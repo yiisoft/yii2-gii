@@ -500,7 +500,7 @@ abstract class Generator extends Model
             } else {
                 $ph = '';
             }
-            $str = "Yii::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
+            $str = "\\Yii::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
         } else {
             // No I18N, replace placeholders by real words, if any
             if (!empty($placeholders)) {
