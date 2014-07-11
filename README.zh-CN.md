@@ -2,7 +2,7 @@ Gii Extension for Yii 2
 ========================
 
 Gii 扩展为 Yii 2 应用程序提供了一个基于 Web 的代码生成器。
-你可以 Gii 快速生成模型、表单、模块、CURD等的代码。
+你可以使用 Gii 快速生成模型、表单、模块、CRUD等的代码。
 
 
 安装
@@ -10,7 +10,7 @@ Gii 扩展为 Yii 2 应用程序提供了一个基于 Web 的代码生成器。
 
 安装本扩展首选的方式是使用 [composer](http://getcomposer.org/download/)。
 
-运行如下命令
+运行如下命令:
 
 ```
 php composer.phar require --prefer-dist yiisoft/yii2-gii "*"
@@ -46,7 +46,7 @@ return [
 http://localhost/path/to/index.php?r=gii
 ```
 
-如果你启用了友好的 URL，你可以使用下面的 URL 来访问:
+或者如果你启用了友好的 URL，你可以使用下面的 URL 来访问:
 
 ```
 http://localhost/path/to/index.php/gii
