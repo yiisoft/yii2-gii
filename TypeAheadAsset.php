@@ -10,24 +10,18 @@ namespace yii\gii;
 use yii\web\AssetBundle;
 
 /**
- * This declares the asset files required by Gii.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class GiiAsset extends AssetBundle
+class TypeAheadAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/gii/assets';
-    public $css = [
-        'main.css',
-    ];
+    public $sourcePath = '@bower/typeahead.js';
     public $js = [
-        'gii.js',
+        'dist/typeahead.bundle.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
-        'yii\gii\TypeAheadAsset',
     ];
 }
