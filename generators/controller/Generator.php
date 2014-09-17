@@ -235,7 +235,7 @@ class Generator extends \yii\gii\Generator
     {
         $module = $this->getModule();
 
-        if( $module instanceof \yii\console\Application ) {
+        if( $module instanceof \yii\console\Application || $module instanceof \yii\web\Application ) {
             $controllerPath = Yii::getAlias('@' . str_replace('\\', '/', $this->ns));
         } else {
             $controllerPath = $module->getControllerPath();
