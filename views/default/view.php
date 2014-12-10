@@ -28,6 +28,7 @@ foreach ($generator->templates as $name => $path) {
     <?php $form = ActiveForm::begin([
         'id' => "$id-generator",
         'successCssClass' => '',
+        'action' => Yii::$app->request->url . "?" . Yii::$app->request->queryString,
         'fieldConfig' => ['class' => ActiveField::className()],
     ]); ?>
         <div class="row">
