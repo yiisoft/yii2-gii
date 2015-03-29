@@ -22,21 +22,6 @@ to the require-dev section of your `composer.json` file.
 
 ## Configuring application
 
-Gii is an official Yii extension. The preferred way to install this extension is through
-[composer](http://getcomposer.org/download/).
-
-You can either run this command:
-
-```
-composer require "yiisoft/yii2-gii:*"
-```
-
-Or you can add this code to the require section of your `composer.json` file:
-
-```
-"yiisoft/yii2-gii": "*"
-```
-
 Once the Gii extension has been installed, you enable it by adding these lines to your application configuration file:
 
 ```php
