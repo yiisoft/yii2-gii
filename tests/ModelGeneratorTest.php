@@ -21,17 +21,18 @@ class ModelGeneratorTest extends GiiTestCase
         $files = $generator->generate();
         $this->assertEquals(7, count($files));
         $expectedNames = [
-            'Profile.php',
-            'Customer.php',
             'Category.php',
             'CategoryPhoto.php',
-            'Supplier.php',
+            'Customer.php',
             'Product.php',
             'ProductLanguage.php',
+            'Profile.php',
+            'Supplier.php',
         ];
         $fileNames = array_map(function ($f) {
             return basename($f->path);
         }, $files);
+        sort($fileNames);
         $this->assertEquals($expectedNames, $fileNames);
     }
 
