@@ -5,6 +5,7 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Bug #6667: Gii form generator rendering mistake view (pana1990)
+- Bug #5098: Properly detect hasOne relations (nineinchnick)
 
 
 2.0.3 March 01, 2015
