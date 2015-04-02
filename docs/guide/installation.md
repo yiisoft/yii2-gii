@@ -76,7 +76,7 @@ yii gii/model --tableName=city --modelClass=City
 
 ### Basic application
 
-In basic application template configuration structure is a bit different so Gii should be configured in
+In basic project template configuration structure is a bit different so Gii should be configured in
 `config/web.php`:
 
 ```php
