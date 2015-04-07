@@ -370,15 +370,17 @@ class Generator extends \yii\gii\Generator
                     ];
 
                     // Add relation for the referenced table
-                    $hasMany = false;
-                    if (count($table->primaryKey) > count($fks)) {
-                        $hasMany = true;
-                    } else {
-                        foreach ($fks as $key) {
-                            if (!in_array($key, $table->primaryKey, true)) {
-                                $hasMany = true;
-                                break;
-                            }
+                    $uniqueKeys = [$table->primaryKey];
+                    try {
+                        $uniqueKeys = array_merge($uniqueKeys, $db->getSchema()->findUniqueIndexes($table));
+                    } catch (NotSupportedException $e) {
+                        // ignore
+                    }
+                    $hasMany = true;
+                    foreach ($uniqueKeys as $uniqueKey) {
+                        if (count(array_diff(array_merge($uniqueKey, $fks), array_intersect($uniqueKey, $fks))) === 0) {
+                            $hasMany = false;
+                            break;
                         }
                     }
                     $link = $this->generateRelationLink($refs);
