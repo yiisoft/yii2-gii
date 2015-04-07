@@ -19,14 +19,9 @@ class GiiTestCase extends TestCase
 
         FileHelper::createDirectory(__DIR__ . '/runtime');
 
-        $databases = [
-            'sqlite' => [
-                'dsn' => 'sqlite::memory:',
-                'fixture' => __DIR__ . '/data/sqlite.sql',
-            ],
-        ];
+        $allConfigs = require(__DIR__ . '/data/config.php');
 
-        $config = $databases[$this->driverName];
+        $config = $allConfigs['databases'][$this->driverName];
         $pdo_database = 'pdo_'.$this->driverName;
 
         if (!extension_loaded('pdo') || !extension_loaded($pdo_database)) {
@@ -44,7 +39,7 @@ class GiiTestCase extends TestCase
            ],
         ]);
 
-        if(isset($config['fixture'])) {
+        if (isset($config['fixture'])) {
             Yii::$app->db->open();
             $lines = explode(';', file_get_contents($config['fixture']));
             foreach ($lines as $line) {
