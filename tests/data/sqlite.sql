@@ -1,5 +1,5 @@
 /**
- * This is the database schema for testing Sqlite support of Yii DAO and Active Record.
+ * This is the database schema for testing Sqlite support of Gii module.
  * The database setup in config.php is required to perform then relevant tests:
  */
 
