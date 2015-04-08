@@ -38,7 +38,7 @@ class SchemaTest extends GiiTestCase
         $relations = [
             "\$this->hasMany(Schema2Table1::className(), ['fk1' => 'fk2', 'fk2' => 'fk1']);",
             "\$this->hasMany(Schema2Table1::className(), ['fk3' => 'fk4', 'fk4' => 'fk3']);",
-            "\$this->hasMany(Schema2Table2::className(), ['fk1' => 'fk1', 'fk2' => 'fk2']);",
+            "\$this->hasOne(Schema2Table2::className(), ['fk1' => 'fk1', 'fk2' => 'fk2']);",
         ];
         foreach ($relations as $relation) {
             $this->assertTrue(strpos($modelCode, $relation) !== false, "Model $modelClass should contain this relation: $relation.\n$modelCode");
@@ -56,7 +56,7 @@ class SchemaTest extends GiiTestCase
         $relations = [
             "\$this->hasOne(Schema1Table1::className(), ['fk2' => 'fk1', 'fk1' => 'fk2']);",
             "\$this->hasOne(Schema1Table1::className(), ['fk4' => 'fk3', 'fk3' => 'fk4']);",
-            "\$this->hasMany(Schema2Table2::className(), ['fk5' => 'fk5', 'fk6' => 'fk6']);",
+            "\$this->hasOne(Schema2Table2::className(), ['fk5' => 'fk5', 'fk6' => 'fk6']);",
         ];
         foreach ($relations as $relation) {
             $this->assertTrue(strpos($modelCode, $relation) !== false, "Model $modelClass should contain this relation: $relation.\n$modelCode");

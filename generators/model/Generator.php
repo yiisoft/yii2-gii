@@ -290,16 +290,17 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
+     * Generates relations using a junction table by adding an extra viaTable().
      * @param \yii\db\TableSchema the table being checked
-     * @param array $fks
+     * @param array $fks obtained from the checkPivotTable() method
      * @param array $relations
-     * @return array
+     * @return array modified $relations
      */
     private function generateManyManyRelations($table, $fks, $relations)
     {
-        $db         = $this->getDbConnection();
-        $table0     = $fks[$table->primaryKey[0]][0];
-        $table1     = $fks[$table->primaryKey[1]][0];
+        $db = $this->getDbConnection();
+        $table0 = $fks[$table->primaryKey[0]][0];
+        $table1 = $fks[$table->primaryKey[1]][0];
         $className0 = $this->generateClassName($table0);
         $className1 = $this->generateClassName($table1);
         $table0Schema = $db->getTableSchema($table0);
@@ -357,7 +358,7 @@ class Generator extends \yii\gii\Generator
                     $refTable = $refs[0];
                     $refTableSchema = $db->getTableSchema($refTable);
                     unset($refs[0]);
-                    $fks          = array_keys($refs);
+                    $fks = array_keys($refs);
                     $refClassName = $this->generateClassName($refTable);
 
                     // Add relation for this table
