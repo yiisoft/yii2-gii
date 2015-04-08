@@ -6,6 +6,7 @@ Yii Framework 2 gii extension Change Log
 
 - Bug #5098: Properly detect hasOne relations (nineinchnick)
 - Bug #6667: Gii form generator rendering mistake view (pana1990)
+- Enh #7830: Added ability to detect relations between multiple schemas (nineinchnick) 
 
 
 2.0.3 March 01, 2015
