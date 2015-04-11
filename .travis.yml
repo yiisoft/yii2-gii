@@ -32,6 +32,11 @@ install:
   - composer show -i
 
 before_script:
+  - psql --version
+  - psql -U postgres -c 'CREATE DATABASE yiitest;';
+  - psql -U postgres yiitest < tests/data/pgsql.sql
+  - echo "<?php unset(\$config['databases']['pgsql']['fixture']);" > tests/data/config.local.php
+
   - |
     if [ $TRAVIS_PHP_VERSION = '5.6' ]; then
       PHPUNIT_FLAGS="--coverage-clover=coverage.clover"

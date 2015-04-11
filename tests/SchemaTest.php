@@ -10,7 +10,7 @@ use yii\gii\generators\model\Generator as ModelGenerator;
  */
 class SchemaTest extends GiiTestCase
 {
-    public $driverName = 'pgsql';
+    protected $driverName = 'pgsql';
 
     public function testPrefixesGenerator()
     {
