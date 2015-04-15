@@ -1,10 +1,10 @@
-Creating your own templates
+Criando seus próprios modelos (templates)
 ===========================
 
-Every generator has a form field `Code Template` that lets you choose a template to use for code generation.
-By default Gii only provides one template `default` but you can create your own templates that are adjusted to your needs.
+Cada gerador tem um campo no formulário chamado `Code Template` que permite que você escolha um modelo (template) a ser usado para geração de código.
+Por padrão o Gii apenas fornece um template `default` mas você pode criar seus próprios modelos (templates).
 
-If you open the folder `@app\vendor\yiisoft\yii2-gii\generators`, you'll see six folders of generators.
+Se você abrir a pasta `@app\vendor\yiisoft\yii2-gii\generators`, você verá seis pastas de geradores.
 
 ```
 + controller
@@ -16,10 +16,10 @@ If you open the folder `@app\vendor\yiisoft\yii2-gii\generators`, you'll see six
 + module
 ```
 
-These names are the generator names. If you open any of these folders, you can see the folder `default`, which is the name of the template.
+Esse são os nomes dos geradores. Se você abrir qualquer uma delas, você verá a pasta `default`, que é o nome do modelo (template).
 
-Copy the folder `@app\vendor\yiisoft\yii2-gii\generators\crud\default` to another location, for example `@app\myTemplates\crud\`.
-Now open this folder and modify any template to fit your desires, for example, add `errorSummary` in `views\_form.php`:
+Copie a pasta `@app\vendor\yiisoft\yii2-gii\generators\crud\default` para outro local, por exemplo `@app\myTemplates\crud\`.
+Agora abra essa pasta e modifique qualquer modelo (template) para atenderem suas necessidades, por exemplo, adicione um `errorSummary` em `views\_form.php`:
 
 ```php
 <?php
@@ -34,7 +34,7 @@ Now open this folder and modify any template to fit your desires, for example, a
 //...
 ```
 
-Now you need to tell Gii about our template. The setting is made in the config file:
+Agora você precisa informar ao Gii sobre nosso modelo (template). A configuração deve ser feita no arquivo de configuração:
 
 ```php
 // config/web.php for basic app
@@ -54,4 +54,4 @@ if (YII_ENV_DEV) {
     ];
 }
 ```
-Open the CRUD generator and you will see that in the field `Code Template` of form appeared own template.
+Abra o gerador de CRUD e você verá  que no campo 'Code Template` do formulário aprece a opção do seu modelo (template).

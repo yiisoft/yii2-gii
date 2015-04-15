@@ -1,7 +1,7 @@
-Basic Usage
+Uso Básico
 ===========
 
-Quando você abre Gii, você verá a primeira a página de entrada que lhe permite escolher um gerador.
+Quando você abre Gii, você verá primeiro a página de entrada que lhe permite escolher um gerador.
 
 ![Gii entry page](images/gii-entry.png)
 
@@ -15,22 +15,22 @@ Por padrão, existem os seguintes geradores disponíveis:
 - **Form Generator** - Este gerador gera um arquivo view que exibe um formulário para receber dados para a
 	classe de modelo especificado.
 - **Module Generator** - Este gerador ajuda a gerar o esqueleto necessário por um módulo Yii.
-- **Extension Generator** - Este gerador ajuda a gerar os arquivos necessários por uma extensão de Yii.
+- **Extension Generator** - Este gerador ajuda a gerar os arquivos necessários por uma extensão Yii.
 
 Depois de escolher um gerador, clicando no botão "Start", você verá um formulário que permite que você configure os
 parâmetros do gerador. Preencha o formulário de acordo com as suas necessidades e pressione o botão "Preview" para obter uma
-pré-visualização do código que GII está prestes a gerar. Dependendo do gerador que você escolheu e/ou se os arquivos
+pré-visualização do código que o GII está prestes a gerar. Dependendo do gerador que você escolheu e/ou se os arquivos
 já existiam ou não, você vai ter uma tela semelhante ao que você vê na figura abaixo:
 
 ![Gii preview](images/gii-preview.png)
 
-Clicando sobre o nome do arquivo que você poderá ver um preview do código que será gerado para esse arquivo.
+Clicando sobre o nome do arquivo que você poderá ver um preview do código que será gerado para o arquivo.
 Quando o arquivo já existe, o Gii fornece uma visão diff que mostra o que é diferente entre o código que existe
 e o que vai ser gerado. Neste caso, você também pode escolher quais arquivos devem ser substituídos.
 
 > Dica: Ao utilizar o Modelo Generator para atualizar modelos após a mudança de banco de dados, você pode copiar o código da pré-visualização do Gii 
   e mesclar as alterações com o seu próprio código. Você pode usar recursos de uma IDE como PHPStorms.
-  [compare with clipboard](http://www.jetbrains.com/phpstorm/webhelp/comparing-files.html), [Aptana Studio](http://www.aptana.com/products/studio3/download) or [Eclipse](http://www.eclipse.org/pdt/) based editor also allows [compare with clipboard](http://andrei.gmxhome.de/anyedit/examples.html) by using [AnyEdit tools plugin](http://andrei.gmxhome.de/anyedit/) for this, which allows you to merge in relevant changes and leave out others that may revert your own code.
+  [compare with clipboard](http://www.jetbrains.com/phpstorm/webhelp/comparing-files.html), [Aptana Studio](http://www.aptana.com/products/studio3/download) ou [Eclipse](http://www.eclipse.org/pdt/) based também permitem [compare with clipboard](http://andrei.gmxhome.de/anyedit/examples.html) por usar [AnyEdit tools plugin](http://andrei.gmxhome.de/anyedit/) para isso, que lhe permite unir as mudanças relevantes e deixar de fora outros que podem reverter o seu próprio código.
   
 Depois de revisar o código e selecionar os arquivos a serem gerados você pode clicar no botão "Gerar" para criar
 os arquivos. Se tudo correu bem está pronto. Quando você vê erros que Gii não é capaz de gerar os arquivos e que você tem que

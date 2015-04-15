@@ -1,9 +1,9 @@
-Creating your own generators
+Criando seus próprios geradores
 ============================
 
-Open the folder of any generator and you will see two files `form.php` and `Generator.php`.
-One is the form, the second is the generator class. In order to create your own generator, you need to create or
-override these classes in any folder. Again as in the previous paragraph customize the configuration:
+Abra a pasta de qualquer gerador e você verá dois arquivos `form.php` e `Generator.php`.
+O primeiro é o formulário, o segundo é a classe geradora. A fim de criar seu próprio gerador, você precisa criar ou
+sobrescrever essas classes em qualquer pasta. Novamente personalizar a configuração:
 
 ```php
 //config/web.php for basic app
@@ -45,4 +45,4 @@ class Generator extends \yii\gii\Generator
 }
 ```
 
-Open Gii Module and you will see a new generator appears in it.
+Abra o gii e você verá que um novo gerador irá aparecer.

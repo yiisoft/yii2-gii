@@ -1,29 +1,29 @@
-Installation
+Instalação
 ============
 
-## Getting Composer package
+## Instalado o pocote composer
 
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+A maneira preferida para instalar essa extensão é via [composer](http://getcomposer.org/download/).
 
-Either run
+Então rode
 
 ```
 php composer.phar require --dev --prefer-dist yiisoft/yii2-gii
 ```
 
-or add
+ou adicione
 
 ```
 "yiisoft/yii2-gii": "~2.0.0"
 ```
 
-to the require-dev section of your `composer.json` file.
+para ser requerido na sessão dev (desenvolvimento) do seu  arquivo `composer.json` .
 
 
-## Configuring application
+## Configurando a Aplicação
 
-Once the Gii extension has been installed, you enable it by adding these lines to your application configuration file:
-
+Assim que a extensão Gii for instalada, você habilitá-la adicionando estas linhas no seu arquivo de configuração da aplicação:
+	
 ```php
 return [
     'bootstrap' => ['gii'],
@@ -35,21 +35,22 @@ return [
 ];
 ```
 
-You can then access Gii through the following URL:
+Você pode acessar o Gii através da seguinte URL:
 
 ```
 http://localhost/path/to/index.php?r=gii
 ```
 
-If you have enabled pretty URLs, you may use the following URL:
+Se você tiver habilitado as URLs amigavéis, você pode usar a seguinte URL:
 
 ```
 http://localhost/path/to/index.php/gii
 ```
 
-> Note: if you are accessing gii from an IP address other than localhost, access will be denied by default.
-> To circumvent that default, add the allowed IP addresses to the configuration:
+> Nota: Se você estiver acessando o gii a partir de um endereço IP diferente de localhost, o acesso será negado por padrão.
+> Para contornar esse padrão, adicione permisão para o endereço de ip na configuração:
 >
+
 ```php
 'gii' => [
     'class' => 'yii\gii\Module',
@@ -57,26 +58,26 @@ http://localhost/path/to/index.php/gii
 ],
 ```
 
-If you have configured Gii similarly in your console application configuration, you may also access Gii through
-command window like the following:
+Se você tiver a configuração do Gii semelhante em sua configuração da aplicação console, você também pode acessar o Gii através
+dos seguintes comandos:
 
 ```
-# change path to your application's base path
+# Altera o caminho para BasePath do sua aplicação
 cd path/to/AppBasePath
 
-# show help information about Gii
+# Mostra informações de ajuda do Gii
 yii help gii
 
-# show help information about the model generator in Gii
+# Mostra informações de ajuda do gerador de modelos do Gii
 yii help gii/model
 
-# generate City model from city table
+# Gera modelo City a partir da tabela city
 yii gii/model --tableName=city --modelClass=City
 ```
 
-### Basic application
+### Basic application (Aplicação básica)
 
-In basic application template configuration structure is a bit different so Gii should be configured in
+Na estrutura de configuração de uma aplicação básica é um pouco diferente, o Gii deve ser configurado em
 `config/web.php`:
 
 ```php
@@ -91,7 +92,7 @@ if (YII_ENV_DEV) {
 }
 ```
 
-So in order to adjust IP address you need to do it like the following:
+Portanto, a fim de ajustar o endereço IP que você precisa fazer o seguinte:
 
 ```php
 if (YII_ENV_DEV) {
