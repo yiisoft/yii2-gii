@@ -161,7 +161,8 @@ class Generator extends \yii\gii\Generator
      */
     public function requiredTemplates()
     {
-        return ['model.php', 'query.php'];
+        // @todo make 'query.php' before 2.1 release
+        return ['model.php'/*, 'query.php'*/];
     }
 
     /**
