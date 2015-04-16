@@ -146,23 +146,44 @@ yii.gii = (function ($) {
             initConfirmationCheckboxes();
             initToggleActions();
 
-            // model generator: hide class name input when table name input contains *
+            // model generator: hide class name inputs when table name input contains *
             $('#model-generator #generator-tablename').change(function () {
-                $('.field-generator-modelclass').toggle($(this).val().indexOf('*') == -1);
+                var show = ($(this).val().indexOf('*') == -1);
+                $('.field-generator-modelclass').toggle(show);
+                $('.field-generator-queryclass').toggle(show);
             }).change();
 
             // model generator: translate table name to model class
             $('#model-generator #generator-tablename').on('blur', function () {
                 var tableName = $(this).val();
-                if ($('#generator-modelclass').val()=='' && tableName && tableName.indexOf('*') === -1){
+                if ($('#generator-modelclass').val()=='' && tableName && tableName.indexOf('*') === -1) {
                     var modelClass='';
                     $.each(tableName.split('_'), function() {
                         if(this.length>0)
                             modelClass+=this.substring(0,1).toUpperCase()+this.substring(1);
                     });
-                    $('#generator-modelclass').val(modelClass);
+                    $('#generator-modelclass').val(modelClass).blur();
                 }
             });
+
+            // model generator: translate model class to query class
+            $('#model-generator #generator-modelclass').on('blur', function () {
+                var modelClass = $(this).val();
+                if (modelClass != '') {
+                    var queryClass = $('#generator-queryclass').val();
+                    if (queryClass == '') {
+                        queryClass = modelClass + 'Query';
+                        $('#generator-queryclass').val(queryClass);
+                    }
+                }
+            });
+
+            // model generator: toggle query fields
+            $('form #generator-generatequery').change(function () {
+                $('form .field-generator-queryns').toggle($(this).is(':checked'));
+                $('form .field-generator-queryclass').toggle($(this).is(':checked'));
+                $('form .field-generator-querybaseclass').toggle($(this).is(':checked'));
+            }).change();
 
             // hide message category when I18N is disabled
             $('form #generator-enablei18n').change(function () {

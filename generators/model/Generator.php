@@ -8,6 +8,7 @@
 namespace yii\gii\generators\model;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Connection;
 use yii\db\Schema;
@@ -32,6 +33,10 @@ class Generator extends \yii\gii\Generator
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
     public $useSchemaName = true;
+    public $generateQuery = false;
+    public $queryNs = 'app\models';
+    public $queryClass;
+    public $queryBaseClass = 'yii\db\ActiveQuery';
 
 
     /**
@@ -56,21 +61,21 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['db', 'ns', 'tableName', 'modelClass', 'baseClass'], 'filter', 'filter' => 'trim'],
-            [['ns'], 'filter', 'filter' => function($value) { return trim($value, '\\'); }],
+            [['db', 'ns', 'tableName', 'modelClass', 'baseClass', 'queryNs', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
+            [['ns', 'queryNs'], 'filter', 'filter' => function($value) { return trim($value, '\\'); }],
 
-            [['db', 'ns', 'tableName', 'baseClass'], 'required'],
-            [['db', 'modelClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
-            [['ns', 'baseClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
+            [['db', 'ns', 'tableName', 'baseClass', 'queryNs', 'queryBaseClass'], 'required'],
+            [['db', 'modelClass', 'queryClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
+            [['ns', 'baseClass', 'queryNs', 'queryBaseClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['tableName'], 'match', 'pattern' => '/^(\w+\.)?([\w\*]+)$/', 'message' => 'Only word characters, and optionally an asterisk and/or a dot are allowed.'],
             [['db'], 'validateDb'],
-            [['ns'], 'validateNamespace'],
+            [['ns', 'queryNs'], 'validateNamespace'],
             [['tableName'], 'validateTableName'],
             [['modelClass'], 'validateModelClass', 'skipOnEmpty' => false],
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
-            [['generateRelations', 'generateLabelsFromComments'], 'boolean'],
+            [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
+            [['generateRelations', 'generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
             [['enableI18N'], 'boolean'],
-            [['useTablePrefix', 'useSchemaName'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
         ]);
     }
@@ -88,6 +93,10 @@ class Generator extends \yii\gii\Generator
             'baseClass' => 'Base Class',
             'generateRelations' => 'Generate Relations',
             'generateLabelsFromComments' => 'Generate Labels from DB Comments',
+            'generateQuery' => 'Generate ActiveQuery',
+            'queryNs' => 'ActiveQuery Namespace',
+            'queryClass' => 'ActiveQuery Class',
+            'queryBaseClass' => 'ActiveQuery Base Class',
         ]);
     }
 
@@ -121,6 +130,12 @@ class Generator extends \yii\gii\Generator
                 will return the table name as <code>{{%post}}</code>.',
             'useSchemaName' => 'This indicates whether to include the schema name in the ActiveRecord class
                 when it\'s auto generated. Only non default schema would be used.',
+            'generateQuery' => 'This indicates whether to generate ActiveQuery for the ActiveRecord class.',
+            'queryNs' => 'This is the namespace of the ActiveQuery class to be generated, e.g., <code>app\models</code>',
+            'queryClass' => 'This is the name of the ActiveQuery class to be generated. The class name should not contain
+                the namespace part as it is specified in "ActiveQuery Namespace". You do not need to specify the class name
+                if "Table Name" ends with asterisk, in which case multiple ActiveQuery classes will be generated.',
+            'queryBaseClass' => 'This is the base class of the new ActiveQuery class. It should be a fully qualified namespaced class name.',
         ]);
     }
 
@@ -146,7 +161,7 @@ class Generator extends \yii\gii\Generator
      */
     public function requiredTemplates()
     {
-        return ['model.php'];
+        return ['model.php', 'query.php'];
     }
 
     /**
@@ -154,7 +169,7 @@ class Generator extends \yii\gii\Generator
      */
     public function stickyAttributes()
     {
-        return array_merge(parent::stickyAttributes(), ['ns', 'db', 'baseClass', 'generateRelations', 'generateLabelsFromComments']);
+        return array_merge(parent::stickyAttributes(), ['ns', 'db', 'baseClass', 'generateRelations', 'generateLabelsFromComments', 'queryNs', 'queryBaseClass']);
     }
 
     /**
@@ -166,20 +181,35 @@ class Generator extends \yii\gii\Generator
         $relations = $this->generateRelations();
         $db = $this->getDbConnection();
         foreach ($this->getTableNames() as $tableName) {
-            $className = $this->generateClassName($tableName);
+            // model :
+            $modelClassName = $this->generateClassName($tableName);
+            $queryClassName = ($this->generateQuery) ? $this->generateQueryClassName($modelClassName) : false;
             $tableSchema = $db->getTableSchema($tableName);
             $params = [
                 'tableName' => $tableName,
-                'className' => $className,
+                'className' => $modelClassName,
+                'queryClassName' => $queryClassName,
                 'tableSchema' => $tableSchema,
                 'labels' => $this->generateLabels($tableSchema),
                 'rules' => $this->generateRules($tableSchema),
                 'relations' => isset($relations[$tableName]) ? $relations[$tableName] : [],
             ];
             $files[] = new CodeFile(
-                Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $className . '.php',
+                Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
                 $this->render('model.php', $params)
             );
+
+            // query :
+            if ($queryClassName) {
+                $params = [
+                    'className' => $queryClassName,
+                    'modelClassName' => $modelClassName,
+                ];
+                $files[] = new CodeFile(
+                    Yii::getAlias('@' . str_replace('\\', '/', $this->queryNs)) . '/' . $queryClassName . '.php',
+                    $this->render('query.php', $params)
+                );
+            }
         }
 
         return $files;
@@ -639,6 +669,20 @@ class Generator extends \yii\gii\Generator
         }
 
         return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
+    }
+
+    /**
+     * Generates a query class name from the specified model class name.
+     * @param string $modelClassName model class name
+     * @return string generated class name
+     */
+    protected function generateQueryClassName($modelClassName)
+    {
+        $queryClassName = $this->queryClass;
+        if (empty($queryClassName) || strpos($this->tableName, '*') !== false) {
+            $queryClassName = $modelClassName . 'Query';
+        }
+        return $queryClassName;
     }
 
     /**
