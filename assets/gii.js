@@ -148,7 +148,7 @@ yii.gii = (function ($) {
 
             // model generator: hide class name inputs when table name input contains *
             $('#model-generator #generator-tablename').change(function () {
-                var show = ($(this).val().indexOf('*') == -1);
+                var show = ($(this).val().indexOf('*') === -1);
                 $('.field-generator-modelclass').toggle(show);
                 $('.field-generator-queryclass').toggle(show);
             }).change();
@@ -156,8 +156,8 @@ yii.gii = (function ($) {
             // model generator: translate table name to model class
             $('#model-generator #generator-tablename').on('blur', function () {
                 var tableName = $(this).val();
-                if ($('#generator-modelclass').val()=='' && tableName && tableName.indexOf('*') === -1) {
-                    var modelClass='';
+                if ($('#generator-modelclass').val() === '' && tableName && tableName.indexOf('*') === -1) {
+                    var modelClass = '';
                     $.each(tableName.split('_'), function() {
                         if(this.length>0)
                             modelClass+=this.substring(0,1).toUpperCase()+this.substring(1);
@@ -169,9 +169,9 @@ yii.gii = (function ($) {
             // model generator: translate model class to query class
             $('#model-generator #generator-modelclass').on('blur', function () {
                 var modelClass = $(this).val();
-                if (modelClass != '') {
+                if (modelClass !== '') {
                     var queryClass = $('#generator-queryclass').val();
-                    if (queryClass == '') {
+                    if (queryClass === '') {
                         queryClass = modelClass + 'Query';
                         $('#generator-queryclass').val(queryClass);
                     }
@@ -199,7 +199,7 @@ yii.gii = (function ($) {
             $('.module-form #generator-moduleclass').change(function () {
                 var value = $(this).val().match(/(\w+)\\\w+$/);
                 var $idInput = $('#generator-moduleid');
-                if (value && value[1] && $idInput.val() == '') {
+                if (value && value[1] && $idInput.val() === '') {
                     $idInput.val(value[1]);
                 }
             });

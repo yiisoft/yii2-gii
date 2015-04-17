@@ -8,7 +8,7 @@
 /* @var $className string class name */
 /* @var $modelClassName string related model class name */
 
-$modelFullClassName =$modelClassName;
+$modelFullClassName = $modelClassName;
 if ($generator->ns !== $generator->queryNs) {
     $modelFullClassName = '\\' . $generator->ns . '\\' . $modelFullClassName;
 }
