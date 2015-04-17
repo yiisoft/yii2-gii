@@ -178,6 +178,17 @@ yii.gii = (function ($) {
                 }
             });
 
+            // model generator: synchronize query namespace with model namespace
+            $('#model-generator #generator-ns').on('blur', function () {
+                var stickyValue = $('#model-generator .field-generator-queryns .sticky-value');
+                var input = $('#model-generator #generator-queryns');
+                if (stickyValue.is(':visible') || !input.is(':visible')) {
+                    var ns = $(this).val();
+                    stickyValue.html(ns);
+                    input.val(ns);
+                }
+            });
+
             // model generator: toggle query fields
             $('form #generator-generatequery').change(function () {
                 $('form .field-generator-queryns').toggle($(this).is(':checked'));
