@@ -150,7 +150,9 @@ yii.gii = (function ($) {
             $('#model-generator #generator-tablename').change(function () {
                 var show = ($(this).val().indexOf('*') === -1);
                 $('.field-generator-modelclass').toggle(show);
-                $('.field-generator-queryclass').toggle(show);
+                if ($('#generator-generatequery').is(':checked')) {
+                    $('.field-generator-queryclass').toggle(show);
+                }
             }).change();
 
             // model generator: translate table name to model class
