@@ -371,9 +371,15 @@ class Generator extends \yii\gii\Generator
 
         $db = $this->getDbConnection();
 
-        try {
-            $schemaNames = $db->getSchema()->getSchemaNames();
-        } catch (NotSupportedException $e) {
+        $schema = $db->getSchema();
+        if ($schema->hasMethod('getSchemaNames')) { // keep BC to Yii versions < 2.0.4
+            try {
+                $schemaNames = $schema->getSchemaNames();
+            } catch (NotSupportedException $e) {
+                // schema names are not supported by schema
+            }
+        }
+        if (!isset($schemaNames)) {
             if (($pos = strpos($this->tableName, '.')) !== false) {
                 $schemaNames = [substr($this->tableName, 0, $pos)];
             } else {
