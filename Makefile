@@ -16,11 +16,11 @@ test: docker-php docker-pgsql adjust-config
 	docker run --rm=true -v $(shell pwd):/opt/test --link $(shell cat tests/dockerids/pgsql):postgres yiitest/php:${PHP_VERSION} phpunit --verbose --color
 
 adjust-config:
-	#echo "<?php \$$config['databases']['pgsql']['dsn'] = 'redis';" > tests/data/config.local.php
+	echo "<?php \$$config['databases']['pgsql']['dsn'] = 'pgsql:host=postgres;port=5432;dbname=postgres';" > tests/data/config.local.php
 
 docker-pgsql: dockerfiles
 	docker pull postgres:${PGSQL_VERSION}
-	docker run -d -P postgres > tests/dockerids/pgsql
+	docker run -d -P postgres:${PGSQL_VERSION} > tests/dockerids/pgsql
 
 docker-php: dockerfiles
 	cd tests/docker/php && sh build.sh
