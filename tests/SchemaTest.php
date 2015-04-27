@@ -2,7 +2,7 @@
 namespace yiiunit\extensions\gii;
 
 use yii\gii\generators\model\Generator as ModelGenerator;
-
+use Yii;
 /**
  * SchemaTest checks that Gii model generator supports multiple schemas
  * @group gii
@@ -19,6 +19,11 @@ class SchemaTest extends GiiTestCase
         $generator->tableName = 'schema1.*';
 
         $files = $generator->generate();
+
+        if (version_compare(str_replace('-dev', '', Yii::getVersion()), '2.0.4', '<')) {
+            $this->markTestSkipped('This feature is only available since Yii 2.0.4.');
+        }
+
         $this->assertEquals(2, count($files));
         $this->assertEquals("Schema1Table1", basename($files[0]->path, '.php'));
         $this->assertEquals("Schema1Table2", basename($files[1]->path, '.php'));
@@ -34,6 +39,10 @@ class SchemaTest extends GiiTestCase
         $this->assertEquals(2, count($files));
         $modelCode = $files[0]->content;
         $modelClass = basename($files[0]->path, '.php');
+
+        if (version_compare(str_replace('-dev', '', Yii::getVersion()), '2.0.4', '<')) {
+            $this->markTestSkipped('This feature is only available since Yii 2.0.4.');
+        }
 
         $relations = [
             "\$this->hasMany(Schema2Table1::className(), ['fk1' => 'fk2', 'fk2' => 'fk1']);",
