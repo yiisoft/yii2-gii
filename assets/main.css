@@ -223,7 +223,7 @@ body {
     color: #999
 }
 
-.tt-menu {
+.tt-dropdown-menu, .tt-menu {
     width: 422px;
     margin-top: 2px;
     padding: 8px 0;
