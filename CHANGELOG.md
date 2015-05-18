@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.5 under development
 -----------------------
 
+- Chg #38: Added compatibility with latest Typeahead version (razvanphp)
 
 
 2.0.4 May 10, 2015
