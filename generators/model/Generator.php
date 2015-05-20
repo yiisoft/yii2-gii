@@ -237,6 +237,7 @@ class Generator extends \yii\gii\Generator
                 $labels[$column->name] = $label;
             }
         }
+        ksort($labels);
 
         return $labels;
     }
