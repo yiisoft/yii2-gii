@@ -5,7 +5,7 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
-
+- Chg #43: Added support for GridView filtering on values starting with basic operators to CRUD Generator (yii2#2022)
 
 2.0.4 May 10, 2015
 ------------------
