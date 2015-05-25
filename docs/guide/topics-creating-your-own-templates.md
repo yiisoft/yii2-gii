@@ -16,7 +16,7 @@ If you open the folder `@app\vendor\yiisoft\yii2-gii\generators`, you'll see six
 + module
 ```
 
-These names are the generator names. If you open any of these folders, you can see the folder `default`, which is the name of the template.
+These names are the generator names. If you open any of these folders, you can see the folder `default`, which name is the name of the template.
 
 Copy the folder `@app\vendor\yiisoft\yii2-gii\generators\crud\default` to another location, for example `@app\myTemplates\crud\`.
 Now open this folder and modify any template to fit your desires, for example, add `errorSummary` in `views\_form.php`:
@@ -28,9 +28,6 @@ Now open this folder and modify any template to fit your desires, for example, a
 
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
     <?= "<?=" ?> $form->errorSummary($model) ?> <!-- ADDED HERE -->
-    <?php foreach ($safeAttributes as $attribute) {
-        echo "    <?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
-    } ?>
 //...
 ```
 
@@ -54,4 +51,5 @@ if (YII_ENV_DEV) {
     ];
 }
 ```
+
 Open the CRUD generator and you will see that in the field `Code Template` of form appeared own template.
