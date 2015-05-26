@@ -78,7 +78,11 @@ yii.gii = (function ($) {
             $modal.find('.modal-next').attr('href', $next.attr('href')).data('title', $next.data('title'));
         }
         $modalBody.html(data);
-        valueToCopy = $modalBody.get(0).innerText;
+
+        var tmp = document.createElement("div");
+        tmp.innerHTML = data;
+        valueToCopy = tmp.innerText || tmp.textContent || "";
+
         $modal.find('.content').css('max-height', ($(window).height() - 200) + 'px');
     };
 
