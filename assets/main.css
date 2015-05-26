@@ -250,3 +250,18 @@ body {
     margin: 0;
 }
 
+#clipboard-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    z-index: 100;
+    /*display: none;*/
+    opacity: 0;
+}
+#clipboard {
+    width: 1px;
+    height: 1px;
+    padding: 0;
+}
