@@ -80,6 +80,14 @@ body {
     background: transparent;
 }
 
+.default-view .modal-dialog .modal-copy-hint {
+    margin-right: 10px;
+}
+
+.default-view .modal-dialog .modal-copy-hint kbd {
+    margin: 0 2px;
+}
+
 .default-view-files table .action {
     width: 100px;
 }

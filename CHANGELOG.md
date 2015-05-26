@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.5 under development
 -----------------------
 
+- Enh: #42: Entire preview code now can be copied by pressing CTRL+C (thiagotalma, samdark) 
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
 
 

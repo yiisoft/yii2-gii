@@ -101,10 +101,11 @@ use yii\gii\CodeFile;
                         &nbsp;
                     </div>
                     <strong class="modal-title pull-left">Modal title</strong>
+                    <span class="modal-copy-hint pull-right"><kbd>CTRL</kbd>+<kbd>C</kbd> to copy</span>
                     <div id="clipboard-container"><textarea id="clipboard"></textarea></div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="modal-body" title="Press CTRL+C to copy">
+                <div class="modal-body">
                     <p>Please wait ...</p>
                 </div>
             </div>

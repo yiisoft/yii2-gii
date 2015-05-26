@@ -78,11 +78,7 @@ yii.gii = (function ($) {
             $modal.find('.modal-next').attr('href', $next.attr('href')).data('title', $next.data('title'));
         }
         $modalBody.html(data);
-
-        var tmp = document.createElement("div");
-        tmp.innerHTML = data;
-        valueToCopy = tmp.innerText || tmp.textContent || "";
-
+        valueToCopy = $("<div/>").html(data.replace(/(<(br[^>]*)>)/ig, '\n')).text().trim() + '\n';
         $modal.find('.content').css('max-height', ($(window).height() - 200) + 'px');
     };
 
