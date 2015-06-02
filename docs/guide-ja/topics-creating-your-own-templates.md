@@ -31,9 +31,6 @@
 
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
     <?= "<?=" ?> $form->errorSummary($model) ?> <!-- これを追加 -->
-    <?php foreach ($safeAttributes as $attribute) {
-        echo "    <?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
-    } ?>
 //...
 ```
 
