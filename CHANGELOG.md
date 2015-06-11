@@ -4,9 +4,9 @@ Yii Framework 2 gii extension Change Log
 2.0.5 under development
 -----------------------
 
-- Enh: #42: Entire preview code now can be copied by pressing CTRL+C (thiagotalma, samdark) 
+- Enh #42: Entire preview code now can be copied by pressing CTRL+C (thiagotalma, samdark) 
+- Enh #2022: Added support for GridView filtering on values starting with basic operators to CRUD Generator (lennartvdd)
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
-
 
 2.0.4 May 10, 2015
 ------------------

@@ -397,14 +397,16 @@ class Generator extends \yii\gii\Generator
             }
         }
 
-        $likeConditions = [];
+        $compareConditions = [];
         $hashConditions = [];
         foreach ($columns as $column => $type) {
             switch ($type) {
+                case Schema::TYPE_BOOLEAN:
+                    $hashConditions[] = "'{$column}' => \$this->{$column},";
+                    break;
                 case Schema::TYPE_SMALLINT:
                 case Schema::TYPE_INTEGER:
                 case Schema::TYPE_BIGINT:
-                case Schema::TYPE_BOOLEAN:
                 case Schema::TYPE_FLOAT:
                 case Schema::TYPE_DOUBLE:
                 case Schema::TYPE_DECIMAL:
@@ -413,10 +415,10 @@ class Generator extends \yii\gii\Generator
                 case Schema::TYPE_TIME:
                 case Schema::TYPE_DATETIME:
                 case Schema::TYPE_TIMESTAMP:
-                    $hashConditions[] = "'{$column}' => \$this->{$column},";
+                    $compareConditions[] = "->andFilterCompare('{$column}', \$this->{$column})";
                     break;
                 default:
-                    $likeConditions[] = "->andFilterWhere(['like', '{$column}', \$this->{$column}])";
+                    $compareConditions[] = "->andFilterCompare('{$column}', \$this->{$column}, 'like')";
                     break;
             }
         }
@@ -427,8 +429,8 @@ class Generator extends \yii\gii\Generator
                 . str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $hashConditions)
                 . "\n" . str_repeat(' ', 8) . "]);\n";
         }
-        if (!empty($likeConditions)) {
-            $conditions[] = "\$query" . implode("\n" . str_repeat(' ', 12), $likeConditions) . ";\n";
+        if (!empty($compareConditions)) {
+            $conditions[] = "\$query" . implode("\n" . str_repeat(' ', 12), $compareConditions) . ";\n";
         }
 
         return $conditions;
