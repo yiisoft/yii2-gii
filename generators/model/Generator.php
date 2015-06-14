@@ -323,13 +323,12 @@ class Generator extends \yii\gii\Generator
             unset($refs[0]);
             $rules[] = "[['" . implode("', '", array_keys($refs)) . "'], "
                 . "'exist', "
-                . "'skypOnError' => true, "
+                . "'skipOnError' => true, "
                 . "'targetClass' => $refClassName::className(), "
                 . "'targetAttributes' => ['"
                     . implode("', '", array_values($refs))
                 . "']],";
         }
-
 
         return $rules;
     }
