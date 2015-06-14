@@ -317,6 +317,20 @@ class Generator extends \yii\gii\Generator
             // doesn't support unique indexes information...do nothing
         }
 
+        // Exist rules for foreign keys.
+        foreach ($table->foreignKeys as $refs) {
+            $refClassName = $this->generateClassName($refs[0]);
+            unset($refs[0]);
+            $rules[] = "[['" . implode("', '", array_keys($refs)) . "'], "
+                . "'exist', "
+                . "'skypOnError' => true, "
+                . "'targetClass' => $refClassName::className(), "
+                . "'targetAttributes' => ['"
+                    . implode("', '", array_values($refs))
+                . "']],";
+        }
+
+
         return $rules;
     }
 
