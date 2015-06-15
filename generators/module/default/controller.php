@@ -13,8 +13,14 @@ namespace <?= $generator->getControllerNamespace() ?>;
 
 use yii\web\Controller;
 
+/**
+ * Default controller for the `<?= $generator->moduleId ?>` module
+ */
 class DefaultController extends Controller
 {
+    /**
+     * render the default view for the module
+     */
     public function actionIndex()
     {
         return $this->render('index');
