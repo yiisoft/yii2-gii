@@ -14,7 +14,7 @@ namespace <?= $generator->getControllerNamespace() ?>;
 use yii\web\Controller;
 
 /**
- * Default controller for the `<?= $generator->moduleId ?>` module
+ * Default controller for the `<?= $generator->moduleID ?>` module
  */
 class DefaultController extends Controller
 {
