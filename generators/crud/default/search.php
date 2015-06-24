@@ -35,9 +35,9 @@ use <?= ltrim($generator->modelClass, '\\') . (isset($modelAlias) ? " as $modelA
 class <?= $searchModelClass ?> extends Model
 {
     <?php foreach ($searchAttributes as $attribute) : ?>/**
-    * @var <?= ($tableSchema !== false) ? $tableSchema->columns[$attribute]->phpType : 'mixed'?>
+     * @var <?= ($tableSchema !== false) ? $tableSchema->columns[$attribute]->phpType : 'mixed'?>
 
-    */
+     */
     public $<?= $attribute ?>;
     <?php endforeach ?>
 
