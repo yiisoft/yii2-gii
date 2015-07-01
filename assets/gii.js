@@ -241,6 +241,11 @@ yii.gii = (function ($) {
                 $('form .field-generator-querybaseclass').toggle($(this).is(':checked'));
             }).change();
 
+            // use alias path: toggle base path field
+            $('form #generator-usealiaspath').change(function () {
+                $('form .field-generator-basepath').toggle(!$(this).is(':checked'));
+            }).change();
+
             // hide message category when I18N is disabled
             $('form #generator-enablei18n').change(function () {
                 $('form .field-generator-messagecategory').toggle($(this).is(':checked'));

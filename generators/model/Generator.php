@@ -37,6 +37,8 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
+    public $useAliasPath = true;
+    public $basePath;
 
 
     /**
@@ -61,7 +63,7 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['db', 'ns', 'tableName', 'modelClass', 'baseClass', 'queryNs', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
+            [['db', 'ns', 'tableName', 'modelClass', 'baseClass', 'queryNs', 'queryClass', 'queryBaseClass', 'basePath'], 'filter', 'filter' => 'trim'],
             [['ns', 'queryNs'], 'filter', 'filter' => function($value) { return trim($value, '\\'); }],
 
             [['db', 'ns', 'tableName', 'baseClass', 'queryNs', 'queryBaseClass'], 'required'],
@@ -74,9 +76,10 @@ class Generator extends \yii\gii\Generator
             [['modelClass'], 'validateModelClass', 'skipOnEmpty' => false],
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
-            [['generateRelations', 'generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
+            [['generateRelations', 'generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'useAliasPath'], 'boolean'],
             [['enableI18N'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
+            [['basePath'], 'validateBasePath'],
         ]);
     }
 
@@ -97,6 +100,7 @@ class Generator extends \yii\gii\Generator
             'queryNs' => 'ActiveQuery Namespace',
             'queryClass' => 'ActiveQuery Class',
             'queryBaseClass' => 'ActiveQuery Base Class',
+            'useAliasPath' => 'Save files on default path',
         ]);
     }
 
@@ -136,6 +140,8 @@ class Generator extends \yii\gii\Generator
                 the namespace part as it is specified in "ActiveQuery Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveQuery classes will be generated.',
             'queryBaseClass' => 'This is the base class of the new ActiveQuery class. It should be a fully qualified namespaced class name.',
+            'useAliasPath' => 'This indicates whether the path to save files is based on the namespace.',
+            'basePath' => 'This is the path to save generated files, e.g., <code>/var/www/app/models</code>',
         ]);
     }
 
@@ -195,8 +201,13 @@ class Generator extends \yii\gii\Generator
                 'rules' => $this->generateRules($tableSchema),
                 'relations' => isset($relations[$tableName]) ? $relations[$tableName] : [],
             ];
+            if ($this->useAliasPath) {
+                $path = Yii::getAlias('@' . str_replace('\\', '/', $this->ns));
+            } else {
+                $path = $this->basePath . '/' . $this->ns;
+            }
             $files[] = new CodeFile(
-                Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
+                $path . '/' . $modelClassName . '.php',
                 $this->render('model.php', $params)
             );
 
@@ -206,8 +217,13 @@ class Generator extends \yii\gii\Generator
                     'className' => $queryClassName,
                     'modelClassName' => $modelClassName,
                 ];
+                if ($this->useAliasPath) {
+                    $path = Yii::getAlias('@' . str_replace('\\', '/', $this->queryNs));
+                } else {
+                    $path = $this->basePath . '/' . $this->queryNs;
+                }
                 $files[] = new CodeFile(
-                    Yii::getAlias('@' . str_replace('\\', '/', $this->queryNs)) . '/' . $queryClassName . '.php',
+                    $path . '/' . $queryClassName . '.php',
                     $this->render('query.php', $params)
                 );
             }
@@ -549,6 +565,16 @@ class Generator extends \yii\gii\Generator
         }
         if ((empty($this->tableName) || substr_compare($this->tableName, '*', -1, 1)) && $this->modelClass == '') {
             $this->addError('modelClass', 'Model Class cannot be blank if table name does not end with asterisk.');
+        }
+    }
+
+    /**
+     * Validates the [[basePath]] attribute.
+     */
+    public function validateBasePath()
+    {
+        if (!is_dir($this->basePath)) {
+            $this->addError('basePath', 'Base Path must be an existing directory.');
         }
     }
 
