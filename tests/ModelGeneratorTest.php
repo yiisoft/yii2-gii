@@ -36,6 +36,9 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertEquals($expectedNames, $fileNames);
     }
 
+    /**
+     * @return array
+     */
     public function relationsProvider()
     {
         return [
@@ -122,5 +125,56 @@ class ModelGeneratorTest extends GiiTestCase
     public function testSchemas()
     {
 
+    }
+
+    /**
+     * @return array
+     */
+    public function rulesProvider()
+    {
+        return [
+            ['category_photo', 'CategoryPhoto.php', [
+                "[['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['id']],",
+                "[['category_id', 'display_number'], 'unique', 'targetAttribute' => ['category_id', 'display_number'], 'message' => 'The combination of Category ID and Display Number has already been taken.'],",
+            ]],
+            ['product', 'Product.php', [
+                "[['supplier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::className(), 'targetAttribute' => ['id']],",
+                "[['category_id', 'category_language_code'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['id', 'language_code']],",
+                "[['category_id', 'category_language_code'], 'unique', 'targetAttribute' => ['category_id', 'category_language_code'], 'message' => 'The combination of Category Language Code and Category ID has already been taken.'],"
+            ]],
+            ['product_language', 'ProductLanguage.php', [
+                "[['supplier_id', 'id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['supplier_id', 'id']],",
+                "[['supplier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::className(), 'targetAttribute' => ['id']],",
+                "[['supplier_id'], 'unique']",
+                "[['id', 'supplier_id', 'language_code'], 'unique', 'targetAttribute' => ['id', 'supplier_id', 'language_code'], 'message' => 'The combination of ID, Supplier ID and Language Code has already been taken.']",
+                "[['id', 'supplier_id'], 'unique', 'targetAttribute' => ['id', 'supplier_id'], 'message' => 'The combination of ID and Supplier ID has already been taken.']",
+            ]],
+        ];
+    }
+
+    /**
+     * @dataProvider rulesProvider
+     *
+     * @param $tableName string
+     * @param $fileName string
+     * @param $rules array
+     */
+    public function testRules($tableName, $fileName, $rules)
+    {
+        $generator = new ModelGenerator();
+        $generator->template = 'default';
+        $generator->tableName = $tableName;
+
+        $files = $generator->generate();
+        $this->assertEquals(1, count($files));
+        $this->assertEquals($fileName, basename($files[0]->path));
+
+        $code = $files[0]->content;
+        foreach ($rules as $rule) {
+            $location = strpos($code, $rule);
+            $this->assertTrue($location !== false,
+                "Rule \"{$rule}\" should be there:\n" . $code
+            );
+        }
     }
 }

@@ -4,7 +4,8 @@ Yii Framework 2 gii extension Change Log
 2.0.5 under development
 -----------------------
 
-- Enh: #42: Entire preview code now can be copied by pressing CTRL+C (thiagotalma, samdark) 
+- Enh #42: Entire preview code now can be copied by pressing CTRL+C (thiagotalma, samdark)
+- Enh #56: Model generator now generates exist rules based on table foreign keys (Faryshta, samdark)
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
 
 

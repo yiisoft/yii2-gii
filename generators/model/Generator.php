@@ -303,13 +303,13 @@ class Generator extends \yii\gii\Generator
                 if (!$this->isColumnAutoIncremental($table, $uniqueColumns)) {
                     $attributesCount = count($uniqueColumns);
 
-                    if ($attributesCount == 1) {
+                    if ($attributesCount === 1) {
                         $rules[] = "[['" . $uniqueColumns[0] . "'], 'unique']";
                     } elseif ($attributesCount > 1) {
                         $labels = array_intersect_key($this->generateLabels($table), array_flip($uniqueColumns));
                         $lastLabel = array_pop($labels);
                         $columnsList = implode("', '", $uniqueColumns);
-                        $rules[] = "[['" . $columnsList . "'], 'unique', 'targetAttribute' => ['" . $columnsList . "'], 'message' => 'The combination of " . implode(', ', $labels) . " and " . $lastLabel . " has already been taken.']";
+                        $rules[] = "[['$columnsList'], 'unique', 'targetAttribute' => ['$columnsList'], 'message' => 'The combination of " . implode(', ', $labels) . " and $lastLabel has already been taken.']";
                     }
                 }
             }
@@ -317,17 +317,13 @@ class Generator extends \yii\gii\Generator
             // doesn't support unique indexes information...do nothing
         }
 
-        // Exist rules for foreign keys.
+        // Exist rules for foreign keys
         foreach ($table->foreignKeys as $refs) {
             $refClassName = $this->generateClassName($refs[0]);
             unset($refs[0]);
-            $rules[] = "[['" . implode("', '", array_keys($refs)) . "'], "
-                . "'exist', "
-                . "'skipOnError' => true, "
-                . "'targetClass' => $refClassName::className(), "
-                . "'targetAttributes' => ['"
-                    . implode("', '", array_values($refs))
-                . "']],";
+            $attributes = implode("', '", array_keys($refs));
+            $targetAttributes = implode("', '", array_values($refs));
+            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => ['$targetAttributes']]";
         }
 
         return $rules;
