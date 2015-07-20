@@ -28,7 +28,9 @@ Once the Gii extension has been installed, you enable it by adding these lines t
 return [
     'bootstrap' => ['gii'],
     'modules' => [
-        'gii' => 'yii\gii\Module',
+        'gii' => [
+            'class' => 'yii\gii\Module',
+        ],
         // ...
     ],
     // ...

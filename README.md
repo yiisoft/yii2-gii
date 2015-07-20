@@ -40,7 +40,9 @@ Once the extension is installed, simply modify your application configuration as
 return [
     'bootstrap' => ['gii'],
     'modules' => [
-        'gii' => 'yii\gii\Module',
+        'gii' => [
+            'class' => 'yii\gii\Module',
+        ],
         // ...
     ],
     // ...
