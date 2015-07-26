@@ -28,15 +28,48 @@ use yii\widgets\ActiveForm;
 
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
 
-<?php foreach ($generator->getColumnNames() as $attribute) {
-    if (in_array($attribute, $safeAttributes)) {
-        echo "    <?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
+<?php 
+$weights = [
+    'yii\validators\ExistValidator' => 2,
+    'yii\validators\FileValidator' => 2,
+    'yii\validators\ImageValidator' => 2,
+    'yii\validators\CapchaValidator' => 2,
+    'yii\validators\DateValidator' => 1,
+    'yii\validators\RangeValidator' => 1,
+    'yii\validators\NumberValidator' => 1,
+    'yii\validators\BooleanValidator' => 0,
+    'yii\validators\EmailValidator' => 0,
+    'yii\validators\NumberValidator' => 0,
+];
+
+$model = new $generator->modelClass();
+$attributes = array_flip($model->safeAttributes());
+
+foreach ($model->validators as $validator) {
+    if (!isset($weights[get_class($validator)])) {
+        continue;
     }
-} ?>
+
+    $weight = $weights[get_class($validator)];
+    foreach ($validator->attributes as $attr) {
+        if (!is_array($attributes[$attr])
+            or $weight <= $attributes[$attr]['weight']
+        ) {
+            continue;
+        }
+
+        $attributes[$attr] => ['weight' => $weight, 'validator' => $validator];
+    }
+}
+
+foreach ($attributes as $attr => $value) {
+    // code to generate each attribute based on the validators saved sofar.
+}
+    ?>
     <div class="form-group">
         <?= "<?= " ?>Html::submitButton($model->isNewRecord ? <?= $generator->generateString('Create') ?> : <?= $generator->generateString('Update') ?>, ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
-
+    
     <?= "<?php " ?>ActiveForm::end(); ?>
 
 </div>
