@@ -322,11 +322,11 @@ class Generator extends \yii\gii\Generator
             $refClassName = $this->generateClassName($refs[0]);
             unset($refs[0]);
             $attributes = implode("', '", array_keys($refs));
-            $targetAttributes = '';
+            $targetAttributes = [];
             foreach ($refs as $key => $value) {
-                $targetAttributes .= "'$key' => '$value', ";
+                $targetAttributes[] = "'$key' => '$value'";
             }
-            $targetAttributes = trim($targetAttributes);
+            $targetAttributes = implode(',', $targetAttributes);
             $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
         }
 
