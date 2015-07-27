@@ -326,7 +326,7 @@ class Generator extends \yii\gii\Generator
             foreach ($refs as $key => $value) {
                 $targetAttributes[] = "'$key' => '$value'";
             }
-            $targetAttributes = implode(',', $targetAttributes);
+            $targetAttributes = implode(', ', $targetAttributes);
             $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
         }
 
