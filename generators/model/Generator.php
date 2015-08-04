@@ -37,6 +37,7 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
+    public $sortAttributes = false;
 
 
     /**
@@ -75,7 +76,7 @@ class Generator extends \yii\gii\Generator
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
             [['generateRelations', 'generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
-            [['enableI18N'], 'boolean'],
+            [['enableI18N', 'sortAttributes'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
         ]);
     }
@@ -97,6 +98,7 @@ class Generator extends \yii\gii\Generator
             'queryNs' => 'ActiveQuery Namespace',
             'queryClass' => 'ActiveQuery Class',
             'queryBaseClass' => 'ActiveQuery Base Class',
+            'sortAttributes' => 'Sort Attributes',
         ]);
     }
 
@@ -136,6 +138,7 @@ class Generator extends \yii\gii\Generator
                 the namespace part as it is specified in "ActiveQuery Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveQuery classes will be generated.',
             'queryBaseClass' => 'This is the base class of the new ActiveQuery class. It should be a fully qualified namespaced class name.',
+            'sortAttributes' => 'This indicates whether the labels should be ordered alphabetically.',
         ]);
     }
 
@@ -224,7 +227,7 @@ class Generator extends \yii\gii\Generator
     public function generateLabels($table)
     {
         $labels = [];
-        foreach ($table->columns as $column) {
+        foreach ($this->getColumns($table) as $column) {
             if ($this->generateLabelsFromComments && !empty($column->comment)) {
                 $labels[$column->name] = $column->comment;
             } elseif (!strcasecmp($column->name, 'id')) {
@@ -250,7 +253,7 @@ class Generator extends \yii\gii\Generator
     {
         $types = [];
         $lengths = [];
-        foreach ($table->columns as $column) {
+        foreach ($this->getColumns($table) as $column) {
             if ($column->autoIncrement) {
                 continue;
             }
@@ -728,5 +731,21 @@ class Generator extends \yii\gii\Generator
         }
 
         return false;
+    }
+
+    /**
+     * Get columns for the specified table.
+     * @param \yii\db\TableSchema $table the table schema
+     * @return array the columns ordered in accordance with the request
+     */
+    public function getColumns($table)
+    {
+        $columns = $table->columns;
+
+        if ($this->sortAttributes) {
+            ksort($columns);
+        }
+
+        return $columns;
     }
 }
