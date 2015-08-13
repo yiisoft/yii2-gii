@@ -5,6 +5,7 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Bug #66: It was impossible to use tables with spaces (cornernote)
+- Enh #34: Model generator now skips FKs pointing to non-existing tables (samdark)
 - Enh #42: Entire preview code now can be copied by pressing CTRL+C (thiagotalma, samdark)
 - Enh #56: Model generator now generates exist rules based on table foreign keys (Faryshta, samdark)
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
