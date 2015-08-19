@@ -51,7 +51,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
