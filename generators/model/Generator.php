@@ -97,6 +97,7 @@ class Generator extends \yii\gii\Generator
             'queryNs' => 'ActiveQuery Namespace',
             'queryClass' => 'ActiveQuery Class',
             'queryBaseClass' => 'ActiveQuery Base Class',
+            'useSchemaName' => 'Use Schema Name',
         ]);
     }
 
