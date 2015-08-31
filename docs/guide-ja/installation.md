@@ -25,7 +25,9 @@ Gii エクステンションがインストールされたら、アプリケー�
 return [
     'bootstrap' => ['gii'],
     'modules' => [
-        'gii' => 'yii\gii\Module',
+        'gii' => [
+            'class' => 'yii\gii\Module',
+        },
         // ...
     ],
     // ...
