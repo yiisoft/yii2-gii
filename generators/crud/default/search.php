@@ -24,10 +24,10 @@ echo "<?php\n";
 
 namespace <?= StringHelper::dirname(ltrim($generator->searchModelClass, '\\')) ?>;
 
+use <?= ltrim($generator->modelClass, '\\') . (isset($modelAlias) ? " as $modelAlias" : "") ?>;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use <?= ltrim($generator->modelClass, '\\') . (isset($modelAlias) ? " as $modelAlias" : "") ?>;
 
 /**
  * <?= $searchModelClass ?> represents the model behind the search form about `<?= $generator->modelClass ?>`.
@@ -56,30 +56,26 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
 
     /**
      * Creates data provider instance with search query applied
-     *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
     {
         $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
 
-        // add conditions that should always apply here
+        // Add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider = new ActiveDataProvider(['query' => $query]);
 
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
+            // Uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
+        // Grid filtering conditions
         <?= implode("\n        ", $searchConditions) ?>
 
         return $dataProvider;

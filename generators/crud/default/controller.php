@@ -29,11 +29,12 @@ echo "<?php\n";
 
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
-use Yii;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
-use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
+use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : '') ?>;
+use Yii;
 <?php else: ?>
+use Yii;
 use yii\data\ActiveDataProvider;
 <?php endif; ?>
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
@@ -45,6 +46,9 @@ use yii\filters\VerbFilter;
  */
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -59,7 +63,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
     /**
      * Lists all <?= $modelClass ?> models.
-     * @return mixed
+     * @return string
      */
     public function actionIndex()
     {
@@ -72,32 +76,27 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             'dataProvider' => $dataProvider,
         ]);
 <?php else: ?>
-        $dataProvider = new ActiveDataProvider([
-            'query' => <?= $modelClass ?>::find(),
-        ]);
+        $dataProvider = new ActiveDataProvider(['query' => <?= $modelClass ?>::find()]);
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('index', ['dataProvider' => $dataProvider]);
 <?php endif; ?>
     }
 
     /**
      * Displays a single <?= $modelClass ?> model.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView(<?= $actionParams ?>)
     {
-        return $this->render('view', [
-            'model' => $this->findModel(<?= $actionParams ?>),
-        ]);
+        return $this->render('view', ['model' => $this->findModel(<?= $actionParams ?>)]);
     }
 
     /**
      * Creates a new <?= $modelClass ?> model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
@@ -106,9 +105,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', <?= $urlParams ?>]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->render('create', ['model' => $model]);
         }
     }
 
@@ -116,7 +113,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * Updates an existing <?= $modelClass ?> model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
@@ -125,9 +122,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', <?= $urlParams ?>]);
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            return $this->render('update', ['model' => $model]);
         }
     }
 
@@ -135,7 +130,8 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * Deletes an existing <?= $modelClass ?> model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete(<?= $actionParams ?>)
     {
@@ -164,7 +160,8 @@ if (count($pks) === 1) {
     $condition = '[' . implode(', ', $condition) . ']';
 }
 ?>
-        if (($model = <?= $modelClass ?>::findOne(<?= $condition ?>)) !== null) {
+        $model = <?= $modelClass ?>::findOne(<?= $condition ?>);
+        if ($model !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
