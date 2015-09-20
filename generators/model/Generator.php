@@ -344,39 +344,44 @@ class Generator extends \yii\gii\Generator
     /**
      * Generates relations using a junction table by adding an extra viaTable().
      * @param \yii\db\TableSchema the table being checked
-     * @param array $fks obtained from the checkPivotTable() method
+     * @param array $fks obtained from the checkJunctionTable() method
      * @param array $relations
      * @return array modified $relations
      */
     private function generateManyManyRelations($table, $fks, $relations)
     {
         $db = $this->getDbConnection();
-        $table0 = $fks[$table->primaryKey[0]][0];
-        $table1 = $fks[$table->primaryKey[1]][0];
-        $className0 = $this->generateClassName($table0);
-        $className1 = $this->generateClassName($table1);
-        $table0Schema = $db->getTableSchema($table0);
-        $table1Schema = $db->getTableSchema($table1);
 
-        $link = $this->generateRelationLink([$fks[$table->primaryKey[1]][1] => $table->primaryKey[1]]);
-        $viaLink = $this->generateRelationLink([$table->primaryKey[0] => $fks[$table->primaryKey[0]][1]]);
-        $relationName = $this->generateRelationName($relations, $table0Schema, $table->primaryKey[1], true);
-        $relations[$table0Schema->fullName][$relationName] = [
-            "return \$this->hasMany($className1::className(), $link)->viaTable('"
-            . $this->generateTableName($table->name) . "', $viaLink);",
-            $className1,
-            true,
-        ];
+        foreach ($fks as $pair) {
+            list($firstKey, $secondKey) = $pair;
+            $table0 = $firstKey[0];
+            $table1 = $secondKey[0];
+            unset($firstKey[0], $secondKey[0]);
+            $className0 = $this->generateClassName($table0);
+            $className1 = $this->generateClassName($table1);
+            $table0Schema = $db->getTableSchema($table0);
+            $table1Schema = $db->getTableSchema($table1);
 
-        $link = $this->generateRelationLink([$fks[$table->primaryKey[0]][1] => $table->primaryKey[0]]);
-        $viaLink = $this->generateRelationLink([$table->primaryKey[1] => $fks[$table->primaryKey[1]][1]]);
-        $relationName = $this->generateRelationName($relations, $table1Schema, $table->primaryKey[0], true);
-        $relations[$table1Schema->fullName][$relationName] = [
-            "return \$this->hasMany($className0::className(), $link)->viaTable('"
-            . $this->generateTableName($table->name) . "', $viaLink);",
-            $className0,
-            true,
-        ];
+            $link = $this->generateRelationLink(array_flip($secondKey));
+            $viaLink = $this->generateRelationLink($firstKey);
+            $relationName = $this->generateRelationName($relations, $table0Schema, reset($secondKey), true);
+            $relations[$table0Schema->fullName][$relationName] = [
+                "return \$this->hasMany($className1::className(), $link)->viaTable('"
+                . $this->generateTableName($table->name) . "', $viaLink);",
+                $className1,
+                true,
+            ];
+
+            $link = $this->generateRelationLink(array_flip($firstKey));
+            $viaLink = $this->generateRelationLink($secondKey);
+            $relationName = $this->generateRelationName($relations, $table1Schema, reset($firstKey), true);
+            $relations[$table1Schema->fullName][$relationName] = [
+                "return \$this->hasMany($className0::className(), $link)->viaTable('"
+                . $this->generateTableName($table->name) . "', $viaLink);",
+                $className0,
+                true,
+            ];
+        }
 
         return $relations;
     }
@@ -455,11 +460,11 @@ class Generator extends \yii\gii\Generator
                     ];
                 }
 
-                if (($fks = $this->checkPivotTable($table)) === false) {
+                if (($junctionFks = $this->checkJunctionTable($table)) === false) {
                     continue;
                 }
 
-                $relations = $this->generateManyManyRelations($table, $fks, $relations);
+                $relations = $this->generateManyManyRelations($table, $junctionFks, $relations);
             }
         }
 
@@ -482,34 +487,44 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * Checks if the given table is a junction table.
-     * For simplicity, this method only deals with the case where the pivot contains two PK columns,
-     * each referencing a column in a different table.
+     * Checks if the given table is a junction table, that is it has at least one pair of unique foreign keys.
      * @param \yii\db\TableSchema the table being checked
-     * @return array|boolean the relevant foreign key constraint information if the table is a junction table,
+     * @return array|boolean all unique foreign key pairs if the table is a junction table,
      * or false if the table is not a junction table.
      */
-    protected function checkPivotTable($table)
+    protected function checkJunctionTable($table)
     {
-        $pk = $table->primaryKey;
-        if (count($pk) !== 2) {
+        if (count($table->foreignKeys) < 2) {
             return false;
         }
-        $fks = [];
-        foreach ($table->foreignKeys as $refs) {
-            if (count($refs) === 2) {
-                if (isset($refs[$pk[0]])) {
-                    $fks[$pk[0]] = [$refs[0], $refs[$pk[0]]];
-                } elseif (isset($refs[$pk[1]])) {
-                    $fks[$pk[1]] = [$refs[0], $refs[$pk[1]]];
+        $uniqueKeys = [$table->primaryKey];
+        try {
+            $uniqueKeys = array_merge($uniqueKeys, $this->getDbConnection()->getSchema()->findUniqueIndexes($table));
+        } catch (NotSupportedException $e) {
+            // ignore
+        }
+        $result = [];
+        // find all foreign key pairs that have all columns in an unique constraint
+        $foreignKeys = array_values($table->foreignKeys);
+        for ($i = 0; $i < count($foreignKeys); $i++) {
+            $firstColumns = $foreignKeys[$i];
+            unset($firstColumns[0]);
+
+            for ($j = $i + 1; $j < count($foreignKeys); $j++) {
+                $secondColumns = $foreignKeys[$j];
+                unset($secondColumns[0]);
+
+                $fks = array_merge(array_keys($firstColumns), array_keys($secondColumns));
+                foreach ($uniqueKeys as $uniqueKey) {
+                    if (count(array_diff(array_merge($uniqueKey, $fks), array_intersect($uniqueKey, $fks))) === 0) {
+                        // save the foreign key pair
+                        $result[] = [$foreignKeys[$i], $foreignKeys[$j]];
+                        break;
+                    }
                 }
             }
         }
-        if (count($fks) === 2 && $fks[$pk[0]][0] !== $fks[$pk[1]][0]) {
-            return $fks;
-        } else {
-            return false;
-        }
+        return empty($result) ? false : $result;
     }
 
     /**
