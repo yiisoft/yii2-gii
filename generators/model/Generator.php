@@ -12,6 +12,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Connection;
 use yii\db\Schema;
+use yii\db\TableSchema;
 use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\base\NotSupportedException;
@@ -24,12 +25,16 @@ use yii\base\NotSupportedException;
  */
 class Generator extends \yii\gii\Generator
 {
+    const RELATIONS_NONE = 'none';
+    const RELATIONS_ALL = 'all';
+    const RELATIONS_ALL_INVERSE = 'all-inverse';
+
     public $db = 'db';
     public $ns = 'app\models';
     public $tableName;
     public $modelClass;
     public $baseClass = 'yii\db\ActiveRecord';
-    public $generateRelations = true;
+    public $generateRelations = self::RELATIONS_ALL;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
     public $useSchemaName = true;
@@ -74,7 +79,8 @@ class Generator extends \yii\gii\Generator
             [['modelClass'], 'validateModelClass', 'skipOnEmpty' => false],
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
-            [['generateRelations', 'generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
+            [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
+            [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
             [['enableI18N'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
         ]);
@@ -382,16 +388,12 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return array the generated relation declarations
+     * @return \string[] all db schema names or an array with a single empty string
+     * @throws NotSupportedException
      */
-    protected function generateRelations()
+    protected function getSchemaNames()
     {
-        if (!$this->generateRelations) {
-            return [];
-        }
-
         $db = $this->getDbConnection();
-
         $schema = $db->getSchema();
         if ($schema->hasMethod('getSchemaNames')) { // keep BC to Yii versions < 2.0.4
             try {
@@ -407,9 +409,22 @@ class Generator extends \yii\gii\Generator
                 $schemaNames = [''];
             }
         }
+        return $schemaNames;
+    }
+
+    /**
+     * @return array the generated relation declarations
+     */
+    protected function generateRelations()
+    {
+        if ($this->generateRelations === self::RELATIONS_NONE) {
+            return [];
+        }
+
+        $db = $this->getDbConnection();
 
         $relations = [];
-        foreach ($schemaNames as $schemaName) {
+        foreach ($this->getSchemaNames() as $schemaName) {
             foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
                 foreach ($table->foreignKeys as $refs) {
@@ -433,19 +448,7 @@ class Generator extends \yii\gii\Generator
                     ];
 
                     // Add relation for the referenced table
-                    $uniqueKeys = [$table->primaryKey];
-                    try {
-                        $uniqueKeys = array_merge($uniqueKeys, $db->getSchema()->findUniqueIndexes($table));
-                    } catch (NotSupportedException $e) {
-                        // ignore
-                    }
-                    $hasMany = true;
-                    foreach ($uniqueKeys as $uniqueKey) {
-                        if (count(array_diff(array_merge($uniqueKey, $fks), array_intersect($uniqueKey, $fks))) === 0) {
-                            $hasMany = false;
-                            break;
-                        }
-                    }
+                    $hasMany = $this->isManyRelation($table, $fks);
                     $link = $this->generateRelationLink($refs);
                     $relationName = $this->generateRelationName($relations, $refTableSchema, $className, $hasMany);
                     $relations[$refTableSchema->fullName][$relationName] = [
@@ -463,7 +466,73 @@ class Generator extends \yii\gii\Generator
             }
         }
 
+        if ($this->generateRelations === self::RELATIONS_ALL_INVERSE) {
+            return $this->generateInverseRelations($relations);
+        }
+
         return $relations;
+    }
+
+    /**
+     * @param array $relations relation declarations
+     * @return array relation declarations extended with inverse relation names
+     */
+    protected function generateInverseRelations($relations)
+    {
+        $relationNames = [];
+        $db = $this->getDbConnection();
+
+        foreach ($this->getSchemaNames() as $schemaName) {
+            foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
+                $className = $this->generateClassName($table->fullName);
+                foreach ($table->foreignKeys as $refs) {
+                    $refTable = $refs[0];
+                    $refTableSchema = $db->getTableSchema($refTable);
+                    unset($refs[0]);
+                    $fks = array_keys($refs);
+
+                    $leftRelationName = $this->generateRelationName($relationNames, $table, $fks[0], false);
+                    $relationNames[$table->fullName][$leftRelationName] = true;
+                    $hasMany = $this->isManyRelation($table, $fks);
+                    $rightRelationName = $this->generateRelationName(
+                        $relationNames,
+                        $refTableSchema,
+                        $className,
+                        $hasMany
+                    );
+                    $relationNames[$refTableSchema->fullName][$rightRelationName] = true;
+
+                    $relations[$table->fullName][$leftRelationName][0] =
+                        rtrim($relations[$table->fullName][$leftRelationName][0], ';')
+                        . "->inverseOf('".lcfirst($rightRelationName)."');";
+                    $relations[$refTableSchema->fullName][$rightRelationName][0] =
+                        rtrim($relations[$refTableSchema->fullName][$rightRelationName][0], ';')
+                        . "->inverseOf('".lcfirst($leftRelationName)."');";
+                }
+            }
+        }
+        return $relations;
+    }
+
+    /**
+     * @param TableSchema $table
+     * @param array $fks
+     * @return bool
+     */
+    protected function isManyRelation($table, $fks)
+    {
+        $uniqueKeys = [$table->primaryKey];
+        try {
+            $uniqueKeys = array_merge($uniqueKeys, $this->getDbConnection()->getSchema()->findUniqueIndexes($table));
+        } catch (NotSupportedException $e) {
+            // ignore
+        }
+        foreach ($uniqueKeys as $uniqueKey) {
+            if (count(array_diff(array_merge($uniqueKey, $fks), array_intersect($uniqueKey, $fks))) === 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
