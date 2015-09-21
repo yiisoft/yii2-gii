@@ -448,7 +448,7 @@ class Generator extends \yii\gii\Generator
                     ];
 
                     // Add relation for the referenced table
-                    $hasMany = $this->isManyRelation($table, $fks);
+                    $hasMany = $this->isHasManyRelation($table, $fks);
                     $link = $this->generateRelationLink($refs);
                     $relationName = $this->generateRelationName($relations, $refTableSchema, $className, $hasMany);
                     $relations[$refTableSchema->fullName][$relationName] = [
@@ -491,7 +491,7 @@ class Generator extends \yii\gii\Generator
 
                     $leftRelationName = $this->generateRelationName($relationNames, $table, $fks[0], false);
                     $relationNames[$table->fullName][$leftRelationName] = true;
-                    $hasMany = $this->isManyRelation($table, $fks);
+                    $hasMany = $this->isHasManyRelation($table, $fks);
                     $rightRelationName = $this->generateRelationName(
                         $relationNames,
                         $refTableSchema,
@@ -517,7 +517,7 @@ class Generator extends \yii\gii\Generator
      * @param array $fks
      * @return bool
      */
-    protected function isManyRelation($table, $fks)
+    protected function isHasManyRelation($table, $fks)
     {
         $uniqueKeys = [$table->primaryKey];
         try {
