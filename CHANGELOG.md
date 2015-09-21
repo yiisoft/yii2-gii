@@ -8,6 +8,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #79: There was no form element to toggle using schema name for class name (phpniki)
 - Enh #34: Model generator now skips FKs pointing to non-existing tables (samdark)
 - Enh #42: Entire preview code now can be copied by pressing CTRL+C (thiagotalma, samdark)
+- Enh #54: Model generator is now able to generate reverse relations (nineinchnick)
 - Enh #56: Model generator now generates exist rules based on table foreign keys (Faryshta, samdark)
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
 
