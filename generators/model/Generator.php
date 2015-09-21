@@ -467,7 +467,7 @@ class Generator extends \yii\gii\Generator
         }
 
         if ($this->generateRelations === self::RELATIONS_ALL_INVERSE) {
-            return $this->generateInverseRelations($relations);
+            return $this->addInverseRelations($relations);
         }
 
         return $relations;
@@ -477,17 +477,15 @@ class Generator extends \yii\gii\Generator
      * @param array $relations relation declarations
      * @return array relation declarations extended with inverse relation names
      */
-    protected function generateInverseRelations($relations)
+    protected function addInverseRelations($relations)
     {
         $relationNames = [];
-        $db = $this->getDbConnection();
-
         foreach ($this->getSchemaNames() as $schemaName) {
-            foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
+            foreach ($this->getDbConnection()->getSchema()->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
                 foreach ($table->foreignKeys as $refs) {
                     $refTable = $refs[0];
-                    $refTableSchema = $db->getTableSchema($refTable);
+                    $refTableSchema = $this->getDbConnection()->getTableSchema($refTable);
                     unset($refs[0]);
                     $fks = array_keys($refs);
 
