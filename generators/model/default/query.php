@@ -22,6 +22,9 @@ namespace <?= $generator->queryNs ?>;
  * This is the ActiveQuery class for [[<?= $modelFullClassName ?>]].
  *
  * @see <?= $modelFullClassName . "\n" ?>
+ *
+ * @method <?= $modelFullClassName ?>[]|array all($db = null)
+ * @method <?= $modelFullClassName ?>|array|null one($db = null)
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . "\n" ?>
 {
@@ -31,21 +34,4 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
         return $this;
     }*/
 
-    /**
-     * @inheritdoc
-     * @return <?= $modelFullClassName ?>[]|array
-     */
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
-
-    /**
-     * @inheritdoc
-     * @return <?= $modelFullClassName ?>|array|null
-     */
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
 }
