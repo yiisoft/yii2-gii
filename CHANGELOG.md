@@ -12,6 +12,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #42: Entire preview code now can be copied by pressing CTRL+C (thiagotalma, samdark)
 - Enh #54: Model generator is now able to generate reverse relations (nineinchnick)
 - Enh #56: Model generator now generates exist rules based on table foreign keys (Faryshta, samdark)
+- Enh #95: More parameters are now available in `query.php` view of model generator (demisang)
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
 
 

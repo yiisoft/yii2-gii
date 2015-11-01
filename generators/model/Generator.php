@@ -209,10 +209,8 @@ class Generator extends \yii\gii\Generator
 
             // query :
             if ($queryClassName) {
-                $params = [
-                    'className' => $queryClassName,
-                    'modelClassName' => $modelClassName,
-                ];
+                $params['className'] = $queryClassName;
+                $params['modelClassName'] = $modelClassName;
                 $files[] = new CodeFile(
                     Yii::getAlias('@' . str_replace('\\', '/', $this->queryNs)) . '/' . $queryClassName . '.php',
                     $this->render('query.php', $params)
