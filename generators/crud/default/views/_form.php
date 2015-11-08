@@ -36,7 +36,6 @@ $weights = [
     'yii\validators\CapchaValidator' => 2,
     'yii\validators\DateValidator' => 1,
     'yii\validators\RangeValidator' => 1,
-    'yii\validators\NumberValidator' => 1,
     'yii\validators\BooleanValidator' => 0,
     'yii\validators\EmailValidator' => 0,
     'yii\validators\NumberValidator' => 0,
@@ -53,7 +52,7 @@ foreach ($model->validators as $validator) {
     $weight = $weights[get_class($validator)];
     foreach ($validator->attributes as $attr) {
         if (!is_array($attributes[$attr])
-            or $weight <= $attributes[$attr]['weight']
+            || $weight <= $attributes[$attr]['weight']
         ) {
             continue;
         }
@@ -62,8 +61,96 @@ foreach ($model->validators as $validator) {
     }
 }
 
-foreach ($attributes as $attr => $value) {
+foreach ($attributes as $attribute => $value){ 
+    echo "    <?= ";
+    if (!isset($value['validator'])) {
+        // previously defined behavior
+        echo $generator->generateActiveField($attriute), " ?>\n\n";
+        continue;
+    }
+
+    if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
+        echo "\$form->field(\$model, '$attribute')->passwordInput() ?>\n\n";
+        continue;
+    }
+
     // code to generate each attribute based on the validators saved sofar.
+    switch (get_class($value['validator'])) {
+
+        case 'yii\validators\NumberValidator': 
+           echo  "\$form->field(\$model, '$attribute')->input('number')";
+        break;
+
+        case 'yii\validators\EmailValidator': 
+           echo  "\$form->field(\$model, '$attribute')->input('email')";
+        break;
+        
+        case 'yii\validators\BooleanValidator': 
+           echo  "\$form->field(\$model, '$attribute')->checkbox()";
+        break;
+        
+        case 'yii\validators\RangeValidator':
+            echo  "\$form->field(\$model, '$attribute')->dropDownList([\n";
+            
+            foreach ($value['validator']->range as $key) {
+                echo "        '$key' => '$key',\n";
+            }
+                
+            echo "], ['prompt' => ''])";
+        break;
+        
+        case 'yii\validators\DateValidator':
+            $dateFormat = $value['validator']->format;
+            echo "\$form->field(\$model, '$attribute')->widget(\yii\jui\Datepicker(), [\n",
+                    "        dateFormat' => '$dateFormat',\n"
+                "    ])";
+        break;
+
+        case  'yii\validators\CapchaValidator':
+            echo "\$form->field(\$model, '$attribute')->widget(\yii\captcha\Captcha::classname()) ?>";
+        break;
+
+        case 'yii\validators\FileValidator':
+        case 'yii\validators\ImageValidator':
+            echo  "\$form->field(\$model, '$attribute')->fileInput()";
+        break;
+
+        case  'yii\validators\ExistValidator':
+            $targetAttribute = isset($value['validator']->targetAttribute) ?
+                ? $value['validator']->targetAttribute
+                : $attribute;
+            
+            // if the attribute is an array for example ['id' => 'user_id']
+            // then the first key will be used as targetAttribute
+            if (is_array($targetAttribute)) {
+                $targetAttribute = array_keys($targetAttribute);
+                $targetAttribute = $targetAttribute[0];
+            }
+            
+            $targetClass = isset($value['validator']->targetClass)
+                ? $value['validator']->targetClass
+                : get_class($model);
+
+            echo "\$form->field(\$model, '$attribute')->dropDownList(\n",
+                "        $targetClass::find()\n"
+                "            ->select(['$targetAttribute'])\n";
+                
+            if (is_array($value['validator']->filter)) {
+                echo "            ->andWhere([\n"
+                foreach ($value['validator']->filter as $key => $val) {
+                    echo "                '$key' => '$val',\n";
+                }
+                echo "            ])\n"
+            }
+            
+            echo "            ->indexBy('$targetAttribute')\n",
+                "            ->column(),\n"
+                "        ['prompt' => '']\n"
+                "    )";
+        break;
+    }
+    
+    echo " ?>\n\n";
 }
     ?>
     <div class="form-group">
