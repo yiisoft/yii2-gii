@@ -136,7 +136,7 @@ yii.gii = (function ($) {
         var $modal = $('#preview-modal');
         var $checkbox = $modal.data('current').closest('tr').find('input');
         var checked = !$checkbox.prop('checked');
-        $checkbox.prop('checked', checked);
+        $checkbox.trigger('click');
         $modal.find('.modal-checkbox span').toggleClass('glyphicon-check', checked).toggleClass('glyphicon-unchecked', !checked);
         return false;
     };
