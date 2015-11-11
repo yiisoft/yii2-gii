@@ -63,9 +63,8 @@ yii.gii = (function ($) {
         });
     };
 
-    var fillModal = function(data) {
+    var fillModal = function(data, $link) {
         var $modal = $('#preview-modal'),
-         $link = $(this),
          $modalBody = $modal.find('.modal-body');
         if (!$link.hasClass('modal-refresh')) {
             var filesSelector = 'a.' + $modal.data('action');
@@ -108,7 +107,7 @@ yii.gii = (function ($) {
                 url: $link.prop('href'),
                 data: $('.default-view form').serializeArray(),
                 success: function (data) {
-                    fillModal(data);
+                    fillModal(data, $link);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $modal.find('.modal-body').html('<div class="error">' + XMLHttpRequest.responseText + '</div>');
