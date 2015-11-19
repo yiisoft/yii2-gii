@@ -113,7 +113,11 @@ class Module extends \yii\base\Module implements BootstrapInterface
         }
 
         foreach (array_merge($this->coreGenerators(), $this->generators) as $id => $config) {
-            $this->generators[$id] = Yii::createObject($config);
+            if (is_object($config)) {
+                $this->generators[$id] = $config;
+            } else {
+                $this->generators[$id] = Yii::createObject($config);
+            }
         }
 
         $this->resetGlobalSettings();
