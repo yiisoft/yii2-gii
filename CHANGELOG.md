@@ -15,6 +15,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #56: Model generator now generates exist rules based on table foreign keys (Faryshta, samdark)
 - Enh #95: More parameters are now available in `query.php` view of model generator (demisang)
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
+- Bug #109: Exception was throwed when `UrlManager::ruleConfig` class was setted with `yii\rest\UrlRule` (lichunqiang)
 
 
 2.0.4 May 10, 2015
