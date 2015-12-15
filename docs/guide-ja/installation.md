@@ -46,7 +46,7 @@ http://localhost/path/to/index.php?r=gii
 http://localhost/path/to/index.php/gii
 ```
 
-> Note|注意: ローカルホスト以外の IP から Gii にアクセスしようとすると、デフォルトでは、アクセスが拒否されます。
+> Note: ローカルホスト以外の IP から Gii にアクセスしようとすると、デフォルトでは、アクセスが拒否されます。
 > このデフォルトを回避するためには、許可される IP アドレスを構成情報に追加してください。
 >
 ```php
