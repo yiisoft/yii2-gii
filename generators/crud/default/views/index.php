@@ -14,6 +14,7 @@ echo "<?php\n";
 
 use yii\helpers\Html;
 use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
@@ -34,6 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
 <?php if ($generator->indexWidgetType === 'grid'): ?>
+    <?= "<?php Pjax::begin() ?>\n" ?>
+
     <?= "<?= " ?>GridView::widget([
         'dataProvider' => $dataProvider,
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
@@ -64,6 +67,9 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
+    <?= "<?php Pjax::end() ?>" ?>
+
 <?php else: ?>
     <?= "<?= " ?>ListView::widget([
         'dataProvider' => $dataProvider,
