@@ -39,7 +39,7 @@ class Generator extends \yii\gii\Generator
     public $searchModelClass = '';
 
     /**
-     * @var bool if Pjax widget should be enabled.
+     * @var boolean use `yii\widgets\Pjax` widget to wrap the `GridView` or `ListView` widget
      * @since 2.0.5
      */
     public $enablePjax = false;
