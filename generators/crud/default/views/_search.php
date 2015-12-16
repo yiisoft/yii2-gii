@@ -18,7 +18,6 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-search">
-
     <?= "<?php " ?>$form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
@@ -40,5 +39,4 @@ foreach ($generator->getColumnNames() as $attribute) {
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>
-
 </div>
