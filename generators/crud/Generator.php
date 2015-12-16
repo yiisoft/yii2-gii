@@ -121,7 +121,9 @@ class Generator extends \yii\gii\Generator
                 You may choose either <code>GridView</code> or <code>ListView</code>',
             'searchModelClass' => 'This is the name of the search model class to be generated. You should provide a fully
                 qualified namespaced class name, e.g., <code>app\models\PostSearch</code>.',
-            'enablePjax' => 'Enables the use of `yii\widgets\Pjax` inside the generated views.',
+            'enablePjax' => 'This indicates whether the generator should wrap the <code>GridView</code> or <code>ListView</code>
+                widget on the index page with <code>yii\web\Pjax</code> widget, Set this to <code>true</code> if you want to get
+                sorting, filtering and pagination without page refreshing.',
         ]);
     }
 
