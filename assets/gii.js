@@ -201,7 +201,7 @@ yii.gii = (function ($) {
             // model generator: translate table name to model class
             $('#model-generator #generator-tablename').on('blur', function () {
                 var tableName = $(this).val();
-                if ($('#generator-modelclass').val() === '' && tableName && tableName.indexOf('*') === -1) {
+                if (tableName && tableName.indexOf('*') === -1) {
                     var modelClass = '';
                     $.each(tableName.split('_'), function() {
                         if(this.length>0)
@@ -215,11 +215,8 @@ yii.gii = (function ($) {
             $('#model-generator #generator-modelclass').on('blur', function () {
                 var modelClass = $(this).val();
                 if (modelClass !== '') {
-                    var queryClass = $('#generator-queryclass').val();
-                    if (queryClass === '') {
-                        queryClass = modelClass + 'Query';
-                        $('#generator-queryclass').val(queryClass);
-                    }
+                    var queryClass = modelClass + 'Query';
+                    $('#generator-queryclass').val(queryClass)
                 }
             });
 
