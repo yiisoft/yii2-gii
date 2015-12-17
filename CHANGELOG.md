@@ -15,6 +15,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #54: Model generator is now able to generate reverse relations (nineinchnick)
 - Enh #56: Model generator now generates exist rules based on table foreign keys (Faryshta, samdark)
 - Enh #95: More parameters are now available in `query.php` view of model generator (demisang)
+- Enh #99: Added `enablePjax` option to wrap GridView with Pjax (Faryshta, silverfire)
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
 
 
