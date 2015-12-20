@@ -181,7 +181,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return db tables prefix
+     * @return string db tables prefix
      *
      */
     public function getTablePrefix()
