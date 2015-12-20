@@ -3,7 +3,7 @@ Yii Framework 2 gii extension Change Log
 
 2.0.5 under development
 -----------------------
-
+- Bug #116: Removed tables prefix from auto-generated Model Class fields (umanamente)
 - Bug #66: It was impossible to use tables with spaces (cornernote)
 - Bug #79: There was no form element to toggle using schema name for class name (phpniki)
 - Bug #83: Files were overwritten regardless of answers in console Gii (chernyshev, jeicd)
