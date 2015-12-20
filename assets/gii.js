@@ -202,7 +202,7 @@ yii.gii = (function ($) {
             $('#model-generator #generator-tablename').on('blur', function () {
                 var tableName = $(this).val();
                 var tablePrefix = $(this).attr('table_prefix') || '';
-                if (tablePrefix.length > 0) {
+                if (tablePrefix.length) {
                     // if starts with prefix
                     if (tableName.slice(0, tablePrefix.length) === tablePrefix) {
                         // removing prefix
