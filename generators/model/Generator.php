@@ -181,10 +181,11 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * Returns db tables prefix
+     * @return db tables prefix
      *
      */
-    public function getTablePrefix(){
+    public function getTablePrefix()
+    {
       $db = $this->getDbConnection();
       if ($db !== null) {
             return $db->tablePrefix;

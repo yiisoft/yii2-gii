@@ -6,7 +6,7 @@ use yii\gii\generators\model\Generator;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $generator yii\gii\generators\form\Generator */
 
-echo $form->field($generator, 'tableName')->textInput(array('table_prefix' => $generator->getTablePrefix()));
+echo $form->field($generator, 'tableName')->textInput(['table_prefix' => $generator->getTablePrefix()]);
 echo $form->field($generator, 'modelClass');
 echo $form->field($generator, 'ns');
 echo $form->field($generator, 'baseClass');

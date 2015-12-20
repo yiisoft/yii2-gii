@@ -201,13 +201,10 @@ yii.gii = (function ($) {
             // model generator: translate table name to model class
             $('#model-generator #generator-tablename').on('blur', function () {
                 var tableName = $(this).val();
-                var tablePrefix = $(this).attr('table_prefix');
-                if (typeof tablePrefix === typeof undefined || tablePrefix === false) {
-                    tablePrefix = '';
-                }
-                if(tablePrefix.length > 0){
+                var tablePrefix = $(this).attr('table_prefix') || '';
+                if (tablePrefix.length > 0) {
                     // if starts with prefix
-                    if(tableName.slice(0, tablePrefix.length) == tablePrefix){
+                    if (tableName.slice(0, tablePrefix.length) === tablePrefix) {
                         // removing prefix
                         tableName = tableName.slice(tablePrefix.length);
                     }
