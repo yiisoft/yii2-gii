@@ -181,6 +181,23 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
+     * Returns the `tablePrefix` property of the DB connection as specified
+     *
+     * @return string
+     * @since 2.0.5
+     * @see getDbConnection
+     */
+    public function getTablePrefix()
+    {
+      $db = $this->getDbConnection();
+      if ($db !== null) {
+          return $db->tablePrefix;
+      } else {
+          return '';
+      }
+    }
+
+    /**
      * @inheritdoc
      */
     public function generate()
