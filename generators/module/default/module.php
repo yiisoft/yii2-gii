@@ -17,7 +17,7 @@ echo "<?php\n";
 namespace <?= $ns ?>;
 
 /**
- * Class to initialize the module `<?= $generator->moduleID ?>`
+ * <?= $generator->moduleID ?> module definition class
  */
 class <?= $className ?> extends \yii\base\Module
 {
