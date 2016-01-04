@@ -201,6 +201,14 @@ yii.gii = (function ($) {
             // model generator: translate table name to model class
             $('#model-generator #generator-tablename').on('blur', function () {
                 var tableName = $(this).val();
+                var tablePrefix = $(this).attr('table_prefix') || '';
+                if (tablePrefix.length) {
+                    // if starts with prefix
+                    if (tableName.slice(0, tablePrefix.length) === tablePrefix) {
+                        // remove prefix
+                        tableName = tableName.slice(tablePrefix.length);
+                    }
+                }
                 if ($('#generator-modelclass').val() === '' && tableName && tableName.indexOf('*') === -1) {
                     var modelClass = '';
                     $.each(tableName.split('_'), function() {

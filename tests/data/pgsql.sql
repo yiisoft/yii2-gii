@@ -7,6 +7,9 @@ DROP TABLE IF EXISTS "schema1"."table1" CASCADE;
 DROP TABLE IF EXISTS "schema1"."table2" CASCADE;
 DROP TABLE IF EXISTS "schema2"."table1" CASCADE;
 DROP TABLE IF EXISTS "schema2"."table2" CASCADE;
+DROP TABLE IF EXISTS "schema1"."multi_pk" CASCADE;
+DROP TABLE IF EXISTS "schema1"."junction1" CASCADE;
+DROP TABLE IF EXISTS "schema1"."junction2" CASCADE;
 DROP SCHEMA IF EXISTS "schema1" CASCADE;
 DROP SCHEMA IF EXISTS "schema2" CASCADE;
 
@@ -30,6 +33,31 @@ CREATE TABLE "schema1"."table2" (
   fk1 integer not null,
   fk2 integer not null,
   UNIQUE (fk1, fk2)
+);
+
+CREATE TABLE "schema1"."multi_pk" (
+  id1 integer not null,
+  id2 integer not null,
+  PRIMARY KEY (id1, id2)
+);
+
+CREATE TABLE "schema1"."junction1" (
+  multi_pk_id1 integer not null,
+  multi_pk_id2 integer not null,
+  table1_id integer not null,
+  PRIMARY KEY (multi_pk_id1, multi_pk_id2, table1_id),
+  CONSTRAINT j1_multi_pk_fkey FOREIGN KEY (multi_pk_id1, multi_pk_id2) REFERENCES "schema1"."multi_pk" (id1, id2),
+  CONSTRAINT j1_table1_fkey FOREIGN KEY (table1_id) REFERENCES "schema1"."table1" (id)
+);
+
+CREATE TABLE "schema1"."junction2" (
+  multi_pk_id1 integer not null,
+  multi_pk_id2 integer not null,
+  table1_id integer not null,
+  data text,
+  PRIMARY KEY (multi_pk_id1, multi_pk_id2, table1_id),
+  CONSTRAINT j1_multi_pk_fkey FOREIGN KEY (multi_pk_id1, multi_pk_id2) REFERENCES "schema1"."multi_pk" (id1, id2),
+  CONSTRAINT j1_table1_fkey FOREIGN KEY (table1_id) REFERENCES "schema1"."table1" (id)
 );
 
 CREATE TABLE "schema2"."table1" (
