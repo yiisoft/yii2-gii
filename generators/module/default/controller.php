@@ -19,7 +19,8 @@ use yii\web\Controller;
 class DefaultController extends Controller
 {
     /**
-     * render the default view for the module
+     * Renders the index view for the module
+     * @return string
      */
     public function actionIndex()
     {
