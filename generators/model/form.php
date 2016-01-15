@@ -13,9 +13,9 @@ echo $form->field($generator, 'baseClass');
 echo $form->field($generator, 'db');
 echo $form->field($generator, 'useTablePrefix')->checkbox();
 echo $form->field($generator, 'generateRelations')->dropDownList([
-    Generator::RELATIONS_NONE => Yii::t('yii', 'No relations'),
-    Generator::RELATIONS_ALL => Yii::t('yii', 'All relations'),
-    Generator::RELATIONS_ALL_INVERSE => Yii::t('yii', 'All relations with inverse'),
+    Generator::RELATIONS_NONE => 'No relations',
+    Generator::RELATIONS_ALL => 'All relations',
+    Generator::RELATIONS_ALL_INVERSE => 'All relations with inverse',
 ]);
 echo $form->field($generator, 'generateLabelsFromComments')->checkbox();
 echo $form->field($generator, 'generateQuery')->checkbox();
