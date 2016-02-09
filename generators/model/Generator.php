@@ -36,6 +36,7 @@ class Generator extends \yii\gii\Generator
     public $baseClass = 'yii\db\ActiveRecord';
     public $generateRelations = self::RELATIONS_ALL;
     public $generateLabelsFromComments = false;
+    public $generateDocsFromComments = false;
     public $useTablePrefix = false;
     public $useSchemaName = true;
     public $generateQuery = false;
@@ -80,7 +81,7 @@ class Generator extends \yii\gii\Generator
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
-            [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
+            [['generateLabelsFromComments', 'generateDocsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
             [['enableI18N'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
         ]);
@@ -99,6 +100,7 @@ class Generator extends \yii\gii\Generator
             'baseClass' => 'Base Class',
             'generateRelations' => 'Generate Relations',
             'generateLabelsFromComments' => 'Generate Labels from DB Comments',
+            'generateDocsFromComments' => 'Generate model\'s propeties descriptions from DB Comments',
             'generateQuery' => 'Generate ActiveQuery',
             'queryNs' => 'ActiveQuery Namespace',
             'queryClass' => 'ActiveQuery Class',
@@ -131,6 +133,8 @@ class Generator extends \yii\gii\Generator
                 you may want to uncheck this option to accelerate the code generation process.',
             'generateLabelsFromComments' => 'This indicates whether the generator should generate attribute labels
                 by using the comments of the corresponding DB columns.',
+            'generateDocsFromComments' => 'This indicates whether the generator should generate description
+                for each model\'s @propery by using the comments of the corresponding DB columns.',
             'useTablePrefix' => 'This indicates whether the table name returned by the generated ActiveRecord class
                 should consider the <code>tablePrefix</code> setting of the DB connection. For example, if the
                 table name is <code>tbl_post</code> and <code>tablePrefix=tbl_</code>, the ActiveRecord class
@@ -177,7 +181,7 @@ class Generator extends \yii\gii\Generator
      */
     public function stickyAttributes()
     {
-        return array_merge(parent::stickyAttributes(), ['ns', 'db', 'baseClass', 'generateRelations', 'generateLabelsFromComments', 'queryNs', 'queryBaseClass']);
+        return array_merge(parent::stickyAttributes(), ['ns', 'db', 'baseClass', 'generateRelations', 'generateLabelsFromComments', 'generateDocsFromComments', 'queryNs', 'queryBaseClass']);
     }
 
     /**
