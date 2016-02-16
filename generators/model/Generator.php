@@ -654,14 +654,17 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * Validates the [[ns]] attribute.
+     * Validates the namespace.
+     *
+     * @param string $attribute Namespace variable.
      */
-    public function validateNamespace()
+    public function validateNamespace($attribute)
     {
-        $this->ns = ltrim($this->ns, '\\');
-        $path = Yii::getAlias('@' . str_replace('\\', '/', $this->ns), false);
+        $value = $this->$attribute;
+        $value = ltrim($value, '\\');
+        $path = Yii::getAlias('@' . str_replace('\\', '/', $value), false);
         if ($path === false) {
-            $this->addError('ns', 'Namespace must be associated with an existing directory.');
+            $this->addError($attribute, 'Namespace must be associated with an existing directory.');
         }
     }
 

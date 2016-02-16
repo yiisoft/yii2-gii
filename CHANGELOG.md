@@ -3,12 +3,14 @@ Yii Framework 2 gii extension Change Log
 
 2.0.5 under development
 -----------------------
+
 - Bug #66: It was impossible to use tables with spaces (cornernote)
 - Bug #79: There was no form element to toggle using schema name for class name (phpniki)
 - Bug #83: Files were overwritten regardless of answers in console Gii (chernyshev, jeicd)
 - Bug #104: Allow reuse of the Gii Module for running multiple actions (cebe)
 - Bug #109: Exception was thrown when `yii\rest\UrlRule` was used in `UrlManager::ruleConfig` (lichunqiang)
 - Bug #116: Added table prefix autoremoving from the generated model className (umanamente, silverfire)
+- Bug #134: Model generator was not validating ActiveQuery namespace (zetamen)
 - Enh #20: Added support for composite (multi-column) foreign keys in junction tables (nineinchnick)
 - Enh #34: Model generator now skips FKs pointing to non-existing tables (samdark)
 - Enh #42: Entire preview code now can be copied by pressing CTRL+C (thiagotalma, samdark)
