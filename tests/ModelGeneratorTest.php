@@ -15,6 +15,14 @@ class ModelGeneratorTest extends GiiTestCase
         $generator->template = 'default';
         $generator->tableName = '*';
 
+        $generator->queryNs = 'application\models';
+
+        $valid = $generator->validate();
+        $this->assertFalse($valid);
+        $this->assertEquals($generator->getFirstError('queryNs'), 'Namespace must be associated with an existing directory.');
+
+        $generator->queryNs = 'app\models';
+
         $valid = $generator->validate();
         $this->assertTrue($valid, 'Validation failed: ' . print_r($generator->getErrors(), true));
 
