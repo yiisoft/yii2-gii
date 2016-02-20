@@ -1,11 +1,30 @@
+html,
 body {
+    height: 100%;
+}
+
+.page-container {
+    min-height: 100%;
+}
+
+.content-container {
     padding-top: 70px;
 }
 
+.footer-fix {
+    height: 100px;
+}
+
 .footer {
+    margin-top: -60px;
     border-top: 1px solid #ddd;
-    margin-top: 30px;
-    padding: 15px 0 30px;
+    height: 59px;
+    line-height: 59px;
+    box-sizing: border-box;
+}
+
+.footer p {
+    margin: 0;
 }
 
 .jumbotron {
