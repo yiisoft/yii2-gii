@@ -18,6 +18,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #56: Model generator now generates exist rules based on table foreign keys (Faryshta, samdark)
 - Enh #95: More parameters are now available in `query.php` view of model generator (demisang)
 - Enh #99: Added `enablePjax` option to wrap GridView with Pjax (Faryshta, silverfire)
+- Enh #135: Footer now sticks to the bottom of the page (zetamen)
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
 
 
