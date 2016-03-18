@@ -1,8 +1,8 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.0.5 under development
------------------------
+2.0.5 March 18, 2016
+--------------------
 
 - Bug #66: It was impossible to use tables with spaces (cornernote)
 - Bug #79: There was no form element to toggle using schema name for class name (phpniki)

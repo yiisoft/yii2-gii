@@ -408,8 +408,9 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return \string[] all db schema names or an array with a single empty string
+     * @return string[] all db schema names or an array with a single empty string
      * @throws NotSupportedException
+     * @since 2.0.5
      */
     protected function getSchemaNames()
     {
@@ -498,6 +499,7 @@ class Generator extends \yii\gii\Generator
      *
      * @param array $relations relation declarations
      * @return array relation declarations extended with inverse relation names
+     * @since 2.0.5
      */
     protected function addInverseRelations($relations)
     {
@@ -540,6 +542,7 @@ class Generator extends \yii\gii\Generator
      * @param TableSchema $table
      * @param array $fks
      * @return boolean
+     * @since 2.0.5
      */
     protected function isHasManyRelation($table, $fks)
     {
