@@ -82,6 +82,11 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
                 [
+                    'name' => 'function getAttributes()',
+                    'relation' => "\$this->hasOne(Attribute::className(), ['supplier_id' => 'id']);",
+                    'expected' => false,
+                ],
+                [
                     'name' => 'function getProductLanguage()',
                     'relation' => "\$this->hasOne(ProductLanguage::className(), ['supplier_id' => 'id']);",
                     'expected' => true,
