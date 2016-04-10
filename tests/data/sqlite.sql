@@ -49,6 +49,14 @@ CREATE TABLE "supplier" (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE "attribute" (
+  id INTEGER NOT NULL,
+  supplier_id INTEGER NOT NULL REFERENCES "supplier" (id) ON DELETE CASCADE,
+  name varchar(128) NOT NULL,
+  value varchar(128) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE "product" (
   id INTEGER NOT NULL,
   supplier_id INTEGER NOT NULL REFERENCES "supplier" (id) ON DELETE CASCADE,
