@@ -67,7 +67,7 @@ class Generator extends \yii\gii\Generator
     {
         return array_merge(parent::rules(), [
             [['db', 'ns', 'tableName', 'modelClass', 'baseClass', 'queryNs', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
-            [['ns', 'queryNs'], 'filter', 'filter' => function($value) { return trim($value, '\\'); }],
+            [['ns', 'queryNs'], 'filter', 'filter' => function ($value) { return trim($value, '\\'); }],
 
             [['db', 'ns', 'tableName', 'baseClass', 'queryNs', 'queryBaseClass'], 'required'],
             [['db', 'modelClass', 'queryClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
@@ -189,12 +189,12 @@ class Generator extends \yii\gii\Generator
      */
     public function getTablePrefix()
     {
-      $db = $this->getDbConnection();
-      if ($db !== null) {
-          return $db->tablePrefix;
-      } else {
-          return '';
-      }
+        $db = $this->getDbConnection();
+        if ($db !== null) {
+            return $db->tablePrefix;
+        } else {
+            return '';
+        }
     }
 
     /**
@@ -626,6 +626,11 @@ class Generator extends \yii\gii\Generator
      */
     protected function generateRelationName($relations, $table, $key, $multiple)
     {
+        static $baseModel;
+        if ($baseModel === null) {
+            $baseClass = $this->baseClass;
+            $baseModel = new $baseClass();
+        }
         if (!empty($key) && substr_compare($key, 'id', -2, 2, true) === 0 && strcasecmp($key, 'id')) {
             $key = rtrim(substr($key, 0, -2), '_');
         }
@@ -634,6 +639,9 @@ class Generator extends \yii\gii\Generator
         }
         $name = $rawName = Inflector::id2camel($key, '_');
         $i = 0;
+        while ($baseModel->hasProperty(lcfirst($name))) {
+            $name = $rawName . ($i++);
+        }
         while (isset($table->columns[lcfirst($name)])) {
             $name = $rawName . ($i++);
         }

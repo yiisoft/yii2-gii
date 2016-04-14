@@ -27,8 +27,9 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertTrue($valid, 'Validation failed: ' . print_r($generator->getErrors(), true));
 
         $files = $generator->generate();
-        $this->assertEquals(7, count($files));
+        $this->assertEquals(8, count($files));
         $expectedNames = [
+            'Attribute.php',
             'Category.php',
             'CategoryPhoto.php',
             'Customer.php',
@@ -52,50 +53,70 @@ class ModelGeneratorTest extends GiiTestCase
         return [
             ['category', 'Category.php', [
                 [
+                    'name' => 'function getCategoryPhotos()',
                     'relation' => "\$this->hasMany(CategoryPhoto::className(), ['category_id' => 'id']);",
                     'expected' => true,
                 ],
                 [
+                    'name' => 'function getProduct()',
                     'relation' => "\$this->hasOne(Product::className(), ['category_id' => 'id', 'category_language_code' => 'language_code']);",
                     'expected' => true,
                 ],
             ]],
             ['category_photo', 'CategoryPhoto.php', [
                 [
+                    'name' => 'function getCategory()',
                     'relation' => "\$this->hasOne(Category::className(), ['id' => 'category_id']);",
                     'expected' => true,
                 ],
             ]],
             ['supplier', 'Supplier.php', [
                 [
+                    'name' => 'function getProducts()',
                     'relation' => "\$this->hasMany(Product::className(), ['supplier_id' => 'id']);",
                     'expected' => true,
                 ],
                 [
+                    'name' => 'function getAttributes0()',
+                    'relation' => "\$this->hasMany(Attribute::className(), ['supplier_id' => 'id']);",
+                    'expected' => true,
+                ],
+                [
+                    'name' => 'function getAttributes()',
+                    'relation' => "\$this->hasOne(Attribute::className(), ['supplier_id' => 'id']);",
+                    'expected' => false,
+                ],
+                [
+                    'name' => 'function getProductLanguage()',
                     'relation' => "\$this->hasOne(ProductLanguage::className(), ['supplier_id' => 'id']);",
                     'expected' => true,
                 ],
             ]],
             ['product', 'Product.php', [
                 [
+                    'name' => 'function getSupplier()',
                     'relation' => "\$this->hasOne(Supplier::className(), ['id' => 'supplier_id']);",
                     'expected' => true,
                 ],
                 [
+                    'name' => 'function getCategory()',
                     'relation' => "\$this->hasOne(Category::className(), ['id' => 'category_id', 'language_code' => 'category_language_code']);",
                     'expected' => true,
                 ],
                 [
+                    'name' => 'function getProductLanguage()',
                     'relation' => "\$this->hasOne(ProductLanguage::className(), ['supplier_id' => 'supplier_id', 'id' => 'id']);",
                     'expected' => true,
                 ],
             ]],
             ['product_language', 'ProductLanguage.php', [
                 [
+                    'name' => 'function getSupplier()',
                     'relation' => "\$this->hasOne(Product::className(), ['supplier_id' => 'supplier_id', 'id' => 'id']);",
                     'expected' => true,
                 ],
                 [
+                    'name' => 'function getSupplier0()',
                     'relation' => "\$this->hasOne(Supplier::className(), ['id' => 'supplier_id']);",
                     'expected' => true,
                 ],
@@ -121,10 +142,17 @@ class ModelGeneratorTest extends GiiTestCase
 
         $code = $files[0]->content;
         foreach ($relations as $relation) {
-            $location = strpos($code, $relation['relation']);
+            $found = strpos($code, $relation['relation']) !== false;
             $this->assertTrue(
-                $relation['expected'] ? $location !== false : $location === false,
+                $relation['expected'] === $found,
                 "Relation \"{$relation['relation']}\" should"
+                . ($relation['expected'] ? '' : ' not')." be there:\n" . $code
+            );
+
+            $found = strpos($code, $relation['name']) !== false;
+            $this->assertTrue(
+                $relation['expected'] === $found,
+                "Relation Name \"{$relation['name']}\" should"
                 . ($relation['expected'] ? '' : ' not')." be there:\n" . $code
             );
         }
@@ -132,7 +160,6 @@ class ModelGeneratorTest extends GiiTestCase
 
     public function testSchemas()
     {
-
     }
 
     /**
