@@ -157,9 +157,15 @@ yii.gii = (function ($) {
     };
 
     var initToggleActions = function () {
-        $('#action-toggle :input').change(function () {
+        $('#action-toggle').find(':input').change(function () {
             $(this).parent('label').toggleClass('active', this.checked);
-            $('.' + this.value, '.default-view-files table').toggle(this.checked).find('.check input').attr('disabled', !this.checked);
+            var $rows = $('.' + this.value, '.default-view-files table').toggleClass('action-hidden', !this.checked);
+            if (this.checked) {
+                $rows.not('.filter-hidden').show();
+            } else {
+                $rows.hide();
+            }
+            $rows.find('.check input').attr('disabled', !this.checked);
             checkAllToggle();
         });
     };
@@ -169,9 +175,9 @@ yii.gii = (function ($) {
             var that = this,
             $rows = $('#files-body').find('tr');
 
-            $rows.hide().filter(function () {
+            $rows.hide().toggleClass('filter-hidden', true).filter(function () {
                 return $(this).text().toUpperCase().indexOf(that.value.toUpperCase()) > -1;
-            }).show();
+            }).toggleClass('filter-hidden', false).not('.action-hidden').show();
 
             $rows.find('input').each(function(){
                 $(this).prop('disabled', $(this).is(':hidden'));
