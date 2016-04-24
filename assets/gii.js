@@ -164,6 +164,21 @@ yii.gii = (function ($) {
         });
     };
 
+    var initFilterRows = function () {
+        $('#filter-input').on('input', function () {
+            var that = this,
+            $rows = $('#files-body').find('tr');
+
+            $rows.hide().filter(function () {
+                return $(this).text().toUpperCase().indexOf(that.value.toUpperCase()) > -1;
+            }).show();
+
+            $rows.find('input').each(function(){
+                $(this).prop('disabled', $(this).is(':hidden'));
+            });
+        });
+    };
+
     $(document).on("keydown", function(e) {
         if (valueToCopy && (e.ctrlKey || e.metaKey) && (e.which === 67)) {
             return onKeydown(e);
@@ -188,6 +203,7 @@ yii.gii = (function ($) {
             initPreviewDiffLinks();
             initConfirmationCheckboxes();
             initToggleActions();
+            initFilterRows();
 
             // model generator: hide class name inputs when table name input contains *
             $('#model-generator #generator-tablename').change(function () {
@@ -255,7 +271,7 @@ yii.gii = (function ($) {
             }).change();
 
             // hide Generate button if any input is changed
-            $('.default-view .form-group input,select,textarea').change(function () {
+            $('#form-fields').find('input,select,textarea').change(function () {
                 $('.default-view-results,.default-view-files').hide();
                 $('.default-view button[name="generate"]').hide();
             });
