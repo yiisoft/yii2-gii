@@ -68,7 +68,7 @@ yii.gii = (function ($) {
         var $modal = $('#preview-modal'),
          $modalBody = $modal.find('.modal-body');
         if (!$link.hasClass('modal-refresh')) {
-            var filesSelector = 'a.' + $modal.data('action');
+            var filesSelector = 'a.' + $modal.data('action') + ':visible';
             var $files = $(filesSelector);
             var index = $files.filter('[href="' + $link.attr('href') + '"]').index(filesSelector);
             var $prev = $files.eq(index - 1);
