@@ -157,10 +157,31 @@ yii.gii = (function ($) {
     };
 
     var initToggleActions = function () {
-        $('#action-toggle :input').change(function () {
+        $('#action-toggle').find(':input').change(function () {
             $(this).parent('label').toggleClass('active', this.checked);
-            $('.' + this.value, '.default-view-files table').toggle(this.checked).find('.check input').attr('disabled', !this.checked);
+            var $rows = $('.' + this.value, '.default-view-files table').toggleClass('action-hidden', !this.checked);
+            if (this.checked) {
+                $rows.not('.filter-hidden').show();
+            } else {
+                $rows.hide();
+            }
+            $rows.find('.check input').attr('disabled', !this.checked);
             checkAllToggle();
+        });
+    };
+
+    var initFilterRows = function () {
+        $('#filter-input').on('input', function () {
+            var that = this,
+            $rows = $('#files-body').find('tr');
+
+            $rows.hide().toggleClass('filter-hidden', true).filter(function () {
+                return $(this).text().toUpperCase().indexOf(that.value.toUpperCase()) > -1;
+            }).toggleClass('filter-hidden', false).not('.action-hidden').show();
+
+            $rows.find('input').each(function(){
+                $(this).prop('disabled', $(this).is(':hidden'));
+            });
         });
     };
 
@@ -188,6 +209,7 @@ yii.gii = (function ($) {
             initPreviewDiffLinks();
             initConfirmationCheckboxes();
             initToggleActions();
+            initFilterRows();
 
             // model generator: hide class name inputs when table name input contains *
             $('#model-generator #generator-tablename').change(function () {
@@ -255,7 +277,7 @@ yii.gii = (function ($) {
             }).change();
 
             // hide Generate button if any input is changed
-            $('.default-view .form-group input,select,textarea').change(function () {
+            $('#form-fields').find('input,select,textarea').change(function () {
                 $('.default-view-results,.default-view-files').hide();
                 $('.default-view button[name="generate"]').hide();
             });
