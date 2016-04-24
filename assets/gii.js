@@ -2,6 +2,7 @@ yii.gii = (function ($) {
 
     var $clipboardContainer = $("#clipboard-container"),
     valueToCopy = '',
+    ajaxRequest = null,
 
     onKeydown = function(e) {
         var $target;
@@ -63,9 +64,8 @@ yii.gii = (function ($) {
         });
     };
 
-    var fillModal = function(data) {
+    var fillModal = function($link, data) {
         var $modal = $('#preview-modal'),
-         $link = $(this),
          $modalBody = $modal.find('.modal-body');
         if (!$link.hasClass('modal-refresh')) {
             var filesSelector = 'a.' + $modal.data('action');
@@ -84,6 +84,12 @@ yii.gii = (function ($) {
 
     var initPreviewDiffLinks = function () {
         $('.preview-code, .diff-code, .modal-refresh, .modal-previous, .modal-next').on('click', function () {
+            if (ajaxRequest !== null) {
+                if ($.isFunction(ajaxRequest.abort)) {
+                    ajaxRequest.abort();
+                }
+            }
+            var that = this;
             var $modal = $('#preview-modal');
             var $link = $(this);
             $modal.find('.modal-refresh').attr('href', $link.attr('href'));
@@ -102,13 +108,14 @@ yii.gii = (function ($) {
                 $modal.find('.modal-checkbox').addClass('disabled');
             }
             $modal.find('.modal-checkbox span').toggleClass('glyphicon-check', checked).toggleClass('glyphicon-unchecked', !checked);
-            $.ajax({
+
+            ajaxRequest = $.ajax({
                 type: 'POST',
                 cache: false,
                 url: $link.prop('href'),
                 data: $('.default-view form').serializeArray(),
                 success: function (data) {
-                    fillModal(data);
+                    fillModal($(that), data);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $modal.find('.modal-body').html('<div class="error">' + XMLHttpRequest.responseText + '</div>');
