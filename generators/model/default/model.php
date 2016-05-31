@@ -93,7 +93,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
     public static function find()
     {
-        return new <?= $queryClassFullName ?>(get_called_class());
+        return new <?= $queryClassFullName ?>(static::class);
     }
 <?php endif; ?>
 }
