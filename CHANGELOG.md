@@ -8,6 +8,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #149: Relation names no longer override existing methods and properties (Faryshta)
 - Bug #152: Fixed generating model without any rules (and800)
 - Enh #153: Added filename filter to generated files list preview (thiagotalma)
+- Enh #162: Model generator now detects foreign keys named as `id_*` (mootensai, samdark)
 
 
 2.0.5 March 18, 2016

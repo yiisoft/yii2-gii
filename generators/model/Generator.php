@@ -631,8 +631,12 @@ class Generator extends \yii\gii\Generator
             $baseClass = $this->baseClass;
             $baseModel = new $baseClass();
         }
-        if (!empty($key) && substr_compare($key, 'id', -2, 2, true) === 0 && strcasecmp($key, 'id')) {
-            $key = rtrim(substr($key, 0, -2), '_');
+        if (!empty($key) && strcasecmp($key, 'id')) {
+            if (substr_compare($key, 'id', -2, 2, true) === 0) {
+                $key = rtrim(substr($key, 0, -2), '_');
+            } elseif (substr_compare($key, 'id', 0, 2, true) === 0) {
+                $key = ltrim(substr($key, 2, strlen($key)), '_');
+            }
         }
         if ($multiple) {
             $key = Inflector::pluralize($key);
