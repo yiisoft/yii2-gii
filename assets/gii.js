@@ -276,6 +276,7 @@ yii.gii = (function ($) {
                 $('form .field-generator-queryns').toggle($(this).is(':checked'));
                 $('form .field-generator-queryclass').toggle($(this).is(':checked'));
                 $('form .field-generator-querybaseclass').toggle($(this).is(':checked'));
+                $('#generator-queryclass').prop('disabled', $(this).is(':not(:checked)'));
             }).change();
 
             // hide message category when I18N is disabled
