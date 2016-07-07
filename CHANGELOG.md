@@ -9,7 +9,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #152: Fixed generating model without any rules (and800)
 - Enh #153: Added filename filter to generated files list preview (thiagotalma)
 - Enh #162: Model generator now detects foreign keys named as `id_*` (mootensai, samdark)
-
+- Bug #126, #139: Fixed model generator form validation when "ActiveQuery Class" is invalid but unused (kikimor)
 
 2.0.5 March 18, 2016
 --------------------
