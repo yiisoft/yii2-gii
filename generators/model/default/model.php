@@ -24,7 +24,7 @@ use Yii;
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
  *
 <?php foreach ($tableSchema->columns as $column): ?>
- * @property <?= "{$column->phpType} \${$column->name}\n" ?>
+ * @property <?= "{$column->phpType} \${$column->name}" . ($generator->generateDocsFromComments ? " {$column->comment}" : '') . "\n" ?>
 <?php endforeach; ?>
 <?php if (!empty($relations)): ?>
  *
