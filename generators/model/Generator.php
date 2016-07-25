@@ -383,6 +383,11 @@ class Generator extends \yii\gii\Generator
             $table0Schema = $db->getTableSchema($table0);
             $table1Schema = $db->getTableSchema($table1);
 
+            // #199 this foreign key no related to current schema
+            if(empty($table0Schema) or empty($table1Schema)){
+                continue;
+            }
+
             $link = $this->generateRelationLink(array_flip($secondKey));
             $viaLink = $this->generateRelationLink($firstKey);
             $relationName = $this->generateRelationName($relations, $table0Schema, key($secondKey), true);
