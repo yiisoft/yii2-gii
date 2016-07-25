@@ -27,6 +27,7 @@ class Generator extends \yii\gii\Generator
 {
     const RELATIONS_NONE = 'none';
     const RELATIONS_ALL = 'all';
+    const RELATIONS_ALL_FROM_CURRENT_SCHEMA = 'all-from-current-schema';
     const RELATIONS_ALL_INVERSE = 'all-inverse';
 
     public $db = 'db';
@@ -79,7 +80,7 @@ class Generator extends \yii\gii\Generator
             [['modelClass'], 'validateModelClass', 'skipOnEmpty' => false],
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
-            [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
+            [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_FROM_CURRENT_SCHEMA, self::RELATIONS_ALL_INVERSE]],
             [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
             [['enableI18N'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
@@ -443,9 +444,9 @@ class Generator extends \yii\gii\Generator
         }
 
         $db = $this->getDbConnection();
-
         $relations = [];
-        foreach ($this->getSchemaNames() as $schemaName) {
+        $schemaNames = ($this->generateRelations === self::RELATIONS_ALL_FROM_CURRENT_SCHEMA) ? [$db->schema->defaultSchema] : $this->getSchemaNames();
+        foreach ($schemaNames as $schemaName) {
             foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
                 foreach ($table->foreignKeys as $refs) {
