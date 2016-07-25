@@ -384,6 +384,11 @@ class Generator extends \yii\gii\Generator
             $table0Schema = $db->getTableSchema($table0);
             $table1Schema = $db->getTableSchema($table1);
 
+            // @see https://github.com/yiisoft/yii2-gii/issues/166
+            if ($table0Schema === null || $table1Schema === null) {
+                continue;
+            }
+
             $link = $this->generateRelationLink(array_flip($secondKey));
             $viaLink = $this->generateRelationLink($firstKey);
             $relationName = $this->generateRelationName($relations, $table0Schema, key($secondKey), true);
