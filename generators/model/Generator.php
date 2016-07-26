@@ -27,7 +27,6 @@ class Generator extends \yii\gii\Generator
 {
     const RELATIONS_NONE = 'none';
     const RELATIONS_ALL = 'all';
-    const RELATIONS_ALL_FROM_CURRENT_SCHEMA = 'all-from-current-schema';
     const RELATIONS_ALL_INVERSE = 'all-inverse';
 
     public $db = 'db';
@@ -36,6 +35,7 @@ class Generator extends \yii\gii\Generator
     public $modelClass;
     public $baseClass = 'yii\db\ActiveRecord';
     public $generateRelations = self::RELATIONS_ALL;
+    public $generateRelationsFromCurrentSchema = true;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
     public $useSchemaName = true;
@@ -80,8 +80,8 @@ class Generator extends \yii\gii\Generator
             [['modelClass'], 'validateModelClass', 'skipOnEmpty' => false],
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
-            [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_FROM_CURRENT_SCHEMA, self::RELATIONS_ALL_INVERSE]],
-            [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
+            [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
+            [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema'], 'boolean'],
             [['enableI18N'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
         ]);
@@ -99,6 +99,7 @@ class Generator extends \yii\gii\Generator
             'modelClass' => 'Model Class',
             'baseClass' => 'Base Class',
             'generateRelations' => 'Generate Relations',
+            'generateRelationsFromCurrentSchema' => 'Generate Relations from Current Schema',
             'generateLabelsFromComments' => 'Generate Labels from DB Comments',
             'generateQuery' => 'Generate ActiveQuery',
             'queryNs' => 'ActiveQuery Namespace',
@@ -130,6 +131,7 @@ class Generator extends \yii\gii\Generator
             'generateRelations' => 'This indicates whether the generator should generate relations based on
                 foreign key constraints it detects in the database. Note that if your database contains too many tables,
                 you may want to uncheck this option to accelerate the code generation process.',
+            'generateRelationsFromCurrentSchema' => 'This indicates whether the generator should generate relations from current schema or from all available schemas.',
             'generateLabelsFromComments' => 'This indicates whether the generator should generate attribute labels
                 by using the comments of the corresponding DB columns.',
             'useTablePrefix' => 'This indicates whether the table name returned by the generated ActiveRecord class
@@ -384,6 +386,11 @@ class Generator extends \yii\gii\Generator
             $table0Schema = $db->getTableSchema($table0);
             $table1Schema = $db->getTableSchema($table1);
 
+            // @see https://github.com/yiisoft/yii2-gii/issues/166
+            if ($table0Schema === null || $table1Schema === null) {
+                continue;
+            }
+
             $link = $this->generateRelationLink(array_flip($secondKey));
             $viaLink = $this->generateRelationLink($firstKey);
             $relationName = $this->generateRelationName($relations, $table0Schema, key($secondKey), true);
@@ -445,7 +452,7 @@ class Generator extends \yii\gii\Generator
 
         $db = $this->getDbConnection();
         $relations = [];
-        $schemaNames = ($this->generateRelations === self::RELATIONS_ALL_FROM_CURRENT_SCHEMA) ? [$db->schema->defaultSchema] : $this->getSchemaNames();
+        $schemaNames = ($this->generateRelationsFromCurrentSchema === true) ? [$db->schema->defaultSchema] : $this->getSchemaNames();
         foreach ($schemaNames as $schemaName) {
             foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
@@ -504,13 +511,16 @@ class Generator extends \yii\gii\Generator
      */
     protected function addInverseRelations($relations)
     {
+        $db = $this->getDbConnection();
         $relationNames = [];
-        foreach ($this->getSchemaNames() as $schemaName) {
-            foreach ($this->getDbConnection()->getSchema()->getTableSchemas($schemaName) as $table) {
+
+        $schemaNames = ($this->generateRelationsFromCurrentSchema === true) ? [$db->schema->defaultSchema] : $this->getSchemaNames();
+        foreach ($schemaNames as $schemaName) {
+            foreach ($db->schema->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
                 foreach ($table->foreignKeys as $refs) {
                     $refTable = $refs[0];
-                    $refTableSchema = $this->getDbConnection()->getTableSchema($refTable);
+                    $refTableSchema = $db->getTableSchema($refTable);
                     unset($refs[0]);
                     $fks = array_keys($refs);
 
