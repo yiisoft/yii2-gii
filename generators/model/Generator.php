@@ -96,7 +96,7 @@ class Generator extends \yii\gii\Generator
             'ns' => 'Namespace',
             'db' => 'Database Connection ID',
             'tableName' => 'Table Name',
-            'modelClass' => 'Model Class',
+            'modelClass' => 'Model Class Name',
             'baseClass' => 'Base Class',
             'generateRelations' => 'Generate Relations',
             'generateLabelsFromComments' => 'Generate Labels from DB Comments',
