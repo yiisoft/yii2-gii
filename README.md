@@ -79,3 +79,4 @@ yii help gii/model
 # generate City model from city table
 yii gii/model --tableName=city --modelClass=City
 ```
+
