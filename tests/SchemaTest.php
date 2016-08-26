@@ -68,6 +68,7 @@ class SchemaTest extends GiiTestCase
         $generator = new ModelGenerator();
         $generator->template = $template;
         $generator->tableName = $tableName;
+        $generator->generateRelationsFromCurrentSchema = false;
 
         $files = $generator->generate();
         $this->assertEquals($filesCount, count($files));
