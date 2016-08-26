@@ -12,6 +12,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #126, #139: Fixed model generator form validation when "ActiveQuery Class" is invalid but unused (kikimor)
 - Enh #167: Added option for generating relations from current schema only (zlakomanoff)
 - Bug #166: Fixed "Trying to get property of non-object" during model generation (zlakomanoff)
+- Bug #183: Added "generating relations from current schema" option to model generator (zlakomanoff)
 
 2.0.5 March 18, 2016
 --------------------
