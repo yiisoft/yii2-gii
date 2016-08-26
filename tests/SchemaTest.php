@@ -17,6 +17,7 @@ class SchemaTest extends GiiTestCase
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->tableName = 'schema1.*';
+        $generator->generateRelationsFromCurrentSchema = false;
 
         $files = $generator->generate();
 
