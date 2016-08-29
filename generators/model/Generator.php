@@ -452,7 +452,7 @@ class Generator extends \yii\gii\Generator
 
         $db = $this->getDbConnection();
         $relations = [];
-        $schemaNames = ($this->generateRelationsFromCurrentSchema) ? [$db->schema->defaultSchema] : $this->getSchemaNames();
+        $schemaNames = $this->getSchemaNames();
         foreach ($schemaNames as $schemaName) {
             foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
