@@ -423,6 +423,14 @@ class Generator extends \yii\gii\Generator
     protected function getSchemaNames()
     {
         $db = $this->getDbConnection();
+
+        if ($this->generateRelationsFromCurrentSchema) {
+            if ($db->schema->defaultSchema !== null) {
+                return [$db->schema->defaultSchema];
+            }
+            return [];
+        }
+
         $schema = $db->getSchema();
         if ($schema->hasMethod('getSchemaNames')) { // keep BC to Yii versions < 2.0.4
             try {
@@ -452,7 +460,7 @@ class Generator extends \yii\gii\Generator
 
         $db = $this->getDbConnection();
         $relations = [];
-        $schemaNames = ($this->generateRelationsFromCurrentSchema) ? [$db->schema->defaultSchema] : $this->getSchemaNames();
+        $schemaNames = $this->getSchemaNames();
         foreach ($schemaNames as $schemaName) {
             foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
@@ -514,7 +522,7 @@ class Generator extends \yii\gii\Generator
         $db = $this->getDbConnection();
         $relationNames = [];
 
-        $schemaNames = ($this->generateRelationsFromCurrentSchema) ? [$db->schema->defaultSchema] : $this->getSchemaNames();
+        $schemaNames = $this->getSchemaNames();
         foreach ($schemaNames as $schemaName) {
             foreach ($db->schema->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
