@@ -646,9 +646,11 @@ class Generator extends \yii\gii\Generator
     protected function generateRelationName($relations, $table, $key, $multiple)
     {
         static $baseModel;
+        /* @var $baseModel \yii\db\ActiveRecord */
         if ($baseModel === null) {
             $baseClass = $this->baseClass;
             $baseModel = new $baseClass();
+            $baseModel->setAttributes([]);
         }
         if (!empty($key) && strcasecmp($key, 'id')) {
             if (substr_compare($key, 'id', -2, 2, true) === 0) {
