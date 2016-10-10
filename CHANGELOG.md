@@ -14,6 +14,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #166: Fixed "Trying to get property of non-object" during model generation (zlakomanoff)
 - Bug #179: Fixed indentation and newlines for Pjax widget in crud index view (nkovacs)
 - Bug #186: Fixed incorrect database name exception (zlakomanoff)
+- Bug #200: Fixed Pjax and Listview with CRUD generator (ariestattoo)
 - Chg: Updated version constraint for `yiisoft/yii2` in extension template to `~2.0.0` to ensure compatibility when 2.1 is released (cebe)
 
 2.0.5 March 18, 2016
