@@ -22,10 +22,11 @@ use yii\widgets\ActiveForm;
     <?= "<?php " ?>$form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
-    <?php if ($generator->enablePjax) {
-        ?>'options' => [
-            'data-pjax'   => 1
-        ],<?php } >
+<?php if ($generator->enablePjax): ?>
+        'options' => [
+            'data-pjax' => 1
+        ],
+<?php endif; ?>
     ]); ?>
 
 <?php
