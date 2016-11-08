@@ -428,7 +428,7 @@ class Generator extends \yii\gii\Generator
             if ($db->schema->defaultSchema !== null) {
                 return [$db->schema->defaultSchema];
             }
-            return [];
+            return [''];
         }
 
         $schema = $db->getSchema();
