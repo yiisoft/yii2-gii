@@ -69,7 +69,7 @@ class DefaultController extends Controller
                 if ($f->id === $file) {
                     $content = $f->preview();
                     if ($content !== false) {
-                        return  '<div class="content">' . $content . '</content>';
+                        return  '<div class="content">' . $content . '</div>';
                     } else {
                         return '<div class="error">Preview is not available for this file type.</div>';
                     }
