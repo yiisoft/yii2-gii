@@ -26,6 +26,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #200: Fixed Pjax and Listview with CRUD generator (ariestattoo)
 - Chg: Updated version constraint for `yiisoft/yii2` in extension template to `~2.0.0` to ensure compatibility when 2.1 is released (cebe)
 - Enh: `yii\gii\Module::defaultVersion()` implemented to pick up 'yiisoft/yii2-gii' extension version (klimov-paul)
+- Enh #131: Allow using table comments for PHPdoc property description (stmswitcher, michaelarnauts)
 
 2.0.5 March 18, 2016
 --------------------

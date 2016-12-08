@@ -260,7 +260,11 @@ class Generator extends \yii\gii\Generator
             } else {
                 $type = $columnPhpType;
             }
-            $properties[$column->name] = $type;
+            $properties[$column->name] = [
+                'type' => $type,
+                'name' => $column->name,
+                'comment' => $column->comment,
+            ];
         }
 
         return $properties;
