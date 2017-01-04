@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
+- Enh #230: Allowed underscores for extension namespaces (Nex Otaku)
 - Bug #100, #102: Fixed "Check This File" button in the preview modal (Insensus, thiagotalma)
 - Bug #149: Relation names no longer override existing methods and properties (Faryshta)
 - Bug #152: Fixed generating model without any rules (and800)
