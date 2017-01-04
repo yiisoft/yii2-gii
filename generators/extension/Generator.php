@@ -86,8 +86,8 @@ class Generator extends \yii\gii\Generator
                 [
                     ['namespace'],
                     'match',
-                    'pattern' => '/^[a-zA-Z0-9\\\]+\\\$/',
-                    'message' => 'Only letters, numbers and backslashes are allowed. PSR-4 namespaces must end with a namespace separator.'
+                    'pattern' => '/^[a-zA-Z0-9_\\\]+\\\$/',
+                    'message' => 'Only letters, numbers, underscores and backslashes are allowed. PSR-4 namespaces must end with a namespace separator.'
                 ],
             ]
         );
