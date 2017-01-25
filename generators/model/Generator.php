@@ -354,12 +354,22 @@ class Generator extends \yii\gii\Generator
             $refClassName = $this->generateClassName($refTable);
             unset($refs[0]);
             $attributes = implode("', '", array_keys($refs));
+
+            // https://github.com/yiisoft/yii2-gii/issues/64
+            $skipOnEmpty = true;
+            foreach (array_keys($refs) as $refColumnName) {
+                if(!$table->columns[$refColumnName]->allowNull === false) {
+                    $skipOnEmpty = false;
+                }
+            }
+
             $targetAttributes = [];
             foreach ($refs as $key => $value) {
                 $targetAttributes[] = "'$key' => '$value'";
             }
             $targetAttributes = implode(', ', $targetAttributes);
-            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
+
+            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]" . ($skipOnEmpty ? '' : ', \'skipOnEmpty\' => false') . "]";
         }
 
         return $rules;
