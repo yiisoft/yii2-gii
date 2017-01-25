@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
-- Enh #234: Change submit button label from Update to Save (MKiselev)
+- Enh #234: Changed submit button label from "Update" and "Create" to "Save" (MKiselev)
 - Bug #232: Fixed Help documentation link (drdim)
 - Enh #230: Allowed underscores for extension namespaces (Nex Otaku)
 - Bug #100, #102: Fixed "Check This File" button in the preview modal (Insensus, thiagotalma)
