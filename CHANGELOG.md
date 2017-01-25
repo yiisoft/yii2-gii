@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
+- Enh #64: Add "skipOnEmpty => false" to generated model exist rule if referrer foreign key column is NOT NULL (MKiselev)
 - Enh #234: Changed submit button label from "Update" and "Create" to "Save" (MKiselev)
 - Bug #232: Fixed Help documentation link (drdim)
 - Enh #230: Allowed underscores for extension namespaces (Nex Otaku)
