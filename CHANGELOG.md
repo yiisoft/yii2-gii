@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
-- Bug #182: Fix controller generator save paths and link to try if generated controller namespace was be a sub namespace of application controller namespace (MKiselev)
+- Bug #182: Fixed wrong link after generating controller located in sub-namespace of controllers namespace (MKiselev)
 - Enh #234: Changed submit button label from "Update" and "Create" to "Save" (MKiselev)
 - Bug #232: Fixed Help documentation link (drdim)
 - Enh #230: Allowed underscores for extension namespaces (Nex Otaku)
