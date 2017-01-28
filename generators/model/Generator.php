@@ -245,8 +245,9 @@ class Generator extends \yii\gii\Generator
      * Generates the properties for the specified table.
      * @param \yii\db\TableSchema $table the table schema
      * @return array the generated properties (property => type)
+     * @since 2.0.6
      */
-    public function generateProperties($table)
+    private function generateProperties($table)
     {
         $properties = [];
         foreach ($table->columns as $column) {
