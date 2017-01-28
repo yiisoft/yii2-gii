@@ -217,6 +217,7 @@ class Generator extends \yii\gii\Generator
                 'tableName' => $tableName,
                 'className' => $modelClassName,
                 'queryClassName' => $queryClassName,
+                'tableSchema' => $tableSchema,
                 'properties' => $this->generateProperties($tableSchema),
                 'labels' => $this->generateLabels($tableSchema),
                 'rules' => $this->generateRules($tableSchema),
