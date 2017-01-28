@@ -141,15 +141,14 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * This method return link to try for generated controller
-     * if him located in sub-namespace of controllers namespace
+     * This method returns a link to try controller generated
+     * @see https://github.com/yiisoft/yii2-gii/issues/182
      * @return string
      * @since 2.0.6
      */
     private function getLinkToTry()
     {
         $linkToTry = '';
-        // https://github.com/yiisoft/yii2-gii/issues/182
         if (strpos($this->controllerNamespace, Yii::$app->controllerNamespace) === 0) {
             $actions = $this->getActionIDs();
             if (in_array('index', $actions)) {
