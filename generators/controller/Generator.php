@@ -137,20 +137,30 @@ class Generator extends \yii\gii\Generator
      */
     public function successMessage()
     {
-        $actions = $this->getActionIDs();
+        return "The controller has been generated successfully." . $this->getLinkToTry();
+    }
 
+    /**
+     * This method return link to try for generated controller
+     * if him located in sub-namespace of controllers namespace
+     * @return string
+     * @since 2.0.6
+     */
+    private function getLinkToTry()
+    {
+        $linkToTry = '';
         // https://github.com/yiisoft/yii2-gii/issues/182
-        $tryLink = '';
         if (strpos($this->controllerNamespace, Yii::$app->controllerNamespace) === 0) {
+            $actions = $this->getActionIDs();
             if (in_array('index', $actions)) {
                 $route = $this->getControllerSubPath() . $this->getControllerID() . '/index';
             } else {
                 $route = $this->getControllerSubPath() . $this->getControllerID() . '/' . reset($actions);
             }
-            $tryLink = ' You may ' . Html::a('try it now', Yii::$app->getUrlManager()->createUrl($route), ['target' => '_blank']) . '.';
+            $linkToTry = ' You may ' . Html::a('try it now', Yii::$app->getUrlManager()->createUrl($route), ['target' => '_blank']) . '.';
         }
 
-        return "The controller has been generated successfully." . $tryLink;
+        return $linkToTry;
     }
 
     /**
