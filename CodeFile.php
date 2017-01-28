@@ -77,7 +77,7 @@ class CodeFile extends Object
 
     /**
      * Saves the code into the file specified by [[path]].
-     * @return string|boolean the error occurred while saving the code file, or true if no error.
+     * @return string|bool the error occurred while saving the code file, or true if no error.
      */
     public function save()
     {
