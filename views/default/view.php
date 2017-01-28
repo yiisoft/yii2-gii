@@ -10,7 +10,7 @@ use yii\gii\CodeFile;
 /* @var $id string panel ID */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $results string */
-/* @var $hasError boolean */
+/* @var $hasError bool */
 /* @var $files CodeFile[] */
 /* @var $answers array */
 
