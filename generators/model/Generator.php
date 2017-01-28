@@ -217,7 +217,7 @@ class Generator extends \yii\gii\Generator
                 'tableName' => $tableName,
                 'className' => $modelClassName,
                 'queryClassName' => $queryClassName,
-                'tableSchema' => $tableSchema,
+                'properties' => $this->generateProperties($tableSchema),
                 'labels' => $this->generateLabels($tableSchema),
                 'rules' => $this->generateRules($tableSchema),
                 'relations' => isset($relations[$tableName]) ? $relations[$tableName] : [],
@@ -239,6 +239,29 @@ class Generator extends \yii\gii\Generator
         }
 
         return $files;
+    }
+
+    /**
+     * Generates the properties for the specified table.
+     * @param \yii\db\TableSchema $table the table schema
+     * @return array the generated properties (property => type)
+     */
+    public function generateProperties($table)
+    {
+        $properties = [];
+        foreach ($table->columns as $column) {
+            $columnPhpType = $column->phpType;
+            if ($columnPhpType === 'integer') {
+                $type = 'int';
+            } elseif ($columnPhpType === 'boolean') {
+                $type = 'bool';
+            } else {
+                $type = $columnPhpType;
+            }
+            $properties[$column->name] = $type;
+        }
+
+        return $properties;
     }
 
     /**
