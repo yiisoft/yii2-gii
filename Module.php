@@ -67,13 +67,13 @@ class Module extends \yii\base\Module implements BootstrapInterface
      */
     public $generators = [];
     /**
-     * @var integer the permission to be set for newly generated code files.
+     * @var int the permission to be set for newly generated code files.
      * This value will be used by PHP chmod function.
      * Defaults to 0666, meaning the file is read-writable by all users.
      */
     public $newFileMode = 0666;
     /**
-     * @var integer the permission to be set for newly generated directories.
+     * @var int the permission to be set for newly generated directories.
      * This value will be used by PHP chmod function.
      * Defaults to 0777, meaning the directory can be read, written and executed by all users.
      */
@@ -137,7 +137,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
     }
 
     /**
-     * @return boolean whether the module can be accessed by the current user
+     * @return int whether the module can be accessed by the current user
      */
     protected function checkAccess()
     {

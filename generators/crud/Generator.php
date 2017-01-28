@@ -23,7 +23,7 @@ use yii\web\Controller;
  * @property string $controllerID The controller ID (without the module ID prefix). This property is
  * read-only.
  * @property array $searchAttributes Searchable attributes. This property is read-only.
- * @property boolean|\yii\db\TableSchema $tableSchema This property is read-only.
+ * @property bool|\yii\db\TableSchema $tableSchema This property is read-only.
  * @property string $viewPath The controller view path. This property is read-only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -38,7 +38,7 @@ class Generator extends \yii\gii\Generator
     public $indexWidgetType = 'grid';
     public $searchModelClass = '';
     /**
-     * @var boolean whether to wrap the `GridView` or `ListView` widget with the `yii\widgets\Pjax` widget
+     * @var bool whether to wrap the `GridView` or `ListView` widget with the `yii\widgets\Pjax` widget
      * @since 2.0.5
      */
     public $enablePjax = false;
@@ -519,7 +519,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Returns table schema for current model class or false if it is not an active record
-     * @return boolean|\yii\db\TableSchema
+     * @return bool|\yii\db\TableSchema
      */
     public function getTableSchema()
     {
