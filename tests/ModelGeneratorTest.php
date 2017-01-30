@@ -171,19 +171,19 @@ class ModelGeneratorTest extends GiiTestCase
         return [
             ['category_photo', 'CategoryPhoto.php', [
                 "[['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],",
-                "[['category_id', 'display_number'], 'unique', 'targetAttribute' => ['category_id', 'display_number'], 'message' => 'The combination of Category ID and Display Number has already been taken.'],",
+                "[['category_id', 'display_number'], 'unique', 'targetAttribute' => ['category_id', 'display_number']],",
             ]],
             ['product', 'Product.php', [
                 "[['supplier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::className(), 'targetAttribute' => ['supplier_id' => 'id']],",
                 "[['category_id', 'category_language_code'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id', 'category_language_code' => 'language_code']],",
-                "[['category_id', 'category_language_code'], 'unique', 'targetAttribute' => ['category_id', 'category_language_code'], 'message' => 'The combination of Category Language Code and Category ID has already been taken.'],"
+                "[['category_id', 'category_language_code'], 'unique', 'targetAttribute' => ['category_id', 'category_language_code']],"
             ]],
             ['product_language', 'ProductLanguage.php', [
                 "[['supplier_id', 'id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['supplier_id' => 'supplier_id', 'id' => 'id']],",
                 "[['supplier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::className(), 'targetAttribute' => ['supplier_id' => 'id']],",
                 "[['supplier_id'], 'unique']",
-                "[['id', 'supplier_id', 'language_code'], 'unique', 'targetAttribute' => ['id', 'supplier_id', 'language_code'], 'message' => 'The combination of ID, Supplier ID and Language Code has already been taken.']",
-                "[['id', 'supplier_id'], 'unique', 'targetAttribute' => ['id', 'supplier_id'], 'message' => 'The combination of ID and Supplier ID has already been taken.']",
+                "[['id', 'supplier_id', 'language_code'], 'unique', 'targetAttribute' => ['id', 'supplier_id', 'language_code']]",
+                "[['id', 'supplier_id'], 'unique', 'targetAttribute' => ['id', 'supplier_id']]",
             ]],
         ];
     }
