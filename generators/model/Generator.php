@@ -898,13 +898,9 @@ class Generator extends \yii\gii\Generator
      */
     protected function getDbDriverName()
     {
+        /** @var Connection $db */
         $db = $this->getDbConnection();
-        if ($db !== null) {
-            /** @var Connection $db */
-            return substr($db->dsn, 0, strpos($db->dsn, ':'));
-        }
-
-        return '';
+        return $db->driverName;
     }
 
     /**
