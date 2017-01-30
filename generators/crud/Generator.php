@@ -425,7 +425,11 @@ class Generator extends \yii\gii\Generator
                     $hashConditions[] = "'{$column}' => \$this->{$column},";
                     break;
                 default:
-                    $likeConditions[] = "->andFilterWhere(['like', '{$column}', \$this->{$column}])";
+                    if ($this->getClassDbDriverName() === 'pgsql') {
+                        $likeConditions[] = "->andFilterWhere(['ilike', '{$column}', \$this->{$column}])";
+                    } else {
+                        $likeConditions[] = "->andFilterWhere(['like', '{$column}', \$this->{$column}])";
+                    }
                     break;
             }
         }
@@ -547,5 +551,16 @@ class Generator extends \yii\gii\Generator
 
             return $model->attributes();
         }
+    }
+
+    /**
+     * @return string driver name of modelClass db connection.
+     * @since 2.0.6
+     */
+    protected function getClassDbDriverName()
+    {
+        /* @var $class ActiveRecord */
+        $class = $this->modelClass;
+        return $class::getDb()->driverName;
     }
 }
