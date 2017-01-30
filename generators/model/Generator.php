@@ -893,7 +893,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return string driver name of connection or empty string if connection does't exist.
+     * @return string driver name of db connection.
      * @since 2.0.6
      */
     protected function getDbDriverName()
