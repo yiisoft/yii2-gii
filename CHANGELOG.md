@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
+- Bug #224: Add default validator with null value for integers when db is PostgreSQL (MKiselev)
 - Enh #223: Use ilike operator when generating search model for PostgreSQL (MKiselev)
 - Enh #241: Remove message for unique validator (MKiselev)
 - Enh #238: Use int/bool instead of integer/boolean in phpdoc blocks generated (MKiselev)
