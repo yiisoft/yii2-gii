@@ -337,7 +337,11 @@ class Generator extends \yii\gii\Generator
             }
         }
         $rules = [];
+        $driverName = $this->getDbDriverName();
         foreach ($types as $type => $columns) {
+            if ($driverName === 'pgsql' && $type === 'integer') {
+                $rules[] = "[['" . implode("', '", $columns) . "'], 'default', 'value' => null]";
+            }
             $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
         }
         foreach ($lengths as $length => $columns) {
@@ -886,6 +890,21 @@ class Generator extends \yii\gii\Generator
     protected function getDbConnection()
     {
         return Yii::$app->get($this->db, false);
+    }
+
+    /**
+     * @return string driver name of connection or empty string if connection does't exist.
+     * @since 2.0.6
+     */
+    protected function getDbDriverName()
+    {
+        $db = $this->getDbConnection();
+        if ($db !== null) {
+            /** @var Connection $db */
+            return substr($db->dsn, 0, strpos($db->dsn, ':'));
+        }
+
+        return '';
     }
 
     /**
