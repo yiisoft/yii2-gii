@@ -5,7 +5,6 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Bug #241: Remove message for unique validator (MKiselev)
-- Bug #220: Generate localized messages for unique validation rule (MKiselev)
 - Enh #238: Use int/bool instead of integer/boolean in phpdoc blocks generated (MKiselev)
 - Bug #182: Fixed wrong link after generating controller located in sub-namespace of controllers namespace (MKiselev)
 - Enh #234: Changed submit button label from "Update" and "Create" to "Save" (MKiselev)
