@@ -22,10 +22,14 @@ namespace <?= $generator->ns ?>;
 use Yii;
 
 /**
+<?php if (property_exists($tableSchema, 'comment') && $tableSchema->comment): ?>
+ * <?= strtr($tableSchema->comment, ["\n" => "\n * "]) . "\n" ?>
+<?php else: ?>
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
+<?php endif; ?>
  *
-<?php foreach ($properties as $property => $type): ?>
- * @property <?= "{$type} \${$property}\n" ?>
+<?php foreach ($properties as $property => $data): ?>
+ * @property <?= "{$data['type']} \${$property}\n"  . ($data['comment'] ? ' ' . strtr($data['comment'], ["\n" => ' ']) : '') . "\n" ?>
 <?php endforeach; ?>
 <?php if (!empty($relations)): ?>
  *
