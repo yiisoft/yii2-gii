@@ -240,7 +240,7 @@ class Generator extends \yii\gii\Generator
         if (empty($this->viewPath)) {
             return Yii::getAlias('@app/views/' . $this->getControllerSubPath() . $this->getControllerID() . "/$action.php");
         } else {
-            return Yii::getAlias($this->viewPath . "/$action.php");
+            return Yii::getAlias(str_replace('\\', '/', $this->viewPath) . "/$action.php");
         }
     }
 

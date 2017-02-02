@@ -205,7 +205,7 @@ class Generator extends \yii\gii\Generator
         if (empty($this->viewPath)) {
             return Yii::getAlias('@app/views/' . $this->getControllerID());
         } else {
-            return Yii::getAlias($this->viewPath);
+            return Yii::getAlias(str_replace('\\', '/', $this->viewPath));
         }
     }
 

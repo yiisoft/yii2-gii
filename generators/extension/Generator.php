@@ -223,7 +223,7 @@ EOD;
      */
     public function getOutputPath()
     {
-        return Yii::getAlias($this->outputPath);
+        return Yii::getAlias(str_replace('\\', '/', $this->outputPath));
     }
 
     /**
