@@ -360,6 +360,11 @@ class Generator extends \yii\gii\Generator
             foreach ($uniqueIndexes as $uniqueColumns) {
                 // Avoid validating auto incremental columns
                 if (!$this->isColumnAutoIncremental($table, $uniqueColumns)) {
+                    // Avoid validation for primary keys, we do it below
+                    if ($uniqueColumns === $table->primaryKey) {
+                        continue;
+                    }
+
                     $attributesCount = count($uniqueColumns);
 
                     if ($attributesCount === 1) {
@@ -391,6 +396,12 @@ class Generator extends \yii\gii\Generator
             }
             $targetAttributes = implode(', ', $targetAttributes);
             $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
+        }
+
+        // Unique validation for multiple primary keys
+        if (is_array($table->primaryKey) && count($table->primaryKey) > 1) {
+            $attributes = implode("', '", $table->primaryKey);
+            $rules[] = "[['$attributes'], 'unique', 'targetAttribute' => ['$attributes']]";
         }
 
         return $rules;
