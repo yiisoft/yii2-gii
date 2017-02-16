@@ -32,6 +32,8 @@ Yii Framework 2 gii extension Change Log
 - Enh: `yii\gii\Module::defaultVersion()` implemented to pick up 'yiisoft/yii2-gii' extension version (klimov-paul)
 - Chg: Updated version constraint for `yiisoft/yii2` in extension template to `~2.0.0` to ensure compatibility when 2.1 is released (cebe)
 - Bug #274: Added `useTablePrefix` and `generateQuery` to `stickyAttributes` (luyi61)
+- Enh #249: unique validation rule is now generated for tables with multiple primary keys (dmirogin)
+
 
 
 2.0.5 March 18, 2016
