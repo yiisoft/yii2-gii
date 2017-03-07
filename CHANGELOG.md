@@ -6,7 +6,7 @@ Yii Framework 2 gii extension Change Log
 
 - Bug #97: Fixed errors and wrong directories created when using backslash in view paths and output paths of CRUD, Controller and Extension generators (lubosdz, samdark)
 - Bug #224: Add default validator with null value for integers when db is PostgreSQL (MKiselev)
-- Enh #223: Use ilike operator when generating search model for PostgreSQL (MKiselev)
+- Enh #223: Use ilike operator when generating search model for PostgreSQL (MKiselev, arogachev)
 - Enh #241: Remove message for unique validator (MKiselev)
 - Enh #238: Use int/bool instead of integer/boolean in phpdoc blocks generated (MKiselev)
 - Bug #182: Fixed wrong link after generating controller located in sub-namespace of controllers namespace (MKiselev)
