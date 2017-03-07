@@ -425,7 +425,7 @@ class Generator extends \yii\gii\Generator
                     $hashConditions[] = "'{$column}' => \$this->{$column},";
                     break;
                 default:
-                    $likeKeyword = $this->getClassDbDriverName() === 'pgsql' ? 'ilike': 'like';
+                    $likeKeyword = $this->getClassDbDriverName() === 'pgsql' ? 'ilike' : 'like';
                     $likeConditions[] = "->andFilterWhere([$likeKeyword, '{$column}', \$this->{$column}])";                    
                     break;
             }
