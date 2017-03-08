@@ -551,8 +551,8 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return string driver name of modelClass db connection.
-     * In case db is not instance of \yii\db\Connection empty string will be returned.
+     * @return string|null driver name of modelClass db connection.
+     * In case db is not instance of \yii\db\Connection null will be returned.
      * @since 2.0.6
      */
     protected function getClassDbDriverName()
@@ -560,6 +560,6 @@ class Generator extends \yii\gii\Generator
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $db = $class::getDb();
-        return $db instanceof \yii\db\Connection ? $db->driverName : '';
+        return $db instanceof \yii\db\Connection ? $db->driverName : null;
     }
 }
