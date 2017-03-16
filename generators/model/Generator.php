@@ -897,14 +897,15 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return string driver name of db connection.
+     * @return string|null driver name of db connection.
+     * In case db is not instance of \yii\db\Connection null will be returned.
      * @since 2.0.6
      */
     protected function getDbDriverName()
     {
         /** @var Connection $db */
         $db = $this->getDbConnection();
-        return $db->driverName;
+        return $db instanceof \yii\db\Connection ? $db->driverName : null;
     }
 
     /**
