@@ -27,7 +27,7 @@ Yii Framework 2 gii extension Change Log
 - Chg: Updated version constraint for `yiisoft/yii2` in extension template to `~2.0.0` to ensure compatibility when 2.1 is released (cebe)
 - Enh: `yii\gii\Module::defaultVersion()` implemented to pick up 'yiisoft/yii2-gii' extension version (klimov-paul)
 - Enh #131: Allow using table comments for PHPdoc property description (stmswitcher, michaelarnauts)
-- Enh #249: Added generation unique validator for tables with multiple primary keys (dmirogin)
+- Enh #249: unique validation rule is now generated for tables with multiple primary keys (dmirogin)
 
 2.0.5 March 18, 2016
 --------------------
