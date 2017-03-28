@@ -364,7 +364,7 @@ class Generator extends \yii\gii\Generator
     public function generateSearchLabels()
     {
         /* @var $model \yii\base\Model */
-        $model = new $this->modelClass();
+        $model = new $this->modelClass;
         $attributeLabels = $model->attributeLabels();
         $labels = [];
         foreach ($this->getColumnNames() as $name) {
