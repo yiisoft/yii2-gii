@@ -32,7 +32,7 @@ $asset = yii\gii\GiiAsset::register($this);
             'options' => ['class' => 'nav navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Home', 'url' => ['default/index']],
-                ['label' => 'Help', 'url' => 'http://www.yiiframework.com/doc-2.0/ext-gii-index.html'],
+                ['label' => 'Help', 'url' => 'https://github.com/yiisoft/yii2-gii/blob/master/docs/guide/README.md'],
                 ['label' => 'Application', 'url' => Yii::$app->homeUrl],
             ],
         ]);
