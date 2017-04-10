@@ -76,7 +76,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php foreach ($relations as $name => $relation): ?>
 
     /**
-     * @return \yii\db\ActiveQueryInterface
+     * @return \yii\db\ActiveQuery
      */
     public function get<?= $name ?>()
     {
