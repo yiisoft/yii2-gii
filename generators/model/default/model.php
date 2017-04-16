@@ -36,6 +36,11 @@ use Yii;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+
+<?php foreach ($tableSchema->columns as $column): ?>
+    const COL_<?= strtoupper($column->name) ?> = '<?= $column->name ?>';
+<?php endforeach; ?>
+
     /**
      * @inheritdoc
      */
