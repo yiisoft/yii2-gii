@@ -50,6 +50,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #99: Added `enablePjax` option to wrap GridView with Pjax (Faryshta, silverfire)
 - Enh #135: Footer now sticks to the bottom of the page (zetamen)
 - Chg #38: Added compatibility with latest Typeahead version (razvanphp)
+- Bug #109: Exception was throwed when `UrlManager::ruleConfig` class was setted with `yii\rest\UrlRule` (lichunqiang)
 
 
 2.0.4 May 10, 2015
