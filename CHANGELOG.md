@@ -25,6 +25,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #179: Fixed indentation and newlines for Pjax widget in crud index view (nkovacs)
 - Bug #186: Fixed incorrect database name exception (zlakomanoff, shirase)
 - Bug #200: Fixed Pjax and Listview with CRUD generator (ariestattoo)
+- Bug #271: Fixed absolute namespace of model class in form generator (CeBe, amin3mej)
 - Enh #131: Allow using table comments for PHPdoc property description (stmswitcher, michaelarnauts)
 - Enh #252: Added meta tag to prevent indexing of debug by search engines in case it's exposed (bashkarev)
 - Enh: `yii\gii\Module::defaultVersion()` implemented to pick up 'yiisoft/yii2-gii' extension version (klimov-paul)
