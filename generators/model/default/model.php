@@ -20,6 +20,7 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>;
 
 use Yii;
+use <?= ltrim($generator->baseClass, '\\') ?>;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -34,7 +35,7 @@ use Yii;
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
+class <?= $className ?> extends <?= substr(strrchr(ltrim($generator->baseClass, '\\'), "\\"), 1) . "\n" ?>
 {
     /**
      * @inheritdoc
