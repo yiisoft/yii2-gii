@@ -298,7 +298,7 @@ class Generator extends \yii\gii\Generator
             return 'datetime';
         } elseif (stripos($column->name, 'email') !== false) {
             return 'email';
-        } elseif (stripos($column->name, 'url') !== false) {
+        } elseif (preg_match('/(\b|[_-])url(\b|[_-])/i', $column->name)) {
             return 'url';
         } else {
             return 'text';

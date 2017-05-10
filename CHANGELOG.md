@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
+- Bug #198: Fixed false-positive detection of URL fields in CRUD generator (cebe)
 - Bug #255: Fixed error when getting database driver name when db is not an instance of `yii\db\Connection` (MKiselev)
 - Bug #97: Fixed errors and wrong directories created when using backslash in view paths and output paths of CRUD, Controller and Extension generators (lubosdz, samdark)
 - Bug #224: Add default validator with null value for integers when db is PostgreSQL (MKiselev)
