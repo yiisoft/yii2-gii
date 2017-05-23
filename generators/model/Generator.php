@@ -858,11 +858,15 @@ class Generator extends \yii\gii\Generator
         $patterns[] = "/^{$db->tablePrefix}(.*?)$/";
         $patterns[] = "/^(.*?){$db->tablePrefix}$/";
         if (strpos($this->tableName, '*') !== false) {
-            $pattern = $this->tableName;
-            if (($pos = strrpos($pattern, '.')) !== false) {
-                $pattern = substr($pattern, $pos + 1);
+            $bulkPattern = $this->tableName;
+            if (($pos = strrpos($bulkPattern, '.')) !== false) {
+                $bulkPattern = substr($bulkPattern, $pos + 1);
             }
-            $patterns[] = '/^' . str_replace('*', '(\w+)', $pattern) . '$/';
+            $bulkPattern = '/^' . str_replace('*', '(\w+)', $bulkPattern) . '$/';
+            if (preg_match($bulkPattern, $tableName, $matches)) {
+                $className = $matches[1];
+				return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
+            }
         }
         $className = $tableName;
         foreach ($patterns as $pattern) {
