@@ -86,9 +86,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
                 if(strpos($activeQueryClass, $generator->ns) === 0){
                     $activeQueryClass = StringHelper::basename($activeQueryClass);
                 }
-                echo $activeQueryClass;
+                echo '\yii\db\ActiveQuery|' . $activeQueryClass;
             } else {
-                echo (($generator->ns === $generator->queryNs) ? $relation[1]: '\\' . $generator->queryNs . '\\' . $relation[1]) . 'Query';
+                echo '\yii\db\ActiveQuery|' . (($generator->ns === $generator->queryNs) ? $relation[1]: '\\' . $generator->queryNs . '\\' . $relation[1]) . 'Query';
             }
         } else {
             echo '\yii\db\ActiveQuery';
