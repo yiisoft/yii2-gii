@@ -76,25 +76,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php foreach ($relations as $name => $relation): ?>
 
     /**
-     * @return <?php
-        if ($queryClassName) {
-            $queryClassRealName = '\\' . $generator->queryNs . '\\' . $relation[1];
-            if (class_exists($queryClassRealName, true) && is_subclass_of($queryClassRealName, '\yii\db\BaseActiveRecord')) {
-                /** @var \yii\db\ActiveQuery $activeQuery */
-                $activeQuery = $queryClassRealName::find();
-                $activeQueryClass = $activeQuery::className();
-                if(strpos($activeQueryClass, $generator->ns) === 0){
-                    $activeQueryClass = StringHelper::basename($activeQueryClass);
-                }
-                echo '\yii\db\ActiveQuery|' . $activeQueryClass;
-            } else {
-                echo '\yii\db\ActiveQuery|' . (($generator->ns === $generator->queryNs) ? $relation[1]: '\\' . $generator->queryNs . '\\' . $relation[1]) . 'Query';
-            }
-        } else {
-            echo '\yii\db\ActiveQuery';
-        }
-        echo "\n";
-    ?>
+     * @return <?= $relationsClassHints[$name] . "\n" ?>
      */
     public function get<?= $name ?>()
     {
