@@ -298,7 +298,7 @@ class Generator extends \yii\gii\Generator
             return 'datetime';
         } elseif (stripos($column->name, 'email') !== false) {
             return 'email';
-        } elseif (stripos($column->name, 'url') !== false) {
+        } elseif (preg_match('/(\b|[_-])url(\b|[_-])/i', $column->name)) {
             return 'url';
         } else {
             return 'text';
@@ -425,11 +425,8 @@ class Generator extends \yii\gii\Generator
                     $hashConditions[] = "'{$column}' => \$this->{$column},";
                     break;
                 default:
-                    if ($this->getClassDbDriverName() === 'pgsql') {
-                        $likeConditions[] = "->andFilterWhere(['ilike', '{$column}', \$this->{$column}])";
-                    } else {
-                        $likeConditions[] = "->andFilterWhere(['like', '{$column}', \$this->{$column}])";
-                    }
+                    $likeKeyword = $this->getClassDbDriverName() === 'pgsql' ? 'ilike' : 'like';
+                    $likeConditions[] = "->andFilterWhere(['{$likeKeyword}', '{$column}', \$this->{$column}])";                    
                     break;
             }
         }
@@ -554,13 +551,15 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return string driver name of modelClass db connection.
+     * @return string|null driver name of modelClass db connection.
+     * In case db is not instance of \yii\db\Connection null will be returned.
      * @since 2.0.6
      */
     protected function getClassDbDriverName()
     {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
-        return $class::getDb()->driverName;
+        $db = $class::getDb();
+        return $db instanceof \yii\db\Connection ? $db->driverName : null;
     }
 }
