@@ -16,9 +16,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
-$this->title = <?= strtr($generator->generateString('Update {modelClass}: ', ['modelClass' => '{modelClass}']), [
-        '\'{modelClass}\'' => $generator->generateString(Inflector::camel2words(StringHelper::basename($generator->modelClass)))
-]) ?> . $model-><?= $generator->getNameAttribute() ?>;
+$this->title = <?= strtr($generator->generateString('Update ' .
+    Inflector::camel2words(StringHelper::basename($generator->modelClass)) .
+    ': {nameAttribute}', ['nameAttribute' => '{nameAttribute}']), [
+    '\'{nameAttribute}\'' => '$model->' . $generator->getNameAttribute()
+]) ?>;
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
 $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
