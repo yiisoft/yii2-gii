@@ -240,7 +240,7 @@ yii.gii = (function ($) {
                 }
                 if ($('#generator-modelclass').val() === '' && tableName && tableName.indexOf('*') === -1) {
                     var modelClass = '';
-                    $.each(tableName.split('_'), function() {
+                    $.each(tableName.split(/\.|\_/), function() {
                         if(this.length>0)
                             modelClass+=this.substring(0,1).toUpperCase()+this.substring(1);
                     });

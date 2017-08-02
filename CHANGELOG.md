@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
+- Bug #290: Fixed model generator to work properly with `schema.table` as table name (SwoDs)
 - Bug #198: Fixed false-positive detection of URL fields in CRUD generator (cebe)
 - Bug #255: Fixed error when getting database driver name when db is not an instance of `yii\db\Connection` (MKiselev)
 - Bug #97: Fixed errors and wrong directories created when using backslash in view paths and output paths of CRUD, Controller and Extension generators (lubosdz, samdark)
@@ -34,6 +35,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #274: Added `useTablePrefix` and `generateQuery` to `stickyAttributes` (luyi61)
 - Enh #249: unique validation rule is now generated for tables with multiple primary keys (dmirogin)
 - Enh #287: Model generator is now generated relation's hints with target ActiveQuery class (bscheshirwork)
+- Chg #246: Changed the way CRUD generator translates "Update X id". Now it's a whole string because of translation difficulties  (bscheshirwork)
 
 
 
