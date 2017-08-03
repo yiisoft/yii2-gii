@@ -34,7 +34,7 @@ Yii Framework 2 gii extension Change Log
 - Chg: Updated version constraint for `yiisoft/yii2` in extension template to `~2.0.0` to ensure compatibility when 2.1 is released (cebe)
 - Bug #274: Added `useTablePrefix` and `generateQuery` to `stickyAttributes` (luyi61)
 - Enh #249: unique validation rule is now generated for tables with multiple primary keys (dmirogin)
-- Enh #287: Model generator is now generated relation's hints with target ActiveQuery class (bscheshirwork)
+- Enh #287: Model generator is now generating relation's phpdoc hints with target ActiveQuery class (bscheshirwork)
 - Chg #246: Changed the way CRUD generator translates "Update X id". Now it's a whole string because of translation difficulties  (bscheshirwork)
 
 
