@@ -6,10 +6,9 @@
  * For example to change PostgreSQL username and password your `config.local.php` should
  * contain the following:
  *
-<?php
-$config['databases']['pgsql']['username'] = 'yiitest';
-$config['databases']['pgsql']['password'] = 'changeme';
-
+ * <?php
+ * $config['databases']['pgsql']['username'] = 'yiitest';
+ * $config['databases']['pgsql']['password'] = 'changeme';
  */
 
 $config = [
