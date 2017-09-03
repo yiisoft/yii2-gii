@@ -315,7 +315,7 @@ class Generator extends \yii\gii\Generator
                     /** @var \yii\db\ActiveQuery $activeQuery */
                     $activeQuery = $queryClassRealName::find();
                     $activeQueryClass = $activeQuery::className();
-                    if(strpos($activeQueryClass, $this->ns) === 0){
+                    if (strpos($activeQueryClass, $this->ns) === 0){
                         $activeQueryClass = StringHelper::basename($activeQueryClass);
                     }
                     $result[$name] = '\yii\db\ActiveQuery|' . $activeQueryClass;
