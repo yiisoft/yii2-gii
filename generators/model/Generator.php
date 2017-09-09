@@ -43,6 +43,7 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
+    public $fkColumnIdentifiers = ['id'];
 
 
     /**
@@ -684,11 +685,7 @@ class Generator extends \yii\gii\Generator
             $baseModel = new $baseClass();
             $baseModel->setAttributes([]);
         }
-        $string_replacements = [
-            'id',
-            'code',
-        ];
-        foreach ($string_replacements as $str) {
+        foreach ($this->fkColumnIdentifiers as $str) {
             if (!empty($key) && strcasecmp($key, $str)) {
                 if (substr_compare($key, $str, strlen($str)*-1, strlen($str), true) === 0) {
                     $key = rtrim(substr($key, 0, strlen($str)*-1), '_');
