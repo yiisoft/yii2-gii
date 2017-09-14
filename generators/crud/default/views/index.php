@@ -48,7 +48,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         if (++$count < 6) {
             echo "            '" . $name . "',\n";
         } else {
-            echo "            // '" . $name . "',\n";
+            echo "           // '" . $name . "',\n";
         }
     }
 } else {
@@ -57,7 +57,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         if (++$count < 6) {
             echo "            '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
         } else {
-            echo "            // '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
+            echo "           // '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
         }
     }
 }
