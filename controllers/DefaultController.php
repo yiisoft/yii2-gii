@@ -40,20 +40,22 @@ class DefaultController extends Controller
         $generator = $this->loadGenerator($id);
         $params = ['generator' => $generator, 'id' => $id];
 
-        $preview = Yii::$app->request->post('preview');
-        $generate = Yii::$app->request->post('generate');
-        $answers = Yii::$app->request->post('answers');
+        if (Yii::$app->request->isPost) {
+            $preview = Yii::$app->request->post('preview');
+            $generate = Yii::$app->request->post('generate');
+            $answers = Yii::$app->request->post('answers');
 
-        if ($preview !== null || $generate !== null) {
-            if ($generator->validate()) {
-                $generator->saveStickyAttributes();
-                $files = $generator->generate();
-                if ($generate !== null && !empty($answers)) {
-                    $params['hasError'] = !$generator->save($files, (array) $answers, $results);
-                    $params['results'] = $results;
-                } else {
-                    $params['files'] = $files;
-                    $params['answers'] = $answers;
+            if ($preview !== null || $generate !== null) {
+                if ($generator->validate()) {
+                    $generator->saveStickyAttributes();
+                    $files = $generator->generate();
+                    if ($generate !== null && !empty($answers)) {
+                        $params['hasError'] = !$generator->save($files, (array)$answers, $results);
+                        $params['results'] = $results;
+                    } else {
+                        $params['files'] = $files;
+                        $params['answers'] = $answers;
+                    }
                 }
             }
         }
@@ -125,7 +127,9 @@ class DefaultController extends Controller
         if (isset($this->module->generators[$id])) {
             $this->generator = $this->module->generators[$id];
             $this->generator->loadStickyAttributes();
-            $this->generator->load(Yii::$app->request->post());
+            if (Yii::$app->request->isPost) {
+                $this->generator->load(Yii::$app->request->post());
+            }
 
             return $this->generator;
         } else {
