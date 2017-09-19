@@ -171,6 +171,6 @@ if (count($pks) === 1) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(<?= $generator->generateString('The requested page does not exist.') ?>);
     }
 }
