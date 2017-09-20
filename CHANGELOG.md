@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
+- Enh #174: NotFoundHttpException's message in CRUD uses i18n (bscheshirwork)
 - Enh #293: Do not generate redundant `else` after `return` (bscheshirwork)
 - Bug #290: Fixed model generator to work properly with `schema.table` as table name (SwoDs)
 - Bug #198: Fixed false-positive detection of URL fields in CRUD generator (cebe)
