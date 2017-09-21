@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
-- Chg #300: Remove space from commented attribute lines in CRUD index view. Uncomment this line still make tabs is equal (bscheshirwork)
+- Enh #300: Removed space from commented out code so when uncommenting in IDEs there's no extra spacing (bscheshirwork)
 - Enh #293: Do not generate redundant `else` after `return` (bscheshirwork)
 - Bug #290: Fixed model generator to work properly with `schema.table` as table name (SwoDs)
 - Bug #198: Fixed false-positive detection of URL fields in CRUD generator (cebe)
