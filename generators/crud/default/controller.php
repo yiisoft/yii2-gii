@@ -61,6 +61,33 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     }
 
     /**
+     * Finds the <?= $modelClass ?> model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
+     * @return <?=                   $modelClass ?> the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel(<?= $actionParams ?>)
+    {
+<?php
+if (count($pks) === 1) {
+    $condition = '$id';
+} else {
+    $condition = [];
+    foreach ($pks as $pk) {
+        $condition[] = "'$pk' => \$$pk";
+    }
+    $condition = '[' . implode(', ', $condition) . ']';
+}
+?>
+        if (($model = <?= $modelClass ?>::findOne(<?= $condition ?>)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(<?= $generator->generateString('The requested page does not exist.') ?>);
+    }
+
+    /**
      * Lists all <?= $modelClass ?> models.
      * @return mixed
      */
@@ -145,32 +172,5 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $this->findModel(<?= $actionParams ?>)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the <?= $modelClass ?> model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return <?=                   $modelClass ?> the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel(<?= $actionParams ?>)
-    {
-<?php
-if (count($pks) === 1) {
-    $condition = '$id';
-} else {
-    $condition = [];
-    foreach ($pks as $pk) {
-        $condition[] = "'$pk' => \$$pk";
-    }
-    $condition = '[' . implode(', ', $condition) . ']';
-}
-?>
-        if (($model = <?= $modelClass ?>::findOne(<?= $condition ?>)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(<?= $generator->generateString('The requested page does not exist.') ?>);
     }
 }
