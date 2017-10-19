@@ -102,4 +102,22 @@ class GeneratorsTest extends GiiTestCase
 
         $this->assertNotEmpty($generator->generate());
     }
+
+    public function testTemplateValidation()
+    {
+        $generator = new ModelGenerator();
+
+        // Validate default template
+        $generator->template = 'default';
+        $this->assertTrue($generator->validate(['template']));
+
+        // Validate custom template
+        \Yii::setAlias('@customTemplate', __DIR__ . '/data/templates');
+        $generator->templates = [
+            'custom' => '@customTemplate/custom'
+        ];
+        $generator->template = 'custom';
+
+        $this->assertTrue($generator->validate(['template']));
+    }
 }
