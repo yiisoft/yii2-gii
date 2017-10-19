@@ -330,7 +330,7 @@ abstract class Generator extends Model
         } else {
             $templatePath = $this->templates[$this->template];
             foreach ($this->requiredTemplates() as $template) {
-                if (!is_file($templatePath . '/' . $template)) {
+                if (!is_file(Yii::getAlias($templatePath . '/' . $template))) {
                     $this->addError('template', "Unable to find the required code template file '$template'.");
                 }
             }
