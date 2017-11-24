@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.6 under development
 -----------------------
 
+- Enh #315: Make generators/model/Generator generateProperties protected to be able to call it from overriting Class (claudejanz)
 - Enh #295: Allowed to use aliases in generator's templates (dmirogin)
 - Enh #300: Removed space from commented out code so when uncommenting in IDEs there's no extra spacing (bscheshirwork)
 - Enh #174: NotFoundHttpException's message in CRUD uses i18n (bscheshirwork)
