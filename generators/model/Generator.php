@@ -248,7 +248,7 @@ class Generator extends \yii\gii\Generator
      * @return array the generated properties (property => type)
      * @since 2.0.6
      */
-    private function generateProperties($table)
+    protected function generateProperties($table)
     {
         $properties = [];
         foreach ($table->columns as $column) {
