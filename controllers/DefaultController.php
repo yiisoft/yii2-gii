@@ -28,7 +28,9 @@ class DefaultController extends Controller
      */
     public $generator;
     
-    
+    /**
+     * @inheritdoc
+     */
     public function beforeAction($action)
     {
         Yii::$app->response->format = Response::FORMAT_HTML;
