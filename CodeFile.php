@@ -8,7 +8,7 @@
 namespace yii\gii;
 
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii\gii\components\DiffRendererHtmlInline;
 use yii\helpers\Html;
 
@@ -22,7 +22,7 @@ use yii\helpers\Html;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class CodeFile extends Object
+class CodeFile extends BaseObject
 {
     /**
      * The code file is new.
