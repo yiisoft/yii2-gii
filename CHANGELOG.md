@@ -3,6 +3,7 @@ Yii Framework 2 gii extension Change Log
 
 2.0.6 under development
 -----------------------
+- Bug #318: Use `yii\base\BaseObject` instead `yii\base\Object` in `CodeFile.php` (MKiselev)
 - Bug #317: Force HTML content type in response to display HTML when app is configured for REST API (microThread)
 - Enh #315: Make `yii\gii\generators\model\Generator` `generateProperties` protected (claudejanz)
 - Enh #295: Allowed to use aliases in generator's templates (dmirogin)
