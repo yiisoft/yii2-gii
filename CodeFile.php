@@ -131,7 +131,7 @@ class CodeFile extends BaseObject
     /**
      * Returns preview or false if it cannot be rendered
      *
-     * @return boolean|string
+     * @return bool|string
      */
     public function preview()
     {
@@ -153,7 +153,7 @@ class CodeFile extends BaseObject
     /**
      * Returns diff or false if it cannot be calculated
      *
-     * @return boolean|string
+     * @return bool|string
      */
     public function diff()
     {

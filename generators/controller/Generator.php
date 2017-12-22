@@ -20,6 +20,7 @@ use yii\helpers\StringHelper;
  * @property string $controllerFile The controller class file path. This property is read-only.
  * @property string $controllerID The controller ID. This property is read-only.
  * @property string $controllerNamespace The namespace of the controller class. This property is read-only.
+ * @property string $controllerSubPath The controller sub path. This property is read-only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0

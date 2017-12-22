@@ -27,7 +27,8 @@ class DefaultController extends Controller
      * @var \yii\gii\Generator
      */
     public $generator;
-    
+
+
     /**
      * @inheritdoc
      */
