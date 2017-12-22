@@ -10,7 +10,7 @@ namespace yii\gii;
 use yii\web\AssetBundle;
 
 /**
- * This declares the asset files for jQuery 'typeahead' plugin.
+ * Declares the asset files for jQuery 'typeahead' plugin.
  *
  * @see http://twitter.github.io/typeahead.js/
  *

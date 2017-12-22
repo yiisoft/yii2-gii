@@ -3,22 +3,23 @@ Yii Framework 2 gii extension Change Log
 
 2.0.6 under development
 -----------------------
-- Enh #319: Added @throws tags for 404 exceptions in CRUD actions (and800)
+
+- Enh #319: Added `@throws` tags for 404 exceptions in CRUD actions (and800)
 - Bug #318: Use `yii\base\BaseObject` instead `yii\base\Object` in `CodeFile.php` (MKiselev)
 - Bug #317: Force HTML content type in response to display HTML when app is configured for REST API (microThread)
 - Enh #315: Make `yii\gii\generators\model\Generator` `generateProperties` protected (claudejanz)
 - Enh #295: Allowed to use aliases in generator's templates (dmirogin)
 - Enh #300: Removed space from commented out code so when uncommenting in IDEs there's no extra spacing (bscheshirwork)
-- Enh #174: NotFoundHttpException's message in CRUD uses i18n (bscheshirwork)
+- Enh #174: `NotFoundHttpException` message in CRUD now uses i18n (bscheshirwork)
 - Enh #293: Do not generate redundant `else` after `return` (bscheshirwork)
 - Bug #290: Fixed model generator to work properly with `schema.table` as table name (SwoDs)
 - Bug #198: Fixed false-positive detection of URL fields in CRUD generator (cebe)
 - Bug #255: Fixed error when getting database driver name when db is not an instance of `yii\db\Connection` (MKiselev)
 - Bug #97: Fixed errors and wrong directories created when using backslash in view paths and output paths of CRUD, Controller and Extension generators (lubosdz, samdark)
-- Bug #224: Add default validator with null value for integers when db is PostgreSQL (MKiselev)
-- Enh #223: Use ilike operator when generating search model for PostgreSQL (MKiselev, arogachev)
+- Bug #224: Add default validator with `null` value for integers when db is PostgreSQL (MKiselev)
+- Enh #223: Use `ilike` operator when generating search model for PostgreSQL (MKiselev, arogachev)
 - Enh #241: Remove message for unique validator (MKiselev)
-- Enh #238: Use int/bool instead of integer/boolean in phpdoc blocks generated (MKiselev)
+- Enh #238: Use `int`/`bool` instead of `integer`/`boolean` in phpdoc blocks generated (MKiselev)
 - Bug #182: Fixed wrong link after generating controller located in sub-namespace of controllers namespace (MKiselev)
 - Enh #234: Changed submit button label from "Update" and "Create" to "Save" (MKiselev)
 - Bug #232: Fixed Help documentation link (drdim)
@@ -31,18 +32,16 @@ Yii Framework 2 gii extension Change Log
 - Bug #126, #139: Fixed model generator form validation when "ActiveQuery Class" is invalid but unused (kikimor)
 - Enh #167: Added "generating relations from current schema" option to model generator (zlakomanoff)
 - Bug #166: Fixed "Trying to get property of non-object" during model generation (zlakomanoff)
-- Bug #179: Fixed indentation and newlines for Pjax widget in crud index view (nkovacs)
+- Bug #179: Fixed indentation and newlines for Pjax widget in CRUD index view (nkovacs)
 - Bug #186: Fixed incorrect database name exception (zlakomanoff, shirase)
 - Bug #200: Fixed Pjax and Listview with CRUD generator (ariestattoo)
 - Bug #271: Fixed absolute namespace of model class in form generator (CeBe, amin3mej)
 - Enh #131: Allow using table comments for PHPdoc property description (stmswitcher, michaelarnauts)
 - Enh #252: Added meta tag to prevent indexing of debug by search engines in case it's exposed (bashkarev)
 - Enh: `yii\gii\Module::defaultVersion()` implemented to pick up 'yiisoft/yii2-gii' extension version (klimov-paul)
-- Chg: Updated version constraint for `yiisoft/yii2` in extension template to `~2.0.0` to ensure compatibility when 2.1 is released (cebe)
 - Bug #274: Added `useTablePrefix` and `generateQuery` to `stickyAttributes` (luyi61)
 - Enh #249: unique validation rule is now generated for tables with multiple primary keys (dmirogin)
 - Chg #246: Changed the way CRUD generator translates "Update X id". Now it's a whole string because of translation difficulties  (bscheshirwork)
-
 
 
 2.0.5 March 18, 2016
