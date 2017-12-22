@@ -1,6 +1,12 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
+2.0.7 under development
+-----------------------
+
+- no changes in this release.
+
+
 2.0.6 December 23, 2017
 -----------------------
 
