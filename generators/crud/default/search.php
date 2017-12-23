@@ -18,7 +18,7 @@ $rules = $generator->generateSearchRules();
 $labels = $generator->generateSearchLabels();
 $searchAttributes = $generator->getSearchAttributes();
 $searchConditions = $generator->generateSearchConditions();
-
+$tableSchema = $generator->getTableSchema();
 echo "<?php\n";
 ?>
 
@@ -32,9 +32,16 @@ use <?= ltrim($generator->modelClass, '\\') . (isset($modelAlias) ? " as $modelA
 /**
  * <?= $searchModelClass ?> represents the model behind the search form of `<?= $generator->modelClass ?>`.
  */
-class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $modelClass ?>
-
+class <?= $searchModelClass ?> extends Model
 {
+    <?php foreach ($searchAttributes as $attribute) : ?>/**
+     * @var <?= ($tableSchema !== false) ? $tableSchema->columns[$attribute]->phpType : 'mixed'?>
+
+     */
+    public $<?= $attribute ?>;
+    <?php endforeach ?>
+
+
     /**
      * @inheritdoc
      */
@@ -43,15 +50,6 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         return [
             <?= implode(",\n            ", $rules) ?>,
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
     }
 
     /**
