@@ -20,6 +20,7 @@ use yii\helpers\StringHelper;
  * @property string $controllerFile The controller class file path. This property is read-only.
  * @property string $controllerID The controller ID. This property is read-only.
  * @property string $controllerNamespace The namespace of the controller class. This property is read-only.
+ * @property string $controllerSubPath The controller sub path. This property is read-only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -137,7 +138,7 @@ class Generator extends \yii\gii\Generator
      */
     public function successMessage()
     {
-        return "The controller has been generated successfully." . $this->getLinkToTry();
+        return 'The controller has been generated successfully.' . $this->getLinkToTry();
     }
 
     /**
@@ -148,18 +149,17 @@ class Generator extends \yii\gii\Generator
      */
     private function getLinkToTry()
     {
-        $linkToTry = '';
-        if (strpos($this->controllerNamespace, Yii::$app->controllerNamespace) === 0) {
-            $actions = $this->getActionIDs();
-            if (in_array('index', $actions)) {
-                $route = $this->getControllerSubPath() . $this->getControllerID() . '/index';
-            } else {
-                $route = $this->getControllerSubPath() . $this->getControllerID() . '/' . reset($actions);
-            }
-            $linkToTry = ' You may ' . Html::a('try it now', Yii::$app->getUrlManager()->createUrl($route), ['target' => '_blank']) . '.';
+        if (strpos($this->controllerNamespace, Yii::$app->controllerNamespace) !== 0) {
+            return '';
         }
 
-        return $linkToTry;
+        $actions = $this->getActionIDs();
+        if (in_array('index', $actions, true)) {
+            $route = $this->getControllerSubPath() . $this->getControllerID() . '/index';
+        } else {
+            $route = $this->getControllerSubPath() . $this->getControllerID() . '/' . reset($actions);
+        }
+        return ' You may ' . Html::a('try it now', Yii::$app->getUrlManager()->createUrl($route), ['target' => '_blank', 'rel' => 'noopener noreferrer']) . '.';
     }
 
     /**
@@ -239,9 +239,9 @@ class Generator extends \yii\gii\Generator
     {
         if (empty($this->viewPath)) {
             return Yii::getAlias('@app/views/' . $this->getControllerSubPath() . $this->getControllerID() . "/$action.php");
-        } else {
-            return Yii::getAlias(str_replace('\\', '/', $this->viewPath) . "/$action.php");
         }
+
+        return Yii::getAlias(str_replace('\\', '/', $this->viewPath) . "/$action.php");
     }
 
     /**
