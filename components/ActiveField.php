@@ -23,7 +23,7 @@ class ActiveField extends \yii\widgets\ActiveField
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {

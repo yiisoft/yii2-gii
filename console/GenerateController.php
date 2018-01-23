@@ -49,7 +49,7 @@ class GenerateController extends Controller
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __get($name)
     {
@@ -57,7 +57,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __set($name, $value)
     {
@@ -65,7 +65,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -76,7 +76,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createAction($id)
     {
@@ -89,7 +89,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function actions()
     {
@@ -109,7 +109,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUniqueID()
     {
@@ -117,7 +117,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function options($id)
     {
@@ -137,7 +137,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getActionHelpSummary($action)
     {
@@ -150,7 +150,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getActionHelp($action)
     {
@@ -164,7 +164,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getActionArgsHelp($action)
     {
@@ -172,7 +172,7 @@ class GenerateController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getActionOptionsHelp($action)
     {

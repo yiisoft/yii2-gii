@@ -26,7 +26,7 @@ class GenerateAction extends \yii\base\Action
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {

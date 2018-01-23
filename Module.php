@@ -43,7 +43,7 @@ use yii\web\ForbiddenHttpException;
 class Module extends \yii\base\Module implements BootstrapInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $controllerNamespace = 'yii\gii\controllers';
     /**
@@ -81,7 +81,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function bootstrap($app)
     {
@@ -101,7 +101,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function beforeAction($action)
     {
@@ -169,7 +169,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      * @since 2.0.6
      */
     protected function defaultVersion()

@@ -37,7 +37,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
     }*/
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      * @return <?= $modelFullClassName ?>[]|array
      */
     public function all($db = null)
@@ -46,7 +46,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      * @return <?= $modelFullClassName ?>|array|null
      */
     public function one($db = null)

@@ -22,12 +22,12 @@ namespace <?= $ns ?>;
 class <?= $className ?> extends \yii\base\Module
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $controllerNamespace = '<?= $generator->getControllerNamespace() ?>';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
