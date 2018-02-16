@@ -28,11 +28,36 @@ use yii\widgets\ActiveForm;
 
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
 
-<?php foreach ($generator->getColumnNames() as $attribute) {
-    if (in_array($attribute, $safeAttributes)) {
-        echo "    <?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
+<?php
+
+$model = new $generator->modelClass();
+$attributePriorities = array_flip($model->safeAttributes());
+
+foreach ($model->validators as $validator) {
+    foreach ($validator->attributes as $attr) {
+        if (is_int($attributePriorities[$attr])
+            || $generator->validatorPriority($attributePriorities[$attr])
+                < $generator->validatorPriority($validator)
+        ) {
+            $attributePriorities[$attr] = $validator;
+        }
     }
-} ?>
+}
+
+foreach ($attributePriorities as $attribute => $validator) {
+    echo "    <?= ";
+    if (is_int($validator)
+        || $generator->validatorPriority($validator) === -1
+        || preg_match('/^(password|pass|passwd|passcode)$/i', $attribute)
+    ) {
+        // previously defined behavior
+        echo $generator->generateActiveField($attribute);
+    } else {
+        echo $generator->generateValidatorField($attribute, $validator);
+    }
+    echo " ?>\n\n";
+}
+    ?>
     <div class="form-group">
         <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('Save') ?>, ['class' => 'btn btn-success']) ?>
     </div>

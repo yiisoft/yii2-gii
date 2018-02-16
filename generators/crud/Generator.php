@@ -12,8 +12,10 @@ use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
 use yii\db\Schema;
 use yii\gii\CodeFile;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
+use yii\validators\Validator;
 use yii\web\Controller;
 
 /**
@@ -579,5 +581,134 @@ class Generator extends \yii\gii\Generator
         $class = $this->modelClass;
         $db = $class::getDb();
         return $db instanceof \yii\db\Connection ? $db->driverName : null;
+    }
+
+    public function validatorPriority(Validator $validator)
+    {
+        static $priorities = [
+            'yii\validators\NumberValidator' => 0,
+            'yii\validators\EmailValidator' => 1,
+            'yii\validators\BooleanValidator' => 2,
+            'yii\validators\RangeValidator' => 3,
+            'faryshta\\validators\\EnumValidator' => 4,
+            'yii\validators\DateValidator' => 5,
+            'yii\validators\CapchaValidator' => 6,
+            'yii\validators\FileValidator' => 7,
+            'yii\validators\ImageValidator' => 8,
+            'yii\validators\ExistValidator' => 9,
+        ];
+
+        return ArrayHelper::getValue($priorities, $validator->className(), -1);
+    }
+
+    public function generateValidatorField($attribute, $validator)
+    {
+        // space tab
+        static $t = [
+            '',
+            '    ',
+            '        ',
+            '            ',
+            '                ',
+        ];
+
+        // code to generate each attribute based on the validators saved sofar.
+        switch ($validator->className()) {
+
+            case 'yii\validators\NumberValidator':
+               return "\$form->field(\$model, '$attribute')->input('number')";
+            break;
+
+            case 'yii\validators\EmailValidator':
+                return "\$form->field(\$model, '$attribute')->input('email')";
+            break;
+
+            case 'yii\validators\BooleanValidator':
+               return "\$form->field(\$model, '$attribute')->checkbox()";
+            break;
+
+            case 'yii\validators\RangeValidator':
+                $field = "\$form->field(\$model, '$attribute')->dropDownList(\n"
+                    . "$t[2][\n";
+
+                foreach ($validator->range as $key) {
+                    $field .= "{$t[3]}'$key' => '$key',\n";
+                }
+
+                return $field . "{$t[2]}],\n"
+                    . "{$t[2]}['prompt' => "
+                        . "\$model->getAttributeLabel('$attribute')]\n"
+                    . "{$t[1]})";
+            break;
+
+            case 'faryshta\validators\EnumValidator':
+                $params = '';
+                if (!empty($validator->enumClass)) {
+                    $params .= "'enumClass' => '{$validator->enumClass}',";
+                }
+                if (!empty($validator->enumName)) {
+                    $params .= "'enumName' => '{$validator->enumName}',";
+                }
+                if (!empty($params)) {
+                    $params = ",\n{$t[2]}[$params]";
+                }
+
+                return "\$form->field(\$model, '$attribute')->widget(\n"
+                    . "{$t[2]}'faryshta\\widgets\\EnumDropdown'$params\n"
+                    . "{$t[1]})";
+            break;
+
+            case 'yii\validators\DateValidator':
+                return "\$form->field(\$model, '$attribute')->widget(\n"
+                    . "{$t[2]}'yii\jui\Datepicker',\n"
+                    . "{$t[2]}['dateFormat' => '{$validator->format}'],\n"
+                    . "{$t[1]})";
+            break;
+
+            case  'yii\validators\CapchaValidator':
+                return "\$form->field(\$model, '$attribute')->widget('yii\captcha\Captcha')";
+            break;
+
+            case 'yii\validators\FileValidator':
+            case 'yii\validators\ImageValidator':
+                return  "\$form->field(\$model, '$attribute')->fileInput()";
+            break;
+
+            case  'yii\validators\ExistValidator':
+                $targetAttribute = empty($validator->targetAttribute)
+                    ? $attribute
+                    : $validator->targetAttribute;
+
+                // if the attribute is an array for example ['id' => 'user_id']
+                // then the first key will be used as targetAttribute
+                if (is_array($targetAttribute)) {
+                    $targetAttribute = array_keys($targetAttribute);
+                    $targetAttribute = $targetAttribute[0];
+                }
+
+                $targetClass = empty($validator->targetClass)
+                    ? $model->className()
+                    : $validator->targetClass;
+
+                $field = "\$form->field(\$model, '$attribute')->dropDownList(\n"
+                    . "{$t[2]}$targetClass::find()\n"
+                    . "{$t[3]}->select(['$targetAttribute'])\n";
+
+                if (is_array($validator->filter)) {
+                    $field .= "{$t[3]}->andWhere([\n";
+                    foreach ($validator->filter as $key => $val) {
+                        $field .= "{$t[4]}'$key' => '$val',\n";
+                    }
+                    $field .= "{$t[3]}])\n";
+                }
+
+                echo "{$field}{$t[3]}->indexBy('$targetAttribute')\n"
+                    . "{$t[3]}->column(),\n"
+                    . "{$t[2]}['prompt' => "
+                        . "\$model->getAttributeLabel('$attribute')]\n"
+                    . "{$t[1]})";
+            break;
+            default: return $validator->className();
+        }
     }
 }
