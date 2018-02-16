@@ -19,8 +19,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "yiisoft/yii2": "~2.0.13",
-        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2": "2.1.x-dev",
+        "yiisoft/yii2-bootstrap": "2.2.x-dev",
         "phpspec/php-diff": ">=1.0.2",
         "bower-asset/typeahead.js": "0.10.* | ~0.11.0"
     },
@@ -28,6 +28,9 @@
         "psr-4": {
             "yii\\gii\\": "src"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {"yiiunit\\gii\\": "tests/"}
     },
     "extra": {
         "branch-alias": {

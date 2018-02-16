@@ -32,7 +32,7 @@ php composer.phar require --dev --prefer-dist yiisoft/yii2-gii
 or add
 
 ```
-"yiisoft/yii2-gii": "~2.0.0"
+"yiisoft/yii2-gii": "~2.1.0"
 ```
 
 to the require-dev section of your `composer.json` file.
@@ -48,7 +48,7 @@ return [
     'bootstrap' => ['gii'],
     'modules' => [
         'gii' => [
-            'class' => 'yii\gii\Module',
+            'class' => yii\gii\Module::class,
         ],
         // ...
     ],

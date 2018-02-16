@@ -14,7 +14,7 @@ php composer.phar require --dev --prefer-dist yiisoft/yii2-gii
 or add
 
 ```
-"yiisoft/yii2-gii": "~2.0.0"
+"yiisoft/yii2-gii": "~2.1.0"
 ```
 
 to the require-dev section of your `composer.json` file.
@@ -29,7 +29,7 @@ return [
     'bootstrap' => ['gii'],
     'modules' => [
         'gii' => [
-            'class' => 'yii\gii\Module',
+            'class' => yii\gii\Module::class,
         ],
         // ...
     ],
@@ -54,7 +54,7 @@ http://localhost/path/to/index.php/gii
 >
 ```php
 'gii' => [
-    'class' => 'yii\gii\Module',
+    'class' => yii\gii\Module::class,
     'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'] // adjust this to your needs
 ],
 ```
@@ -86,10 +86,10 @@ In basic project template configuration structure is a bit different so Gii shou
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = 'yii\debug\Module';
+    $config['modules']['debug'] = yii\debug\Module::class;
 
     $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = 'yii\gii\Module'; // <--- here
+    $config['modules']['gii'] = yii\gii\Module::class; // <--- here
 }
 ```
 
@@ -99,11 +99,11 @@ So in order to adjust IP address you need to do it like the following:
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = 'yii\debug\Module';
+    $config['modules']['debug'] = yii\debug\Module::class;
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
+        'class' => yii\gii\Module::class,
         'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'],
     ];
 }

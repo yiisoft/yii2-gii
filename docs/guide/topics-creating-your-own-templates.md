@@ -38,11 +38,11 @@ Now you need to tell Gii about our template. The setting is made in the config f
 // ...
 if (YII_ENV_DEV) {    
     $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',      
+        'class' => yii\gii\Module::classs,
         'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'],  
         'generators' => [ //here
             'crud' => [ // generator name
-                'class' => 'yii\gii\generators\crud\Generator', // generator class
+                'class' => yii\gii\generators\crud\Generator::class, // generator class
                 'templates' => [ //setting for out templates
                     'myCrud' => '@app/myTemplates/crud/default', // template name => path to template
                 ]
