@@ -1,10 +1,10 @@
 <?php
 
-namespace yiiunit\extensions\gii\generators;
+namespace yiiunit\gii\generators;
 
 use yii\db\ColumnSchema;
 use yii\gii\generators\crud\Generator;
-use yiiunit\extensions\gii\TestCase;
+use yiiunit\gii\TestCase;
 
 class CrudGeneratorTest extends TestCase
 {

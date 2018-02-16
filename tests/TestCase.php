@@ -1,6 +1,6 @@
 <?php
 
-namespace yiiunit\extensions\gii;
+namespace yiiunit\gii;
 
 use yii\di\Container;
 use yii\helpers\ArrayHelper;

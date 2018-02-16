@@ -1,8 +1,6 @@
 <?php
 
-
-namespace yiiunit\extensions\gii;
-
+namespace yiiunit\gii;
 
 use yii\db\ActiveRecord;
 

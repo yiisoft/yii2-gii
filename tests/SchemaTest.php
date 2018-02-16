@@ -1,8 +1,10 @@
 <?php
-namespace yiiunit\extensions\gii;
+
+namespace yiiunit\gii;
 
 use yii\gii\generators\model\Generator as ModelGenerator;
 use Yii;
+
 /**
  * SchemaTest checks that Gii model generator supports multiple schemas
  * @group gii
