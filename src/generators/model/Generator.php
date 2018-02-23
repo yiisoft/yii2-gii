@@ -322,7 +322,7 @@ class Generator extends \yii\gii\Generator
                     $types['boolean'][] = $column->name;
                     break;
                 case Schema::TYPE_FLOAT:
-                case 'double': // Schema::TYPE_DOUBLE, which is available since Yii 2.0.3
+                case Schema::TYPE_DOUBLE:
                 case Schema::TYPE_DECIMAL:
                 case Schema::TYPE_MONEY:
                     $types['number'][] = $column->name;
