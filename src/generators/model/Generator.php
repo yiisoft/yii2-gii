@@ -285,7 +285,8 @@ class Generator extends \yii\gii\Generator
             } elseif (!strcasecmp($column->name, 'id')) {
                 $labels[$column->name] = 'ID';
             } else {
-                $label = Inflector::camel2words($column->name);
+                // COMPLETED_TODO - naming - fix label generation when processing upper-cased string in column name
+                $label = str_replace('  ', ' ', Inflector::camel2words($column->name));
                 if (!empty($label) && substr_compare($label, ' id', -3, 3, true) === 0) {
                     $label = substr($label, 0, -3) . ' ID';
                 }
