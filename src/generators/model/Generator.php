@@ -859,6 +859,20 @@ class Generator extends \yii\gii\Generator
             return $this->classNames[$tableName];
         }
 
+        // COMPLETED_TODO : un-list do from reserved words, and map it to delivery order
+        switch ($tableName) {
+            case 'DO':
+                $tableName = 'DELIVERY_ORDER';
+                break;
+            case 'DO_LINE':
+                $tableName = 'DELIVERY_ORDER_LINE';
+                break;
+            case 'DO_LINE_E':
+                $tableName = 'DELIVERY_ORDER_LINE_E';
+                break;
+            default:
+                break;
+        }
         $schemaName = '';
         $fullTableName = $tableName;
         if (($pos = strrpos($tableName, '.')) !== false) {
