@@ -43,7 +43,14 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
-    // @TODO - naming - 'use last column in foreign-keys when generating relation name' SHOULD BE CONFIGURABLE
+    // @TODO - extended model/query generation SHOULD BE CONFIGURABLE via boolean property
+    // COMPLETED_TODO - generate extended model file
+    public $extendedModelNs; // = 'app\models\extended';
+    // COMPLETED_TODO - generate extended query file
+    public $extendedQueryNs; // = 'app\models\extended\query';
+    // @TODO - rules() generation SHOULD BE CONFIGURABLE, whether it is generated in extended model, instead of in base model
+    // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+    public $doNotGenerateGetDb = false;
 
 
     /**
@@ -85,6 +92,8 @@ class Generator extends \yii\gii\Generator
             [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema'], 'boolean'],
             [['enableI18N'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
+            // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+            [['doNotGenerateGetDb'], 'boolean'],
         ]);
     }
 
@@ -107,6 +116,8 @@ class Generator extends \yii\gii\Generator
             'queryClass' => 'ActiveQuery Class',
             'queryBaseClass' => 'ActiveQuery Base Class',
             'useSchemaName' => 'Use Schema Name',
+            // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+            'doNotGenerateGetDb' => 'Do not generate GetDb()',
         ]);
     }
 
@@ -147,6 +158,9 @@ class Generator extends \yii\gii\Generator
                 the namespace part as it is specified in "ActiveQuery Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveQuery classes will be generated.',
             'queryBaseClass' => 'This is the base class of the new ActiveQuery class. It should be a fully qualified namespaced class name.',
+            // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+            'doNotGenerateGetDb' => 'This indicates whether the generator should generate <code>static::getDb()</code> in the base model or not.
+                By default, <code>static::getDb()</code> will be generated when gii/model not using default DB component',
         ]);
     }
 
@@ -228,6 +242,13 @@ class Generator extends \yii\gii\Generator
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
                 $this->render('model.php', $params)
             );
+            // COMPLETED_TODO - generate extended model file
+            if ($this->extendedModelNs && file_exists($this->templatePath . DIRECTORY_SEPARATOR . 'model-extended.php')) {
+                $files[] = new CodeFile(
+                    Yii::getAlias('@' . str_replace('\\', '/', $this->extendedModelNs)) . '/' . $modelClassName . '.php',
+                    $this->render('model-extended.php', $params)
+                );
+            }
 
             // query :
             if ($queryClassName) {
@@ -236,6 +257,15 @@ class Generator extends \yii\gii\Generator
                 $files[] = new CodeFile(
                     Yii::getAlias('@' . str_replace('\\', '/', $this->queryNs)) . '/' . $queryClassName . '.php',
                     $this->render('query.php', $params)
+                );
+            }
+            // COMPLETED_TODO - generate extended query file
+            if ($queryClassName && $this->extendedQueryNs && file_exists($this->templatePath . DIRECTORY_SEPARATOR . 'query-extended.php')) {
+                $params['className'] = $queryClassName;
+                $params['modelClassName'] = $modelClassName;
+                $files[] = new CodeFile(
+                    Yii::getAlias('@' . str_replace('\\', '/', $this->extendedQueryNs)) . '/' . $queryClassName . '.php',
+                    $this->render('query-extended.php', $params)
                 );
             }
         }
