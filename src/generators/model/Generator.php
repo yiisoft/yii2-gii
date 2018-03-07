@@ -48,6 +48,7 @@ class Generator extends \yii\gii\Generator
     public $extendedModelNs; // = 'app\models\extended';
     // COMPLETED_TODO - generate extended query file
     public $extendedQueryNs; // = 'app\models\extended\query';
+    // @TODO - rules() generation SHOULD BE CONFIGURABLE, whether it is generated in extended model, instead of in base model
     // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
     public $doNotGenerateGetDb = false;
 

@@ -54,6 +54,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     }
 <?php endif; ?>
 
+<?php // @TODO - rules() generation SHOULD BE CONFIGURABLE, whether it is generated in extended model, instead of in base model ?>
     /**
      * {@inheritdoc}
      */
