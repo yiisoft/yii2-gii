@@ -510,7 +510,8 @@ class Generator extends \yii\gii\Generator
 
                     // Add relation for this table
                     $link = $this->generateRelationLink(array_flip($refs));
-                    $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
+                    // @COMPLETED_TODO - naming - use last column in foreign-keys when generating relation name
+                    $relationName = $this->generateRelationName($relations, $table, $fks[count($fks)-1], false);
                     $relations[$table->fullName][$relationName] = [
                         "return \$this->hasOne($refClassName::className(), $link);",
                         $refClassName,
@@ -565,7 +566,8 @@ class Generator extends \yii\gii\Generator
                     unset($refs[0]);
                     $fks = array_keys($refs);
 
-                    $leftRelationName = $this->generateRelationName($relationNames, $table, $fks[0], false);
+                    // @COMPLETED_TODO - naming - use last column in foreign-keys when generating relation name
+                    $leftRelationName = $this->generateRelationName($relationNames, $table, $fks[count($fks)-1], false);
                     $relationNames[$table->fullName][$leftRelationName] = true;
                     $hasMany = $this->isHasManyRelation($table, $fks);
                     $rightRelationName = $this->generateRelationName(
