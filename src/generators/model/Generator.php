@@ -43,6 +43,7 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
+    // @TODO - naming - 'use last column in foreign-keys when generating relation name' SHOULD BE CONFIGURABLE
 
 
     /**
@@ -284,7 +285,8 @@ class Generator extends \yii\gii\Generator
             } elseif (!strcasecmp($column->name, 'id')) {
                 $labels[$column->name] = 'ID';
             } else {
-                $label = Inflector::camel2words($column->name);
+                // COMPLETED_TODO - naming - fix label generation when processing upper-cased string in column name
+                $label = str_replace('  ', ' ', Inflector::camel2words($column->name));
                 if (!empty($label) && substr_compare($label, ' id', -3, 3, true) === 0) {
                     $label = substr($label, 0, -3) . ' ID';
                 }
@@ -510,7 +512,9 @@ class Generator extends \yii\gii\Generator
 
                     // Add relation for this table
                     $link = $this->generateRelationLink(array_flip($refs));
-                    $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
+                    // @COMPLETED_TODO - naming - use last column in foreign-keys when generating relation name
+                    // @TODO - naming - 'use last column in foreign-keys when generating relation name' SHOULD BE CONFIGURABLE
+                    $relationName = $this->generateRelationName($relations, $table, $fks[count($fks)-1], false);
                     $relations[$table->fullName][$relationName] = [
                         "return \$this->hasOne($refClassName::className(), $link);",
                         $refClassName,
@@ -569,7 +573,9 @@ class Generator extends \yii\gii\Generator
                     unset($refs[0]);
                     $fks = array_keys($refs);
 
-                    $leftRelationName = $this->generateRelationName($relationNames, $table, $fks[0], false);
+                    // @COMPLETED_TODO - naming - use last column in foreign-keys when generating relation name
+                    // @TODO - naming - 'use last column in foreign-keys when generating relation name' SHOULD BE CONFIGURABLE
+                    $leftRelationName = $this->generateRelationName($relationNames, $table, $fks[count($fks)-1], false);
                     $relationNames[$table->fullName][$leftRelationName] = true;
                     $hasMany = $this->isHasManyRelation($table, $fks);
                     $rightRelationName = $this->generateRelationName(
@@ -701,7 +707,9 @@ class Generator extends \yii\gii\Generator
         if ($multiple) {
             $key = Inflector::pluralize($key);
         }
-        $name = $rawName = Inflector::id2camel($key, '_');
+        // @COMPLETED_TODO - naming - fix relation-name generation when processing upper-cased string
+        // https://github.com/yiisoft/yii2-gii/issues/325
+        $name = $rawName = Inflector::id2camel(Inflector::camel2id($key));
         $i = 0;
         while ($baseModel->hasProperty(lcfirst($name))) {
             $name = $rawName . ($i++);
@@ -879,7 +887,9 @@ class Generator extends \yii\gii\Generator
             }
         }
 
-        return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
+        // COMPLETED_TODO - naming - fix class-name generation when processing upper-cased string
+        // https://github.com/yiisoft/yii2-gii/issues/325
+        return $this->classNames[$fullTableName] = Inflector::id2camel(Inflector::camel2id($schemaName.$className));
     }
 
     /**
