@@ -875,7 +875,9 @@ class Generator extends \yii\gii\Generator
             }
         }
 
-        return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
+        // COMPLETED_TODO - naming - fix class-name generation when processing upper-cased string
+        // https://github.com/yiisoft/yii2-gii/issues/325
+        return $this->classNames[$fullTableName] = Inflector::id2camel(Inflector::camel2id($schemaName.$className));
     }
 
     /**
