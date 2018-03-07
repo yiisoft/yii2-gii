@@ -48,6 +48,8 @@ class Generator extends \yii\gii\Generator
     public $extendedModelNs; // = 'app\models\extended';
     // COMPLETED_TODO - generate extended query file
     public $extendedQueryNs; // = 'app\models\extended\query';
+    // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+    public $doNotGenerateGetDb = false;
 
 
     /**
@@ -89,6 +91,8 @@ class Generator extends \yii\gii\Generator
             [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema'], 'boolean'],
             [['enableI18N'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
+            // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+            [['doNotGenerateGetDb'], 'boolean'],
         ]);
     }
 
@@ -111,6 +115,8 @@ class Generator extends \yii\gii\Generator
             'queryClass' => 'ActiveQuery Class',
             'queryBaseClass' => 'ActiveQuery Base Class',
             'useSchemaName' => 'Use Schema Name',
+            // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+            'doNotGenerateGetDb' => 'Do not generate GetDb()',
         ]);
     }
 
@@ -151,6 +157,9 @@ class Generator extends \yii\gii\Generator
                 the namespace part as it is specified in "ActiveQuery Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveQuery classes will be generated.',
             'queryBaseClass' => 'This is the base class of the new ActiveQuery class. It should be a fully qualified namespaced class name.',
+            // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+            'doNotGenerateGetDb' => 'This indicates whether the generator should generate <code>static::getDb()</code> in the base model or not.
+                By default, <code>static::getDb()</code> will be generated when gii/model not using default DB component',
         ]);
     }
 
