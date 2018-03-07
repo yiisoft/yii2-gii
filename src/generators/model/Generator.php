@@ -697,7 +697,9 @@ class Generator extends \yii\gii\Generator
         if ($multiple) {
             $key = Inflector::pluralize($key);
         }
-        $name = $rawName = Inflector::id2camel($key, '_');
+        // @COMPLETED_TODO - naming - fix relation-name generation when processing upper-cased string
+        // https://github.com/yiisoft/yii2-gii/issues/325
+        $name = $rawName = Inflector::id2camel(Inflector::camel2id($key));
         $i = 0;
         while ($baseModel->hasProperty(lcfirst($name))) {
             $name = $rawName . ($i++);
