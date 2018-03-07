@@ -43,6 +43,7 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
+    // @TODO - extended model/query generation SHOULD BE CONFIGURABLE via boolean property
     // COMPLETED_TODO - generate extended model file
     public $extendedModelNs; // = 'app\models\extended';
     // COMPLETED_TODO - generate extended query file
