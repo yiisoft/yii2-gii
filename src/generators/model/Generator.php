@@ -43,6 +43,7 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
+    // @TODO - naming - 'use last column in foreign-keys when generating relation name' SHOULD BE CONFIGURABLE
 
 
     /**
@@ -511,6 +512,7 @@ class Generator extends \yii\gii\Generator
                     // Add relation for this table
                     $link = $this->generateRelationLink(array_flip($refs));
                     // @COMPLETED_TODO - naming - use last column in foreign-keys when generating relation name
+                    // @TODO - naming - 'use last column in foreign-keys when generating relation name' SHOULD BE CONFIGURABLE
                     $relationName = $this->generateRelationName($relations, $table, $fks[count($fks)-1], false);
                     $relations[$table->fullName][$relationName] = [
                         "return \$this->hasOne($refClassName::className(), $link);",
@@ -567,6 +569,7 @@ class Generator extends \yii\gii\Generator
                     $fks = array_keys($refs);
 
                     // @COMPLETED_TODO - naming - use last column in foreign-keys when generating relation name
+                    // @TODO - naming - 'use last column in foreign-keys when generating relation name' SHOULD BE CONFIGURABLE
                     $leftRelationName = $this->generateRelationName($relationNames, $table, $fks[count($fks)-1], false);
                     $relationNames[$table->fullName][$leftRelationName] = true;
                     $hasMany = $this->isHasManyRelation($table, $fks);
