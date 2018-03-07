@@ -43,6 +43,14 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
+    // @TODO - extended model/query generation SHOULD BE CONFIGURABLE via boolean property
+    // COMPLETED_TODO - generate extended model file
+    public $extendedModelNs; // = 'app\models\extended';
+    // COMPLETED_TODO - generate extended query file
+    public $extendedQueryNs; // = 'app\models\extended\query';
+    // @TODO - rules() generation SHOULD BE CONFIGURABLE, whether it is generated in extended model, instead of in base model
+    // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+    public $doNotGenerateGetDb = false;
 
 
     /**
@@ -78,12 +86,14 @@ class Generator extends \yii\gii\Generator
             [['ns', 'queryNs'], 'validateNamespace'],
             [['tableName'], 'validateTableName'],
             [['modelClass'], 'validateModelClass', 'skipOnEmpty' => false],
-            [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
-            [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
+            [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::class]],
+            [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::class]],
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
             [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema'], 'boolean'],
             [['enableI18N'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
+            // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+            [['doNotGenerateGetDb'], 'boolean'],
         ]);
     }
 
@@ -106,6 +116,8 @@ class Generator extends \yii\gii\Generator
             'queryClass' => 'ActiveQuery Class',
             'queryBaseClass' => 'ActiveQuery Base Class',
             'useSchemaName' => 'Use Schema Name',
+            // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+            'doNotGenerateGetDb' => 'Do not generate GetDb()',
         ]);
     }
 
@@ -146,6 +158,9 @@ class Generator extends \yii\gii\Generator
                 the namespace part as it is specified in "ActiveQuery Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveQuery classes will be generated.',
             'queryBaseClass' => 'This is the base class of the new ActiveQuery class. It should be a fully qualified namespaced class name.',
+            // COMPLETED_TODO - static::getDb() generation in the base model SHOULD BE CONFIGURABLE via boolean property
+            'doNotGenerateGetDb' => 'This indicates whether the generator should generate <code>static::getDb()</code> in the base model or not.
+                By default, <code>static::getDb()</code> will be generated when gii/model not using default DB component',
         ]);
     }
 
@@ -227,6 +242,13 @@ class Generator extends \yii\gii\Generator
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
                 $this->render('model.php', $params)
             );
+            // COMPLETED_TODO - generate extended model file
+            if ($this->extendedModelNs && file_exists($this->templatePath . DIRECTORY_SEPARATOR . 'model-extended.php')) {
+                $files[] = new CodeFile(
+                    Yii::getAlias('@' . str_replace('\\', '/', $this->extendedModelNs)) . '/' . $modelClassName . '.php',
+                    $this->render('model-extended.php', $params)
+                );
+            }
 
             // query :
             if ($queryClassName) {
@@ -235,6 +257,15 @@ class Generator extends \yii\gii\Generator
                 $files[] = new CodeFile(
                     Yii::getAlias('@' . str_replace('\\', '/', $this->queryNs)) . '/' . $queryClassName . '.php',
                     $this->render('query.php', $params)
+                );
+            }
+            // COMPLETED_TODO - generate extended query file
+            if ($queryClassName && $this->extendedQueryNs && file_exists($this->templatePath . DIRECTORY_SEPARATOR . 'query-extended.php')) {
+                $params['className'] = $queryClassName;
+                $params['modelClassName'] = $modelClassName;
+                $files[] = new CodeFile(
+                    Yii::getAlias('@' . str_replace('\\', '/', $this->extendedQueryNs)) . '/' . $queryClassName . '.php',
+                    $this->render('query-extended.php', $params)
                 );
             }
         }
@@ -284,7 +315,8 @@ class Generator extends \yii\gii\Generator
             } elseif (!strcasecmp($column->name, 'id')) {
                 $labels[$column->name] = 'ID';
             } else {
-                $label = Inflector::camel2words($column->name);
+                // COMPLETED_TODO - naming - fix label generation when processing upper-cased string in column name
+                $label = str_replace('  ', ' ', Inflector::camel2words($column->name));
                 if (!empty($label) && substr_compare($label, ' id', -3, 3, true) === 0) {
                     $label = substr($label, 0, -3) . ' ID';
                 }
@@ -392,7 +424,7 @@ class Generator extends \yii\gii\Generator
                 $targetAttributes[] = "'$key' => '$value'";
             }
             $targetAttributes = implode(', ', $targetAttributes);
-            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
+            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::class, 'targetAttribute' => [$targetAttributes]]";
         }
 
         return $rules;
@@ -428,7 +460,7 @@ class Generator extends \yii\gii\Generator
             $viaLink = $this->generateRelationLink($firstKey);
             $relationName = $this->generateRelationName($relations, $table0Schema, key($secondKey), true);
             $relations[$table0Schema->fullName][$relationName] = [
-                "return \$this->hasMany($className1::className(), $link)->viaTable('"
+                "return \$this->hasMany($className1::class, $link)->viaTable('"
                 . $this->generateTableName($table->name) . "', $viaLink);",
                 $className1,
                 true,
@@ -438,7 +470,7 @@ class Generator extends \yii\gii\Generator
             $viaLink = $this->generateRelationLink($secondKey);
             $relationName = $this->generateRelationName($relations, $table1Schema, key($firstKey), true);
             $relations[$table1Schema->fullName][$relationName] = [
-                "return \$this->hasMany($className0::className(), $link)->viaTable('"
+                "return \$this->hasMany($className0::class, $link)->viaTable('"
                 . $this->generateTableName($table->name) . "', $viaLink);",
                 $className0,
                 true,
@@ -510,9 +542,11 @@ class Generator extends \yii\gii\Generator
 
                     // Add relation for this table
                     $link = $this->generateRelationLink(array_flip($refs));
-                    $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
+                    // @COMPLETED_TODO - naming - use last column in foreign-keys when generating relation name
+                    // @TODO - naming - 'use last column in foreign-keys when generating relation name' SHOULD BE CONFIGURABLE
+                    $relationName = $this->generateRelationName($relations, $table, $fks[count($fks)-1], false);
                     $relations[$table->fullName][$relationName] = [
-                        "return \$this->hasOne($refClassName::className(), $link);",
+                        "return \$this->hasOne($refClassName::class, $link);",
                         $refClassName,
                         false,
                     ];
@@ -522,7 +556,7 @@ class Generator extends \yii\gii\Generator
                     $link = $this->generateRelationLink($refs);
                     $relationName = $this->generateRelationName($relations, $refTableSchema, $className, $hasMany);
                     $relations[$refTableSchema->fullName][$relationName] = [
-                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($className::className(), $link);",
+                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($className::class, $link);",
                         $className,
                         $hasMany,
                     ];
@@ -562,10 +596,16 @@ class Generator extends \yii\gii\Generator
                 foreach ($table->foreignKeys as $refs) {
                     $refTable = $refs[0];
                     $refTableSchema = $db->getTableSchema($refTable);
+                    if ($refTableSchema === null) {
+                        // Foreign key could point to non-existing table: https://github.com/yiisoft/yii2-gii/issues/34
+                        continue;
+                    }
                     unset($refs[0]);
                     $fks = array_keys($refs);
 
-                    $leftRelationName = $this->generateRelationName($relationNames, $table, $fks[0], false);
+                    // @COMPLETED_TODO - naming - use last column in foreign-keys when generating relation name
+                    // @TODO - naming - 'use last column in foreign-keys when generating relation name' SHOULD BE CONFIGURABLE
+                    $leftRelationName = $this->generateRelationName($relationNames, $table, $fks[count($fks)-1], false);
                     $relationNames[$table->fullName][$leftRelationName] = true;
                     $hasMany = $this->isHasManyRelation($table, $fks);
                     $rightRelationName = $this->generateRelationName(
@@ -697,7 +737,9 @@ class Generator extends \yii\gii\Generator
         if ($multiple) {
             $key = Inflector::pluralize($key);
         }
-        $name = $rawName = Inflector::id2camel($key, '_');
+        // @COMPLETED_TODO - naming - fix relation-name generation when processing upper-cased string
+        // https://github.com/yiisoft/yii2-gii/issues/325
+        $name = $rawName = Inflector::id2camel(Inflector::camel2id($key));
         $i = 0;
         while ($baseModel->hasProperty(lcfirst($name))) {
             $name = $rawName . ($i++);
@@ -847,6 +889,20 @@ class Generator extends \yii\gii\Generator
             return $this->classNames[$tableName];
         }
 
+        // COMPLETED_TODO : un-list do from reserved words, and map it to delivery order
+        switch ($tableName) {
+            case 'DO':
+                $tableName = 'DELIVERY_ORDER';
+                break;
+            case 'DO_LINE':
+                $tableName = 'DELIVERY_ORDER_LINE';
+                break;
+            case 'DO_LINE_E':
+                $tableName = 'DELIVERY_ORDER_LINE_E';
+                break;
+            default:
+                break;
+        }
         $schemaName = '';
         $fullTableName = $tableName;
         if (($pos = strrpos($tableName, '.')) !== false) {
@@ -875,7 +931,9 @@ class Generator extends \yii\gii\Generator
             }
         }
 
-        return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
+        // COMPLETED_TODO - naming - fix class-name generation when processing upper-cased string
+        // https://github.com/yiisoft/yii2-gii/issues/325
+        return $this->classNames[$fullTableName] = Inflector::id2camel(Inflector::camel2id($schemaName.$className));
     }
 
     /**

@@ -425,7 +425,8 @@ abstract class Generator extends Model
             'declare',
             'default',
             'die',
-            'do',
+            // COMPLETED_TODO : un-list do from reserved words, and map it to delivery order
+            // 'do',
             'echo',
             'else',
             'elseif',
