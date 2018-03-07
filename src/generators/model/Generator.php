@@ -43,6 +43,8 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
+    // COMPLETED_TODO - generate extended model file
+    public $extendedModelNs; // = 'app\models\extended';
 
 
     /**
@@ -227,6 +229,13 @@ class Generator extends \yii\gii\Generator
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
                 $this->render('model.php', $params)
             );
+            // COMPLETED_TODO - generate extended model file
+            if ($this->extendedModelNs && file_exists($this->templatePath . DIRECTORY_SEPARATOR . 'model-extended.php')) {
+                $files[] = new CodeFile(
+                    Yii::getAlias('@' . str_replace('\\', '/', $this->extendedModelNs)) . '/' . $modelClassName . '.php',
+                    $this->render('model-extended.php', $params)
+                );
+            }
 
             // query :
             if ($queryClassName) {
