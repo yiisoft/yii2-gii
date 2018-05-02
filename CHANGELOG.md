@@ -8,6 +8,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #328: Fix bug in CRUD update view generator (ricpelo)
 - Bug #340: Fix bug in CRUD SearchModel generator (JeanWolf)
 - Bug #185: Fix bug in Model generators when FKs pointing to non-existing tables (adipriyantobpn)
+- Bug #351: Fixed incorrect validation rule for JSON column type (silverfire)
 
 
 2.0.6 December 23, 2017
