@@ -32,7 +32,9 @@
     "extra": {
         "branch-alias": {
             "dev-master": "2.0.x-dev"
-        },
+        }
+    },
+    "config": {
         "fxp-asset": {
             "installer-paths": {
                 "npm-asset-library": "vendor/npm",
