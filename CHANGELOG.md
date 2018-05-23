@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.8 under development
 -----------------------
 
-- no changes in this release.
+- Bug #327: Fixed bug in Model generator when $baseClass is an abstract class (rhertogh)
 
 
 2.0.7 May 3, 2018
