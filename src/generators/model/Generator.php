@@ -692,10 +692,6 @@ class Generator extends \yii\gii\Generator
             $baseClass = $this->baseClass;
             $baseClassReflector = new \ReflectionClass($baseClass);
             if ($baseClassReflector->isAbstract()) {
-                //Extra check for security to validate that $baseClass is indeed a class since this variable is used in eval
-                if (!class_exists($baseClass)) {
-                    throw new InvalidConfigException("Class '$class' does not exist or has syntax error.");
-                }
                 $baseClassWrapper =
                     'namespace ' . __NAMESPACE__ . ';'.
                     'class GiiBaseClassWrapper extends \\' . $baseClass . ' {' .
