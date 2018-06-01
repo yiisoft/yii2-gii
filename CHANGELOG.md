@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.8 under development
 -----------------------
 
-- no changes in this release.
+- Enh #366: Better class and file names for uppercase tables (slinstj)
 
 
 2.0.7 May 3, 2018
