@@ -8,6 +8,7 @@
 namespace yii\gii\generators\model;
 
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Connection;
@@ -689,9 +690,23 @@ class Generator extends \yii\gii\Generator
         /* @var $baseModel \yii\db\ActiveRecord */
         if ($baseModel === null) {
             $baseClass = $this->baseClass;
-            $baseModel = new $baseClass();
+            $baseClassReflector = new \ReflectionClass($baseClass);
+            if ($baseClassReflector->isAbstract()) {
+                $baseClassWrapper =
+                    'namespace ' . __NAMESPACE__ . ';'.
+                    'class GiiBaseClassWrapper extends \\' . $baseClass . ' {' .
+                        'public static function tableName(){' .
+                            'return "' . addslashes($table->fullName) . '";' .
+                        '}' .
+                    '};' .
+                    'return new GiiBaseClassWrapper();';
+                $baseModel = eval($baseClassWrapper);
+            } else {
+                $baseModel = new $baseClass();
+            }
             $baseModel->setAttributes([]);
         }
+
         if (!empty($key) && strcasecmp($key, 'id')) {
             if (substr_compare($key, 'id', -2, 2, true) === 0) {
                 $key = rtrim(substr($key, 0, -2), '_');

@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.8 under development
 -----------------------
 
+- Bug #327: Fixed bug in Model generator when $baseClass is an abstract class (rhertogh)
 - Enh #366: Better class and file names for uppercase tables (slinstj)
 
 
