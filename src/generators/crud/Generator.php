@@ -521,7 +521,7 @@ class Generator extends \yii\gii\Generator
         if (($table = $this->getTableSchema()) === false) {
             $params = [];
             foreach ($pks as $pk) {
-                $params[] = '@param ' . (strtolower(substr($pk, -2)) === 'id' ? 'integer' : 'string') . ' $' . $pk;
+                $params[] = '@param ' . (strtolower(substr($pk, -2)) === 'id' ? 'int' : 'string') . ' $' . $pk;
             }
 
             return $params;
