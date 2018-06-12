@@ -214,4 +214,27 @@ class ModelGeneratorTest extends GiiTestCase
             );
         }
     }
+
+    public function testGenerateClassName()
+    {
+        $modelGenerator = new ModelGeneratorMock;
+
+        $tableNames = [
+            'lower_underline_name' => 'LowerUnderlineName',
+            'Ucwords_Underline_Name' => 'UcwordsUnderlineName',
+            'UPPER_UNDERLINE_NAME' => 'UpperUnderlineName',
+            'lower-hyphen-name' => 'LowerHyphenName',
+            'Ucwords-Hyphen-Name' => 'UcwordsHyphenName',
+            'UPPER-HYPHEN-NAME' => 'UpperHyphenName',
+            'CamelCaseName' => 'CamelCaseName',
+            'lowerUcwordsName' => 'LowerUcwordsName',
+            'lowername' => 'Lowername',
+            'UPPERNAME' => 'Uppername',
+        ];
+
+        foreach ($tableNames as $tableName => $expectedClassName) {
+            $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
+            $this->assertEquals($generatedClassName, $expectedClassName);
+        }
+    }
 }
