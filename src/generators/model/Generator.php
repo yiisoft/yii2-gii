@@ -902,9 +902,9 @@ class Generator extends \yii\gii\Generator
         }
 
         if ($this->forcePsrClassNames) {
-            $schemaName = ctype_upper(strtr($schemaName, ['_' => '', '-' => ''])) ? strtolower($schemaName) : $schemaName;
-            $className = ctype_upper(strtr($className, ['_' => '', '-' => ''])) ? strtolower($className) : $className;
-            return $this->classNames[$fullTableName] = strtr(ucwords(implode(' ', explode('_', strtolower(strtr(Inflector::camel2words($schemaName.$className), [' ' => '_']))))), [' ' => '']);
+            $schemaName = ctype_upper(preg_replace('/[_-]/', '', $schemaName)) ? strtolower($schemaName) : $schemaName;
+            $className = ctype_upper(preg_replace('/[_-]/', '', $className)) ? strtolower($className) : $className;
+            return $this->classNames[$fullTableName] = str_replace(' ', '', ucwords(implode(' ', explode('_', strtolower(str_replace(' ', '_', Inflector::camel2words($schemaName.$className)))))));
         } else {
             return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
         }
