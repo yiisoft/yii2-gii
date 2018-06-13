@@ -215,9 +215,10 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
-    public function testGenerateClassName()
+    public function testGenerateClassNameForcingPsr()
     {
         $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator->forcePsrClassNames = true;
 
         $tableNames = [
             'lower_underline_name' => 'LowerUnderlineName',
@@ -230,6 +231,32 @@ class ModelGeneratorTest extends GiiTestCase
             'lowerUcwordsName' => 'LowerUcwordsName',
             'lowername' => 'Lowername',
             'UPPERNAME' => 'Uppername',
+        ];
+
+        foreach ($tableNames as $tableName => $expectedClassName) {
+            $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
+            $this->assertEquals($generatedClassName, $expectedClassName);
+        }
+    }
+
+    public function testGenerateClassNameNoForcingPsr()
+    {
+        $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator->forcePsrClassNames = false;
+
+        $tableNames = [
+            'lower_underline_name' => 'LowerUnderlineName',
+            'Ucwords_Underline_Name' => 'UcwordsUnderlineName',
+            'UPPER_UNDERLINE_NAME' => 'UPPERUNDERLINENAME',
+            'ABBRMyTable' => 'ABBRMyTable',
+            'lower-hyphen-name' => 'Lower-hyphen-name',
+            'Ucwords-Hyphen-Name' => 'Ucwords-Hyphen-Name',
+            'UPPER-HYPHEN-NAME' => 'UPPER-HYPHEN-NAME',
+            'CamelCaseName' => 'CamelCaseName',
+            'lowerUcwordsName' => 'LowerUcwordsName',
+            'lowername' => 'Lowername',
+            'UPPERNAME' => 'UPPERNAME',
+            'PARTIALUpperName' => 'PARTIALUpperName',
         ];
 
         foreach ($tableNames as $tableName => $expectedClassName) {
