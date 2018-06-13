@@ -39,6 +39,7 @@ class Generator extends \yii\gii\Generator
     public $generateRelationsFromCurrentSchema = true;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
+    public $forcePsrClassNames = false;
     public $useSchemaName = true;
     public $generateQuery = false;
     public $queryNs = 'app\models';
@@ -97,6 +98,7 @@ class Generator extends \yii\gii\Generator
             'ns' => 'Namespace',
             'db' => 'Database Connection ID',
             'tableName' => 'Table Name',
+            'forcePsrClassNames' => 'Force PSR Class Names',
             'modelClass' => 'Model Class Name',
             'baseClass' => 'Base Class',
             'generateRelations' => 'Generate Relations',
@@ -128,6 +130,10 @@ class Generator extends \yii\gii\Generator
             'modelClass' => 'This is the name of the ActiveRecord class to be generated. The class name should not contain
                 the namespace part as it is specified in "Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveRecord classes will be generated.',
+            'forcePsrClassNames' => 'This indicates whether the generated class names should be PSR compliant.
+            For example, if this is marked, table names like <code>MYTable</code> or <code>MY_TABLE</code> would generate class
+            names <code>Mytable</code> and <code>MyTable</code>, respectively. If not marked, the same tables would result in the names
+            <code>MYTable</code> and <code>MYTABLE</code>, instead.',
             'baseClass' => 'This is the base class of the new ActiveRecord class. It should be a fully qualified namespaced class name.',
             'generateRelations' => 'This indicates whether the generator should generate relations based on
                 foreign key constraints it detects in the database. Note that if your database contains too many tables,
@@ -895,9 +901,14 @@ class Generator extends \yii\gii\Generator
             }
         }
 
-        $schemaName = ctype_upper(strtr($schemaName, ['_' => '', '-' => ''])) ? strtolower($schemaName) : $schemaName;
-        $className = ctype_upper(strtr($className, ['_' => '', '-' => ''])) ? strtolower($className) : $className;
-        return $this->classNames[$fullTableName] = strtr(ucwords(implode(' ', explode('_', strtolower(strtr(Inflector::camel2words($schemaName.$className), [' ' => '_']))))), [' ' => '']);
+        if ($this->forcePsrClassNames) {
+            $schemaName = ctype_upper(strtr($schemaName, ['_' => '', '-' => ''])) ? strtolower($schemaName) : $schemaName;
+            $className = ctype_upper(strtr($className, ['_' => '', '-' => ''])) ? strtolower($className) : $className;
+            return $this->classNames[$fullTableName] = strtr(ucwords(implode(' ', explode('_', strtolower(strtr(Inflector::camel2words($schemaName.$className), [' ' => '_']))))), [' ' => '']);
+        } else {
+            return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
+        }
+
     }
 
     /**
