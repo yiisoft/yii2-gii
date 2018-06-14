@@ -226,7 +226,7 @@ yii.gii = (function ($) {
                 if ($('#generator-generatequery').is(':checked')) {
                     $('.field-generator-queryclass').toggle(show);
                 }
-                $('.field-generator-forcepsrclassnames').toggle(!show);
+                $('.field-generator-caseinsensitive').toggle(!show);
             }).change();
 
             // model generator: translate table name to model class

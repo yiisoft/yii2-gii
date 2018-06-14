@@ -218,7 +218,7 @@ class ModelGeneratorTest extends GiiTestCase
     public function testGenerateClassNameForcingPsr()
     {
         $modelGenerator = new ModelGeneratorMock;
-        $modelGenerator->forcePsrClassNames = true;
+        $modelGenerator->caseInsensitive = true;
 
         $tableNames = [
             'lower_underline_name' => 'LowerUnderlineName',
@@ -242,7 +242,7 @@ class ModelGeneratorTest extends GiiTestCase
     public function testGenerateClassNameNoForcingPsr()
     {
         $modelGenerator = new ModelGeneratorMock;
-        $modelGenerator->forcePsrClassNames = false;
+        $modelGenerator->caseInsensitive = false;
 
         $tableNames = [
             'lower_underline_name' => 'LowerUnderlineName',
