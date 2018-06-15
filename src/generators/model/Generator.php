@@ -904,7 +904,7 @@ class Generator extends \yii\gii\Generator
         if ($this->caseInsensitive) {
             $schemaName = ctype_upper(preg_replace('/[_-]/', '', $schemaName)) ? strtolower($schemaName) : $schemaName;
             $className = ctype_upper(preg_replace('/[_-]/', '', $className)) ? strtolower($className) : $className;
-            return $this->classNames[$fullTableName] = str_replace(' ', '', ucwords(implode(' ', explode('_', strtolower(str_replace(' ', '_', Inflector::camel2words($schemaName.$className)))))));
+            return $this->classNames[$fullTableName] = Inflector::camelize(Inflector::camel2words($schemaName.$className));
         } else {
             return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
         }
