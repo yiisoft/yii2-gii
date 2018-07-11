@@ -5,7 +5,7 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Bug #327: Fixed bug in Model generator when $baseClass is an abstract class (rhertogh)
-- Enh #366: Better class and file names for uppercase tables (slinstj)
+- Enh #366: Option to allow standardized class names capitals in model generator (slinstj)
 
 
 2.0.7 May 3, 2018

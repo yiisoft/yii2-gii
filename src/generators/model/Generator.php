@@ -39,6 +39,7 @@ class Generator extends \yii\gii\Generator
     public $generateRelationsFromCurrentSchema = true;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
+    public $standardizeCapitals = false;
     public $useSchemaName = true;
     public $generateQuery = false;
     public $queryNs = 'app\models';
@@ -83,7 +84,7 @@ class Generator extends \yii\gii\Generator
             [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
             [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema'], 'boolean'],
-            [['enableI18N'], 'boolean'],
+            [['enableI18N', 'standardizeCapitals'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
         ]);
     }
@@ -97,6 +98,7 @@ class Generator extends \yii\gii\Generator
             'ns' => 'Namespace',
             'db' => 'Database Connection ID',
             'tableName' => 'Table Name',
+            'standardizeCapitals' => 'Standardize Capitals',
             'modelClass' => 'Model Class Name',
             'baseClass' => 'Base Class',
             'generateRelations' => 'Generate Relations',
@@ -128,6 +130,10 @@ class Generator extends \yii\gii\Generator
             'modelClass' => 'This is the name of the ActiveRecord class to be generated. The class name should not contain
                 the namespace part as it is specified in "Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveRecord classes will be generated.',
+            'standardizeCapitals' => 'This indicates whether the generated class names should have standardized capitals. For example,
+            table names like <code>SOME_TABLE</code> or <code>Other_Table</code> will have class names <code>SomeTable</code>
+            and <code>OtherTable</code>, respectively. If not checked, the same tables will have class names <code>SOMETABLE</code>
+            and <code>OtherTable</code> instead.',
             'baseClass' => 'This is the base class of the new ActiveRecord class. It should be a fully qualified namespaced class name.',
             'generateRelations' => 'This indicates whether the generator should generate relations based on
                 foreign key constraints it detects in the database. Note that if your database contains too many tables,
@@ -895,9 +901,14 @@ class Generator extends \yii\gii\Generator
             }
         }
 
-        $schemaName = ctype_upper(strtr($schemaName, ['_' => '', '-' => ''])) ? strtolower($schemaName) : $schemaName;
-        $className = ctype_upper(strtr($className, ['_' => '', '-' => ''])) ? strtolower($className) : $className;
-        return $this->classNames[$fullTableName] = strtr(ucwords(implode(' ', explode('_', strtolower(strtr(Inflector::camel2words($schemaName.$className), [' ' => '_']))))), [' ' => '']);
+        if ($this->standardizeCapitals) {
+            $schemaName = ctype_upper(preg_replace('/[_-]/', '', $schemaName)) ? strtolower($schemaName) : $schemaName;
+            $className = ctype_upper(preg_replace('/[_-]/', '', $className)) ? strtolower($className) : $className;
+            return $this->classNames[$fullTableName] = Inflector::camelize(Inflector::camel2words($schemaName.$className));
+        } else {
+            return $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
+        }
+
     }
 
     /**

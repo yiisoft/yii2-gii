@@ -215,9 +215,10 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
-    public function testGenerateClassName()
+    public function testGenerateStandardizedCapitalsForClassNames()
     {
         $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator->standardizeCapitals = true;
 
         $tableNames = [
             'lower_underline_name' => 'LowerUnderlineName',
@@ -234,7 +235,33 @@ class ModelGeneratorTest extends GiiTestCase
 
         foreach ($tableNames as $tableName => $expectedClassName) {
             $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
-            $this->assertEquals($generatedClassName, $expectedClassName);
+            $this->assertEquals($expectedClassName, $generatedClassName);
+        }
+    }
+
+    public function testGenerateNotStandardizedCapitalsForClassNames()
+    {
+        $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator->standardizeCapitals = false;
+
+        $tableNames = [
+            'lower_underline_name' => 'LowerUnderlineName',
+            'Ucwords_Underline_Name' => 'UcwordsUnderlineName',
+            'UPPER_UNDERLINE_NAME' => 'UPPERUNDERLINENAME',
+            'ABBRMyTable' => 'ABBRMyTable',
+            'lower-hyphen-name' => 'Lower-hyphen-name',
+            'Ucwords-Hyphen-Name' => 'Ucwords-Hyphen-Name',
+            'UPPER-HYPHEN-NAME' => 'UPPER-HYPHEN-NAME',
+            'CamelCaseName' => 'CamelCaseName',
+            'lowerUcwordsName' => 'LowerUcwordsName',
+            'lowername' => 'Lowername',
+            'UPPERNAME' => 'UPPERNAME',
+            'PARTIALUpperName' => 'PARTIALUpperName',
+        ];
+
+        foreach ($tableNames as $tableName => $expectedClassName) {
+            $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
+            $this->assertEquals($expectedClassName, $generatedClassName);
         }
     }
 }
