@@ -215,10 +215,10 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
-    public function testGenerateClassNameForcingPsr()
+    public function testGenerateStandardizedCapitalsForClassNames()
     {
         $modelGenerator = new ModelGeneratorMock;
-        $modelGenerator->caseInsensitive = true;
+        $modelGenerator->standardizeCapitals = true;
 
         $tableNames = [
             'lower_underline_name' => 'LowerUnderlineName',
@@ -235,14 +235,14 @@ class ModelGeneratorTest extends GiiTestCase
 
         foreach ($tableNames as $tableName => $expectedClassName) {
             $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
-            $this->assertEquals($generatedClassName, $expectedClassName);
+            $this->assertEquals($expectedClassName, $generatedClassName);
         }
     }
 
-    public function testGenerateClassNameNoForcingPsr()
+    public function testGenerateNotStandardizedCapitalsForClassNames()
     {
         $modelGenerator = new ModelGeneratorMock;
-        $modelGenerator->caseInsensitive = false;
+        $modelGenerator->standardizeCapitals = false;
 
         $tableNames = [
             'lower_underline_name' => 'LowerUnderlineName',
@@ -261,7 +261,7 @@ class ModelGeneratorTest extends GiiTestCase
 
         foreach ($tableNames as $tableName => $expectedClassName) {
             $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
-            $this->assertEquals($generatedClassName, $expectedClassName);
+            $this->assertEquals($expectedClassName, $generatedClassName);
         }
     }
 }
