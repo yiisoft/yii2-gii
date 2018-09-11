@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.0.8 under development
 -----------------------
 
+- Bug #379: Fixed bug in view page where delete button not work well (zacksleo)
 - Bug #327: Fixed bug in Model generator when $baseClass is an abstract class (rhertogh)
 - Enh #366: Option to allow standardized class names capitals in model generator (slinstj)
 
