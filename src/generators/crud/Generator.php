@@ -503,7 +503,7 @@ class Generator extends \yii\gii\Generator
         $class = $this->modelClass;
         $pks = $class::primaryKey();
         if (count($pks) === 1) {
-            return '$id';
+            return '$' . $pks[0];
         }
 
         return '$' . implode(', $', $pks);
