@@ -14,15 +14,15 @@ use yii\gii\CodeFile;
     <p>Click on the above <code>Generate</code> button to generate the files selected below:</p>
 
     <div class="row form-group">
-        <div class="col-xs-6">
+        <div class="col-sm-6">
             <input id="filter-input" class="form-control" placeholder="Type to filter">
         </div>
-        <div class="col-xs-6 text-right">
-            <div id="action-toggle" class="btn-group btn-group-xs"">
+        <div class="col-sm-6 text-right">
+                <div id="action-toggle" class="btn-group btn-group-sm">
                 <label class="btn btn-success active" title="Filter files that are created">
                     <input type="checkbox" value="<?= CodeFile::OP_CREATE ?>" checked> Create
                 </label>
-                <label class="btn btn-default active" title="Filter files that are unchanged.">
+                <label class="btn btn-outline-secondary active" title="Filter files that are unchanged.">
                     <input type="checkbox" value="<?= CodeFile::OP_SKIP ?>" checked> Unchanged
                 </label>
                 <label class="btn btn-warning active" title="Filter files that are overwritten">
@@ -100,15 +100,14 @@ use yii\gii\CodeFile;
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <div class="btn-group pull-left">
-                        <a class="modal-previous btn btn-xs btn-default" href="#" title="Previous File (Left Arrow)"><span class="glyphicon glyphicon-arrow-left"></span></a>
-                        <a class="modal-next btn btn-xs btn-default" href="#" title="Next File (Right Arrow)"><span class="glyphicon glyphicon-arrow-right"></span></a>
-                        <a class="modal-refresh btn btn-xs btn-default" href="#" title="Refresh File (R)"><span class="glyphicon glyphicon-refresh"></span></a>
-                        <a class="modal-checkbox btn btn-xs btn-default" href="#" title="Check This File (Space)"><span class="glyphicon"></span></a>
-                        &nbsp;
+                    <div class="btn-group float-left">
+                        <a class="modal-previous btn btn-sm btn-outline-secondary" href="#" title="Previous File (Left Arrow)"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                        <a class="modal-next btn btn-sm btn-outline-secondary" href="#" title="Next File (Right Arrow)"><span class="glyphicon glyphicon-arrow-right"></span></a>
+                        <a class="modal-refresh btn btn-sm btn-outline-secondary" href="#" title="Refresh File (R)"><span class="glyphicon glyphicon-refresh"></span></a>
+                        <a class="modal-checkbox btn btn-sm btn-outline-secondary" href="#" title="Check This File (Space)"><span class="glyphicon"></span></a>
                     </div>
-                    <strong class="modal-title pull-left">Modal title</strong>
-                    <span class="modal-copy-hint pull-right"><kbd>CTRL</kbd>+<kbd>C</kbd> to copy</span>
+                    <strong class="modal-title float-left">Modal title</strong>
+                    <span class="modal-copy-hint float-right"><kbd>CTRL</kbd>+<kbd>C</kbd> to copy</span>
                     <div id="clipboard-container"><textarea id="clipboard"></textarea></div>
                     <div class="clearfix"></div>
                 </div>

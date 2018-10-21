@@ -3,28 +3,17 @@ body {
     height: 100%;
 }
 
-.page-container {
+.wrap {
     min-height: 100%;
-}
-
-.content-container {
-    padding-top: 70px;
-}
-
-.footer-fix {
-    height: 100px;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
 }
 
 .footer {
-    margin-top: -60px;
+    height: 60px;
     border-top: 1px solid #ddd;
-    height: 59px;
-    line-height: 59px;
-    box-sizing: border-box;
-}
-
-.footer p {
-    margin: 0;
+    padding-top: 20px;
 }
 
 .jumbotron {
@@ -35,11 +24,6 @@ body {
 .jumbotron .btn {
     font-size: 21px;
     padding: 14px 24px;
-}
-
-.navbar-brand {
-    padding: 0;
-    margin: 0;
 }
 
 .default-index .generator {

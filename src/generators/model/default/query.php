@@ -14,6 +14,8 @@
 /* @var $className string class name */
 /* @var $modelClassName string related model class name */
 
+use yii\helpers\StringHelper;
+
 $modelFullClassName = $modelClassName;
 if ($generator->ns !== $generator->queryNs) {
     $modelFullClassName = '\\' . $generator->ns . '\\' . $modelFullClassName;
@@ -24,12 +26,14 @@ echo "<?php\n";
 
 namespace <?= $generator->queryNs ?>;
 
+use <?= ltrim($generator->queryBaseClass, '\\') ?>;
+
 /**
  * This is the ActiveQuery class for [[<?= $modelFullClassName ?>]].
  *
  * @see <?= $modelFullClassName . "\n" ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . "\n" ?>
+class <?= $className ?> extends <?= '\\' . StringHelper::basename($generator->queryBaseClass) . "\n" ?>
 {
     /*public function active()
     {

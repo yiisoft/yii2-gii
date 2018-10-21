@@ -15,14 +15,23 @@
         {
             "name": "Qiang Xue",
             "email": "qiang.xue@gmail.com"
+        },
+        {
+            "name": "Alex Loban",
+            "email": "lav451@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "yiisoft/yii2": "2.1.x-dev",
-        "yiisoft/yii2-bootstrap": "2.2.x-dev",
+        "php": ">=5.5",
+        "yiisoft/yii2": "2.0.*",
+        "yiisoft/yii2-bootstrap4": "1.0.x-dev",
         "phpspec/php-diff": ">=1.0.2",
-        "bower-asset/typeahead.js": "0.10.* | ~0.11.0"
+        "bower-asset/typeahead.js": "0.10.* | ~0.11.0",
+        "bower-asset/glyphicons-only-bootstrap": "~0.0.1"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "*"
     },
     "autoload": {
         "psr-4": {
@@ -30,15 +39,13 @@
         }
     },
     "autoload-dev": {
-        "psr-4": {"yiiunit\\gii\\": "tests/"}
+        "psr-4": {
+            "yiiunit\\gii\\": "tests/"
+        }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
-        },
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
+            "dev-master": "2.2.x-dev"
         }
     },
     "repositories": [

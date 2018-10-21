@@ -160,10 +160,6 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
-    public function testSchemas()
-    {
-    }
-
     /**
      * @return array
      */

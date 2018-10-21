@@ -14,12 +14,17 @@
 /* @var $rules string[] list of validation rules */
 /* @var $relations array list of relations (name => relation declaration) */
 
+use yii\helpers\StringHelper;
+
 echo "<?php\n";
 ?>
 
 namespace <?= $generator->ns ?>;
 
+<?php if ($generator->db !== 'db'): ?>
 use Yii;
+<?php endif; ?>
+use <?= ltrim($generator->baseClass, '\\') ?>;
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -34,7 +39,7 @@ use Yii;
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
+class <?= $className ?> extends <?= StringHelper::basename($generator->baseClass) . "\n" ?>
 {
     /**
      * {@inheritdoc}
@@ -94,7 +99,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
     public static function find()
     {
-        return new <?= $queryClassFullName ?>(get_called_class());
+        return new <?= $queryClassFullName ?>(static::class);
     }
 <?php endif; ?>
 }

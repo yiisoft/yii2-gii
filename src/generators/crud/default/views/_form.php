@@ -15,18 +15,20 @@ if (empty($safeAttributes)) {
 
 echo "<?php\n";
 ?>
+/**
+ * @var $this yii\web\View
+ * @var $model <?= ltrim($generator->modelClass, '\\') ?>
+ */
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-/* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
 
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
+
+    <?= "<?= " ?>$form->errorSummary($model) ?>
 
 <?php foreach ($generator->getColumnNames() as $attribute) {
     if (in_array($attribute, $safeAttributes)) {

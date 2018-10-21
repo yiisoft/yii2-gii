@@ -10,12 +10,13 @@ $urlParams = $generator->generateUrlParams();
 
 echo "<?php\n";
 ?>
+/**
+ * @var $this yii\web\View
+ * @var $model <?= ltrim($generator->modelClass, '\\') ?>
+ */
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 $this->title = $model-><?= $generator->getNameAttribute() ?>;
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
@@ -23,18 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
 
-    <h1><?= "<?= " ?>Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Update') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Delete') ?>, ['delete', <?= $urlParams ?>], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => <?= $generator->generateString('Are you sure you want to delete this item?') ?>,
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <div class="d-flex justify-content-between mb-3">
+        <h2 class="m-0"><?= "<?=" ?> Html::encode($this->title) ?></h2>
+        <div>
+            <?= "<?= " ?>Html::a(<?= $generator->generateString('Update') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
+            <?= "<?= " ?>Html::a(<?= $generator->generateString('Delete') ?>, ['delete', <?= $urlParams ?>], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => <?= $generator->generateString('Are you sure you want to delete this item?') ?>,
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </div>
+    </div>
 
     <?= "<?= " ?>DetailView::widget([
         'model' => $model,

@@ -9,10 +9,8 @@ $generators = Yii::$app->controller->module->generators;
 $this->title = 'Welcome to Gii';
 ?>
 <div class="default-index">
-    <div class="page-header">
-        <h1>Welcome to Gii <small>a magical tool that can write code for you</small></h1>
-    </div>
-
+    <h1>Welcome to Gii <small class="text-secondary">a magical tool that can write code for you</small></h1>
+    <hr>
     <p class="lead">Start the fun with the following code generators:</p>
 
     <div class="row">
@@ -20,7 +18,7 @@ $this->title = 'Welcome to Gii';
         <div class="generator col-lg-4">
             <h3><?= Html::encode($generator->getName()) ?></h3>
             <p><?= $generator->getDescription() ?></p>
-            <p><?= Html::a('Start &raquo;', ['default/view', 'id' => $id], ['class' => 'btn btn-default']) ?></p>
+            <p><?= Html::a('Start &raquo;', ['default/view', 'id' => $id], ['class' => 'btn btn-outline-secondary']) ?></p>
         </div>
         <?php endforeach; ?>
     </div>
