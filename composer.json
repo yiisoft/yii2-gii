@@ -23,7 +23,7 @@
     ],
     "require": {
         "php": ">=5.5",
-        "yiisoft/yii2": "2.0.*",
+        "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap4": "1.0.x-dev",
         "phpspec/php-diff": ">=1.0.2",
         "bower-asset/typeahead.js": "0.10.* | ~0.11.0",
@@ -46,6 +46,14 @@
     "extra": {
         "branch-alias": {
             "dev-master": "2.2.x-dev"
+        }
+    },
+    "config": {
+        "fxp-asset": {
+            "installer-paths": {
+                "npm-asset-library": "vendor/npm",
+                "bower-asset-library": "vendor/bower"
+            }
         }
     },
     "repositories": [
