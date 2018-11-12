@@ -6,6 +6,7 @@ Yii Framework 2 gii extension Change Log
 
 - Bug #333: Fixed incorrect validation rule for TINYINT column type (nostop8)
 - Bug #328: Fix bug in CRUD update view generator (ricpelo)
+- Bug #383: Fix bug in CRUD update view generator (bscheshirwork)
 
 
 2.0.6 December 23, 2017
