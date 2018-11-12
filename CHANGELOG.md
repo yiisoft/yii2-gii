@@ -8,6 +8,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #327: Fixed bug in Model generator when $baseClass is an abstract class (rhertogh)
 - Enh #366: Option to allow standardized class names capitals in model generator (slinstj)
 - Enh #378: Remove useless import of `Yii` from CRUD generator search model template (CeBe)
+- Bug #383: Fix incorrect title generation in CRUD update view (bscheshirwork)
 
 
 2.0.7 May 3, 2018
@@ -16,8 +17,6 @@ Yii Framework 2 gii extension Change Log
 - Bug #185: Fixed bug in Model generators when FKs pointing to non-existing tables (adipriyantobpn)
 - Bug #328: Fixed bug in CRUD update view generator (ricpelo)
 - Bug #333: Fixed incorrect validation rule for TINYINT column type (nostop8)
-- Bug #328: Fix bug in CRUD update view generator (ricpelo)
-- Bug #383: Fix incorrect title generation in CRUD update view (bscheshirwork)
 - Bug #340: Fixed bug in CRUD SearchModel generator (JeanWolf)
 - Bug #351: Fixed incorrect validation rule for JSON column type (silverfire)
 
