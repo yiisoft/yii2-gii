@@ -22,7 +22,7 @@ $asset = yii\gii\GiiAsset::register($this);
 <body>
     <div class="container-fluid page-container">
         <?php $this->beginBody() ?>
-        <nav class="navbar navbar-fixed-top navbar-dark bg-dark">
+        <nav class="navbar navbar-fixed-top navbar-expand-md navbar-dark bg-dark">
             <?php echo Html::a(Html::img($asset->baseUrl . '/logo.png'), ['default/index'], [
                 'class' => ['navbar-brand']
             ]); ?>
