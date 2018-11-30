@@ -12,6 +12,7 @@
 @import "bs4/dropdown";
 @import "bs4/button-group";
 @import "bs4/nav";
+@import "bs4/navbar";
 @import "bs4/pagination";
 @import "bs4/list-group";
 @import "bs4/utilities";
@@ -43,6 +44,7 @@ body {
     height: 59px;
     line-height: 59px;
     box-sizing: border-box;
+
     p {
         margin: 0;
     }
@@ -68,8 +70,28 @@ body {
     margin-bottom: 20px;
 }
 
-.list-group .glyphicon {
-    float: right;
+.list-group {
+    .active {
+        .icon::after {
+            background-image: $icon-angle-right-active;
+        }
+    }
+
+    .icon {
+        float: right;
+
+        &::after {
+            background: $icon-angle-right no-repeat;
+            background-size: contain;
+            content: "";
+            display: inline-block;
+            height: 1em;
+            line-height: 1;
+            position: relative;
+            top: 2px;
+            width: 1em;
+        }
+    }
 }
 
 .popover {
