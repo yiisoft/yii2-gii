@@ -96,7 +96,7 @@ use yii\helpers\Html;
     </table>
 
     <div class="modal fade" id="preview-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="display: flex;">
                     <div class="btn-group btn-group-sm" role="group">
@@ -114,10 +114,10 @@ use yii\helpers\Html;
                         </a>
                         &nbsp;
                     </div>
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title ml-2">Modal title</h5>
                     <span class="modal-copy-hint ml-auto"><kbd>CTRL</kbd>+<kbd>C</kbd> to copy</span>
                     <div id="clipboard-container"><textarea id="clipboard"></textarea></div>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>

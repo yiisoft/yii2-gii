@@ -19,6 +19,10 @@ use yii\helpers\Json;
 class ActiveField extends \yii\widgets\ActiveField
 {
     /**
+     * {@inheritdoc}
+     */
+    public $template = "{label}\n{input}\n{error}";
+    /**
      * @var Generator
      */
     public $model;
@@ -83,6 +87,7 @@ class ActiveField extends \yii\widgets\ActiveField
         Html::addCssClass($this->labelOptions, 'help');
         ArrayHelper::setValue($this->labelOptions, 'data.toggle', 'popover');
         ArrayHelper::setValue($this->labelOptions, 'data.content', $content);
+        ArrayHelper::setValue($this->labelOptions, 'data.placement', 'right');
 
         return $this;
     }

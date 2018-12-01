@@ -146,17 +146,49 @@ body {
                     }
                 }
 
-                .modal-previous .icon {
-                    background-image: $icon-long-arrow-left;
+                .modal-previous {
+                    .icon {
+                        background-image: $icon-long-arrow-left;
+                    }
+
+                    @include hover {
+                        .icon {
+                            background-image: $icon-long-arrow-left-hover;
+                        }
+                    }
                 }
-                .modal-next .icon {
-                    background-image: $icon-long-arrow-right;
+                .modal-next {
+                    .icon {
+                        background-image: $icon-long-arrow-right;
+                    }
+
+                    @include hover {
+                        .icon {
+                            background-image: $icon-long-arrow-right-hover;
+                        }
+                    }
                 }
-                .modal-refresh .icon {
-                    background-image: $icon-refresh;
+                .modal-refresh {
+                    .icon {
+                        background-image: $icon-refresh;
+                    }
+
+                    @include hover {
+                        .icon {
+                            background-image: $icon-refresh-hover;
+                        }
+                    }
                 }
-                .modal-checkbox .icon {
-                    background-image: $icon-check-square;
+                .modal-checkbox {
+                    .icon {
+                        background-image: $icon-check-square;
+                    }
+
+                    @include hover {
+                        .icon {
+                            background-image: $icon-check-square-hover;
+                        }
+                    }
                 }
             }
         }
