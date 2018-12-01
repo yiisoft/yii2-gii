@@ -9,7 +9,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #366: Option to allow standardized class names capitals in model generator (slinstj)
 - Enh #378: Remove useless import of `Yii` from CRUD generator search model template (CeBe)
 - Bug #383: Fix incorrect title generation in CRUD update view (bscheshirwork)
-
+- Enh #391: Remove empty line of template to fix PSR2 (zacksleo)
 
 2.0.7 May 3, 2018
 -----------------
