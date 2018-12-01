@@ -22,7 +22,7 @@ use yii\gii\CodeFile;
                 <label class="btn btn-success active" title="Filter files that are created">
                     <input type="checkbox" value="<?= CodeFile::OP_CREATE ?>" checked> Create
                 </label>
-                <label class="btn btn-default active" title="Filter files that are unchanged.">
+                <label class="btn btn-outline-secondary active" title="Filter files that are unchanged.">
                     <input type="checkbox" value="<?= CodeFile::OP_SKIP ?>" checked> Unchanged
                 </label>
                 <label class="btn btn-warning active" title="Filter files that are overwritten">
@@ -100,11 +100,11 @@ use yii\gii\CodeFile;
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <div class="btn-group pull-left">
-                        <a class="modal-previous btn btn-xs btn-default" href="#" title="Previous File (Left Arrow)"><span class="glyphicon glyphicon-arrow-left"></span></a>
-                        <a class="modal-next btn btn-xs btn-default" href="#" title="Next File (Right Arrow)"><span class="glyphicon glyphicon-arrow-right"></span></a>
-                        <a class="modal-refresh btn btn-xs btn-default" href="#" title="Refresh File (R)"><span class="glyphicon glyphicon-refresh"></span></a>
-                        <a class="modal-checkbox btn btn-xs btn-default" href="#" title="Check This File (Space)"><span class="glyphicon"></span></a>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <a class="modal-previous btn btn-outline-secondary" href="#" title="Previous File (Left Arrow)"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                        <a class="modal-next btn btn-outline-secondary" href="#" title="Next File (Right Arrow)"><span class="glyphicon glyphicon-arrow-right"></span></a>
+                        <a class="modal-refresh btn btn-outline-secondary" href="#" title="Refresh File (R)"><span class="glyphicon glyphicon-refresh"></span></a>
+                        <a class="modal-checkbox btn btn-outline-secondary" href="#" title="Check This File (Space)"><span class="glyphicon"></span></a>
                         &nbsp;
                     </div>
                     <strong class="modal-title pull-left">Modal title</strong>

@@ -27,7 +27,8 @@ foreach ($generator->templates as $name => $path) {
 
     <?php $form = ActiveForm::begin([
         'id' => "$id-generator",
-        'successCssClass' => '',
+        'successCssClass' => 'is-valid',
+        'errorCssClass' => 'is-invalid',
         'fieldConfig' => [
             'class' => ActiveField::className(),
             'hintOptions' => ['tag' => 'small', 'class' => 'form-text text-muted'],
