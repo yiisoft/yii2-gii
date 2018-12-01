@@ -98,7 +98,7 @@ use yii\helpers\Html;
     <div class="modal fade" id="preview-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="display: flex;">
                     <div class="btn-group btn-group-sm" role="group">
                         <a class="modal-previous btn btn-outline-secondary" href="#" title="Previous File (Left Arrow)">
                             <span class="icon"></span>
@@ -117,7 +117,9 @@ use yii\helpers\Html;
                     <h5 class="modal-title">Modal title</h5>
                     <span class="modal-copy-hint ml-auto"><kbd>CTRL</kbd>+<kbd>C</kbd> to copy</span>
                     <div id="clipboard-container"><textarea id="clipboard"></textarea></div>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <p>Please wait ...</p>
