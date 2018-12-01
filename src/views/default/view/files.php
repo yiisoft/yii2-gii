@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\gii\CodeFile;
+use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 /* @var $generator \yii\gii\Generator */
@@ -14,11 +14,11 @@ use yii\gii\CodeFile;
     <p>Click on the above <code>Generate</code> button to generate the files selected below:</p>
 
     <div class="row form-group">
-        <div class="col-xs-6">
+        <div class="col-6">
             <input id="filter-input" class="form-control" placeholder="Type to filter">
         </div>
-        <div class="col-xs-6 text-right">
-            <div id="action-toggle" class="btn-group btn-group-xs"">
+        <div class="col-6 text-right">
+            <div id="action-toggle" class="btn-group btn-group-xs">
                 <label class="btn btn-success active" title="Filter files that are created">
                     <input type="checkbox" value="<?= CodeFile::OP_CREATE ?>" checked> Create
                 </label>
@@ -32,7 +32,7 @@ use yii\gii\CodeFile;
         </div>
     </div>
 
-    <table class="table table-bordered table-striped table-condensed">
+    <table class="table table-bordered table-striped table-sm">
         <thead>
             <tr>
                 <th class="file">Code File</th>
@@ -52,17 +52,17 @@ use yii\gii\CodeFile;
         </thead>
         <tbody id="files-body">
             <?php foreach ($files as $file): ?>
-            <?php
-            if ($file->operation === CodeFile::OP_OVERWRITE) {
-                $trClass = 'warning';
-            } elseif ($file->operation === CodeFile::OP_SKIP) {
-                $trClass = 'active';
-            } elseif ($file->operation === CodeFile::OP_CREATE) {
-                $trClass = 'success';
-            } else {
-                $trClass = '';
-            }
-            ?>
+                <?php
+                if ($file->operation === CodeFile::OP_OVERWRITE) {
+                    $trClass = 'table-warning';
+                } elseif ($file->operation === CodeFile::OP_SKIP) {
+                    $trClass = 'table-active';
+                } elseif ($file->operation === CodeFile::OP_CREATE) {
+                    $trClass = 'table-success';
+                } else {
+                    $trClass = '';
+                }
+                ?>
             <tr class="<?= "$file->operation $trClass" ?>">
                 <td class="file">
                     <?= Html::a(Html::encode($file->getRelativePath()), ['preview', 'id' => $id, 'file' => $file->id], ['class' => 'preview-code', 'data-title' => $file->getRelativePath()]) ?>
@@ -99,18 +99,25 @@ use yii\gii\CodeFile;
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a class="modal-previous btn btn-outline-secondary" href="#" title="Previous File (Left Arrow)"><span class="glyphicon glyphicon-arrow-left"></span></a>
-                        <a class="modal-next btn btn-outline-secondary" href="#" title="Next File (Right Arrow)"><span class="glyphicon glyphicon-arrow-right"></span></a>
-                        <a class="modal-refresh btn btn-outline-secondary" href="#" title="Refresh File (R)"><span class="glyphicon glyphicon-refresh"></span></a>
-                        <a class="modal-checkbox btn btn-outline-secondary" href="#" title="Check This File (Space)"><span class="glyphicon"></span></a>
+                        <a class="modal-previous btn btn-outline-secondary" href="#" title="Previous File (Left Arrow)">
+                            <span class="icon"></span>
+                        </a>
+                        <a class="modal-next btn btn-outline-secondary" href="#" title="Next File (Right Arrow)">
+                            <span class="icon"></span>
+                        </a>
+                        <a class="modal-refresh btn btn-outline-secondary" href="#" title="Refresh File (R)">
+                            <span class="icon"></span>
+                        </a>
+                        <a class="modal-checkbox btn btn-outline-secondary" href="#" title="Check This File (Space)">
+                            <span class="icon"></span>
+                        </a>
                         &nbsp;
                     </div>
-                    <strong class="modal-title pull-left">Modal title</strong>
-                    <span class="modal-copy-hint pull-right"><kbd>CTRL</kbd>+<kbd>C</kbd> to copy</span>
+                    <h5 class="modal-title">Modal title</h5>
+                    <span class="modal-copy-hint ml-auto"><kbd>CTRL</kbd>+<kbd>C</kbd> to copy</span>
                     <div id="clipboard-container"><textarea id="clipboard"></textarea></div>
-                    <div class="clearfix"></div>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <p>Please wait ...</p>

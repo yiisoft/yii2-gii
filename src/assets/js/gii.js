@@ -98,7 +98,10 @@ yii.gii = (function ($) {
             }
             $modal.find('.modal-title').text($link.data('title'));
             $modal.find('.modal-body').html('Loading ...');
-            $modal.modal('show');
+
+            var modalInitJs = new Modal($modal[0]);
+            modalInitJs.show();
+
             var checkbox = $('a.' + $modal.data('action') + '[href="' + $link.attr('href') + '"]').closest('tr').find('input').get(0);
             var checked = false;
             if (checkbox) {

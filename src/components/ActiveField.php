@@ -8,6 +8,8 @@
 namespace yii\gii\components;
 
 use yii\gii\Generator;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\helpers\Json;
 
 /**
@@ -69,6 +71,18 @@ class ActiveField extends \yii\widgets\ActiveField
             $item = ['word' => $item];
         }
         $this->form->getView()->registerJs("yii.gii.autocomplete($counter, " . Json::htmlEncode($data) . ");");
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hint($content, $options = [])
+    {
+        Html::addCssClass($this->labelOptions, 'help');
+        ArrayHelper::setValue($this->labelOptions, 'data.toggle', 'popover');
+        ArrayHelper::setValue($this->labelOptions, 'data.content', $content);
 
         return $this;
     }

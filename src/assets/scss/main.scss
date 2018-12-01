@@ -43,7 +43,6 @@ body {
 
 .footer {
     margin-top: -60px;
-    border-top: 1px solid #ddd;
     height: 59px;
     line-height: 59px;
     box-sizing: border-box;
@@ -127,6 +126,37 @@ body {
     }
     .modal-dialog {
         width: 800px;
+
+        .modal-header {
+            .btn-group {
+                .icon {
+                    &::after {
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        content: "";
+                        display: inline-block;
+                        height: 1em;
+                        line-height: 1;
+                        position: relative;
+                        top: 2px;
+                        width: 1em;
+                    }
+                }
+
+                .modal-previous .icon {
+                    background-image: $icon-long-arrow-left;
+                }
+                .modal-next .icon {
+                    background-image: $icon-long-arrow-right;
+                }
+                .modal-refresh .icon {
+                    background-image: $icon-refresh;
+                }
+                .modal-checkbox .icon {
+                    background-image: $icon-check-square;
+                }
+            }
+        }
 
         .error {
             color: #d9534f;
