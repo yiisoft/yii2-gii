@@ -29,6 +29,7 @@ foreach ($generator->templates as $name => $path) {
         'id' => "$id-generator",
         'successCssClass' => 'is-valid',
         'errorCssClass' => 'is-invalid',
+        'validationStateOn' => ActiveForm::VALIDATION_STATE_ON_INPUT,
         'fieldConfig' => [
             'class' => ActiveField::className(),
             'hintOptions' => ['tag' => 'small', 'class' => 'form-text text-muted'],

@@ -187,18 +187,18 @@ body {
                     }
                 }
                 .modal-checkbox {
-                    .icon, .icon.checked {
+                    .icon, &.checked .icon {
                         background-image: $icon-check-square;
                     }
-                    .icon.unchecked {
+                    &.unchecked .icon {
                         background-image: $icon-square;
                     }
 
                     @include hover {
-                        .icon, .icon.checked {
+                        .icon, &.checked .icon {
                             background-image: $icon-check-square-hover;
                         }
-                        .icon.unchecked {
+                        &.unchecked .icon {
                             background-image: $icon-square-hover;
                         }
                     }
