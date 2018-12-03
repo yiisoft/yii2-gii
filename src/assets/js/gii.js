@@ -110,7 +110,7 @@ yii.gii = (function ($) {
             } else {
                 $modal.find('.modal-checkbox').addClass('disabled');
             }
-            $modal.find('.modal-checkbox span').toggleClass('glyphicon-check', checked).toggleClass('glyphicon-unchecked', !checked);
+            $modal.find('.modal-checkbox').toggleClass('checked', checked).toggleClass('unchecked', !checked);
 
             ajaxRequest = $.ajax({
                 type: 'POST',

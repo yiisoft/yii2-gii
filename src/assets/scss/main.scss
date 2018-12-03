@@ -15,6 +15,7 @@
 @import "bs4/nav";
 @import "bs4/navbar";
 @import "bs4/pagination";
+@import "bs4/badge";
 @import "bs4/list-group";
 @import "bs4/close";
 @import "bs4/modal";
@@ -37,7 +38,7 @@ body {
 }
 
 .content-container {
-    padding-top: 70px;
+    padding-top: 90px;
 }
 
 .footer-fix {
@@ -63,6 +64,12 @@ body {
         font-size: 21px;
         padding: 14px 24px;
     }
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: $zindex-fixed;
 }
 
 .navbar-brand {
@@ -180,13 +187,19 @@ body {
                     }
                 }
                 .modal-checkbox {
-                    .icon {
+                    .icon, .icon.checked {
                         background-image: $icon-check-square;
+                    }
+                    .icon.unchecked {
+                        background-image: $icon-square;
                     }
 
                     @include hover {
-                        .icon {
+                        .icon, .icon.checked {
                             background-image: $icon-check-square-hover;
+                        }
+                        .icon.unchecked {
+                            background-image: $icon-square-hover;
                         }
                     }
                 }
