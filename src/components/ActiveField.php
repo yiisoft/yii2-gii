@@ -47,6 +47,8 @@ class ActiveField extends \yii\widgets\ActiveField
             } else {
                 $this->autoComplete($autoCompleteData[$this->attribute]);
             }
+        } else {
+            $this->parts['{list}'] = '';
         }
     }
 
