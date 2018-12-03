@@ -42,11 +42,11 @@ foreach ($generator->templates as $name => $path) {
                     'generator' => $generator,
                     'form' => $form,
                 ]) ?>
-                <?= $form->field($generator, 'template')->sticky()
+                <?= $form->field($generator, 'template')
+                    ->sticky()
+                    ->hint('Please select which set of the templates should be used to generated the code.')
                     ->label('Code Template')
-                    ->dropDownList($templates)->hint('
-                        Please select which set of the templates should be used to generated the code.
-                ') ?>
+                    ->dropDownList($templates) ?>
                 <div class="form-group">
                     <?= Html::submitButton('Preview', ['name' => 'preview', 'class' => 'btn btn-primary']) ?>
 

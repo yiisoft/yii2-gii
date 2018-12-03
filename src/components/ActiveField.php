@@ -58,7 +58,7 @@ class ActiveField extends \yii\widgets\ActiveField
      */
     public function sticky()
     {
-        $this->options['class'] .= ' sticky';
+        Html::addCssClass($this->options, 'sticky');
 
         return $this;
     }
