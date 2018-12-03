@@ -31,18 +31,6 @@ yii.gii = (function ($) {
         return true;
     };
 
-    var initHintBlocks = function () {
-        $('.hint-block').each(function () {
-            var $hint = $(this);
-            $hint.parent().find('label').addClass('help').popover({
-                html: true,
-                trigger: 'hover',
-                placement: 'right',
-                content: $hint.html()
-            });
-        });
-    };
-
     var initStickyInputs = function () {
         $('.sticky:not(.error)').find('input[type="text"],select,textarea').each(function () {
             var value;
@@ -56,7 +44,9 @@ yii.gii = (function ($) {
             if (value === '') {
                 value = '[empty]';
             }
-            $(this).before('<div class="sticky-value" data-toggle="tooltip" data-placement="right" title="' + value + '">' + value + '</div>').hide();
+            var $element = $('<div class="sticky-value" title="' + value + '">' + value + '</div>');
+            new Tooltip($element[0], {placement: 'right'});
+            $(this).before($element).hide();
         });
         $('.sticky-value').on('click', function () {
             $(this).hide();
@@ -203,7 +193,6 @@ yii.gii = (function ($) {
 
     return {
         init: function () {
-            initHintBlocks();
             initStickyInputs();
             initPreviewDiffLinks();
             initConfirmationCheckboxes();
