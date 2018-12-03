@@ -10,7 +10,6 @@ namespace yii\gii\components;
 use yii\gii\Generator;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\helpers\Json;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -21,7 +20,7 @@ class ActiveField extends \yii\widgets\ActiveField
     /**
      * {@inheritdoc}
      */
-    public $template = "{label}\n{input}\n{error}";
+    public $template = "{label}\n{input}\n{list}\n{error}";
     /**
      * @var Generator
      */
@@ -69,12 +68,16 @@ class ActiveField extends \yii\widgets\ActiveField
      */
     public function autoComplete($data)
     {
-        static $counter = 0;
-        $this->inputOptions['class'] .= ' typeahead typeahead-' . (++$counter);
-        foreach ($data as &$item) {
-            $item = ['word' => $item];
+        $inputID = $this->getInputId();
+        ArrayHelper::setValue($this->inputOptions, 'list', "$inputID-list");
+
+        $html = Html::beginTag('datalist', ['id' => "$inputID-list"]) . "\n";
+        foreach ($data as $item) {
+            $html .= Html::tag('option', $item) . "\n";
         }
-        $this->form->getView()->registerJs("yii.gii.autocomplete($counter, " . Json::htmlEncode($data) . ");");
+        $html .= Html::endTag('datalist');
+
+        $this->parts['{list}'] = $html;
 
         return $this;
     }
