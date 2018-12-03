@@ -33,7 +33,8 @@ yii.gii = (function ($) {
 
     var initStickyInputs = function () {
         $('.sticky:not(.error)').find('input[type="text"],select,textarea').each(function () {
-            var value;
+            var value,
+                element = document.createElement('div');
             if (this.tagName === 'SELECT') {
                 value = this.options[this.selectedIndex].text;
             } else if (this.tagName === 'TEXTAREA') {
@@ -44,9 +45,11 @@ yii.gii = (function ($) {
             if (value === '') {
                 value = '[empty]';
             }
-            var $element = $('<div class="sticky-value" title="' + value + '">' + value + '</div>');
-            new Tooltip($element[0], {placement: 'right'});
-            $(this).before($element).hide();
+            element.classList.add('sticky-value');
+            element.title = value;
+            element.innerHTML = value;
+            new Tooltip(element, {placement: 'right'});
+            $(this).before(element).hide();
         });
         $('.sticky-value').on('click', function () {
             $(this).hide();
