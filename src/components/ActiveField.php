@@ -96,4 +96,28 @@ class ActiveField extends \yii\widgets\ActiveField
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function checkbox($options = [], $enclosedByLabel = false)
+    {
+        $this->template = "{input}\n{label}\n{error}";
+        Html::addCssClass($this->options, 'form-check');
+        Html::addCssClass($options, 'form-check-input');
+        Html::addCssClass($this->labelOptions, 'form-check-label');
+        return parent::checkbox($options, $enclosedByLabel);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function radio($options = [], $enclosedByLabel = false)
+    {
+        $this->template = "{input}\n{label}\n{error}";
+        Html::addCssClass($this->options, 'form-check');
+        Html::addCssClass($options, 'form-check-input');
+        Html::addCssClass($this->labelOptions, 'form-check-label');
+        return parent::radio($options, $enclosedByLabel);
+    }
 }

@@ -56,7 +56,7 @@ yii.gii = (function ($) {
             if (value === '') {
                 value = '[empty]';
             }
-            $(this).before('<div class="sticky-value">' + value + '</div>').hide();
+            $(this).before('<div class="sticky-value" data-toggle="tooltip" data-placement="right" title="' + value + '">' + value + '</div>').hide();
         });
         $('.sticky-value').on('click', function () {
             $(this).hide();

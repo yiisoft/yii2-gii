@@ -19,14 +19,13 @@
 @import "bs4/list-group";
 @import "bs4/close";
 @import "bs4/modal";
+@import "bs4/tooltip";
 @import "bs4/popover";
 @import "bs4/utilities";
 
 .tab-pane {
     padding: $list-group-item-padding-y 0;
 }
-
-
 
 html,
 body {
@@ -53,16 +52,6 @@ body {
 
     p {
         margin: 0;
-    }
-}
-
-.jumbotron {
-    text-align: center;
-    background-color: transparent;
-
-    .btn {
-        font-size: 21px;
-        padding: 14px 24px;
     }
 }
 
@@ -117,7 +106,7 @@ body {
 
 .error-summary {
     color: #a94442;
-    background: #fdf7f7;
+    background: gray("100");
     border-left: 3px solid #eed3d7;
     padding: 10px 20px;
     margin: 0 0 15px 0;
@@ -125,18 +114,18 @@ body {
 
 .default-view {
     .sticky-value {
-        padding: 6px 12px;
+        @include text-truncate;
+
+        padding: $input-padding-x $input-padding-y;
         background: lightyellow;
         white-space: pre;
         word-wrap: break-word;
     }
     .form-group label.help {
-        border-bottom: 1px dashed #888;
+        border-bottom: 1px dashed gray("600");
         cursor: help;
     }
     .modal-dialog {
-        width: 800px;
-
         .modal-header {
             .btn-group {
                 .icon {
@@ -207,11 +196,11 @@ body {
         }
 
         .error {
-            color: #d9534f;
+            color: theme-color("red");
         }
         .content {
-            background: #fafafa;
-            border-left: #eee 5px solid;
+            background: gray("100");
+            border-left: gray("200") 5px solid;
             padding: 5px 10px;
             overflow: auto;
         }
@@ -243,16 +232,16 @@ body {
 .default-view-results {
     pre {
         overflow: auto;
-        background-color: #333;
+        background-color: gray("800");
         max-height: 300px;
-        color: white;
+        color: $white;
         padding: 10px;
         border-radius: 0;
         white-space: nowrap;
 
         .error {
             background: #FFE0E1;
-            color: black;
+            color: $black;
             padding: 1px;
         }
     }
@@ -289,14 +278,14 @@ body {
     }
     tbody th {
         text-align: right;
-        background: #FAFAFA;
+        background: gray("100");
         padding: 1px 2px;
-        border-right: 1px solid #eee;
+        border-right: 1px solid gray("200");
         vertical-align: top;
         font-size: 13px;
         font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
         font-weight: normal;
-        color: #999;
+        color: gray("500");
         width: 5px;
     }
     td {
@@ -308,7 +297,7 @@ body {
         text-decoration: none;
     }
     .Skipped {
-        background: #f7f7f7;
+        background: gray("100");
     }
 }
 
@@ -364,41 +353,6 @@ body {
     }
     th[data-line-number]:before {
         content: attr(data-line-number);
-    }
-}
-
-/* additional styles for typeahead.js, adapted from http://twitter.github.io/typeahead.js/examples/ */
-
-.twitter-typeahead {
-    display: block !important;
-}
-
-.tt-hint {
-    color: #999
-}
-
-.tt-dropdown-menu, .tt-menu {
-    width: 422px;
-    margin-top: 2px;
-    padding: 8px 0;
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-}
-
-.tt-suggestion {
-    padding: 3px 20px;
-    font-size: 18px;
-    line-height: 24px;
-
-    &.tt-cursor {
-        color: #fff;
-        background-color: #0097cf;
-    }
-    p {
-        margin: 0;
     }
 }
 
