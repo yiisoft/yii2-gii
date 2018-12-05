@@ -134,60 +134,60 @@ body {
                         background-size: contain;
                         content: "";
                         display: inline-block;
-                        height: 1em;
+                        height: 1.2em;
                         line-height: 1;
                         position: relative;
                         top: 2px;
-                        width: 1em;
+                        width: 1.2em;
                     }
                 }
 
                 .modal-previous {
-                    .icon {
+                    .icon::after {
                         background-image: $icon-long-arrow-left;
                     }
 
                     @include hover {
-                        .icon {
+                        .icon::after {
                             background-image: $icon-long-arrow-left-hover;
                         }
                     }
                 }
                 .modal-next {
-                    .icon {
+                    .icon::after {
                         background-image: $icon-long-arrow-right;
                     }
 
                     @include hover {
-                        .icon {
+                        .icon::after {
                             background-image: $icon-long-arrow-right-hover;
                         }
                     }
                 }
                 .modal-refresh {
-                    .icon {
+                    .icon::after {
                         background-image: $icon-refresh;
                     }
 
                     @include hover {
-                        .icon {
+                        .icon::after {
                             background-image: $icon-refresh-hover;
                         }
                     }
                 }
                 .modal-checkbox {
-                    .icon, &.checked .icon {
+                    .icon::after, &.checked .icon::after {
                         background-image: $icon-check-square;
                     }
-                    &.unchecked .icon {
+                    &.unchecked .icon::after {
                         background-image: $icon-square;
                     }
 
                     @include hover {
-                        .icon, &.checked .icon {
+                        .icon::after, &.checked .icon::after {
                             background-image: $icon-check-square-hover;
                         }
-                        &.unchecked .icon {
+                        &.unchecked .icon::after {
                             background-image: $icon-square-hover;
                         }
                     }
