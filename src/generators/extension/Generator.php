@@ -239,12 +239,12 @@ EOD;
      */
     public function optsType()
     {
-        $licenses = [
+        $types = [
             'yii2-extension',
             'library',
         ];
 
-        return array_combine($licenses, $licenses);
+        return array_combine($types, $types);
     }
 
     /**

@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.1.0 under development
 -----------------------
 
-- no changes in this release.
+- Enh #390, Bug #260: Create (bootstrap)-independent version (simialbi)
 
 
 2.0.8 December 08, 2018

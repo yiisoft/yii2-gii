@@ -8,7 +8,8 @@
 namespace yii\gii\components;
 
 use yii\gii\Generator;
-use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -16,6 +17,10 @@ use yii\helpers\Json;
  */
 class ActiveField extends \yii\widgets\ActiveField
 {
+    /**
+     * {@inheritdoc}
+     */
+    public $template = "{label}\n{input}\n{list}\n{error}";
     /**
      * @var Generator
      */
@@ -42,6 +47,8 @@ class ActiveField extends \yii\widgets\ActiveField
             } else {
                 $this->autoComplete($autoCompleteData[$this->attribute]);
             }
+        } else {
+            $this->parts['{list}'] = '';
         }
     }
 
@@ -51,7 +58,7 @@ class ActiveField extends \yii\widgets\ActiveField
      */
     public function sticky()
     {
-        $this->options['class'] .= ' sticky';
+        Html::addCssClass($this->options, 'sticky');
 
         return $this;
     }
@@ -63,13 +70,54 @@ class ActiveField extends \yii\widgets\ActiveField
      */
     public function autoComplete($data)
     {
-        static $counter = 0;
-        $this->inputOptions['class'] .= ' typeahead typeahead-' . (++$counter);
-        foreach ($data as &$item) {
-            $item = ['word' => $item];
+        $inputID = $this->getInputId();
+        ArrayHelper::setValue($this->inputOptions, 'list', "$inputID-list");
+
+        $html = Html::beginTag('datalist', ['id' => "$inputID-list"]) . "\n";
+        foreach ($data as $item) {
+            $html .= Html::tag('option', $item) . "\n";
         }
-        $this->form->getView()->registerJs("yii.gii.autocomplete($counter, " . Json::htmlEncode($data) . ");");
+        $html .= Html::endTag('datalist');
+
+        $this->parts['{list}'] = $html;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hint($content, $options = [])
+    {
+        Html::addCssClass($this->labelOptions, 'help');
+        ArrayHelper::setValue($this->labelOptions, 'data.toggle', 'popover');
+        ArrayHelper::setValue($this->labelOptions, 'data.content', $content);
+        ArrayHelper::setValue($this->labelOptions, 'data.placement', 'right');
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function checkbox($options = [], $enclosedByLabel = false)
+    {
+        $this->template = "{input}\n{label}\n{error}";
+        Html::addCssClass($this->options, 'form-check');
+        Html::addCssClass($options, 'form-check-input');
+        Html::addCssClass($this->labelOptions, 'form-check-label');
+        return parent::checkbox($options, $enclosedByLabel);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function radio($options = [], $enclosedByLabel = false)
+    {
+        $this->template = "{input}\n{label}\n{error}";
+        Html::addCssClass($this->options, 'form-check');
+        Html::addCssClass($options, 'form-check-input');
+        Html::addCssClass($this->labelOptions, 'form-check-label');
+        return parent::radio($options, $enclosedByLabel);
     }
 }

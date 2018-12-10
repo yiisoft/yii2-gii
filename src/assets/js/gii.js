@@ -31,21 +31,10 @@ yii.gii = (function ($) {
         return true;
     };
 
-    var initHintBlocks = function () {
-        $('.hint-block').each(function () {
-            var $hint = $(this);
-            $hint.parent().find('label').addClass('help').popover({
-                html: true,
-                trigger: 'hover',
-                placement: 'right',
-                content: $hint.html()
-            });
-        });
-    };
-
     var initStickyInputs = function () {
         $('.sticky:not(.error)').find('input[type="text"],select,textarea').each(function () {
-            var value;
+            var value,
+                element = document.createElement('div');
             if (this.tagName === 'SELECT') {
                 value = this.options[this.selectedIndex].text;
             } else if (this.tagName === 'TEXTAREA') {
@@ -56,7 +45,11 @@ yii.gii = (function ($) {
             if (value === '') {
                 value = '[empty]';
             }
-            $(this).before('<div class="sticky-value">' + value + '</div>').hide();
+            element.classList.add('sticky-value');
+            element.title = value;
+            element.innerHTML = value;
+            new Tooltip(element, {placement: 'right'});
+            $(this).before(element).hide();
         });
         $('.sticky-value').on('click', function () {
             $(this).hide();
@@ -98,7 +91,10 @@ yii.gii = (function ($) {
             }
             $modal.find('.modal-title').text($link.data('title'));
             $modal.find('.modal-body').html('Loading ...');
-            $modal.modal('show');
+
+            var modalInitJs = new Modal($modal[0]);
+            modalInitJs.show();
+
             var checkbox = $('a.' + $modal.data('action') + '[href="' + $link.attr('href') + '"]').closest('tr').find('input').get(0);
             var checked = false;
             if (checkbox) {
@@ -107,7 +103,7 @@ yii.gii = (function ($) {
             } else {
                 $modal.find('.modal-checkbox').addClass('disabled');
             }
-            $modal.find('.modal-checkbox span').toggleClass('glyphicon-check', checked).toggleClass('glyphicon-unchecked', !checked);
+            $modal.find('.modal-checkbox').toggleClass('checked', checked).toggleClass('unchecked', !checked);
 
             ajaxRequest = $.ajax({
                 type: 'POST',
@@ -144,7 +140,7 @@ yii.gii = (function ($) {
         var $checkbox = $modal.data('current').closest('tr').find('input');
         var checked = !$checkbox.prop('checked');
         $checkbox.trigger('click');
-        $modal.find('.modal-checkbox span').toggleClass('glyphicon-check', checked).toggleClass('glyphicon-unchecked', !checked);
+        $modal.find('.modal-checkbox').toggleClass('checked', checked).toggleClass('unchecked', !checked);
         return false;
     };
 
@@ -199,19 +195,7 @@ yii.gii = (function ($) {
     }).on("keyup", onKeyup);
 
     return {
-        autocomplete: function (counter, data) {
-            var datum = new Bloodhound({
-                datumTokenizer: function (d) {
-                    return Bloodhound.tokenizers.whitespace(d.word);
-                },
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                local: data
-            });
-            datum.initialize();
-            jQuery('.typeahead-' + counter).typeahead(null, {displayKey: 'word', source: datum.ttAdapter()});
-        },
         init: function () {
-            initHintBlocks();
             initStickyInputs();
             initPreviewDiffLinks();
             initConfirmationCheckboxes();
