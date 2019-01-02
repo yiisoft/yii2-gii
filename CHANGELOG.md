@@ -5,6 +5,7 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Enh #390, Bug #260: Create (bootstrap)-independent version (simialbi)
+- Enh: Made `yii\gii\CodeFile` indepdendent of controller context, do not apply `$newDirMode` and `$newFileMode` if module is not available (CeBe)
 
 
 2.0.8 December 08, 2018
