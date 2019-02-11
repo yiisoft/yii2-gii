@@ -195,7 +195,7 @@ class Generator extends \yii\gii\Generator
         $pos = strrpos($this->controllerClass, '\\');
         $class = substr(substr($this->controllerClass, $pos + 1), 0, -10);
 
-        return Inflector::camel2id($class);
+        return Inflector::camel2id($class, '-', true);
     }
 
     /**
