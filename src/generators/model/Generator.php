@@ -135,7 +135,7 @@ class Generator extends \yii\gii\Generator
             table names like <code>SOME_TABLE</code> or <code>Other_Table</code> will have class names <code>SomeTable</code>
             and <code>OtherTable</code>, respectively. If not checked, the same tables will have class names <code>SOMETABLE</code>
             and <code>OtherTable</code> instead.',
-            'singularize' => 'This indicates whether the generated class names should have singularized. For example,
+            'singularize' => 'This indicates whether the generated class names should be singularized. For example,
             table names like <code>some_tables</code> will have class names <code>SomeTable</code>.',
             'baseClass' => 'This is the base class of the new ActiveRecord class. It should be a fully qualified namespaced class name.',
             'generateRelations' => 'This indicates whether the generator should generate relations based on
