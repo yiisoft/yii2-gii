@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.1.0 under development
 -----------------------
 
+- Fix #398, Bug #397: Use strict mode when generating view folder name (machour)
 - Enh #390, Bug #260: Create (bootstrap)-independent version (simialbi)
 - Enh #395: Made `yii\gii\CodeFile` indepdendent of controller context, do not apply `$newDirMode` and `$newFileMode` if module is not available (CeBe)
 
