@@ -44,7 +44,7 @@ class Generator extends \yii\gii\Generator
      */
     public $enablePjax = false;
     /**
-     * @var bool whether to use strict inflection for controller IDs
+     * @var bool whether to use strict inflection for controller IDs (insert a separator between two consecutive uppercase chars)
      * @since 2.1.0
      */
     public $strictInflector = true;
