@@ -6,7 +6,8 @@ Yii Framework 2 gii extension Change Log
 
 - Bug #398, #397: Use strict mode when generating view folder name (machour)
 - Enh #390, Bug #260: Create (bootstrap)-independent version (simialbi)
-- Enh #395: Made `yii\gii\CodeFile` indepdendent of controller context, do not apply `$newDirMode` and `$newFileMode` if module is not available (CeBe)
+- Enh #395: Made `yii\gii\CodeFile` independent of controller context, do not apply `$newDirMode` and `$newFileMode` if module is not available (CeBe)
+- Enh #399: Option to allow singularize class names in model generator (alexkart)
 
 
 2.0.8 December 08, 2018
