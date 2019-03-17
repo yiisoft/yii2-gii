@@ -1,14 +1,14 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.1.0 under development
------------------------
+2.1.0 March 17, 2019
+--------------------
 
-- Bug #398, #397: Use strict mode when generating view folder name (machour)
 - Enh #390, Bug #260: Create (bootstrap)-independent version (simialbi)
+- Bug #386: Move "Create" button outside of pjax container to avoid redirect (alexkart)
+- Bug #398, #397: Use strict mode when generating view folder name (machour)
 - Enh #395: Made `yii\gii\CodeFile` independent of controller context, do not apply `$newDirMode` and `$newFileMode` if module is not available (CeBe)
 - Enh #399: Option to allow singularize class names in model generator (alexkart)
-- Bug #386: Move "Create" button outside of pjax container to avoid redirect (alexkart)
 
 
 2.0.8 December 08, 2018
