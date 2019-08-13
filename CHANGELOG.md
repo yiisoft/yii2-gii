@@ -1,8 +1,8 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.1.1 under development
------------------------
+2.1.1 August 13, 2019
+---------------------
 
 - Bug #410: Inserted rows in the diff were not highlighted (albertborsos)
 
