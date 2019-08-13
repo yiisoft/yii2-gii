@@ -334,7 +334,7 @@ body {
 }
 
 .DifferencesInline {
-    .ChangeReplace, .ChangeDelete {
+    .ChangeReplace, .ChangeDelete, .ChangeInsert {
         .Left {
             background: #fdd;
         }
