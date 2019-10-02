@@ -201,7 +201,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getControllerFile()
     {
-        return Yii::getAlias('@' . str_replace('\\', '/', $this->controllerClass)) . '.php';
+        return Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\'))) . '.php';
     }
 
     /**
