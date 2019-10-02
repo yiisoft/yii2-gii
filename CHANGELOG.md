@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.1.2 under development
 -----------------------
 
-- no changes in this release.
+- Bug #413: Controller Generator produces invalid alias when namespace starts with backslash (cebe)
 
 
 2.1.1 August 13, 2019
