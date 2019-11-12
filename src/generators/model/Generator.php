@@ -288,7 +288,7 @@ class Generator extends \yii\gii\Generator
                 default:
                     $type = $column->phpType;
             }
-            if($column->allowNull){
+            if ($column->allowNull){
                 $type .= '|null';
             }
             $properties[$column->name] = [
