@@ -363,10 +363,11 @@ class ModelGeneratorTest extends GiiTestCase
     /**
      * @dataProvider tablePropertiesProvider
      *
-     * @param $tableName string
-     * @param $columns
+     * @param string $tableName
+     * @param array $columns
      */
-    public function testGenerateProperties($tableName, $columns){
+    public function testGenerateProperties($tableName, $columns)
+    {
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->tableName = $tableName;
