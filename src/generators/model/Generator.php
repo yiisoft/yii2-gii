@@ -719,8 +719,8 @@ class Generator extends \yii\gii\Generator
         if (!empty($key) && strcasecmp($key, 'id')) {
             if (substr_compare($key, 'id', -2, 2, true) === 0) {
                 $key = rtrim(substr($key, 0, -2), '_');
-            } elseif (substr_compare($key, 'id', 0, 2, true) === 0) {
-                $key = ltrim(substr($key, 2, strlen($key)), '_');
+            } elseif (substr_compare($key, 'id_', 0, 3, true) === 0) {
+                $key = ltrim(substr($key, 3, strlen($key)), '_');
             }
         }
         if ($multiple) {
