@@ -122,6 +122,35 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
             ]],
+
+            ['organization', 'Organization.php', [
+                [
+                    'name' => 'function getIdentityProviders()',
+                    'relation' => "\$this->hasMany(IdentityProvider::className(), ['organization_id' => 'id'])->inverseOf('organization');",
+                    'expected' => true,
+                ],
+            ]],
+            ['identity_provider', 'ProductLanguage.php', [
+                [
+                    'name' => 'function getOrganization()',
+                    'relation' => "\$this->hasOne(Organization::className(), ['id' => 'organization_id'])->inverseOf('identityProviders');",
+                    'expected' => true,
+                ],
+            ]],
+            ['user_rtl', 'UserRtl.php', [
+                [
+                    'name' => 'function getBlogRtls()',
+                    'relation' => "\$this->hasMany(BlogRtl::className(), ['id' => 'id_user'])->inverseOf('userRtl');",
+                    'expected' => true,
+                ],
+            ]],
+            ['blog_rtl', 'BlogRtl.php', [
+                [
+                    'name' => 'function getUserRtls()',
+                    'relation' => "\$this->hasOne(UserRtl::className(), ['id_user' => 'id'])->inverseOf('blogRtls');",
+                    'expected' => true,
+                ],
+            ]],
         ];
     }
 
@@ -158,10 +187,6 @@ class ModelGeneratorTest extends GiiTestCase
                 . ($relation['expected'] ? '' : ' not')." be there:\n" . $code
             );
         }
-    }
-
-    public function testSchemas()
-    {
     }
 
     /**
