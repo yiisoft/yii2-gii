@@ -262,13 +262,34 @@ class Generator extends \yii\gii\Generator
     {
         $properties = [];
         foreach ($table->columns as $column) {
-            $columnPhpType = $column->phpType;
-            if ($columnPhpType === 'integer') {
-                $type = 'int';
-            } elseif ($columnPhpType === 'boolean') {
-                $type = 'bool';
-            } else {
-                $type = $columnPhpType;
+            switch ($column->type) {
+                case Schema::TYPE_SMALLINT:
+                case Schema::TYPE_INTEGER:
+                case Schema::TYPE_BIGINT:
+                case Schema::TYPE_TINYINT:
+                    $type = 'int';
+                    break;
+                case Schema::TYPE_BOOLEAN:
+                    $type = 'bool';
+                    break;
+                case Schema::TYPE_FLOAT:
+                case Schema::TYPE_DOUBLE:
+                case Schema::TYPE_DECIMAL:
+                case Schema::TYPE_MONEY:
+                    $type = 'float';
+                    break;
+                case Schema::TYPE_DATE:
+                case Schema::TYPE_TIME:
+                case Schema::TYPE_DATETIME:
+                case Schema::TYPE_TIMESTAMP:
+                case Schema::TYPE_JSON:
+                    $type = 'string';
+                    break;
+                default:
+                    $type = $column->phpType;
+            }
+            if ($column->allowNull){
+                $type .= '|null';
             }
             $properties[$column->name] = [
                 'type' => $type,

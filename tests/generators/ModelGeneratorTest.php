@@ -305,4 +305,83 @@ class ModelGeneratorTest extends GiiTestCase
             $this->assertEquals($expectedClassName, $generatedClassName);
         }
     }
+
+    /**
+     * @return array
+     */
+    public function tablePropertiesProvider()
+    {
+        return [
+            [
+                'tableName' => 'category_photo',
+                'columns' => [
+                    [
+                        'columnName' => 'id',
+                        'propertyRow' => '* @property int $id',
+                    ],
+                    [
+                        'columnName' => 'category_id',
+                        'propertyRow' => '* @property int $category_id',
+                    ],
+                    [
+                        'columnName' => 'display_number',
+                        'propertyRow' => '* @property int $display_number',
+                    ],
+
+                ]
+            ],
+            [
+                'tableName' => 'product',
+                'columns' => [
+                    [
+                        'columnName' => 'id',
+                        'propertyRow' => '* @property int $id',
+                    ],
+                    [
+                        'columnName' => 'category_id',
+                        'propertyRow' => '* @property int $supplier_id',
+                    ],
+                    [
+                        'columnName' => 'category_language_code',
+                        'propertyRow' => '* @property string $category_language_code',
+                    ],
+                    [
+                        'columnName' => 'category_id',
+                        'propertyRow' => '* @property int $category_id',
+                    ],
+                    [
+                        'columnName' => 'internal_name',
+                        'propertyRow' => '* @property string|null $internal_name',
+                    ],
+
+                ]
+            ],
+        ];
+
+    }
+
+    /**
+     * @dataProvider tablePropertiesProvider
+     *
+     * @param string $tableName
+     * @param array $columns
+     */
+    public function testGenerateProperties($tableName, $columns)
+    {
+        $generator = new ModelGenerator();
+        $generator->template = 'default';
+        $generator->tableName = $tableName;
+
+        $files = $generator->generate();
+
+        $code = $files[0]->content;
+        foreach ($columns as $column) {
+            $location = strpos($code, $column['propertyRow']);
+            $this->assertTrue(
+                $location !== false,
+                "Column \"{$column['columnName']}\" properties should be there:\n" . $column['propertyRow']
+            );
+        }
+
+    }
 }
