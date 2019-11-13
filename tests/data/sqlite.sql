@@ -87,14 +87,14 @@ CREATE TABLE "product_language" (
 
 CREATE TABLE "organization" (
   id INTEGER NOT NULL,
-  name varchar(255) NOT NULL
+  name varchar(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE "identity_provider" (
   id INTEGER NOT NULL,
   organization_id INTEGER NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
   CONSTRAINT idp_oid_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES "organization" (id) ON DELETE CASCADE
 );
 
@@ -107,8 +107,8 @@ CREATE TABLE "user_rtl" (
 CREATE TABLE "blog_rtl" (
   id INTEGER NOT NULL,
   id_user INTEGER NOT NULL,
-  name varchar(255) NOT NULL
-  PRIMARY KEY (id)
+  name varchar(255) NOT NULL,
+  PRIMARY KEY (id),
   CONSTRAINT blog_rtl_id_user_rtl_id_fkey FOREIGN KEY (id_user) REFERENCES "rtl_user" (id) ON DELETE CASCADE
 );
 
