@@ -11,11 +11,11 @@ DROP TABLE IF EXISTS "category";
 DROP TABLE IF EXISTS "customer";
 DROP TABLE IF EXISTS "profile";
 
-DROP TABLE IF EXISTS "organization"
-DROP TABLE IF EXISTS "identity_provider"
+DROP TABLE IF EXISTS "organization";
+DROP TABLE IF EXISTS "identity_provider";
 
-DROP TABLE IF EXISTS "user_rtl"
-DROP TABLE IF EXISTS "blog_rtl"
+DROP TABLE IF EXISTS "user_rtl";
+DROP TABLE IF EXISTS "blog_rtl";
 
 CREATE TABLE "profile" (
   id INTEGER NOT NULL,
