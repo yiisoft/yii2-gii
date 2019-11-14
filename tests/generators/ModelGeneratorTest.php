@@ -28,16 +28,20 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertTrue($valid, 'Validation failed: ' . print_r($generator->getErrors(), true));
 
         $files = $generator->generate();
-        $this->assertEquals(8, count($files));
+        $this->assertEquals(12, count($files));
         $expectedNames = [
             'Attribute.php',
+            'BlogRtl.php',
             'Category.php',
             'CategoryPhoto.php',
             'Customer.php',
+            'IdentityProvider.php',
+            'Organization.php',
             'Product.php',
             'ProductLanguage.php',
             'Profile.php',
             'Supplier.php',
+            'UserRtl.php',
         ];
         $fileNames = array_map(function ($f) {
             return basename($f->path);
@@ -140,14 +144,14 @@ class ModelGeneratorTest extends GiiTestCase
             ['user_rtl', 'UserRtl.php', [
                 [
                     'name' => 'function getBlogRtls()',
-                    'relation' => "\$this->hasMany(BlogRtl::className(), ['id' => 'id_user']);",
+                    'relation' => "\$this->hasMany(BlogRtl::className(), ['id_user' => 'id']);",
                     'expected' => true,
                 ],
             ]],
             ['blog_rtl', 'BlogRtl.php', [
                 [
                     'name' => 'function getUserRtls()',
-                    'relation' => "\$this->hasOne(UserRtl::className(), ['id_user' => 'id']);",
+                    'relation' => "\$this->hasOne(UserRtl::className(), ['id' => 'id_user']);",
                     'expected' => true,
                 ],
             ]],
