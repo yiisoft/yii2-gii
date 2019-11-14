@@ -126,28 +126,28 @@ class ModelGeneratorTest extends GiiTestCase
             ['organization', 'Organization.php', [
                 [
                     'name' => 'function getIdentityProviders()',
-                    'relation' => "\$this->hasMany(IdentityProvider::className(), ['organization_id' => 'id'])->inverseOf('organization');",
+                    'relation' => "\$this->hasMany(IdentityProvider::className(), ['organization_id' => 'id']);",
                     'expected' => true,
                 ],
             ]],
             ['identity_provider', 'ProductLanguage.php', [
                 [
                     'name' => 'function getOrganization()',
-                    'relation' => "\$this->hasOne(Organization::className(), ['id' => 'organization_id'])->inverseOf('identityProviders');",
+                    'relation' => "\$this->hasOne(Organization::className(), ['id' => 'organization_id']);",
                     'expected' => true,
                 ],
             ]],
             ['user_rtl', 'UserRtl.php', [
                 [
                     'name' => 'function getBlogRtls()',
-                    'relation' => "\$this->hasMany(BlogRtl::className(), ['id' => 'id_user'])->inverseOf('userRtl');",
+                    'relation' => "\$this->hasMany(BlogRtl::className(), ['id' => 'id_user']);",
                     'expected' => true,
                 ],
             ]],
             ['blog_rtl', 'BlogRtl.php', [
                 [
                     'name' => 'function getUserRtls()',
-                    'relation' => "\$this->hasOne(UserRtl::className(), ['id_user' => 'id'])->inverseOf('blogRtls');",
+                    'relation' => "\$this->hasOne(UserRtl::className(), ['id_user' => 'id']);",
                     'expected' => true,
                 ],
             ]],
