@@ -130,7 +130,7 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
             ]],
-            ['identity_provider', 'ProductLanguage.php', [
+            ['identity_provider', 'IdentityProvider.php', [
                 [
                     'name' => 'function getOrganization()',
                     'relation' => "\$this->hasOne(Organization::className(), ['id' => 'organization_id']);",

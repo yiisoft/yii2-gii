@@ -100,7 +100,7 @@ CREATE TABLE "identity_provider" (
 
 CREATE TABLE "user_rtl" (
   id INTEGER NOT NULL,
-  description varchar(128) NOT NULL,
+  name varchar(128) NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -109,7 +109,7 @@ CREATE TABLE "blog_rtl" (
   id_user INTEGER NOT NULL,
   name varchar(255) NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT blog_rtl_id_user_rtl_id_fkey FOREIGN KEY (id_user) REFERENCES "rtl_user" (id) ON DELETE CASCADE
+  CONSTRAINT blog_rtl_id_user_rtl_id_fkey FOREIGN KEY (id_user) REFERENCES "user_rtl" (id) ON DELETE CASCADE
 );
 
 
