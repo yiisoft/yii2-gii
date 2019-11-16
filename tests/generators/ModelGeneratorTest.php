@@ -384,4 +384,53 @@ class ModelGeneratorTest extends GiiTestCase
         }
 
     }
+
+    /**
+     * @return array
+     */
+    public function rulesDefaultValuesProvider()
+    {
+        return [
+            [
+                'tableName' => 'customer',
+                'columns' => [
+                    [
+                        'columnName' => 'name',
+                        'rule' => '[[\'status\'], \'default\', \'value\' => 0]',
+                    ],
+                    [
+                        'columnName' => 'address',
+                        'rule' => '[[\'name\', \'address\', \'profile_id\'], \'default\', \'value\' => null]',
+                    ],
+                ]
+            ],
+        ];
+
+    }
+
+    /**
+     * @dataProvider rulesDefaultValuesProvider
+     *
+     * @param string $tableName
+     * @param array $columns
+     */
+    public function testRulesDefaultValues($tableName, $columns)
+    {
+        $generator = new ModelGenerator();
+        $generator->template = 'default';
+        $generator->tableName = $tableName;
+
+        $files = $generator->generate();
+
+        $code = $files[0]->content;
+        foreach ($columns as $column) {
+            $location = strpos($code, $column['rule']);
+            $this->assertTrue(
+                $location !== false,
+                "Column \"{$column['columnName']}\" rule should be there:\n" . $column['rule']
+            );
+        }
+
+    }
+
 }
