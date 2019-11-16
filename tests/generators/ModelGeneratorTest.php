@@ -427,7 +427,7 @@ class ModelGeneratorTest extends GiiTestCase
             $location = strpos($code, $column['rule']);
             $this->assertTrue(
                 $location !== false,
-                "Column \"{$column['columnName']}\" rule should be there:\n" . $column['rule']
+                "Rule should be there:\n" . $column['rule']
             );
         }
 

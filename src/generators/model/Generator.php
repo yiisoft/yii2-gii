@@ -336,6 +336,7 @@ class Generator extends \yii\gii\Generator
     {
         $types = [];
         $lengths = [];
+        $rules = [];
 
         $columnsDefaultNull = [];
         $driverName = $this->getDbDriverName();
@@ -348,8 +349,6 @@ class Generator extends \yii\gii\Generator
                 }
             }
         }
-
-        $rules = [];
 
         if ($columnsDefaultNull) {
             $rules[] = "[['" . implode("', '", $columnsDefaultNull) . "'], 'default', 'value' => null]";
