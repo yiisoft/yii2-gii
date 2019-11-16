@@ -337,20 +337,21 @@ class Generator extends \yii\gii\Generator
         $types = [];
         $lengths = [];
 
-        $rules = [];
         $columnsDefaultNull = [];
         $driverName = $this->getDbDriverName();
         foreach ($table->columns as $column) {
-            if (in_array($driverName, ['mysql','sqlite'], true)) {
+            if (in_array($driverName, ['mysql', 'sqlite'], true)) {
                 if ($column->defaultValue !== null) {
                     $rules[] = "[['" . $column->name . "'], 'default', 'value' => $column->defaultValue]";
-                }elseif($column->allowNull){
+                } elseif ($column->allowNull) {
                     $columnsDefaultNull[] = $column->name;
                 }
             }
         }
 
-        if($columnsDefaultNull){
+        $rules = [];
+
+        if ($columnsDefaultNull) {
             $rules[] = "[['" . implode("', '", $columnsDefaultNull) . "'], 'default', 'value' => null]";
         }
 
