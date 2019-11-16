@@ -7,7 +7,6 @@
 
 namespace yii\gii\generators\model;
 
-use ReflectionClass;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\db\ActiveQuery;
@@ -255,7 +254,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Generates the properties for the specified table.
-     * @param TableSchema $table the table schema
+     * @param \yii\db\TableSchema $table the table schema
      * @return array the generated properties (property => type)
      * @since 2.0.6
      */
@@ -304,7 +303,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Generates the attribute labels for the specified table.
-     * @param TableSchema $table the table schema
+     * @param \yii\db\TableSchema $table the table schema
      * @return array the generated attribute labels (name => label)
      */
     public function generateLabels($table)
@@ -329,7 +328,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Generates validation rules for the specified table.
-     * @param TableSchema $table the table schema
+     * @param \yii\db\TableSchema $table the table schema
      * @return array the generated validation rules
      */
     public function generateRules($table)
@@ -449,7 +448,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Generates relations using a junction table by adding an extra viaTable().
-     * @param TableSchema the table being checked
+     * @param \yii\db\TableSchema the table being checked
      * @param array $fks obtained from the checkJunctionTable() method
      * @param array $relations
      * @return array modified $relations
@@ -682,7 +681,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Checks if the given table is a junction table, that is it has at least one pair of unique foreign keys.
-     * @param TableSchema the table being checked
+     * @param \yii\db\TableSchema the table being checked
      * @return array|bool all unique foreign key pairs if the table is a junction table,
      * or false if the table is not a junction table.
      */
@@ -726,7 +725,7 @@ class Generator extends \yii\gii\Generator
     /**
      * Generate a relation name for the specified table and a base name.
      * @param array $relations the relations being generated currently.
-     * @param TableSchema $table the table schema
+     * @param \yii\db\TableSchema $table the table schema
      * @param string $key a base name that the relation name may be generated from
      * @param bool $multiple whether this is a has-many relation
      * @return string the relation name
@@ -734,10 +733,10 @@ class Generator extends \yii\gii\Generator
     protected function generateRelationName($relations, $table, $key, $multiple)
     {
         static $baseModel;
-        /* @var $baseModel ActiveRecord */
+        /* @var $baseModel \yii\db\ActiveRecord */
         if ($baseModel === null) {
             $baseClass = $this->baseClass;
-            $baseClassReflector = new ReflectionClass($baseClass);
+            $baseClassReflector = new \ReflectionClass($baseClass);
             if ($baseClassReflector->isAbstract()) {
                 $baseClassWrapper =
                     'namespace ' . __NAMESPACE__ . ';'.
@@ -988,12 +987,12 @@ class Generator extends \yii\gii\Generator
     {
         /** @var Connection $db */
         $db = $this->getDbConnection();
-        return $db instanceof Connection ? $db->driverName : null;
+        return $db instanceof \yii\db\Connection ? $db->driverName : null;
     }
 
     /**
      * Checks if any of the specified columns is auto incremental.
-     * @param TableSchema $table the table schema
+     * @param \yii\db\TableSchema $table the table schema
      * @param array $columns columns to check for autoIncrement property
      * @return bool whether any of the specified columns is auto incremental.
      */
