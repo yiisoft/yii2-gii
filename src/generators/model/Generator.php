@@ -336,19 +336,44 @@ class Generator extends \yii\gii\Generator
         $types = [];
         $lengths = [];
         $rules = [];
-
-        $columnsDefaultNull = [];
         $driverName = $this->getDbDriverName();
+
+        /**
+         * Default values
+         */
+        $columnsDefaultNull = [];
+        $columnsDefaultValues = [];
         foreach ($table->columns as $column) {
             if (in_array($driverName, ['mysql', 'sqlite'], true)) {
+                /**
+                 * text default values quote
+                 */
                 if ($column->defaultValue !== null) {
-                    $rules[] = "[['" . $column->name . "'], 'default', 'value' => $column->defaultValue]";
+                    switch ($column->type) {
+                        case Schema::TYPE_SMALLINT:
+                        case Schema::TYPE_INTEGER:
+                        case Schema::TYPE_BIGINT:
+                        case Schema::TYPE_TINYINT:
+                        case Schema::TYPE_BOOLEAN:
+                        case Schema::TYPE_FLOAT:
+                        case Schema::TYPE_DOUBLE:
+                        case Schema::TYPE_DECIMAL:
+                        case Schema::TYPE_MONEY:
+                            $defaultValue = $column->defaultValue;
+                            break;
+                        default:
+                            $defaultValue = '\'' . $column->defaultValue . '\'';
+                    }
+                    $columnsDefaultValues[$defaultValue][] = $column->name;
                 } elseif ($column->allowNull) {
                     $columnsDefaultNull[] = $column->name;
                 }
             }
         }
 
+        foreach($columnsDefaultValues as $defaultValue => $columnNameList){
+            $rules[] = "[['" . implode("', '", $columnNameList) . "'], 'default', 'value' => $defaultValue]";
+        }
         if ($columnsDefaultNull) {
             $rules[] = "[['" . implode("', '", $columnsDefaultNull) . "'], 'default', 'value' => null]";
         }

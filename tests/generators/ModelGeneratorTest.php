@@ -400,7 +400,11 @@ class ModelGeneratorTest extends GiiTestCase
                     ],
                     [
                         'columnName' => 'address',
-                        'rule' => '[[\'name\', \'address\', \'profile_id\'], \'default\', \'value\' => null]',
+                        'rule' => '[[\'name\', \'profile_id\'], \'default\', \'value\' => null]',
+                    ],
+                    [
+                        'columnName' => 'address',
+                        'rule' => '[[\'address\'], \'default\', \'value\' => \'-\']',
                     ],
                 ]
             ],
@@ -427,7 +431,7 @@ class ModelGeneratorTest extends GiiTestCase
             $location = strpos($code, $column['rule']);
             $this->assertTrue(
                 $location !== false,
-                "Rule should be there:\n" . $column['rule']
+                "Column \"{$column['columnName']}\" rule should be there:\n" . $column['rule']
             );
         }
 
