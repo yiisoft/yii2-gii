@@ -10,8 +10,9 @@ Yii Framework 2 gii extension Change Log
 2.1.2 October 08, 2019
 ----------------------
 
-- Bug #417: Fixed issue where RTL implementation for foreign keys causes problems with LTR tables names
+- Bug #417: Fixed issue where RTL implementation for foreign keys causes problems with LTR tables names (NickvdMeij)
 - Bug #413: Controller Generator produces invalid alias when namespace starts with backslash (cebe)
+
 
 2.1.1 August 13, 2019
 ---------------------
