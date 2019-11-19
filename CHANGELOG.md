@@ -1,7 +1,7 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.1.3 under development
+2.1.3 November 19, 2019
 -----------------------
 
 - Bug #417: Fixed issue where RTL implementation for foreign keys causes problems with LTR tables names (NickvdMeij)
