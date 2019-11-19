@@ -338,16 +338,11 @@ class Generator extends \yii\gii\Generator
         $rules = [];
         $driverName = $this->getDbDriverName();
 
-        /**
-         * Default values
-         */
         $columnsDefaultNull = [];
         $columnsDefaultValues = [];
-        foreach ($table->columns as $column) {
-            if (in_array($driverName, ['mysql', 'sqlite'], true)) {
-                /**
-                 * text default values quote
-                 */
+        if (in_array($driverName, ['mysql', 'sqlite'], true)) {
+            foreach ($table->columns as $column) {
+
                 if ($column->defaultValue !== null) {
                     switch ($column->type) {
                         case Schema::TYPE_SMALLINT:
@@ -361,8 +356,18 @@ class Generator extends \yii\gii\Generator
                         case Schema::TYPE_MONEY:
                             $defaultValue = $column->defaultValue;
                             break;
+
+                        case Schema::TYPE_DATETIME:
+                        case Schema::TYPE_TIMESTAMP:
+                            if(strtoupper($column->defaultValue) === 'CURRENT_TIMESTAMP'){
+                                $defaultValue = 'date(\'Y-m-d H:i:s\')';
+                            }else{
+                                $defaultValue = '\'' . addslashes($column->defaultValue) . '\'';
+                            }
+                            break;
+
                         default:
-                            $defaultValue = '\'' . $column->defaultValue . '\'';
+                            $defaultValue = '\'' . addslashes($column->defaultValue) . '\'';
                     }
                     $columnsDefaultValues[$defaultValue][] = $column->name;
                 } elseif ($column->allowNull) {
