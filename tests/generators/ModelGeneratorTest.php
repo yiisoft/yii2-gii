@@ -28,16 +28,20 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertTrue($valid, 'Validation failed: ' . print_r($generator->getErrors(), true));
 
         $files = $generator->generate();
-        $this->assertEquals(8, count($files));
+        $this->assertEquals(12, count($files));
         $expectedNames = [
             'Attribute.php',
+            'BlogRtl.php',
             'Category.php',
             'CategoryPhoto.php',
             'Customer.php',
+            'IdentityProvider.php',
+            'Organization.php',
             'Product.php',
             'ProductLanguage.php',
             'Profile.php',
             'Supplier.php',
+            'UserRtl.php',
         ];
         $fileNames = array_map(function ($f) {
             return basename($f->path);
@@ -122,6 +126,35 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
             ]],
+
+            ['organization', 'Organization.php', [
+                [
+                    'name' => 'function getIdentityProviders()',
+                    'relation' => "\$this->hasMany(IdentityProvider::className(), ['organization_id' => 'id']);",
+                    'expected' => true,
+                ],
+            ]],
+            ['identity_provider', 'IdentityProvider.php', [
+                [
+                    'name' => 'function getOrganization()',
+                    'relation' => "\$this->hasOne(Organization::className(), ['id' => 'organization_id']);",
+                    'expected' => true,
+                ],
+            ]],
+            ['user_rtl', 'UserRtl.php', [
+                [
+                    'name' => 'function getBlogRtls()',
+                    'relation' => "\$this->hasMany(BlogRtl::className(), ['id_user' => 'id']);",
+                    'expected' => true,
+                ],
+            ]],
+            ['blog_rtl', 'BlogRtl.php', [
+                [
+                    'name' => 'function getUser()',
+                    'relation' => "\$this->hasOne(UserRtl::className(), ['id' => 'id_user']);",
+                    'expected' => true,
+                ],
+            ]],
         ];
     }
 
@@ -158,10 +191,6 @@ class ModelGeneratorTest extends GiiTestCase
                 . ($relation['expected'] ? '' : ' not')." be there:\n" . $code
             );
         }
-    }
-
-    public function testSchemas()
-    {
     }
 
     /**

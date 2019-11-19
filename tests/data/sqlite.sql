@@ -11,6 +11,12 @@ DROP TABLE IF EXISTS "category";
 DROP TABLE IF EXISTS "customer";
 DROP TABLE IF EXISTS "profile";
 
+DROP TABLE IF EXISTS "organization";
+DROP TABLE IF EXISTS "identity_provider";
+
+DROP TABLE IF EXISTS "user_rtl";
+DROP TABLE IF EXISTS "blog_rtl";
+
 CREATE TABLE "profile" (
   id INTEGER NOT NULL,
   description varchar(128) NOT NULL,
@@ -78,6 +84,34 @@ CREATE TABLE "product_language" (
   UNIQUE (supplier_id),
   CONSTRAINT product_language_id_supplier_id_fkey FOREIGN KEY (supplier_id, id) REFERENCES "product" (supplier_id, id) ON DELETE CASCADE
 );
+
+CREATE TABLE "organization" (
+  id INTEGER NOT NULL,
+  name varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE "identity_provider" (
+  id INTEGER NOT NULL,
+  organization_id INTEGER NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT idp_oid_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES "organization" (id) ON DELETE CASCADE
+);
+
+CREATE TABLE "user_rtl" (
+  id INTEGER NOT NULL,
+  name varchar(128) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE "blog_rtl" (
+  id INTEGER NOT NULL,
+  id_user INTEGER NOT NULL,
+  name varchar(255) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT blog_rtl_id_user_rtl_id_fkey FOREIGN KEY (id_user) REFERENCES "user_rtl" (id) ON DELETE CASCADE
+);
+
 
 INSERT INTO "profile" (description) VALUES ('profile customer 1');
 INSERT INTO "profile" (description) VALUES ('profile customer 3');
