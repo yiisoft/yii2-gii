@@ -330,6 +330,7 @@ class Generator extends \yii\gii\Generator
      * Generates validation rules for the specified table.
      * @param \yii\db\TableSchema $table the table schema
      * @return array the generated validation rules
+     * @throws NotSupportedException
      */
     public function generateRules($table)
     {
@@ -338,9 +339,12 @@ class Generator extends \yii\gii\Generator
         $rules = [];
         $driverName = $this->getDbDriverName();
 
-        $columnsDefaultNull = [];
-        $columnsDefaultValues = [];
         if (in_array($driverName, ['mysql', 'sqlite'], true)) {
+
+            $db = $this->getDbConnection();
+            $columnsDefaultNull = [];
+            $columnsDefaultValues = [];
+
             foreach ($table->columns as $column) {
 
                 if ($column->defaultValue !== null) {
@@ -362,26 +366,27 @@ class Generator extends \yii\gii\Generator
                             if(strtoupper($column->defaultValue) === 'CURRENT_TIMESTAMP'){
                                 $defaultValue = 'date(\'Y-m-d H:i:s\')';
                             }else{
-                                $defaultValue = '\'' . addslashes($column->defaultValue) . '\'';
+                                $defaultValue = $db->getSchema()->quoteValue($column->defaultValue);
                             }
                             break;
 
                         default:
-                            $defaultValue = '\'' . addslashes($column->defaultValue) . '\'';
+                            $defaultValue = $db->getSchema()->quoteValue($column->defaultValue);
                     }
                     $columnsDefaultValues[$defaultValue][] = $column->name;
                 } elseif ($column->allowNull) {
                     $columnsDefaultNull[] = $column->name;
                 }
             }
+            foreach($columnsDefaultValues as $defaultValue => $columnNameList){
+                $rules[] = "[['" . implode("', '", $columnNameList) . "'], 'default', 'value' => $defaultValue]";
+            }
+            if ($columnsDefaultNull) {
+                $rules[] = "[['" . implode("', '", $columnsDefaultNull) . "'], 'default', 'value' => null]";
+            }
         }
 
-        foreach($columnsDefaultValues as $defaultValue => $columnNameList){
-            $rules[] = "[['" . implode("', '", $columnNameList) . "'], 'default', 'value' => $defaultValue]";
-        }
-        if ($columnsDefaultNull) {
-            $rules[] = "[['" . implode("', '", $columnsDefaultNull) . "'], 'default', 'value' => null]";
-        }
+
 
         foreach ($table->columns as $column) {
             if ($column->autoIncrement) {
