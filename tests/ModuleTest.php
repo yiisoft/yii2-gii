@@ -1,6 +1,6 @@
 <?php
 
-namespace yiiunit\extensions\gii;
+namespace yiiunit\gii;
 
 use Yii;
 use yii\gii\Module;

@@ -46,7 +46,7 @@ if (YII_ENV_DEV) {
         'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'],  
         'generators' => [ // ここ
             'crud' => [ // ジェネレータの名前
-                'class' => 'yii\gii\generators\crud\Generator', // ジェネレータクラス
+                'class' => 'yii\gii\generators\crud\Generator', // ジェネレータ・クラス
                 'templates' => [ //setting for out templates
                     'myCrud' => '@app/myTemplates/crud/default', // テンプレート名 => テンプレートへのパス
                 ]

@@ -1,5 +1,6 @@
 <?php
-namespace yiiunit\extensions\gii;
+
+namespace yiiunit\gii;
 
 use yii\gii\CodeFile;
 use yii\gii\generators\controller\Generator as ControllerGenerator;
@@ -80,7 +81,7 @@ class GeneratorsTest extends GiiTestCase
     {
         $generator = new FormGenerator();
         $generator->template = 'default';
-        $generator->modelClass = 'yiiunit\extensions\gii\Profile';
+        $generator->modelClass = 'yiiunit\gii\Profile';
         $generator->viewName = 'profile';
         $generator->viewPath = '@app/runtime';
 
@@ -94,12 +95,30 @@ class GeneratorsTest extends GiiTestCase
     {
         $generator = new CRUDGenerator();
         $generator->template = 'default';
-        $generator->modelClass = 'yiiunit\extensions\gii\Profile';
+        $generator->modelClass = 'yiiunit\gii\Profile';
         $generator->controllerClass = 'app\TestController';
 
         $valid = $generator->validate();
         $this->assertTrue($valid, 'Validation failed: ' . print_r($generator->getErrors(), true));
 
         $this->assertNotEmpty($generator->generate());
+    }
+
+    public function testTemplateValidation()
+    {
+        $generator = new ModelGenerator();
+
+        // Validate default template
+        $generator->template = 'default';
+        $this->assertTrue($generator->validate(['template']));
+
+        // Validate custom template
+        \Yii::setAlias('@customTemplate', __DIR__ . '/data/templates');
+        $generator->templates = [
+            'custom' => '@customTemplate/custom'
+        ];
+        $generator->template = 'custom';
+
+        $this->assertTrue($generator->validate(['template']));
     }
 }

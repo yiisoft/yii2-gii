@@ -1,10 +1,10 @@
 <?php
 
-namespace yiiunit\extensions\gii\generators;
+namespace yiiunit\gii\generators;
 
 use yii\db\ColumnSchema;
 use yii\gii\generators\crud\Generator;
-use yiiunit\extensions\gii\TestCase;
+use yiiunit\gii\TestCase;
 
 class CrudGeneratorTest extends TestCase
 {
@@ -39,4 +39,32 @@ class CrudGeneratorTest extends TestCase
         $c = new ColumnSchema(['phpType' => 'string', 'type' => 'string', 'name' => 'url_lalala']);
         $this->assertEquals('url', $g->generateColumnFormat($c));
     }
+
+    public function testGeneratedControllerId()
+    {
+        $g = new Generator();
+        $g->controllerClass = '\app\controllers\TestController';
+        $this->assertEquals('test', $g->getControllerID());
+
+        $g = new Generator();
+        $g->controllerClass = '\app\controllers\SomeTestController';
+        $this->assertEquals('some-test', $g->getControllerID());
+
+        $g = new Generator();
+        $g->controllerClass = '\app\controllers\ATestController';
+        $this->assertEquals('a-test', $g->getControllerID());
+
+        $g = new Generator();
+        $g->controllerClass = '\app\controllers\YoTestController';
+        $this->assertEquals('yo-test', $g->getControllerID());
+
+        $g = new Generator();
+        $g->controllerClass = '\app\controllers\ABCTestController';
+        $this->assertEquals('a-b-c-test', $g->getControllerID());
+
+        $g = new Generator();
+        $g->controllerClass = '\app\controllers\XYTestController';
+        $this->assertEquals('x-y-test', $g->getControllerID());
+    }
+
 }

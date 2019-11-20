@@ -1,42 +1,102 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.0.6 under development
+2.1.4 under development
 -----------------------
 
-- Bug #290: Fixed model generator to work properly with `schema.table` as table name (SwoDs)
-- Bug #198: Fixed false-positive detection of URL fields in CRUD generator (cebe)
-- Bug #255: Fixed error when getting database driver name when db is not an instance of `yii\db\Connection` (MKiselev)
+- Enh #287: Model generator is now generating relation's phpdoc hints with target ActiveQuery class (bscheshirwork)
+
+
+2.1.3 November 19, 2019
+-----------------------
+
+- Bug #417: Fixed issue where RTL implementation for foreign keys causes problems with LTR tables names (NickvdMeij)
+- Enh #416: Improved generation of model attributes and type annotations (uldisn)
+
+
+2.1.2 October 08, 2019
+----------------------
+
+- Bug #413: Controller Generator produces invalid alias when namespace starts with backslash (cebe)
+
+
+2.1.1 August 13, 2019
+---------------------
+
+- Bug #410: Inserted rows in the diff were not highlighted (albertborsos)
+
+
+2.1.0 March 17, 2019
+--------------------
+
+- Enh #390, Bug #260: Create (bootstrap)-independent version (simialbi)
+- Bug #386: Move "Create" button outside of pjax container to avoid redirect (alexkart)
+- Bug #398, #397: Use strict mode when generating view folder name (machour)
+- Enh #395: Made `yii\gii\CodeFile` independent of controller context, do not apply `$newDirMode` and `$newFileMode` if module is not available (CeBe)
+- Enh #399: Option to allow singularize class names in model generator (alexkart)
+
+
+2.0.8 December 08, 2018
+-----------------------
+
+- Bug #327: Fixed bug in Model generator when $baseClass is an abstract class (rhertogh)
+- Bug #379: Fixed bug in view page where delete button not work well (zacksleo)
+- Bug #383: Fix incorrect title generation in CRUD update view (bscheshirwork)
+- Enh #366: Option to allow standardized class names capitals in model generator (slinstj)
+- Enh #378: Remove useless import of `Yii` from CRUD generator search model template (CeBe)
+
+
+2.0.7 May 3, 2018
+-----------------
+
+- Bug #185: Fixed bug in Model generators when FKs pointing to non-existing tables (adipriyantobpn)
+- Bug #328: Fixed bug in CRUD update view generator (ricpelo)
+- Bug #333: Fixed incorrect validation rule for TINYINT column type (nostop8)
+- Bug #340: Fixed bug in CRUD SearchModel generator (JeanWolf)
+- Bug #351: Fixed incorrect validation rule for JSON column type (silverfire)
+
+
+2.0.6 December 23, 2017
+-----------------------
+
 - Bug #97: Fixed errors and wrong directories created when using backslash in view paths and output paths of CRUD, Controller and Extension generators (lubosdz, samdark)
-- Bug #224: Add default validator with null value for integers when db is PostgreSQL (MKiselev)
-- Enh #223: Use ilike operator when generating search model for PostgreSQL (MKiselev, arogachev)
-- Enh #241: Remove message for unique validator (MKiselev)
-- Enh #238: Use int/bool instead of integer/boolean in phpdoc blocks generated (MKiselev)
-- Bug #182: Fixed wrong link after generating controller located in sub-namespace of controllers namespace (MKiselev)
-- Enh #234: Changed submit button label from "Update" and "Create" to "Save" (MKiselev)
-- Bug #232: Fixed Help documentation link (drdim)
-- Enh #230: Allowed underscores for extension namespaces (Nex Otaku)
 - Bug #100, #102: Fixed "Check This File" button in the preview modal (Insensus, thiagotalma)
+- Bug #126, #139: Fixed model generator form validation when "ActiveQuery Class" is invalid but unused (kikimor)
 - Bug #149: Relation names no longer override existing methods and properties (Faryshta)
 - Bug #152: Fixed generating model without any rules (and800)
+- Bug #166: Fixed "Trying to get property of non-object" during model generation (zlakomanoff)
+- Bug #179: Fixed indentation and newlines for Pjax widget in CRUD index view (nkovacs)
+- Bug #182: Fixed wrong link after generating controller located in sub-namespace of controllers namespace (MKiselev)
+- Bug #186: Fixed incorrect database name exception (zlakomanoff, shirase)
+- Bug #198: Fixed false-positive detection of URL fields in CRUD generator (cebe)
+- Bug #200: Fixed Pjax and Listview with CRUD generator (ariestattoo)
+- Bug #224: Add default validator with `null` value for integers when db is PostgreSQL (MKiselev)
+- Bug #232: Fixed Help documentation link (drdim)
+- Bug #255: Fixed error when getting database driver name when db is not an instance of `yii\db\Connection` (MKiselev)
+- Bug #271: Fixed absolute namespace of model class in form generator (CeBe, amin3mej)
+- Bug #274: Added `useTablePrefix` and `generateQuery` to `stickyAttributes` (luyi61)
+- Bug #290: Fixed model generator to work properly with `schema.table` as table name (SwoDs)
+- Bug #317: Force HTML content type in response to display HTML when app is configured for REST API (microThread)
+- Bug #318: Use `yii\base\BaseObject` instead `yii\base\Object` in `CodeFile.php` (MKiselev)
+- Enh #131: Allow using table comments for PHPdoc property description (stmswitcher, michaelarnauts)
 - Enh #153: Added filename filter to generated files list preview (thiagotalma)
 - Enh #162: Model generator now detects foreign keys named as `id_*` (mootensai, samdark)
-- Bug #126, #139: Fixed model generator form validation when "ActiveQuery Class" is invalid but unused (kikimor)
 - Enh #167: Added "generating relations from current schema" option to model generator (zlakomanoff)
-- Bug #166: Fixed "Trying to get property of non-object" during model generation (zlakomanoff)
-- Bug #179: Fixed indentation and newlines for Pjax widget in crud index view (nkovacs)
-- Bug #186: Fixed incorrect database name exception (zlakomanoff, shirase)
-- Bug #200: Fixed Pjax and Listview with CRUD generator (ariestattoo)
-- Bug #271: Fixed absolute namespace of model class in form generator (CeBe, amin3mej)
-- Enh #131: Allow using table comments for PHPdoc property description (stmswitcher, michaelarnauts)
-- Enh #252: Added meta tag to prevent indexing of debug by search engines in case it's exposed (bashkarev)
-- Enh: `yii\gii\Module::defaultVersion()` implemented to pick up 'yiisoft/yii2-gii' extension version (klimov-paul)
-- Chg: Updated version constraint for `yiisoft/yii2` in extension template to `~2.0.0` to ensure compatibility when 2.1 is released (cebe)
-- Bug #274: Added `useTablePrefix` and `generateQuery` to `stickyAttributes` (luyi61)
+- Enh #174: `NotFoundHttpException` message in CRUD now uses i18n (bscheshirwork)
+- Enh #223: Use `ilike` operator when generating search model for PostgreSQL (MKiselev, arogachev)
+- Enh #230: Allowed underscores for extension namespaces (Nex Otaku)
+- Enh #234: Changed submit button label from "Update" and "Create" to "Save" (MKiselev)
+- Enh #238: Use `int`/`bool` instead of `integer`/`boolean` in phpdoc blocks generated (MKiselev)
+- Enh #241: Remove message for unique validator (MKiselev)
 - Enh #249: unique validation rule is now generated for tables with multiple primary keys (dmirogin)
-- Enh #287: Model generator is now generating relation's phpdoc hints with target ActiveQuery class (bscheshirwork)
+- Enh #252: Added meta tag to prevent indexing of debug by search engines in case it's exposed (bashkarev)
+- Enh #293: Do not generate redundant `else` after `return` (bscheshirwork)
+- Enh #295: Allowed to use aliases in generator's templates (dmirogin)
+- Enh #300: Removed space from commented out code so when uncommenting in IDEs there's no extra spacing (bscheshirwork)
+- Enh #315: Make `yii\gii\generators\model\Generator` `generateProperties` protected (claudejanz)
+- Enh #319: Added `@throws` tags for 404 exceptions in CRUD actions (and800)
+- Enh: `yii\gii\Module::defaultVersion()` implemented to pick up 'yiisoft/yii2-gii' extension version (klimov-paul)
 - Chg #246: Changed the way CRUD generator translates "Update X id". Now it's a whole string because of translation difficulties  (bscheshirwork)
-
 
 
 2.0.5 March 18, 2016

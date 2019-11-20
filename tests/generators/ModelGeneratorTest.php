@@ -1,8 +1,8 @@
 <?php
-namespace yiiunit\extensions\gii\generators;
+namespace yiiunit\gii\generators;
 
 use yii\gii\generators\model\Generator as ModelGenerator;
-use yiiunit\extensions\gii\GiiTestCase;
+use yiiunit\gii\GiiTestCase;
 
 /**
  * ModelGeneratorTest checks that Gii model generator produces valid results
@@ -28,16 +28,20 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertTrue($valid, 'Validation failed: ' . print_r($generator->getErrors(), true));
 
         $files = $generator->generate();
-        $this->assertEquals(8, count($files));
+        $this->assertEquals(12, count($files));
         $expectedNames = [
             'Attribute.php',
+            'BlogRtl.php',
             'Category.php',
             'CategoryPhoto.php',
             'Customer.php',
+            'IdentityProvider.php',
+            'Organization.php',
             'Product.php',
             'ProductLanguage.php',
             'Profile.php',
             'Supplier.php',
+            'UserRtl.php',
         ];
         $fileNames = array_map(function ($f) {
             return basename($f->path);
@@ -122,6 +126,35 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
             ]],
+
+            ['organization', 'Organization.php', [
+                [
+                    'name' => 'function getIdentityProviders()',
+                    'relation' => "\$this->hasMany(IdentityProvider::className(), ['organization_id' => 'id']);",
+                    'expected' => true,
+                ],
+            ]],
+            ['identity_provider', 'IdentityProvider.php', [
+                [
+                    'name' => 'function getOrganization()',
+                    'relation' => "\$this->hasOne(Organization::className(), ['id' => 'organization_id']);",
+                    'expected' => true,
+                ],
+            ]],
+            ['user_rtl', 'UserRtl.php', [
+                [
+                    'name' => 'function getBlogRtls()',
+                    'relation' => "\$this->hasMany(BlogRtl::className(), ['id_user' => 'id']);",
+                    'expected' => true,
+                ],
+            ]],
+            ['blog_rtl', 'BlogRtl.php', [
+                [
+                    'name' => 'function getUser()',
+                    'relation' => "\$this->hasOne(UserRtl::className(), ['id' => 'id_user']);",
+                    'expected' => true,
+                ],
+            ]],
         ];
     }
 
@@ -158,10 +191,6 @@ class ModelGeneratorTest extends GiiTestCase
                 . ($relation['expected'] ? '' : ' not')." be there:\n" . $code
             );
         }
-    }
-
-    public function testSchemas()
-    {
     }
 
     /**
@@ -213,5 +242,175 @@ class ModelGeneratorTest extends GiiTestCase
                 "Rule \"{$rule}\" should be there:\n" . $code
             );
         }
+    }
+
+    public function testGenerateStandardizedCapitalsForClassNames()
+    {
+        $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator->standardizeCapitals = true;
+
+        $tableNames = [
+            'lower_underline_name' => 'LowerUnderlineName',
+            'Ucwords_Underline_Name' => 'UcwordsUnderlineName',
+            'UPPER_UNDERLINE_NAME' => 'UpperUnderlineName',
+            'lower-hyphen-name' => 'LowerHyphenName',
+            'Ucwords-Hyphen-Name' => 'UcwordsHyphenName',
+            'UPPER-HYPHEN-NAME' => 'UpperHyphenName',
+            'CamelCaseName' => 'CamelCaseName',
+            'lowerUcwordsName' => 'LowerUcwordsName',
+            'lowername' => 'Lowername',
+            'UPPERNAME' => 'Uppername',
+        ];
+
+        foreach ($tableNames as $tableName => $expectedClassName) {
+            $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
+            $this->assertEquals($expectedClassName, $generatedClassName);
+        }
+    }
+
+    public function testGenerateNotStandardizedCapitalsForClassNames()
+    {
+        $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator->standardizeCapitals = false;
+
+        $tableNames = [
+            'lower_underline_name' => 'LowerUnderlineName',
+            'Ucwords_Underline_Name' => 'UcwordsUnderlineName',
+            'UPPER_UNDERLINE_NAME' => 'UPPERUNDERLINENAME',
+            'ABBRMyTable' => 'ABBRMyTable',
+            'lower-hyphen-name' => 'Lower-hyphen-name',
+            'Ucwords-Hyphen-Name' => 'Ucwords-Hyphen-Name',
+            'UPPER-HYPHEN-NAME' => 'UPPER-HYPHEN-NAME',
+            'CamelCaseName' => 'CamelCaseName',
+            'lowerUcwordsName' => 'LowerUcwordsName',
+            'lowername' => 'Lowername',
+            'UPPERNAME' => 'UPPERNAME',
+            'PARTIALUpperName' => 'PARTIALUpperName',
+        ];
+
+        foreach ($tableNames as $tableName => $expectedClassName) {
+            $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
+            $this->assertEquals($expectedClassName, $generatedClassName);
+        }
+    }
+
+    public function testGenerateSingularizedClassNames()
+    {
+        $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator->singularize = true;
+
+        $tableNames = [
+            'clients' => 'Client',
+            'client_programs' => 'ClientProgram',
+            'noneexistingwords' => 'Noneexistingword',
+            'noneexistingword' => 'Noneexistingword',
+            'children' => 'Child',
+            'good_children' => 'GoodChild',
+            'user' => 'User',
+        ];
+
+        foreach ($tableNames as $tableName => $expectedClassName) {
+            $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
+            $this->assertEquals($expectedClassName, $generatedClassName);
+        }
+    }
+
+    public function testGenerateNotSingularizedClassNames()
+    {
+        $modelGenerator = new ModelGeneratorMock;
+
+        $tableNames = [
+            'clients' => 'Clients',
+            'client_programs' => 'ClientPrograms',
+            'noneexistingwords' => 'Noneexistingwords',
+            'noneexistingword' => 'Noneexistingword',
+            'children' => 'Children',
+            'good_children' => 'GoodChildren',
+            'user' => 'User',
+        ];
+
+        foreach ($tableNames as $tableName => $expectedClassName) {
+            $generatedClassName = $modelGenerator->publicGenerateClassName($tableName);
+            $this->assertEquals($expectedClassName, $generatedClassName);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function tablePropertiesProvider()
+    {
+        return [
+            [
+                'tableName' => 'category_photo',
+                'columns' => [
+                    [
+                        'columnName' => 'id',
+                        'propertyRow' => '* @property int $id',
+                    ],
+                    [
+                        'columnName' => 'category_id',
+                        'propertyRow' => '* @property int $category_id',
+                    ],
+                    [
+                        'columnName' => 'display_number',
+                        'propertyRow' => '* @property int $display_number',
+                    ],
+
+                ]
+            ],
+            [
+                'tableName' => 'product',
+                'columns' => [
+                    [
+                        'columnName' => 'id',
+                        'propertyRow' => '* @property int $id',
+                    ],
+                    [
+                        'columnName' => 'category_id',
+                        'propertyRow' => '* @property int $supplier_id',
+                    ],
+                    [
+                        'columnName' => 'category_language_code',
+                        'propertyRow' => '* @property string $category_language_code',
+                    ],
+                    [
+                        'columnName' => 'category_id',
+                        'propertyRow' => '* @property int $category_id',
+                    ],
+                    [
+                        'columnName' => 'internal_name',
+                        'propertyRow' => '* @property string|null $internal_name',
+                    ],
+
+                ]
+            ],
+        ];
+
+    }
+
+    /**
+     * @dataProvider tablePropertiesProvider
+     *
+     * @param string $tableName
+     * @param array $columns
+     */
+    public function testGenerateProperties($tableName, $columns)
+    {
+        $generator = new ModelGenerator();
+        $generator->template = 'default';
+        $generator->tableName = $tableName;
+
+        $files = $generator->generate();
+
+        $code = $files[0]->content;
+        foreach ($columns as $column) {
+            $location = strpos($code, $column['propertyRow']);
+            $this->assertTrue(
+                $location !== false,
+                "Column \"{$column['columnName']}\" properties should be there:\n" . $column['propertyRow']
+            );
+        }
+
     }
 }

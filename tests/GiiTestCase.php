@@ -1,6 +1,6 @@
 <?php
 
-namespace yiiunit\extensions\gii;
+namespace yiiunit\gii;
 
 use Yii;
 use yii\helpers\FileHelper;
@@ -22,21 +22,21 @@ class GiiTestCase extends TestCase
         $allConfigs = require(__DIR__ . '/data/config.php');
 
         $config = $allConfigs['databases'][$this->driverName];
-        $pdo_database = 'pdo_'.$this->driverName;
+        $pdo_database = 'pdo_' . $this->driverName;
 
         if (!extension_loaded('pdo') || !extension_loaded($pdo_database)) {
-            $this->markTestSkipped('pdo and '.$pdo_database.' extension are required.');
+            $this->markTestSkipped('pdo and ' . $pdo_database . ' extension are required.');
         }
 
         $this->mockApplication([
-           'components' => [
-               'db' => [
-                   'class' => isset($config['class']) ? $config['class'] : 'yii\db\Connection',
-                   'dsn' => $config['dsn'],
-                   'username' => isset($config['username']) ? $config['username'] : null,
-                   'password' => isset($config['password']) ? $config['password'] : null,
-               ],
-           ],
+            'components' => [
+                'db' => [
+                    'class' => isset($config['class']) ? $config['class'] : 'yii\db\Connection',
+                    'dsn' => $config['dsn'],
+                    'username' => isset($config['username']) ? $config['username'] : null,
+                    'password' => isset($config['password']) ? $config['password'] : null,
+                ],
+            ],
         ]);
 
         if (isset($config['fixture'])) {

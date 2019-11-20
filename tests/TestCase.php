@@ -1,6 +1,6 @@
 <?php
 
-namespace yiiunit\extensions\gii;
+namespace yiiunit\gii;
 
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
@@ -45,10 +45,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             'components' => [
                 'request' => [
                     'cookieValidationKey' => 'wefJDF8sfdsfSDefwqdxj9oq',
-                    'scriptFile' => __DIR__ .'/index.php',
+                    'scriptFile' => __DIR__ . '/index.php',
                     'scriptUrl' => '/index.php',
                 ],
-            ]
+            ],
         ], $config));
     }
 
