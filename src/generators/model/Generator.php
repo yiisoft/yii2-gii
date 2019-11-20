@@ -334,7 +334,7 @@ class Generator extends \yii\gii\Generator
      * @param array $relations the relation array for single table
      * @param bool $generateQuery generates ActiveQuery class (for ActiveQuery namespace available)
      * @return array
-     * @since 2.0.6
+     * @since 2.1.4
      */
     public function generateRelationsClassHints($relations, $generateQuery){
         $result = [];
