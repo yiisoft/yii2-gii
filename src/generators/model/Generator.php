@@ -70,7 +70,9 @@ class Generator extends \yii\gii\Generator
     {
         return array_merge(parent::rules(), [
             [['db', 'ns', 'tableName', 'modelClass', 'baseClass', 'queryNs', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
-            [['ns', 'queryNs'], 'filter', 'filter' => function ($value) { return trim($value, '\\'); }],
+            [['ns', 'queryNs'], 'filter', 'filter' => function ($value) {
+                return trim($value, '\\');
+            }],
 
             [['db', 'ns', 'tableName', 'baseClass', 'queryNs', 'queryBaseClass'], 'required'],
             [['db', 'modelClass', 'queryClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
@@ -288,7 +290,7 @@ class Generator extends \yii\gii\Generator
                 default:
                     $type = $column->phpType;
             }
-            if ($column->allowNull){
+            if ($column->allowNull) {
                 $type .= '|null';
             }
             $properties[$column->name] = [
@@ -335,19 +337,24 @@ class Generator extends \yii\gii\Generator
     {
         $types = [];
         $lengths = [];
+        $defValues = [];
+        $driverName = $this->getDbDriverName();
         foreach ($table->columns as $column) {
             if ($column->autoIncrement) {
                 continue;
             }
-            if (!$column->allowNull && $column->defaultValue === null) {
-                $types['required'][] = $column->name;
-            }
+
             switch ($column->type) {
                 case Schema::TYPE_SMALLINT:
                 case Schema::TYPE_INTEGER:
                 case Schema::TYPE_BIGINT:
                 case Schema::TYPE_TINYINT:
                     $types['integer'][] = $column->name;
+
+                    if ($driverName === 'pgsql' && !is_null($column->defaultValue)) {
+                        $defValues[$column->type][$column->defaultValue][] = $column->name;
+                    }
+
                     break;
                 case Schema::TYPE_BOOLEAN:
                     $types['boolean'][] = $column->name;
@@ -368,18 +375,29 @@ class Generator extends \yii\gii\Generator
                 default: // strings
                     if ($column->size > 0) {
                         $lengths[$column->size][] = $column->name;
+                        if ($driverName === 'pgsql' && !is_null($column->defaultValue)) {
+                            $defValues[$column->type][$column->defaultValue][] = $column->name;
+                        }
                     } else {
                         $types['string'][] = $column->name;
                     }
             }
+
+            if (!$column->allowNull && $column->defaultValue === null) {
+                $types['required'][] = $column->name;
+            }
         }
         $rules = [];
-        $driverName = $this->getDbDriverName();
-        foreach ($types as $type => $columns) {
-            if ($driverName === 'pgsql' && $type === 'integer') {
-                $rules[] = "[['" . implode("', '", $columns) . "'], 'default', 'value' => null]";
+        $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
+
+        if ($driverName === 'pgsql' && $defValues && ($type === 'integer' || $type === 'string')) {
+            foreach ($defValues[$type] as $defValue => $columns) {
+                if ($type === 'integer') {
+                    $rules[] = "[['" . implode("', '", $columns) . "'], 'default', 'value' => $defValue]";
+                } else {
+                    $rules[] = "[['" . implode("', '", $columns) . "'], 'default', 'value' => '$defValue']";
+                }
             }
-            $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
         }
         foreach ($lengths as $length => $columns) {
             $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
