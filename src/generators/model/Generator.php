@@ -16,6 +16,7 @@ use yii\db\Schema;
 use yii\db\TableSchema;
 use yii\gii\CodeFile;
 use yii\helpers\Inflector;
+use yii\helpers\StringHelper;
 
 /**
  * This generator will generate one or multiple ActiveRecord classes for the specified database table.
@@ -222,6 +223,7 @@ class Generator extends \yii\gii\Generator
             // model :
             $modelClassName = $this->generateClassName($tableName);
             $queryClassName = ($this->generateQuery) ? $this->generateQueryClassName($modelClassName) : false;
+            $tableRelations = isset($relations[$tableName]) ? $relations[$tableName] : [];
             $tableSchema = $db->getTableSchema($tableName);
             $params = [
                 'tableName' => $tableName,
@@ -231,7 +233,8 @@ class Generator extends \yii\gii\Generator
                 'properties' => $this->generateProperties($tableSchema),
                 'labels' => $this->generateLabels($tableSchema),
                 'rules' => $this->generateRules($tableSchema),
-                'relations' => isset($relations[$tableName]) ? $relations[$tableName] : [],
+                'relations' => $tableRelations,
+                'relationsClassHints' => $this->generateRelationsClassHints($tableRelations, $this->generateQuery),
             ];
             $files[] = new CodeFile(
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
@@ -324,6 +327,37 @@ class Generator extends \yii\gii\Generator
         }
 
         return $labels;
+    }
+
+    /**
+     * Generates the relation class hints for the relation methods
+     * @param array $relations the relation array for single table
+     * @param bool $generateQuery generates ActiveQuery class (for ActiveQuery namespace available)
+     * @return array
+     * @since 2.1.4
+     */
+    public function generateRelationsClassHints($relations, $generateQuery){
+        $result = [];
+        foreach ($relations as $name => $relation){
+            // The queryNs options available if generateQuery is active
+            if ($generateQuery) {
+                $queryClassRealName = '\\' . $this->queryNs . '\\' . $relation[1];
+                if (class_exists($queryClassRealName, true) && is_subclass_of($queryClassRealName, '\yii\db\BaseActiveRecord')) {
+                    /** @var \yii\db\ActiveQuery $activeQuery */
+                    $activeQuery = $queryClassRealName::find();
+                    $activeQueryClass = $activeQuery::className();
+                    if (strpos($activeQueryClass, $this->ns) === 0){
+                        $activeQueryClass = StringHelper::basename($activeQueryClass);
+                    }
+                    $result[$name] = '\yii\db\ActiveQuery|' . $activeQueryClass;
+                } else {
+                    $result[$name] = '\yii\db\ActiveQuery|' . (($this->ns === $this->queryNs) ? $relation[1]: '\\' . $this->queryNs . '\\' . $relation[1]) . 'Query';
+                }
+            } else {
+                $result[$name] = '\yii\db\ActiveQuery';
+            }
+        }
+        return $result;
     }
 
     /**
