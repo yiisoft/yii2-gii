@@ -76,7 +76,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php foreach ($relations as $name => $relation): ?>
 
     /**
-     * @return <?= $relationsClassHints[$name] ?>
+     * @return <?= $relationsClassHints[$name] . "\n" ?>
      */
     public function get<?= $name ?>()
     {
