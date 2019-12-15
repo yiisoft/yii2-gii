@@ -150,7 +150,9 @@ class Generator extends \yii\gii\Generator
             'generateRelations' => 'This indicates whether the generator should generate relations based on
                 foreign key constraints it detects in the database. Note that if your database contains too many tables,
                 you may want to uncheck this option to accelerate the code generation process.',
-            'generateJunctionRelationMode' => 'This indicates whether junction relations are generated with `viaTable()` or `via()` (via model) relations.',
+            'generateJunctionRelationMode' => 'This indicates whether junction relations are generated with `viaTable()` or `via()` (Via Model) relations.
+                Make sure you also generate the junction models when using the "Via Model" option.
+            ',
             'generateRelationsFromCurrentSchema' => 'This indicates whether the generator should generate relations from current schema or from all available schemas.',
             'generateLabelsFromComments' => 'This indicates whether the generator should generate attribute labels
                 by using the comments of the corresponding DB columns.',
