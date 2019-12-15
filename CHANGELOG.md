@@ -6,6 +6,7 @@ Yii Framework 2 gii extension Change Log
 
 - Enh #287: Model generator is now generating relation's phpdoc hints with target ActiveQuery class (bscheshirwork)
 - Bug #422: Fix relational query getter documentation style (mikk150)
+- Enh #424: Added support for `via()` junction relations in model generator (rhertogh)
 
 
 2.1.3 November 19, 2019
