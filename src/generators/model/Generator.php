@@ -111,7 +111,7 @@ class Generator extends \yii\gii\Generator
             'modelClass' => 'Model Class Name',
             'baseClass' => 'Base Class',
             'generateRelations' => 'Generate Relations',
-            'generateJunctionRelationMode' => 'Generate Junction Relation Mode',
+            'generateJunctionRelationMode' => 'Generate Junction Relations As',
             'generateRelationsFromCurrentSchema' => 'Generate Relations from Current Schema',
             'generateLabelsFromComments' => 'Generate Labels from DB Comments',
             'generateQuery' => 'Generate ActiveQuery',
