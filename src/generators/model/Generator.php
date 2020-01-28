@@ -35,6 +35,11 @@ class Generator extends \yii\gii\Generator
     const JUNCTION_RELATION_VIA_TABLE = 'table';
     const JUNCTION_RELATION_VIA_MODEL = 'model';
 
+    const JUNCTION_RELATION_MODES = [
+        self::JUNCTION_RELATION_VIA_TABLE,
+        self::JUNCTION_RELATION_VIA_MODEL
+    ];
+
     public $db = 'db';
     public $ns = 'app\models';
     public $tableName;
@@ -90,7 +95,7 @@ class Generator extends \yii\gii\Generator
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
-            [['generateJunctionRelationMode'], 'in', 'range' => [self::JUNCTION_RELATION_VIA_TABLE, self::JUNCTION_RELATION_VIA_MODEL]],
+            [['generateJunctionRelationMode'], 'in', 'range' => self::JUNCTION_RELATION_MODES],
             [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema'], 'boolean'],
             [['enableI18N', 'standardizeCapitals', 'singularize'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
@@ -484,6 +489,10 @@ class Generator extends \yii\gii\Generator
      */
     private function generateManyManyRelations($table, $fks, $relations)
     {
+        if (!in_array($this->generateJunctionRelationMode, self::JUNCTION_RELATION_MODES, true)) {
+            throw new InvalidConfigException('Unknown generateViaRelationMode ' . $this->generateJunctionRelationMode);
+        }
+
         $db = $this->getDbConnection();
 
         foreach ($fks as $pair) {
@@ -527,8 +536,6 @@ class Generator extends \yii\gii\Generator
                     $className1,
                     true,
                 ];
-            } else {
-                throw new InvalidConfigException('Unknown generateViaRelationMode ' . $this->generateJunctionRelationMode);
             }
 
             $link = $this->generateRelationLink(array_flip($firstKey[0]));
