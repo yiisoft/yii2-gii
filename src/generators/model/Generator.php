@@ -503,14 +503,14 @@ class Generator extends \yii\gii\Generator
 
             $link = $this->generateRelationLink(array_flip($secondKey[0]));
             $relationName = $this->generateRelationName($relations, $table0Schema, key($secondKey[0]), true);
-            if ($this->generateJunctionRelationMode == self::JUNCTION_RELATION_VIA_TABLE) {
+            if ($this->generateJunctionRelationMode === self::JUNCTION_RELATION_VIA_TABLE) {
                 $relations[$table0Schema->fullName][$relationName] = [
                     "return \$this->hasMany($className1::className(), $link)->viaTable('"
-                    . $this->generateTableName($table->name) . "', " . $this->generateRelationLink($firstKey[0]) . ");",
+                    . $this->generateTableName($table->name) . "', " . $this->generateRelationLink($firstKey[0]) . ');',
                     $className1,
                     true,
                 ];
-            } elseif ($this->generateJunctionRelationMode == self::JUNCTION_RELATION_VIA_MODEL) {
+            } elseif ($this->generateJunctionRelationMode === self::JUNCTION_RELATION_VIA_MODEL) {
                 $foreignRelationName = null;
                 foreach ($relations[$table0Schema->fullName] as $key => $foreignRelationConfig) {
                     if ($foreignRelationConfig[3] == $firstKey[1]) {
@@ -533,14 +533,14 @@ class Generator extends \yii\gii\Generator
 
             $link = $this->generateRelationLink(array_flip($firstKey[0]));
             $relationName = $this->generateRelationName($relations, $table1Schema, key($firstKey[0]), true);
-            if ($this->generateJunctionRelationMode == self::JUNCTION_RELATION_VIA_TABLE) {
+            if ($this->generateJunctionRelationMode === self::JUNCTION_RELATION_VIA_TABLE) {
                 $relations[$table1Schema->fullName][$relationName] = [
                     "return \$this->hasMany($className0::className(), $link)->viaTable('"
-                    . $this->generateTableName($table->name) . "', " . $this->generateRelationLink($secondKey[0]) . ");",
+                    . $this->generateTableName($table->name) . "', " . $this->generateRelationLink($secondKey[0]) . ');',
                     $className0,
                     true,
                 ];
-            } elseif ($this->generateJunctionRelationMode == self::JUNCTION_RELATION_VIA_MODEL) {
+            } elseif ($this->generateJunctionRelationMode === self::JUNCTION_RELATION_VIA_MODEL) {
                 $foreignRelationName = null;
                 foreach ($relations[$table1Schema->fullName] as $key => $foreignRelationConfig) {
                     if ($foreignRelationConfig[3] == $secondKey[1]) {
