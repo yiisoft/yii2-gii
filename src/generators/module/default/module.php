@@ -3,8 +3,8 @@
  * This is the template for generating a module class file.
  */
 
-/** @var $this yii\web\View */
-/** @var $generator yii\gii\generators\module\Generator */
+/* @var $this yii\web\View */
+/* @var $generator yii\gii\generators\module\Generator */
 
 $className = $generator->moduleClass;
 $pos = strrpos($className, '\\');

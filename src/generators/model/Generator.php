@@ -751,7 +751,7 @@ class Generator extends \yii\gii\Generator
     protected function generateRelationName($relations, $table, $key, $multiple)
     {
         static $baseModel;
-        /** @var $baseModel \yii\db\ActiveRecord */
+        /* @var $baseModel \yii\db\ActiveRecord */
         if ($baseModel === null) {
             $baseClass = $this->baseClass;
             $baseClassReflector = new \ReflectionClass($baseClass);
