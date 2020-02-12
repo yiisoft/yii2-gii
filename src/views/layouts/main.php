@@ -3,8 +3,8 @@
 use yii\widgets\Menu;
 use yii\helpers\Html;
 
-/* @var $this \yii\web\View */
-/* @var $content string */
+/** @var $this \yii\web\View */
+/** @var $content string */
 
 $asset = yii\gii\GiiAsset::register($this);
 ?>

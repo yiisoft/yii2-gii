@@ -3,13 +3,13 @@
  * This is the template for generating an action view file.
  */
 
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\controller\Generator */
-/* @var $action string the action ID */
+/** @var $this yii\web\View */
+/** @var $generator yii\gii\generators\controller\Generator */
+/** @var $action string the action ID */
 
 echo "<?php\n";
 ?>
-/* @var $this yii\web\View */
+/** @var $this yii\web\View */
 <?= "?>" ?>
 
 <h1><?= $generator->getControllerSubPath() . $generator->getControllerID() . '/' . $action ?></h1>

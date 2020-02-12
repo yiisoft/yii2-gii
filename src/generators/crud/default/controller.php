@@ -7,8 +7,8 @@ use yii\db\ActiveRecordInterface;
 use yii\helpers\StringHelper;
 
 
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\crud\Generator */
+/** @var $this yii\web\View */
+/** @var $generator yii\gii\generators\crud\Generator */
 
 $controllerClass = StringHelper::basename($generator->controllerClass);
 $modelClass = StringHelper::basename($generator->modelClass);
@@ -17,7 +17,7 @@ if ($modelClass === $searchModelClass) {
     $searchModelAlias = $searchModelClass . 'Search';
 }
 
-/* @var $class ActiveRecordInterface */
+/** @var $class ActiveRecordInterface */
 $class = $generator->modelClass;
 $pks = $class::primaryKey();
 $urlParams = $generator->generateUrlParams();
