@@ -1,10 +1,10 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.1.5 under development
+2.2.0 under development
 -----------------------
 
-- no changes in this release.
+- Enh #424: Added support for `via()` junction relations in model generator (rhertogh)
 
 
 2.1.4 January 17, 2020
