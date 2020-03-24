@@ -31,7 +31,6 @@ class Generator extends \yii\gii\Generator
     const RELATIONS_NONE = 'none';
     const RELATIONS_ALL = 'all';
     const RELATIONS_ALL_INVERSE = 'all-inverse';
-
     const JUNCTION_RELATION_VIA_TABLE = 'table';
     const JUNCTION_RELATION_VIA_MODEL = 'model';
 
