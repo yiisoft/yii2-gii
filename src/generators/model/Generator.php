@@ -86,8 +86,8 @@ class Generator extends \yii\gii\Generator
             [['ns', 'queryNs'], 'validateNamespace'],
             [['tableName'], 'validateTableName'],
             [['modelClass'], 'validateModelClass', 'skipOnEmpty' => false],
-            [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
-            [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
+            [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::class]],
+            [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::class]],
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
             [['generateJunctionRelationMode'], 'in', 'range' => [self::JUNCTION_RELATION_VIA_TABLE, self::JUNCTION_RELATION_VIA_MODEL]],
             [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema'], 'boolean'],
@@ -355,7 +355,7 @@ class Generator extends \yii\gii\Generator
                 if (class_exists($queryClassRealName, true) && is_subclass_of($queryClassRealName, '\yii\db\BaseActiveRecord')) {
                     /** @var \yii\db\ActiveQuery $activeQuery */
                     $activeQuery = $queryClassRealName::find();
-                    $activeQueryClass = $activeQuery::className();
+                    $activeQueryClass = $activeQuery::class;
                     if (strpos($activeQueryClass, $this->ns) === 0){
                         $activeQueryClass = StringHelper::basename($activeQueryClass);
                     }
@@ -468,7 +468,7 @@ class Generator extends \yii\gii\Generator
                 $targetAttributes[] = "'$key' => '$value'";
             }
             $targetAttributes = implode(', ', $targetAttributes);
-            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
+            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::class, 'targetAttribute' => [$targetAttributes]]";
         }
 
         return $rules;
@@ -508,7 +508,7 @@ class Generator extends \yii\gii\Generator
             $relationName = $this->generateRelationName($relations, $table0Schema, key($secondKey[0]), true);
             if ($this->generateJunctionRelationMode === self::JUNCTION_RELATION_VIA_TABLE) {
                 $relations[$table0Schema->fullName][$relationName] = [
-                    "return \$this->hasMany($className1::className(), $link)->viaTable('"
+                    "return \$this->hasMany($className1::class, $link)->viaTable('"
                     . $this->generateTableName($table->name) . "', " . $this->generateRelationLink($firstKey[0]) . ');',
                     $className1,
                     true,
@@ -525,7 +525,7 @@ class Generator extends \yii\gii\Generator
                     throw new Exception('Foreign key for junction table not found.');
                 }
                 $relations[$table0Schema->fullName][$relationName] = [
-                    "return \$this->hasMany($className1::className(), $link)->via('"
+                    "return \$this->hasMany($className1::class, $link)->via('"
                     . lcfirst($foreignRelationName) . "');",
                     $className1,
                     true,
@@ -536,7 +536,7 @@ class Generator extends \yii\gii\Generator
             $relationName = $this->generateRelationName($relations, $table1Schema, key($firstKey[0]), true);
             if ($this->generateJunctionRelationMode === self::JUNCTION_RELATION_VIA_TABLE) {
                 $relations[$table1Schema->fullName][$relationName] = [
-                    "return \$this->hasMany($className0::className(), $link)->viaTable('"
+                    "return \$this->hasMany($className0::class, $link)->viaTable('"
                     . $this->generateTableName($table->name) . "', " . $this->generateRelationLink($secondKey[0]) . ');',
                     $className0,
                     true,
@@ -553,7 +553,7 @@ class Generator extends \yii\gii\Generator
                     throw new Exception('Foreign key for junction table not found.');
                 }
                 $relations[$table1Schema->fullName][$relationName] = [
-                    "return \$this->hasMany($className0::className(), $link)->via('"
+                    "return \$this->hasMany($className0::class, $link)->via('"
                     . lcfirst($foreignRelationName) . "');",
                     $className0,
                     true,
@@ -630,7 +630,7 @@ class Generator extends \yii\gii\Generator
                     $link = $this->generateRelationLink(array_flip($refs));
                     $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
                     $relations[$table->fullName][$relationName] = [
-                        "return \$this->hasOne($refClassName::className(), $link);",
+                        "return \$this->hasOne($refClassName::class, $link);",
                         $refClassName,
                         false,
                         $table->fullName . '.' . $foreignKey
@@ -641,7 +641,7 @@ class Generator extends \yii\gii\Generator
                     $link = $this->generateRelationLink($refs);
                     $relationName = $this->generateRelationName($relations, $refTableSchema, $className, $hasMany);
                     $relations[$refTableSchema->fullName][$relationName] = [
-                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($className::className(), $link);",
+                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($className::class, $link);",
                         $className,
                         $hasMany,
                         $table->fullName . '.' . $foreignKey
