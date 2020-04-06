@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.1 under development
 -----------------------
 
-- no changes in this release.
+- Bug #428: Permit the usage of anonymous generators using dependency injection (aguevaraIL)
 
 
 2.2.0 March 24, 2020
