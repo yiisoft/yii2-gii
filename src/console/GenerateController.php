@@ -73,7 +73,10 @@ class GenerateController extends Controller
     {
         parent::init();
         foreach ($this->generators as $id => $config) {
-            $this->generators[$id] = Instance::ensure($config, Generator::class);
+            $this->generators[$id] = Instance::ensure(
+                $config,
+                Generator::className()
+            );
         }
     }
 
