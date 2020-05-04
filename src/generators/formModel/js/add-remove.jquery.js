@@ -1,40 +1,13 @@
-jQuery(document).ready(function () {
+(function ($) {
 
-    function modifyElements(duplicate_element){
-        // var div = document.getElementById(divID);
-        $(duplicate_element).find('input:text, input:password, input:file, select, textarea')
-            .each(function() {
-                $(this).val('');
-            });
-
-        $(duplicate_element).find('input:radio, input:checkbox').each(function() {
-            $(this).removeAttr('checked');
-            $(this).removeAttr('selected');
-        });
-
-        return duplicate_element;
-        // return reIndex(duplicate_element, 3);
-    }
-
-
-    /*
-     * Give an attribute to anchor tag 'js-add' and the value of that attribute
-     * to be his    parent selector which is to be copied and to be added after it.
-     * For example if you provide <a  js-add=".js-field_row">text</a>
-     * On click of this element will copy its parent element having class js-field_row
-     * and will after it.
-     * */
-    jQuery(document).on('click', 'a[js-add]', function () {
-        var element_to_clone_selector = jQuery(this).attr('js-add');
-        var element_to_clone = jQuery(this).parents(element_to_clone_selector);
-        var duplicate_element = element_to_clone.clone();
-        duplicate_element = modifyElements(duplicate_element);
-        element_to_clone.after(duplicate_element);
-        reIndex();
-    });
-
-    function reIndex() {
-        var props = jQuery('.js-field_row');
+    /**
+     * ReIndexes attributes such as id, name, etc.
+     * It indexes all element from 0 to total_elements-1
+     * For example, if we are cloning some element and it has an id value `example1`, then the element after this will have id `example2`
+     * @param rows_selector
+     */
+    var reIndexAttributes = function(rows_selector) {
+        var props = $(rows_selector);
         var regex = /^(.+?)(\d+)$/i;
         var name_regex = /^(.+?)(\d+)([\[\]]+)$/i;
         var cur_index = 0;
@@ -46,7 +19,7 @@ jQuery(document).ready(function () {
                 this.id = match[1] + (cur_index);
             }
 
-            jQuery(this).find("*")
+            $(this).find("*")
                 .each(function() {
                     var id = this.id || "";
                     var match = id.match(regex) || [];
@@ -73,7 +46,7 @@ jQuery(document).ready(function () {
                     }
 
                     target = $(this).attr('data-index') || "";
-                    if(target != ''){
+                    if(target !== ''){
                         $(this).attr('data-index', cur_index);
                         if($(this)[0].nodeName === 'SPAN'){
                             $(this).html(cur_index);
@@ -85,44 +58,59 @@ jQuery(document).ready(function () {
         });
     }
 
-    $(document).ready(function () {
-        jQuery(document).on('click', '[data-toggle="collapse-custom"]', function () {
-            var val = $(this).attr('data-target');
-            if($(val).hasClass('displayed')){
-                $(val).removeClass('displayed');
-                // $(this).addClass('collapsed');
-            }else {
-                $('.card').removeClass('displayed');
-                $(val).addClass('displayed');
-                // $(this).removeClass('collapsed');
-            }
+    /**
+     * Removes values from all type of input element
+     * @param element
+     * @returns {*}
+     */
+    var truncateValues = function(element){
+        $(element).find('input:text, input:password, input:file, select, textarea')
+            .each(function() {
+                $(this).val('');
+            });
+
+        $(element).find('input:radio, input:checkbox').each(function() {
+            $(this).removeAttr('checked');
+            $(this).removeAttr('selected');
         });
+
+        return element;
+    }
+
+
+    /**
+     * Give an attribute to anchor tag 'js-add' and the value of that attribute
+     * to be his    parent selector which is to be copied and to be added after it.
+     * For example if you provide <a  js-add=".js-field_row">text</a>
+     * On click of this element will copy its parent element having class js-field_row
+     * and will after it.
+     */
+    $(document).on('click', 'a[js-add]', function () {
+        var element_to_clone_selector = $(this).attr('js-add');
+        var element_to_clone = $(this).parents(element_to_clone_selector);
+        var duplicate_element = element_to_clone.clone();
+        duplicate_element = truncateValues(duplicate_element);
+        element_to_clone.after(duplicate_element);
+        reIndexAttributes('.js-field_row');
     });
+
     /*
      * Give an attribute to anchor tag 'js-remove' and the value of that attribute
      * to be his    parent selector which is to be deleted.
      * For example if you provide <a  js-remove=".js-field_row">text</a>
      * On click of this element will remove its parent element having class js-field_row
      * */
-    jQuery(document).on('click', 'a[js-remove]', function () {
-        var removable_element_selector = jQuery(this).attr('js-remove');
-        var removable_element = jQuery(this).parents(removable_element_selector);
+    $(document).on('click', 'a[js-remove]', function () {
+        var removable_element_selector = $(this).attr('js-remove');
+        var removable_element = $(this).parents(removable_element_selector);
         //count all siblings, if its more than 1, delete the selected element.
         var total_row = removable_element.siblings(removable_element_selector).length;
         if (total_row > 0) {
             removable_element.remove();
-            reIndex();
+            reIndexAttributes();
         } else {
             alert('There should be at least one row');
         }
     });
 
-});
-
-$(document).ready(function(){
-    $(document).on("change", ".js-property-name", function(){
-        var index = $(this).attr("data-index");
-        var value = $(this).val();
-        $("#property_holder_" + index).html(value);
-    });
-});
+})(jQuery);

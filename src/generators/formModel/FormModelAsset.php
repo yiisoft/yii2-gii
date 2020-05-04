@@ -14,7 +14,8 @@ class FormModelAsset extends \yii\web\AssetBundle
     ];
 
     public $js = [
-        'js/add-remove.jquery.js'
+        'js/add-remove.jquery.js',
+        'js/accordion.js',
     ];
 
     public $depends = [
