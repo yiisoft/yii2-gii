@@ -39,6 +39,12 @@
                         $(this).attr('aria-labelledby', match[1] + (cur_index));
                     }
 
+                    target = $(this).attr('data-update') || "";
+                    match = target.match(regex) || [];
+                    if (match.length === 3) {
+                        $(this).attr('data-update', match[1] + (cur_index));
+                    }
+
                     target = $(this).attr('name') || "";
                     match = target.match(name_regex) || [];
                     if (match.length === 4) {
@@ -54,7 +60,7 @@
                     }
                 });
             cur_index++;
-            $('.js-property-name').trigger('change');
+            $('input[data-update]').trigger('change');
         });
     }
 

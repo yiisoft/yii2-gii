@@ -27,7 +27,7 @@ $prop_count = !empty($generator->properties) && is_array($generator->properties)
 <?= $form->field($generator, 'base_class') ?>
 <?= $form->field($generator, 'class_name') ?>
 <label><?php echo $generator->getAttributeLabel('properties'); ?></label>
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+<div class="panel-group accordion" id="accordion" role="tablist" aria-multiselectable="false">
     <?php for ($i = 0; $i <= $prop_count; $i++) { ?>
         <?php
         $tab_heading_id = $prop_attr['accordion']['tab']['id']['val'] . ($prop_attr['accordion']['tab']['id']['index']?$i:'');
@@ -39,7 +39,7 @@ $prop_count = !empty($generator->properties) && is_array($generator->properties)
                 <div class="row">
                     <div class="col-md-9 collapsed" style="line-height: 34px; display: block;cursor: pointer;"  data-toggle="collapse-custom" data-target="#accordion-<?php echo $i; ?>">
                         <a role="button" class="card-title">
-                            <?php echo "property #<span data-index='{$i}'>{$i}</span>: "; ?><strong><span id="property_holder_<?php echo $i ?>"><?php echo isset($generator->properties[$i])?$generator->properties[$i]:''; ?></span></strong>
+                            <?php echo "property #<span data-index='{$i}'>{$i}</span>: "; ?><strong><span id="prop_name_<?php echo $i ?>"><?php echo isset($generator->properties[$i])?$generator->properties[$i]:''; ?></span></strong>
                         </a>
                     </div>
                     <div class="col-md-3 text-right">
@@ -54,7 +54,7 @@ $prop_count = !empty($generator->properties) && is_array($generator->properties)
                         <label class="col-md-4 control-label"><?php echo $generator->getAttributeLabel('properties'); ?></label>
                         <div class="col-md-7">
                             <?php
-                            echo $form->field($generator, "properties[$i]", ['inputOptions' => ['class' => ['js-property-name', 'form-control'], 'data-index' => $i]])->label(false);
+                            echo $form->field($generator, "properties[$i]", ['inputOptions' => ['class' => ['js-property-name', 'form-control'], 'data-index' => $i, 'data-update'=>'#prop_name_'.$i]])->label(false);
                             ?>
                         </div>
                     </div>
@@ -70,5 +70,5 @@ $prop_count = !empty($generator->properties) && is_array($generator->properties)
 </div>
 <?php
 //$this->registerJs(file_get_contents(__DIR__.'/js/add-remove.jquery.js'));
-include_once __DIR__.'/'.'FormModelAsset.php';
+//include_once __DIR__.'/'.'FormModelAsset.php';
 \yii\gii\generators\formModel\FormModelAsset::register($this);

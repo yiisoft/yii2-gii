@@ -15,9 +15,9 @@ $(document).ready(function () {
 });
 
 $(document).ready(function(){
-    $(document).on("change", ".js-property-name", function(){
-        var index = $(this).attr("data-index");
+    $(document).on("change", "input[data-update]", function(){
+        var destination = $(this).attr("data-update");
         var value = $(this).val();
-        $("#property_holder_" + index).html(value);
+        $(destination).html(value);
     });
 });
