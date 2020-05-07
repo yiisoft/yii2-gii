@@ -21,6 +21,9 @@ class Generator extends \yii\gii\Generator
     public $properties;
     public $rules;
 
+    /**
+     * @inheritDoc
+     */
     public function rules()
     {
         return array_merge(parent::rules(), [
@@ -41,6 +44,9 @@ class Generator extends \yii\gii\Generator
         ]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), ['ns' => 'Name Space']);
@@ -54,11 +60,17 @@ class Generator extends \yii\gii\Generator
         return 'Form Model Generator';
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getDescription()
     {
         return 'This generator generates form model to validate the form generated against this Model. Next use <strong>Form Generator</strong>';
     }
 
+    /**
+     * @inheritDoc
+     */
     public function hints()
     {
         return array_merge(parent::hints(), [
@@ -70,11 +82,17 @@ class Generator extends \yii\gii\Generator
         ]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function requiredTemplates()
     {
         return ['model.php'];
     }
 
+    /**
+     * @inheritDoc
+     */
     public function stickyAttributes()
     {
         return array_merge(parent::stickyAttributes(), ['ns', 'base_class']);

@@ -32,7 +32,7 @@ $prop_count = !empty($generator->properties) && is_array($generator->properties)
 <?= $form->field($generator, 'class_name') ?>
 <label><?php echo $generator->getAttributeLabel('properties'); ?></label>
 <?php //echo $form->field($generator, 'properties', ['template'=>'{label}']); ?>
-<div class="panel-group accordion" id="accordion" role="tablist" aria-multiselectable="false">
+<div class="panel-group accordion card-group" id="accordion" role="tablist" aria-multiselectable="false">
     <?php for ($i = 0; $i <= $prop_count; $i++) { ?>
         <?php
         $tab_heading_id = $prop_attr['accordion']['tab']['id']['val'] . ($prop_attr['accordion']['tab']['id']['index']?$i:'');
