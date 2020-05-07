@@ -5,7 +5,11 @@
  * @var \ahmadasjad\Yii2GiiFormModel\Generator $generator
  */
 
-use yii\helpers\Html;
+use yii\gii\FormModelAsset;
+use yii\validators\Validator;
+
+
+FormModelAsset::register($this);
 
 $tab = ['id' => ['val'=>'heading','index'=>true]];
 $tab_content = [
@@ -27,6 +31,7 @@ $prop_count = !empty($generator->properties) && is_array($generator->properties)
 <?= $form->field($generator, 'base_class') ?>
 <?= $form->field($generator, 'class_name') ?>
 <label><?php echo $generator->getAttributeLabel('properties'); ?></label>
+<?php //echo $form->field($generator, 'properties', ['template'=>'{label}']); ?>
 <div class="panel-group accordion" id="accordion" role="tablist" aria-multiselectable="false">
     <?php for ($i = 0; $i <= $prop_count; $i++) { ?>
         <?php
@@ -60,7 +65,7 @@ $prop_count = !empty($generator->properties) && is_array($generator->properties)
                     </div>
                 </div>
                 <?php
-                $validators = array_keys(\yii\validators\Validator::$builtInValidators);
+                $validators = array_keys(Validator::$builtInValidators);
                 $validators = array_combine($validators, $validators);
                 echo $form->field($generator, "rules[$i]", ['options' => ['class' => 'rules-container']])->checkboxList($validators);
                 ?>
@@ -68,7 +73,3 @@ $prop_count = !empty($generator->properties) && is_array($generator->properties)
         </div>
     <?php } ?>
 </div>
-<?php
-//$this->registerJs(file_get_contents(__DIR__.'/js/add-remove.jquery.js'));
-//include_once __DIR__.'/'.'FormModelAsset.php';
-\yii\gii\generators\formModel\FormModelAsset::register($this);

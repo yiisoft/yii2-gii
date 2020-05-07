@@ -1,7 +1,5 @@
-
-
-$(document).ready(function () {
-    jQuery(document).on('click', '[data-toggle="collapse-custom"]', function () {
+(function ($) {
+    $(document).on('click', '[data-toggle="collapse-custom"]', function () {
         var val = $(this).attr('data-target');
         if($(val).hasClass('displayed')){
             $(val).removeClass('displayed');
@@ -12,12 +10,11 @@ $(document).ready(function () {
             // $(this).removeClass('collapsed');
         }
     });
-});
 
-$(document).ready(function(){
     $(document).on("change", "input[data-update]", function(){
         var destination = $(this).attr("data-update");
         var value = $(this).val();
         $(destination).html(value);
     });
-});
+})(jQuery);
+

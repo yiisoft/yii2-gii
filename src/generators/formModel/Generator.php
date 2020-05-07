@@ -27,8 +27,13 @@ class Generator extends \yii\gii\Generator
             [['ns', 'base_class', 'class_name', 'properties'], 'required'],
             [['ns', 'base_class', 'class_name'], 'filter', 'filter' => 'trim'],
             [['ns', ], 'filter', 'filter' => function ($value) { return trim($value, '\\'); }],
-            [['base_class'], 'validateClass', 'params' => ['extends' => Model::class]],
+            [['base_class'], 'validateClass', 'params' => ['extends' => Model::className()]],
             [['properties'], 'each', 'rule' => ['required']],
+            [['properties'], function ($attribute, $params, $validator) {
+                if (count(array_unique($this->$attribute)) !== count($this->$attribute)) {
+                    $this->addError($attribute, 'Duplicate values found');
+                }
+            }],
             [['properties'], 'each', 'rule' => ['string']],
             [['properties'], 'each', 'rule' => ['filter', 'filter' => 'trim']],
             [['properties'], 'each', 'rule' => ['match', 'pattern' => '/^[A-Za-z\_]\w+$/', 'message' => 'Only word characters are allowed according to PHP variable rule.']],
@@ -61,6 +66,7 @@ class Generator extends \yii\gii\Generator
             'base_class' => 'This is the base class of the new FormModel class. It should be a fully qualified namespaced class name.  e.g., <code>app\models\BaseModel</code>',
             'class_name' => 'This is the name of the FormModel class to be generated.
             The class name should not contain the namespace part as it is specified in "Namespace".',
+            'properties' => 'Use <code>plus</code>, <code>minus</code> icon to add or remove property of the form model',
         ]);
     }
 

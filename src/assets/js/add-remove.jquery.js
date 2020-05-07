@@ -76,7 +76,9 @@
             });
 
         $(element).find('input:radio, input:checkbox').each(function() {
+            console.log(this);
             $(this).removeAttr('checked');
+            $(this).prop('checked', false);
             $(this).removeAttr('selected');
         });
 
@@ -89,7 +91,7 @@
      * to be his    parent selector which is to be copied and to be added after it.
      * For example if you provide <a  js-add=".js-field_row">text</a>
      * On click of this element will copy its parent element having class js-field_row
-     * and will after it.
+     * and append after it.
      */
     $(document).on('click', 'a[js-add]', function () {
         var element_to_clone_selector = $(this).attr('js-add');
