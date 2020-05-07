@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.2 under development
 -----------------------
 
-- no changes in this release.
+- Enh #431: Added form model generator (ahmadasjad)
 
 
 2.2.1 May 02, 2020
