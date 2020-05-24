@@ -12,6 +12,7 @@ use yii\base\InvalidConfigException;
 use yii\base\NotSupportedException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\ColumnSchema;
 use yii\db\Connection;
 use yii\db\Exception;
 use yii\db\Schema;
@@ -245,6 +246,7 @@ class Generator extends \yii\gii\Generator
                 'rules' => $this->generateRules($tableSchema),
                 'relations' => $tableRelations,
                 'relationsClassHints' => $this->generateRelationsClassHints($tableRelations, $this->generateQuery),
+                'enum' => $this->getEnum($tableSchema->columns),
             ];
             $files[] = new CodeFile(
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
@@ -429,6 +431,17 @@ class Generator extends \yii\gii\Generator
             $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
         }
 
+        foreach ($this->getEnum($table->columns) as $field_name => $field_details) {
+            $fieldEnumValues = [];
+            foreach ($field_details['values'] as $field_enum_values) {
+                $fieldEnumValues[] = 'self::'.$field_enum_values['const_name'];
+            }
+            $rules['enum-' . $field_name] = "['".$field_name."', 'in', 'range' => [\n                    ".implode(
+                    ",\n                    ",
+                    $fieldEnumValues
+                ).",\n                ]\n            ]";
+        }
+
         $db = $this->getDbConnection();
 
         // Unique indexes rules
@@ -490,7 +503,7 @@ class Generator extends \yii\gii\Generator
         $db = $this->getDbConnection();
 
         foreach ($fks as $pair) {
-            list($firstKey, $secondKey) = $pair;
+            [$firstKey, $secondKey] = $pair;
             $table0 = $firstKey[0][0];
             $table1 = $secondKey[0][0];
             unset($firstKey[0][0], $secondKey[0][0]);
@@ -1093,5 +1106,63 @@ class Generator extends \yii\gii\Generator
         }
 
         return false;
+    }
+
+    /**
+     * prepare ENUM field values.
+     *
+     * @param ColumnSchema[] $columns
+     *
+     * @return array
+     */
+    protected function getEnum($columns)
+    {
+        $enum = [];
+        foreach ($columns as $column) {
+            if (!$this->isEnum($column)) {
+                continue;
+            }
+
+            $column_camel_name = str_replace(' ', '', ucwords(implode(' ', explode('_', $column->name))));
+            $enum[$column->name]['func_opts_name'] = 'opts'.$column_camel_name;
+            $enum[$column->name]['func_get_label_name'] = 'get'.$column_camel_name.'ValueLabel';
+            $enum[$column->name]['isFunctionPrefix'] = 'is'.$column_camel_name;
+            $enum[$column->name]['getFunctionPrefix'] = 'get'.$column_camel_name;
+            $enum[$column->name]['columnName'] = $column->name;
+            $enum[$column->name]['values'] = [];
+
+            $enum_values = explode(',', substr($column->dbType, 4, strlen($column->dbType) - 1));
+
+            foreach ($enum_values as $value) {
+                $value = trim($value, "()'");
+
+                $const_name = strtoupper($column->name.'_'.$value);
+                $const_name = preg_replace('/\s+/', '_', $const_name);
+                $const_name = str_replace(['-', '_', ' '], '_', $const_name);
+                $const_name = preg_replace('/[^A-Z0-9_]/', '', $const_name);
+
+                $label = Inflector::camel2words($value);
+
+                $enum[$column->name]['values'][] = [
+                    'value' => $value,
+                    'const_name' => $const_name,
+                    'label' => $label,
+                    'isFunctionSuffix' => str_replace(' ', '', ucwords(implode(' ', explode('_', $value))))
+                ];
+            }
+        }
+
+        return $enum;
+    }
+
+    /**
+     * validate is ENUM column.
+     *
+     * @param  ColumnSchema $column
+     * @return string
+     */
+    protected function isEnum($column)
+    {
+        return stripos(strtoupper($column->dbType), 'ENUM') === 0;
     }
 }

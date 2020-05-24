@@ -13,6 +13,7 @@
 /* @var $labels string[] list of attribute labels (name => label) */
 /* @var $rules string[] list of validation rules */
 /* @var $relations array list of relations (name => relation declaration) */
+/* @var array $enum list of ENUM fields */
 
 echo "<?php\n";
 ?>
@@ -36,6 +37,22 @@ use Yii;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+
+<?php
+if(!empty($enum)){
+    ?>
+    /**
+    * ENUM field values
+    */
+<?php
+    foreach($enum as $column_name => $column_data){
+        foreach ($column_data['values'] as $enum_value){
+            echo '    const ' . $enum_value['const_name'] . ' = \'' . $enum_value['value'] . '\';' . PHP_EOL;
+        }
+    }
+}
+?>
+
     /**
      * {@inheritdoc}
      */
@@ -99,4 +116,59 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         return new <?= $queryClassFullName ?>(get_called_class());
     }
 <?php endif; ?>
+
+<?php if ($enum): ?>
+<?php
+foreach($enum as $column_name => $column_data){
+    ?>
+
+    /**
+    * column <?php echo $column_name?> ENUM value labels
+    * @return array
+    */
+    public static function <?php echo $column_data['func_opts_name']?>()
+    {
+        return [
+<?php
+    foreach($column_data['values'] as $k => $value){
+        if ($generator->enableI18N) {
+            echo '            '.'self::' . $value['const_name'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
+        } else {
+            echo '            '.'self::' . $value['const_name'] . ' => \'' . $value['value'] . "',\n";
+        }
+    }
+    ?>
+        ];
+    }
+<?php
+}
+
+
+    foreach($enum as $column_name => $column_data){
+?>
+
+    /**
+    * @return string
+    */
+    public function <?=$column_data['getFunctionPrefix']?>Label()
+    {
+        return self::<?=$column_data['func_opts_name']?>()[$this-><?=$column_name?>]??$this-><?=$column_name?>;
+    }
+<?php
+        foreach ($column_data['values'] as $enum_value){
+?>
+
+    /**
+    * @return bool
+    */
+    public function <?=$column_data['isFunctionPrefix'].$enum_value['isFunctionSuffix']?>()
+    {
+        return $this-><?=$column_name?> === self::<?=$enum_value['const_name']?>;
+    }
+<?php
+        }
+    }
+endif;
+?>
+
 }

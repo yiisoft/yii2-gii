@@ -413,4 +413,27 @@ class ModelGeneratorTest extends GiiTestCase
         }
 
     }
+
+    /**
+     * @dataProvider tablePropertiesProvider
+     *
+     */
+    public function testEnum()
+    {
+        $generator = new ModelGenerator();
+        $generator->template = 'default';
+        $generator->tableName = 'category_photo';
+
+        $files = $generator->generate();
+
+//        $code = $files[0]->content;
+//        foreach ($columns as $column) {
+//            $location = strpos($code, $column['propertyRow']);
+//            $this->assertTrue(
+//                $location !== false,
+//                "Column \"{$column['columnName']}\" properties should be there:\n" . $column['propertyRow']
+//            );
+//        }
+
+    }
 }
