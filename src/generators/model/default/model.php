@@ -150,9 +150,9 @@ foreach($enum as $column_name => $column_data){
     /**
     * @return string
     */
-    public function <?=$column_data['getFunctionPrefix']?>Label()
+    public function <?=$column_data['displayFunctionPrefix']?>()
     {
-        return self::<?=$column_data['func_opts_name']?>()[$this-><?=$column_name?>]??$this-><?=$column_name?>;
+        return self::<?=$column_data['func_opts_name']?>()[$this-><?=$column_name?>];
     }
 <?php
         foreach ($column_data['values'] as $enum_value){

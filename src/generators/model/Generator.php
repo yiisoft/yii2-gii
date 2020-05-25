@@ -503,7 +503,7 @@ class Generator extends \yii\gii\Generator
         $db = $this->getDbConnection();
 
         foreach ($fks as $pair) {
-            [$firstKey, $secondKey] = $pair;
+            list($firstKey, $secondKey) = $pair;
             $table0 = $firstKey[0][0];
             $table1 = $secondKey[0][0];
             unset($firstKey[0][0], $secondKey[0][0]);
@@ -1127,7 +1127,7 @@ class Generator extends \yii\gii\Generator
             $enum[$column->name]['func_opts_name'] = 'opts'.$column_camel_name;
             $enum[$column->name]['func_get_label_name'] = 'get'.$column_camel_name.'ValueLabel';
             $enum[$column->name]['isFunctionPrefix'] = 'is'.$column_camel_name;
-            $enum[$column->name]['getFunctionPrefix'] = 'get'.$column_camel_name;
+            $enum[$column->name]['displayFunctionPrefix'] = 'display'.$column_camel_name;
             $enum[$column->name]['columnName'] = $column->name;
             $enum[$column->name]['values'] = [];
 
