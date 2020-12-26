@@ -458,7 +458,7 @@ class ModelGeneratorTest extends GiiTestCase
 }
         ';
         if(!class_exists('TestEnumModel')) {
-            echo $classCode;
+            //echo $classCode;
             eval($classCode);
         }
 
