@@ -476,7 +476,7 @@ class ModelGeneratorTest extends GiiTestCase
 
     }
 
-    public function createEnumTableSchema(): TableSchema
+    public function createEnumTableSchema()
     {
         $schema = new TableSchema();
         $schema->name = 'company_type';
