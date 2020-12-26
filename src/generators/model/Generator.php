@@ -1115,7 +1115,7 @@ class Generator extends \yii\gii\Generator
      *
      * @return array
      */
-    protected function getEnum($columns)
+    public function getEnum($columns)
     {
         $enum = [];
         foreach ($columns as $column) {

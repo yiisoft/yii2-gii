@@ -1,6 +1,8 @@
 <?php
 namespace yiiunit\gii\generators;
 
+use yii\db\mysql\ColumnSchema;
+use yii\db\TableSchema;
 use yii\gii\generators\model\Generator as ModelGenerator;
 use yiiunit\gii\GiiTestCase;
 
@@ -414,26 +416,106 @@ class ModelGeneratorTest extends GiiTestCase
 
     }
 
-    /**
-     * @dataProvider tablePropertiesProvider
-     *
-     */
     public function testEnum()
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->tableName = 'category_photo';
 
-        $files = $generator->generate();
 
-//        $code = $files[0]->content;
-//        foreach ($columns as $column) {
-//            $location = strpos($code, $column['propertyRow']);
-//            $this->assertTrue(
-//                $location !== false,
-//                "Column \"{$column['columnName']}\" properties should be there:\n" . $column['propertyRow']
-//            );
-//        }
+        $tableSchema = $this->createEnumTableSchema();
+        $params = [
+            'tableName' => $tableSchema->name,
+            'className' => 'TestEnumModel',
+            'queryClassName' => false,
+            'tableSchema' => $tableSchema,
+            'properties' => [],
+            'labels' => $generator->generateLabels($tableSchema),
+            'rules' => $generator->generateRules($tableSchema),
+            'relations' => [],
+            'relationsClassHints' => [],
+            'enum' => $generator->getEnum($tableSchema->columns),
+        ];
+        $codeFile = $generator->render('model.php', $params);
 
+        /**
+         * Fix class code for eval - remove ?php, namespace and use Yii
+         */
+        $classCode = str_replace('<?php','',$codeFile);
+        $classCode = str_replace('namespace app\models;','',$classCode);
+        $classCode = str_replace('use Yii;','',$classCode);
+
+        /**
+         * add method getTableSchema for seting test schema
+         */
+        $classCode = substr($classCode, 0, strrpos($classCode, "\n"));
+        $classCode = substr($classCode, 0, strrpos($classCode, "\n"));
+        $classCode .= '
+    public static $testTableSchema;
+    public static function getTableSchema(){
+        return self::$testTableSchema;
+    }
+}
+        ';
+        if(!class_exists('TestEnumModel')) {
+            echo $classCode;
+            eval($classCode);
+        }
+
+        $testEnumModel = new \TestEnumModel();
+        $testEnumModel::$testTableSchema = $this->createEnumTableSchema();
+        $testEnumModel->type = \TestEnumModel::TYPE_CLIENT;
+        $this->assertTrue($testEnumModel->isTypeClient());
+        $this->assertFalse($testEnumModel->isTypeConsignees());
+
+        $testEnumModel->type = \TestEnumModel::TYPE_CONSIGNEES;
+        $this->assertFalse($testEnumModel->isTypeClient());
+        $this->assertTrue($testEnumModel->isTypeConsignees());
+        $this->assertEquals(\TestEnumModel::TYPE_CONSIGNEES,$testEnumModel->displayType());
+
+
+    }
+
+    public function createEnumTableSchema(): TableSchema
+    {
+        $schema = new TableSchema();
+        $schema->name = 'company_type';
+        $schema->fullName = 'company_type';
+        $schema->primaryKey = ['id'];
+        $schema->columns = [
+            'id' => new ColumnSchema([
+                'name' => 'id',
+                'allowNull' => false,
+                'type' => 'smallint',
+                'phpType' => 'integer',
+                'dbType' => 'smallint(5) unsigned',
+                'size' => 5,
+                'precision' => 5,
+                'isPrimaryKey' => true,
+                'autoIncrement' => true,
+                'unsigned' => true,
+                'comment' => ''
+            ]),
+            'type' => new ColumnSchema([
+                'name' => 'type',
+                'allowNull' => true,
+                'type' => 'string',
+                'phpType' => 'string',
+                'dbType' => 'enum(\'Client\',\'Consignees\',\'Car cleaner\')',
+                'enumValues' => [
+                    0 => 'Client',
+                    1 => 'Consignees',
+                    2 => 'Car cleaner',
+                ],
+                'size' => null,
+                'precision' => null,
+                'isPrimaryKey' => false,
+                'autoIncrement' => false,
+                'unsigned' => false,
+                'comment' => ''
+            ]),
+        ];
+
+        return $schema;
     }
 }
