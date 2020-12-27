@@ -1131,9 +1131,7 @@ class Generator extends \yii\gii\Generator
             $enum[$column->name]['columnName'] = $column->name;
             $enum[$column->name]['values'] = [];
 
-            $enum_values = explode(',', substr($column->dbType, 4, strlen($column->dbType) - 1));
-
-            foreach ($enum_values as $value) {
+            foreach ($column->enumValues as $value) {
                 $value = trim($value, "()'");
 
                 $const_name = strtoupper($column->name.'_'.$value);

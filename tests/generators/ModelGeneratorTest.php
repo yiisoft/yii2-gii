@@ -464,6 +464,8 @@ class ModelGeneratorTest extends GiiTestCase
 
         $testEnumModel = new \TestEnumModel();
         $testEnumModel::$testTableSchema = $this->createEnumTableSchema();
+
+        /** test assigning and method is... */
         $testEnumModel->type = \TestEnumModel::TYPE_CLIENT;
         $this->assertTrue($testEnumModel->isTypeClient());
         $this->assertFalse($testEnumModel->isTypeConsignees());
@@ -472,6 +474,11 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertFalse($testEnumModel->isTypeClient());
         $this->assertTrue($testEnumModel->isTypeConsignees());
         $this->assertEquals(\TestEnumModel::TYPE_CONSIGNEES,$testEnumModel->displayType());
+
+        /** test validate */
+        $this->assertTrue($testEnumModel->validate());
+        $testEnumModel->type = '11111';
+        $this->assertFalse($testEnumModel->validate());
 
 
     }
