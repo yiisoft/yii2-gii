@@ -992,10 +992,10 @@ class Generator extends \yii\gii\Generator
     /**
      * Generates a class name from the specified table name.
      * @param string $tableName the table name (which may contain schema prefix)
-     * @param bool $useSchemaName should schema name be included in the class name, if present
+     * @param bool|null $useSchemaName should schema name be included in the class name, if present
      * @return string the generated class name
      */
-    protected function generateClassName($tableName, $useSchemaName = null)
+    public function generateClassName($tableName, $useSchemaName = null)
     {
         if (isset($this->classNames[$tableName])) {
             return $this->classNames[$tableName];
@@ -1049,7 +1049,7 @@ class Generator extends \yii\gii\Generator
      * @param string $modelClassName model class name
      * @return string generated class name
      */
-    protected function generateQueryClassName($modelClassName)
+    public function generateQueryClassName($modelClassName)
     {
         $queryClassName = $this->queryClass;
         if (empty($queryClassName) || strpos($this->tableName, '*') !== false) {
