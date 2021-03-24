@@ -445,6 +445,7 @@ abstract class Generator extends Model
             'for',
             'foreach',
             'function',
+            'fn',
             'global',
             'goto',
             'if',
@@ -480,6 +481,7 @@ abstract class Generator extends Model
             'var',
             'while',
             'xor',
+            'yield'
         ];
 
         return in_array(strtolower($value), $keywords, true);
