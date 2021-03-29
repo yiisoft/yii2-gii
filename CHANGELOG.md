@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.2 under development
 -----------------------
 
-- no changes in this release.
+- Chg #444: update preserved keywords in generator (WinterSilence)
 
 
 2.2.1 May 02, 2020
