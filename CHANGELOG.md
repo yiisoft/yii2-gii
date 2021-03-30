@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.2 under development
 -----------------------
 
+- Bug #439: Replace pseudo generation of model class to AJAX request (WinterSilence)
 - Enh #444: Updated reserved keywords in generator (WinterSilence)
 
 
