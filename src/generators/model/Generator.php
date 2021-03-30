@@ -1161,6 +1161,6 @@ class Generator extends \yii\gii\Generator
      */
     protected function isEnum($column)
     {
-        return stripos(strtoupper($column->dbType), 'ENUM') === 0;
+        return stripos($column->dbType, 'ENUM') !== false;
     }
 }
