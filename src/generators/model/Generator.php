@@ -1156,11 +1156,11 @@ class Generator extends \yii\gii\Generator
     /**
      * validate is ENUM column.
      *
-     * @param  ColumnSchema $column
-     * @return string
+     * @param  ColumnSchema $column Column instance
+     * @return bool
      */
     protected function isEnum($column)
     {
-        return stripos($column->dbType, 'ENUM') === 0;
+        return  !empty($column->enumValues) || stripos($column->dbType, 'ENUM') === 0;
     }
 }
