@@ -434,7 +434,7 @@ class Generator extends \yii\gii\Generator
         foreach ($this->getEnum($table->columns) as $fieldName => $colummEnum) {
             $fieldEnumValues = [];
             foreach ($colummEnum['values'] as $fieldEnumValue) {
-                $fieldEnumValues[] = 'self::' . $fieldEnumValues['const_name'];
+                $fieldEnumValues[] = 'self::' . $fieldEnumValue['const_name'];
             }
             $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => [\n                    " . implode(
                     ",\n                    ",
