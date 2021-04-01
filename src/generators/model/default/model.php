@@ -13,7 +13,7 @@
 /* @var $labels string[] list of attribute labels (name => label) */
 /* @var $rules string[] list of validation rules */
 /* @var $relations array list of relations (name => relation declaration) */
-/* @var array $enum list of ENUM fields */
+/* @var $enum array list of ENUM fields */
 
 echo "<?php\n";
 ?>
@@ -38,19 +38,17 @@ use Yii;
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
 
-<?php
-if(!empty($enum)){
-    ?>
+<?php if (!empty($enum)):?>
     /**
-    * ENUM field values
-    */
+     * ENUM field values
+     */
 <?php
-    foreach($enum as $column_name => $column_data){
-        foreach ($column_data['values'] as $enum_value){
-            echo '    const ' . $enum_value['const_name'] . ' = \'' . $enum_value['value'] . '\';' . PHP_EOL;
+    foreach($enum as $columnName => $columnData) {
+        foreach ($columnData['values'] as $enumValue){
+            echo '    const ' . $enumValue['const_name'] . ' = \'' . $enumValue['value'] . '\';' . PHP_EOL;
         }
     }
-}
+endif
 ?>
 
     /**
@@ -119,22 +117,22 @@ if(!empty($enum)){
 
 <?php if ($enum): ?>
 <?php
-foreach($enum as $column_name => $column_data){
+foreach ($enum as $columnName => $columnData) {
     ?>
 
     /**
-    * column <?php echo $column_name?> ENUM value labels
-    * @return array
-    */
-    public static function <?php echo $column_data['func_opts_name']?>()
+     * column <?= $columnName ?> ENUM value labels
+     * @return array
+     */
+    public static function <?= $columnData['func_opts_name'] ?>()
     {
         return [
 <?php
-    foreach($column_data['values'] as $k => $value){
+    foreach ($columnData['values'] as $k => $value) {
         if ($generator->enableI18N) {
-            echo '            '.'self::' . $value['const_name'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
+            echo '            self::' . $value['const_name'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
         } else {
-            echo '            '.'self::' . $value['const_name'] . ' => \'' . $value['value'] . "',\n";
+            echo '            self::' . $value['const_name'] . ' => \'' . $value['value'] . "',\n";
         }
     }
     ?>
@@ -142,33 +140,30 @@ foreach($enum as $column_name => $column_data){
     }
 <?php
 }
-
-
-    foreach($enum as $column_name => $column_data){
+    foreach ($enum as $columnName => $columnData) {
 ?>
 
     /**
-    * @return string
-    */
-    public function <?=$column_data['displayFunctionPrefix']?>()
+     * @return string
+     */
+    public function <?= $columnData['displayFunctionPrefix'] ?>()
     {
-        return self::<?=$column_data['func_opts_name']?>()[$this-><?=$column_name?>];
+        return self::<?= $columnData['func_opts_name'] ?>()[$this-><?=$columnName?>];
     }
 <?php
-        foreach ($column_data['values'] as $enum_value){
+        foreach ($columnData['values'] as $enumValue) {
 ?>
 
     /**
-    * @return bool
-    */
-    public function <?=$column_data['isFunctionPrefix'].$enum_value['isFunctionSuffix']?>()
+     * @return bool
+     */
+    public function <?= $columnData['isFunctionPrefix'] . $enumValue['isFunctionSuffix'] ?>()
     {
-        return $this-><?=$column_name?> === self::<?=$enum_value['const_name']?>;
+        return $this-><?= $columnName ?> === self::<?= $enumValue['const_name'] ?>;
     }
 <?php
         }
     }
 endif;
 ?>
-
 }

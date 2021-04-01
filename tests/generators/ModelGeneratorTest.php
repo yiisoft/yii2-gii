@@ -422,7 +422,6 @@ class ModelGeneratorTest extends GiiTestCase
         $generator->template = 'default';
         $generator->tableName = 'category_photo';
 
-
         $tableSchema = $this->createEnumTableSchema();
         $params = [
             'tableName' => $tableSchema->name,
@@ -441,12 +440,12 @@ class ModelGeneratorTest extends GiiTestCase
         /**
          * Fix class code for eval - remove ?php, namespace and use Yii
          */
-        $classCode = str_replace('<?php','',$codeFile);
-        $classCode = str_replace('namespace app\models;','',$classCode);
-        $classCode = str_replace('use Yii;','',$classCode);
+        $classCode = str_replace('<?php', '', $codeFile);
+        $classCode = str_replace('namespace app\models;', '', $classCode);
+        $classCode = str_replace('use Yii;', '', $classCode);
 
         /**
-         * add method getTableSchema for seting test schema
+         * Add method getTableSchema for setting test schema
          */
         $classCode = substr($classCode, 0, strrpos($classCode, "\n"));
         $classCode = substr($classCode, 0, strrpos($classCode, "\n"));
@@ -457,8 +456,7 @@ class ModelGeneratorTest extends GiiTestCase
     }
 }
         ';
-        if(!class_exists('TestEnumModel')) {
-            //echo $classCode;
+        if (!class_exists('TestEnumModel')) {
             eval($classCode);
         }
 
@@ -479,7 +477,6 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertTrue($testEnumModel->validate());
         $testEnumModel->type = '11111';
         $this->assertFalse($testEnumModel->validate());
-
 
     }
 

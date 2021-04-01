@@ -431,15 +431,15 @@ class Generator extends \yii\gii\Generator
             $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
         }
 
-        foreach ($this->getEnum($table->columns) as $field_name => $field_details) {
+        foreach ($this->getEnum($table->columns) as $fieldName => $colummEnum) {
             $fieldEnumValues = [];
-            foreach ($field_details['values'] as $field_enum_values) {
-                $fieldEnumValues[] = 'self::'.$field_enum_values['const_name'];
+            foreach ($colummEnum['values'] as $fieldEnumValue) {
+                $fieldEnumValues[] = 'self::' . $fieldEnumValues['const_name'];
             }
-            $rules['enum-' . $field_name] = "['".$field_name."', 'in', 'range' => [\n                    ".implode(
+            $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => [\n                    " . implode(
                     ",\n                    ",
                     $fieldEnumValues
-                ).",\n                ]\n            ]";
+                ) . ",\n                ]\n            ]";
         }
 
         $db = $this->getDbConnection();
@@ -1109,7 +1109,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * prepare ENUM field values.
+     * Prepares ENUM field values.
      *
      * @param ColumnSchema[] $columns
      *
@@ -1123,29 +1123,24 @@ class Generator extends \yii\gii\Generator
                 continue;
             }
 
-            $column_camel_name = str_replace(' ', '', ucwords(implode(' ', explode('_', $column->name))));
-            $enum[$column->name]['func_opts_name'] = 'opts'.$column_camel_name;
-            $enum[$column->name]['func_get_label_name'] = 'get'.$column_camel_name.'ValueLabel';
-            $enum[$column->name]['isFunctionPrefix'] = 'is'.$column_camel_name;
-            $enum[$column->name]['displayFunctionPrefix'] = 'display'.$column_camel_name;
+            $columnCamelName = Inflector::id2camel($column->name, '_');
+            $enum[$column->name]['func_opts_name'] = 'opts' . $columnCamelName;
+            $enum[$column->name]['func_get_label_name'] = 'get' . $columnCamelName . 'ValueLabel';
+            $enum[$column->name]['isFunctionPrefix'] = 'is' . $columnCamelName;
+            $enum[$column->name]['displayFunctionPrefix'] = 'display' . $columnCamelName;
             $enum[$column->name]['columnName'] = $column->name;
             $enum[$column->name]['values'] = [];
 
             foreach ($column->enumValues as $value) {
-                $value = trim($value, "()'");
 
-                $const_name = strtoupper($column->name.'_'.$value);
-                $const_name = preg_replace('/\s+/', '_', $const_name);
-                $const_name = str_replace(['-', '_', ' '], '_', $const_name);
-                $const_name = preg_replace('/[^A-Z0-9_]/', '', $const_name);
-
+                $constantName = Inflector::slug($column->name . ' ' . $value, '_');
                 $label = Inflector::camel2words($value);
 
                 $enum[$column->name]['values'][] = [
                     'value' => $value,
-                    'const_name' => $const_name,
+                    'const_name' => $constantName,
                     'label' => $label,
-                    'isFunctionSuffix' => str_replace(' ', '', ucwords(implode(' ', explode('_', $value))))
+                    'isFunctionSuffix' => Inflector::camel2id('_', $value)
                 ];
             }
         }
@@ -1154,13 +1149,13 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * validate is ENUM column.
+     * Checks if column is of ENUM type.
      *
-     * @param  ColumnSchema $column Column instance
+     * @param ColumnSchema $column Column instance
      * @return bool
      */
     protected function isEnum($column)
     {
-        return  !empty($column->enumValues) || stripos($column->dbType, 'ENUM') === 0;
+        return !empty($column->enumValues) || stripos($column->dbType, 'ENUM') === 0;
     }
 }
