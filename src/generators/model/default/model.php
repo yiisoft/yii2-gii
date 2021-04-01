@@ -116,9 +116,7 @@ endif
 <?php endif; ?>
 
 <?php if ($enum): ?>
-<?php
-foreach ($enum as $columnName => $columnData) {
-    ?>
+<?php     foreach ($enum as $columnName => $columnData): ?>
 
     /**
      * column <?= $columnName ?> ENUM value labels
@@ -127,21 +125,19 @@ foreach ($enum as $columnName => $columnData) {
     public static function <?= $columnData['func_opts_name'] ?>()
     {
         return [
+<?php         foreach ($columnData['values'] as $k => $value): ?>
 <?php
-    foreach ($columnData['values'] as $k => $value) {
         if ($generator->enableI18N) {
             echo '            self::' . $value['const_name'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
         } else {
             echo '            self::' . $value['const_name'] . ' => \'' . $value['value'] . "',\n";
         }
-    }
     ?>
+<?php         endforeach; ?>
         ];
     }
-<?php
-}
-    foreach ($enum as $columnName => $columnData) {
-?>
+<?php     endforeach; ?>
+<?php     foreach ($enum as $columnName => $columnData):?>
 
     /**
      * @return string
@@ -150,9 +146,7 @@ foreach ($enum as $columnName => $columnData) {
     {
         return self::<?= $columnData['func_opts_name'] ?>()[$this-><?=$columnName?>];
     }
-<?php
-        foreach ($columnData['values'] as $enumValue) {
-?>
+<?php         foreach ($columnData['values'] as $enumValue): ?>
 
     /**
      * @return bool
@@ -161,9 +155,7 @@ foreach ($enum as $columnName => $columnData) {
     {
         return $this-><?= $columnName ?> === self::<?= $enumValue['const_name'] ?>;
     }
-<?php
-        }
-    }
-endif;
-?>
+<?php         endforeach; ?>
+<?php     endforeach; ?>
+<?php endif; ?>
 }
