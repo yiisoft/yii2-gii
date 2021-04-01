@@ -1133,14 +1133,14 @@ class Generator extends \yii\gii\Generator
 
             foreach ($column->enumValues as $value) {
 
-                $constantName = Inflector::slug($column->name . ' ' . $value, '_');
+                $constantName = strtoupper(Inflector::slug($column->name . ' ' . $value, '_'));
                 $label = Inflector::camel2words($value);
 
                 $enum[$column->name]['values'][] = [
                     'value' => $value,
                     'const_name' => $constantName,
                     'label' => $label,
-                    'isFunctionSuffix' => Inflector::camel2id('_', $value)
+                    'isFunctionSuffix' => Inflector::id2camel( Inflector::slug( $value))
                 ];
             }
         }
