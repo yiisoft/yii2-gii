@@ -1046,8 +1046,8 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Action to generate class name.
-     * 
      * @return string
+     * @since 2.2.2
      */
     public function actionGenerateClassName()
     {
