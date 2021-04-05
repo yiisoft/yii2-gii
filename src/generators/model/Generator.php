@@ -432,14 +432,7 @@ class Generator extends \yii\gii\Generator
         }
 
         foreach ($this->getEnum($table->columns) as $fieldName => $colummEnum) {
-            $fieldEnumValues = [];
-            foreach ($colummEnum['values'] as $fieldEnumValue) {
-                $fieldEnumValues[] = 'self::' . $fieldEnumValue['const_name'];
-            }
-            $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => [\n                    " . implode(
-                    ",\n                    ",
-                    $fieldEnumValues
-                ) . ",\n                ]\n            ]";
+            $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => array_keys(self::".$colummEnum['funcOptsName']."())]";
         }
 
         $db = $this->getDbConnection();
@@ -1124,9 +1117,9 @@ class Generator extends \yii\gii\Generator
             }
 
             $columnCamelName = Inflector::id2camel($column->name, '_');
-            $enum[$column->name]['func_opts_name'] = 'opts' . $columnCamelName;
-            $enum[$column->name]['func_get_label_name'] = 'get' . $columnCamelName . 'ValueLabel';
+            $enum[$column->name]['funcOptsName'] = 'opts' . $columnCamelName;
             $enum[$column->name]['isFunctionPrefix'] = 'is' . $columnCamelName;
+            $enum[$column->name]['setFunctionPrefix'] = 'set' . $columnCamelName . 'To';
             $enum[$column->name]['displayFunctionPrefix'] = 'display' . $columnCamelName;
             $enum[$column->name]['columnName'] = $column->name;
             $enum[$column->name]['values'] = [];
@@ -1138,9 +1131,9 @@ class Generator extends \yii\gii\Generator
 
                 $enum[$column->name]['values'][] = [
                     'value' => $value,
-                    'const_name' => $constantName,
+                    'constName' => $constantName,
                     'label' => $label,
-                    'isFunctionSuffix' => Inflector::id2camel( Inflector::slug( $value))
+                    'functionSuffix' => Inflector::id2camel( Inflector::slug( $value))
                 ];
             }
         }

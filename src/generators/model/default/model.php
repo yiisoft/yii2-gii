@@ -45,7 +45,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php
     foreach($enum as $columnName => $columnData) {
         foreach ($columnData['values'] as $enumValue){
-            echo '    const ' . $enumValue['const_name'] . ' = \'' . $enumValue['value'] . '\';' . PHP_EOL;
+            echo '    const ' . $enumValue['constName'] . ' = \'' . $enumValue['value'] . '\';' . PHP_EOL;
         }
     }
 endif
@@ -120,17 +120,17 @@ endif
 
     /**
      * column <?= $columnName ?> ENUM value labels
-     * @return array
+     * @return string[]
      */
-    public static function <?= $columnData['func_opts_name'] ?>()
+    public static function <?= $columnData['funcOptsName'] ?>()
     {
         return [
 <?php         foreach ($columnData['values'] as $k => $value): ?>
 <?php
         if ($generator->enableI18N) {
-            echo '            self::' . $value['const_name'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
+            echo '            self::' . $value['constName'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
         } else {
-            echo '            self::' . $value['const_name'] . ' => \'' . $value['value'] . "',\n";
+            echo '            self::' . $value['constName'] . ' => \'' . $value['value'] . "',\n";
         }
     ?>
 <?php         endforeach; ?>
@@ -144,16 +144,21 @@ endif
      */
     public function <?= $columnData['displayFunctionPrefix'] ?>()
     {
-        return self::<?= $columnData['func_opts_name'] ?>()[$this-><?=$columnName?>];
+        return self::<?= $columnData['funcOptsName'] ?>()[$this-><?=$columnName?>];
     }
 <?php         foreach ($columnData['values'] as $enumValue): ?>
 
     /**
      * @return bool
      */
-    public function <?= $columnData['isFunctionPrefix'] . $enumValue['isFunctionSuffix'] ?>()
+    public function <?= $columnData['isFunctionPrefix'] . $enumValue['functionSuffix'] ?>()
     {
-        return $this-><?= $columnName ?> === self::<?= $enumValue['const_name'] ?>;
+        return $this-><?= $columnName ?> === self::<?= $enumValue['constName'] ?>;
+    }
+
+    public function <?= $columnData['setFunctionPrefix'] . $enumValue['functionSuffix'] ?>()
+    {
+        $this-><?= $columnName ?> = self::<?= $enumValue['constName'] ?>;
     }
 <?php         endforeach; ?>
 <?php     endforeach; ?>
