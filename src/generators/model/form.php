@@ -7,6 +7,8 @@ use yii\helpers\Url;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $generator yii\gii\generators\model\Generator */
 
+echo $form->field($generator, 'standardizeCapitals')->checkbox();
+echo $form->field($generator, 'singularize')->checkbox();
 echo $form->field($generator, 'tableName')->textInput([
     'data' => [
         'table-prefix' => $generator->getTablePrefix(), 
@@ -14,8 +16,6 @@ echo $form->field($generator, 'tableName')->textInput([
     ]
 ]);
 echo $form->field($generator, 'modelClass');
-echo $form->field($generator, 'standardizeCapitals')->checkbox();
-echo $form->field($generator, 'singularize')->checkbox();
 echo $form->field($generator, 'ns');
 echo $form->field($generator, 'baseClass');
 echo $form->field($generator, 'db');
