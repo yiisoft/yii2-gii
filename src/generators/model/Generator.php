@@ -432,8 +432,8 @@ class Generator extends \yii\gii\Generator
         }
 
         $columnsEnum = $this->getEnum($table->columns);
-        foreach ($columnsEnum as $fieldName => $colummEnum) {
-            $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => array_keys(self::" . $colummEnum['funcOptsName'] . '())]';
+        foreach ($columnsEnum as $fieldName => $columnEnum) {
+            $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => array_keys(self::" . $columnEnum['funcOptsName'] . '())]';
         }
 
         $db = $this->getDbConnection();
