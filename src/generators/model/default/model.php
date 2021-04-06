@@ -38,7 +38,7 @@ use Yii;
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
 
-<?php if (!empty($enum)):?>
+<?php if (!empty($enum)): ?>
     /**
      * ENUM field values
      */
@@ -137,7 +137,7 @@ endif
         ];
     }
 <?php     endforeach; ?>
-<?php     foreach ($enum as $columnName => $columnData):?>
+<?php     foreach ($enum as $columnName => $columnData): ?>
 
     /**
      * @return string

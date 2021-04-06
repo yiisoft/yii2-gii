@@ -431,8 +431,9 @@ class Generator extends \yii\gii\Generator
             $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
         }
 
-        foreach ($this->getEnum($table->columns) as $fieldName => $colummEnum) {
-            $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => array_keys(self::".$colummEnum['funcOptsName']."())]";
+        $columnsEnum = $this->getEnum($table->columns);
+        foreach ($columnsEnum as $fieldName => $colummEnum) {
+            $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => array_keys(self::" . $colummEnum['funcOptsName'] . '())]';
         }
 
         $db = $this->getDbConnection();
@@ -1133,7 +1134,7 @@ class Generator extends \yii\gii\Generator
                     'value' => $value,
                     'constName' => $constantName,
                     'label' => $label,
-                    'functionSuffix' => Inflector::id2camel( Inflector::slug( $value))
+                    'functionSuffix' => Inflector::id2camel(Inflector::slug($value))
                 ];
             }
         }
