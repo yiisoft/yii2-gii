@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.2 under development
 -----------------------
 
+- Enh #450: Updated view of CRUD controller (WinterSilence)
 - Enh #444: Updated reserved keywords in generator (WinterSilence)
 
 
