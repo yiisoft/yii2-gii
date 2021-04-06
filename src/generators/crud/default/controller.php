@@ -121,11 +121,13 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         $model = new <?= $modelClass ?>();
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', <?= $urlParams ?>]);
+            }
+        } else {
+            $model->loadDefaultValues();
         }
-
-        $model->loadDefaultValues();
 
         return $this->render('create', [
             'model' => $model,
