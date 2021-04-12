@@ -346,41 +346,45 @@ class Generator extends \yii\gii\Generator
             $columnsDefaultValues = [];
 
             foreach ($table->columns as $column) {
-
-                if ($column->defaultValue !== null) {
-                    switch ($column->type) {
-                        case Schema::TYPE_SMALLINT:
-                        case Schema::TYPE_INTEGER:
-                        case Schema::TYPE_BIGINT:
-                        case Schema::TYPE_TINYINT:
-                        case Schema::TYPE_BOOLEAN:
-                        case Schema::TYPE_FLOAT:
-                        case Schema::TYPE_DOUBLE:
-                        case Schema::TYPE_DECIMAL:
-                        case Schema::TYPE_MONEY:
-                            $defaultValue = $column->defaultValue;
-                            break;
-
-                        case Schema::TYPE_DATETIME:
-                        case Schema::TYPE_TIMESTAMP:
-                            if(strtoupper($column->defaultValue) === 'CURRENT_TIMESTAMP'){
-                                $defaultValue = 'date(\'Y-m-d H:i:s\')';
-                            }else{
-                                $defaultValue = $db->getSchema()->quoteValue($column->defaultValue);
-                            }
-                            break;
-
-                        default:
-                            $defaultValue = $db->getSchema()->quoteValue($column->defaultValue);
+                
+                if ($column->defaultValue === null) {
+                    if ($column->allowNull) {
+                        $columnsDefaultNull[] = $column->name;
                     }
-                    $columnsDefaultValues[$defaultValue][] = $column->name;
-                } elseif ($column->allowNull) {
-                    $columnsDefaultNull[] = $column->name;
+                    continue;
                 }
+                switch ($column->type) {
+                    case Schema::TYPE_SMALLINT:
+                    case Schema::TYPE_INTEGER:
+                    case Schema::TYPE_BIGINT:
+                    case Schema::TYPE_TINYINT:
+                    case Schema::TYPE_BOOLEAN:
+                    case Schema::TYPE_FLOAT:
+                    case Schema::TYPE_DOUBLE:
+                    case Schema::TYPE_DECIMAL:
+                    case Schema::TYPE_MONEY:
+                        $defaultValue = $column->defaultValue;
+                        break;
+
+                    case Schema::TYPE_DATETIME:
+                    case Schema::TYPE_TIMESTAMP:
+                        if(strtoupper($column->defaultValue) === 'CURRENT_TIMESTAMP'){
+                            $defaultValue = 'date(\'Y-m-d H:i:s\')';
+                        }else{
+                            $defaultValue = $db->getSchema()->quoteValue($column->defaultValue);
+                        }
+                        break;
+
+                    default:
+                        $defaultValue = $db->getSchema()->quoteValue($column->defaultValue);
+                }
+                $columnsDefaultValues[$defaultValue][] = $column->name
             }
+            
             foreach($columnsDefaultValues as $defaultValue => $columnNameList){
                 $rules[] = "[['" . implode("', '", $columnNameList) . "'], 'default', 'value' => $defaultValue]";
             }
+            
             if ($columnsDefaultNull) {
                 $rules[] = "[['" . implode("', '", $columnsDefaultNull) . "'], 'default', 'value' => null]";
             }
