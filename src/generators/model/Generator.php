@@ -378,9 +378,9 @@ class Generator extends \yii\gii\Generator
                     default:
                         $defaultValue = $db->getSchema()->quoteValue($column->defaultValue);
                 }
-                $columnsDefaultValues[$defaultValue][] = $column->name
+                $columnsDefaultValues[$defaultValue][] = $column->name;
             }
-            
+           
             foreach($columnsDefaultValues as $defaultValue => $columnNameList){
                 $rules[] = "[['" . implode("', '", $columnNameList) . "'], 'default', 'value' => $defaultValue]";
             }
