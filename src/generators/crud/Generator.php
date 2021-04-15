@@ -144,7 +144,7 @@ class Generator extends \yii\gii\Generator
     public function hints()
     {
         return array_merge(parent::hints(), [
-            'modelClass' => 'This is the ActiveRecord class associated with the table that CRUD will be built upon.
+            'modelClass' => 'This is the BaseActiveRecord class associated with the table that CRUD will be built upon.
                 You should provide a fully qualified class name, e.g., <code>app\models\Post</code>.',
             'controllerClass' => 'This is the name of the controller class to be generated. You should
                 provide a fully qualified namespaced class (e.g. <code>app\controllers\PostController</code>),
@@ -186,7 +186,8 @@ class Generator extends \yii\gii\Generator
      */
     public function validateModelClass()
     {
-        if (!method_exists($this->modelClass, 'primaryKey') || empty($this->modelClass::primaryKey())) {
+        $class = $this->modelClass;
+        if (!method_exists($this->modelClass, 'primaryKey') || empty($class::primaryKey())) {
             $this->addError('modelClass', "The table associated with $class must have primary key(s).");
         }
     }
@@ -416,8 +417,9 @@ class Generator extends \yii\gii\Generator
      */
     public function generateSearchLabels()
     {
-        /* @var $model \yii\base\Model */
-        $model = new $this->modelClass();
+        $class = $this->modelClass;
+        /* @var $model \yii\db\BaseActiveRecord */
+        $model = new $class();
         $attributeLabels = $model->attributeLabels();
         $labels = [];
         foreach ($this->getColumnNames() as $name) {
@@ -448,7 +450,7 @@ class Generator extends \yii\gii\Generator
         $columns = [];
         if (($table = $this->getTableSchema()) === false) {
             $class = $this->modelClass;
-            /* @var $model \yii\base\Model */
+            /* @var $model \yii\db\BaseActiveRecord */
             $model = new $class();
             foreach ($model->attributes() as $attribute) {
                 $columns[$attribute] = 'unknown';
@@ -508,8 +510,8 @@ class Generator extends \yii\gii\Generator
         $class = $this->modelClass;
         $pks = $class::primaryKey();
         if (count($pks) === 1) {
-            if (is_subclass_of($class, 'yii\mongodb\ActiveRecord')) {
-                return "'id' => (string)\$model->{$pks[0]}";
+            if (is_subclass_of($class, '\yii\mongodb\ActiveRecord')) {
+                return "'id' => (string) \$model->{$pks[0]}";
             }
 
             return "'id' => \$model->{$pks[0]}";
@@ -517,8 +519,8 @@ class Generator extends \yii\gii\Generator
 
         $params = [];
         foreach ($pks as $pk) {
-            if (is_subclass_of($class, 'yii\mongodb\ActiveRecord')) {
-                $params[] = "'$pk' => (string)\$model->$pk";
+            if (is_subclass_of($class, '\yii\mongodb\ActiveRecord')) {
+                $params[] = "'$pk' => (string) \$model->$pk";
             } else {
                 $params[] = "'$pk' => \$model->$pk";
             }
@@ -534,7 +536,8 @@ class Generator extends \yii\gii\Generator
      */
     public function generateActionParams()
     {
-        $pks = $this->modelClass::primaryKey();
+        $class = $this->modelClass;
+        $pks = $class::primaryKey();
         return '$' . implode(', $', $pks);
     }
 
@@ -546,8 +549,10 @@ class Generator extends \yii\gii\Generator
     public function generateActionParamComments()
     {
         $table = $this->getTableSchema();
-        $pks = $this->modelClass::primaryKey();
-        $labels = (new $this->modelClass())->attributeLabels();
+        $class = $this->modelClass;
+        $pks = $class::primaryKey();
+        $model = new $class();
+        $labels = $model->attributeLabels();
         $shortTypes = ['boolean' => 'bool', 'integer' => 'int'];
 
         $paramComments = [];
@@ -573,8 +578,9 @@ class Generator extends \yii\gii\Generator
      */
     public function getTableSchema()
     {
-        if (is_subclass_of($this->modelClass, '\yii\db\ActiveRecord')) {
-            return $this->modelClass::getTableSchema();
+        $class = $this->modelClass;
+        if (is_subclass_of($class, '\yii\db\ActiveRecord')) {
+            return $class::getTableSchema();
         }
 
         return false;
@@ -590,8 +596,9 @@ class Generator extends \yii\gii\Generator
             return $schema->getColumnNames();
         }
 
+        $class = $this->modelClass;
         /* @var $model \yii\db\BaseActiveRecord */
-        $model = new $this->modelClass();
+        $model = new $class();
 
         return $model->attributes();
     }
@@ -604,7 +611,8 @@ class Generator extends \yii\gii\Generator
     protected function getClassDbDriverName()
     {
         if (is_subclass_of($this->modelClass, '\yii\db\ActiveRecord')) {
-            $db = $this->modelClass::getDb();
+            $class = $this->modelClass;
+            $db = $class::getDb();
             return $db instanceof \yii\db\Connection ? $db->driverName : null;
         }
 
