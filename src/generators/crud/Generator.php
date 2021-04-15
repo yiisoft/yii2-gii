@@ -25,24 +25,56 @@ use yii\web\Controller;
  * @property string $nameAttribute This property is read-only.
  * @property array $searchAttributes Searchable attributes. This property is read-only.
  * @property bool|\yii\db\TableSchema $tableSchema This property is read-only.
- * @property string $viewPath The controller view path. This property is read-only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
 class Generator extends \yii\gii\Generator
 {
+    /**
+     * @var string
+     */
     public $modelClass;
+
+    /**
+     * @var string
+     */
     public $controllerClass;
+    
+    /**
+     * @string string[] Allowed widgets for index view
+     */
+    public $indexWidgetTypes = [
+        'grid' => 'yii\grid\GridView',
+        'list' => 'yii\widgets\ListView',
+    ];
+
+    /**
+     * @var string The controller view path
+     */
     public $viewPath;
+
+    /**
+     * @var string
+     */
     public $baseControllerClass = 'yii\web\Controller';
+
+    /**
+     * @var string
+     */
     public $indexWidgetType = 'grid';
+
+    /**
+     * @var string
+     */
     public $searchModelClass = '';
+
     /**
      * @var bool whether to wrap the `GridView` or `ListView` widget with the `yii\widgets\Pjax` widget
      * @since 2.0.5
      */
     public $enablePjax = false;
+
     /**
      * @var bool whether to use strict inflection for controller IDs (insert a separator between two consecutive uppercase chars)
      * @since 2.1.0
@@ -77,15 +109,15 @@ class Generator extends \yii\gii\Generator
             [['modelClass', 'controllerClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
             [['searchModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Search Model Class must not be equal to Model Class.'],
             [['modelClass', 'controllerClass', 'baseControllerClass', 'searchModelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
-            [['modelClass'], 'validateClass', 'params' => ['extends' => BaseActiveRecord::className()]],
+            ['modelClass', 'validateClass', 'params' => ['extends' => BaseActiveRecord::className()]],
             [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::className()]],
             [['controllerClass'], 'match', 'pattern' => '/Controller$/', 'message' => 'Controller class name must be suffixed with "Controller".'],
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
             [['controllerClass', 'searchModelClass'], 'validateNewClass'],
-            [['indexWidgetType'], 'in', 'range' => ['grid', 'list']],
-            [['modelClass'], 'validateModelClass'],
+            ['indexWidgetType', 'in', 'range' => array_keys($this->indexWidgetTypes)],
+            ['modelClass', 'validateModelClass'],
             [['enableI18N', 'enablePjax'], 'boolean'],
-            [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
+            ['messageCategory', 'validateMessageCategory', 'skipOnEmpty' => false],
             ['viewPath', 'safe'],
         ]);
     }
@@ -154,10 +186,7 @@ class Generator extends \yii\gii\Generator
      */
     public function validateModelClass()
     {
-        /* @var $class ActiveRecord */
-        $class = $this->modelClass;
-        $pk = $class::primaryKey();
-        if (empty($pk)) {
+        if (!method_exists($this->modelClass, 'primaryKey') || empty($this->modelClass::primaryKey())) {
             $this->addError('modelClass', "The table associated with $class must have primary key(s).");
         }
     }
@@ -198,7 +227,7 @@ class Generator extends \yii\gii\Generator
     public function getControllerID()
     {
         $pos = strrpos($this->controllerClass, '\\');
-        $class = substr(substr($this->controllerClass, $pos + 1), 0, -10);
+        $class = substr($this->controllerClass, $pos + 1, -10);
 
         return Inflector::camel2id($class, '-', $this->strictInflector);
     }
@@ -499,78 +528,70 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * Generates action parameters
+     * Generates action parameters.
+     *
      * @return string
      */
     public function generateActionParams()
     {
-        /* @var $class ActiveRecord */
-        $class = $this->modelClass;
-        $pks = $class::primaryKey();
-        if (count($pks) === 1) {
-            return '$id';
-        }
-
+        $pks = $this->modelClass::primaryKey();
         return '$' . implode(', $', $pks);
     }
 
     /**
-     * Generates parameter tags for phpdoc
-     * @return array parameter tags for phpdoc
+     * Generates parameter tags for PhpDoc.
+     *
+     * @return string[]
      */
     public function generateActionParamComments()
     {
-        /* @var $class ActiveRecord */
-        $class = $this->modelClass;
-        $pks = $class::primaryKey();
-        if (($table = $this->getTableSchema()) === false) {
-            $params = [];
-            foreach ($pks as $pk) {
-                $params[] = '@param ' . (strtolower(substr($pk, -2)) === 'id' ? 'integer' : 'string') . ' $' . $pk;
-            }
+        $table = $this->getTableSchema();
+        $pks = $this->modelClass::primaryKey();
+        $labels = (new $this->modelClass())->attributeLabels();
+        $shortTypes = ['boolean' => 'bool', 'integer' => 'int'];
 
-            return $params;
-        }
-        if (count($pks) === 1) {
-            return ['@param ' . $table->columns[$pks[0]]->phpType . ' $id'];
-        }
-
-        $params = [];
+        $paramComments = [];
         foreach ($pks as $pk) {
-            $params[] = '@param ' . $table->columns[$pk]->phpType . ' $' . $pk;
+            if ($table === false) {
+                $type = strtolower(substr($pk, -3)) === '_id' ? 'int' : 'string';
+            } else {
+                $type = $table->columns[$pk]->phpType;
+                if (isset($shortTypes[$type])) {
+                    $type = $shortTypes[$type];
+                }
+            }
+            $descr = isset($labels[$pk]) ? ' ' . $labels[$pk] : '';
+            $paramComments[] = '@param ' . $type . ' $' . $pk . $descr;
         }
 
-        return $params;
+        return $paramComments;
     }
 
     /**
      * Returns table schema for current model class or false if it is not an active record
-     * @return bool|\yii\db\TableSchema
+     * @return \yii\db\TableSchema|bool
      */
     public function getTableSchema()
     {
-        /* @var $class ActiveRecord */
-        $class = $this->modelClass;
-        if (is_subclass_of($class, 'yii\db\ActiveRecord')) {
-            return $class::getTableSchema();
+        if (is_subclass_of($this->modelClass, '\yii\db\ActiveRecord')) {
+            return $this->modelClass::getTableSchema();
         }
 
         return false;
     }
 
     /**
-     * @return array model column names
+     * @return array model column/attribute names
      */
     public function getColumnNames()
     {
-        /* @var $class ActiveRecord */
-        $class = $this->modelClass;
-        if (is_subclass_of($class, 'yii\db\ActiveRecord')) {
-            return $class::getTableSchema()->getColumnNames();
+        $schema = $this->getTableSchema();
+        if ($schema) {
+            return $schema->getColumnNames();
         }
 
-        /* @var $model \yii\base\Model */
-        $model = new $class();
+        /* @var $model \yii\db\BaseActiveRecord */
+        $model = new $this->modelClass();
 
         return $model->attributes();
     }
@@ -582,9 +603,11 @@ class Generator extends \yii\gii\Generator
      */
     protected function getClassDbDriverName()
     {
-        /* @var $class ActiveRecord */
-        $class = $this->modelClass;
-        $db = $class::getDb();
-        return $db instanceof \yii\db\Connection ? $db->driverName : null;
+        if (is_subclass_of($this->modelClass, '\yii\db\ActiveRecord')) {
+            $db = $this->modelClass::getDb();
+            return $db instanceof \yii\db\Connection ? $db->driverName : null;
+        }
+
+        return null;
     }
 }
