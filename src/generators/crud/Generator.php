@@ -187,7 +187,7 @@ class Generator extends \yii\gii\Generator
     public function validateModelClass()
     {
         $class = $this->modelClass;
-        if (!method_exists($class, 'primaryKey') || empty($class::primaryKey())) {
+        if (!method_exists($class, 'primaryKey') || !$class::primaryKey()) {
             $this->addError('modelClass', "The table associated with $class must have primary key(s).");
         }
     }
