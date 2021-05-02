@@ -506,20 +506,12 @@ class Generator extends \yii\gii\Generator
      */
     public function generateUrlParams()
     {
-        /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $pks = $class::primaryKey();
-        if (count($pks) === 1) {
-            if (is_subclass_of($class, '\yii\mongodb\ActiveRecord')) {
-                return "'id' => (string) \$model->{$pks[0]}";
-            }
-
-            return "'id' => \$model->{$pks[0]}";
-        }
-
+        $isMongoModel = is_subclass_of($class, '\yii\mongodb\ActiveRecord');
         $params = [];
         foreach ($pks as $pk) {
-            if (is_subclass_of($class, '\yii\mongodb\ActiveRecord')) {
+            if ($isMongoModel) {
                 $params[] = "'$pk' => (string) \$model->$pk";
             } else {
                 $params[] = "'$pk' => \$model->$pk";
@@ -553,23 +545,23 @@ class Generator extends \yii\gii\Generator
         $pks = $class::primaryKey();
         $model = new $class();
         $labels = $model->attributeLabels();
-        $shortTypes = ['boolean' => 'bool', 'integer' => 'int'];
+        $aliasTypes = ['boolean' => 'bool', 'integer' => 'int', 'double' => 'float'];
 
-        $paramComments = [];
+        $comments = [];
         foreach ($pks as $pk) {
-            if ($table === false) {
-                $type = strtolower(substr($pk, -3)) === '_id' ? 'int' : 'string';
-            } else {
+            if ($table) {
                 $type = $table->columns[$pk]->phpType;
-                if (isset($shortTypes[$type])) {
-                    $type = $shortTypes[$type];
+                if (isset($aliasTypes[$type])) {
+                    $type = $aliasTypes[$type];
                 }
+            } else {
+                $type = strtolower(substr($pk, -3)) === '_id' ? 'int' : 'string';
             }
             $descr = isset($labels[$pk]) ? ' ' . $labels[$pk] : '';
-            $paramComments[] = '@param ' . $type . ' $' . $pk . $descr;
+            $comments[] = '@param ' . $type . ' $' . $pk . $descr;
         }
 
-        return $paramComments;
+        return $comments;
     }
 
     /**
@@ -579,7 +571,7 @@ class Generator extends \yii\gii\Generator
     public function getTableSchema()
     {
         $class = $this->modelClass;
-        if (is_subclass_of($class, '\yii\db\ActiveRecord')) {
+        if (is_subclass_of($class, '\yii\db\BaseActiveRecord')) {
             return $class::getTableSchema();
         }
 
