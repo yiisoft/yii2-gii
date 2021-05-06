@@ -7,7 +7,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #450: Add behaviors merging, pagination example, sorting example, loading defaults for a model to CRUD controller (WinterSilence)
 - Enh #444: Updated reserved keywords in generator (WinterSilence)
 - Bug #439: Replace client-side generation of model class name with an AJAX request and a serverside implementation to take options into account (WinterSilence)
-
+- Bug #433: Fix insufficient category validation (samdark)
 
 2.2.1 May 02, 2020
 ------------------
