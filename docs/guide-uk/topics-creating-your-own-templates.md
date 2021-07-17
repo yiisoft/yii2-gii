@@ -39,7 +39,7 @@
 if (YII_ENV_DEV) {    
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',      
-        'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'],  
+        'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20', '172.16.0.0/12'],  
         'generators' => [ // тут
             'crud' => [ // ім’я генератора
                 'class' => 'yii\gii\generators\crud\Generator', // клас генератора
