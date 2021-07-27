@@ -4,7 +4,8 @@ Yii Framework 2 gii extension Change Log
 2.2.3 under development
 -----------------------
 
-- no changes in this release.
+- Enh #458: Added CIDR support for allowedIPs (rhertogh)
+- Enh #453: Allow CRUD to work with non-RDBMS ARs (WinterSilence)
 
 
 2.2.2 May 06, 2021
