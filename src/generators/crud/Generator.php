@@ -19,12 +19,13 @@ use yii\web\Controller;
 /**
  * Generates CRUD controller and views.
  *
- * @property-read array $columnNames Model column names. This property is read-only.
+ * @property-read array $columnNames Model column/attribute names. This property is read-only.
  * @property-read string $controllerID The controller ID (without the module ID prefix). This property is
  * read-only.
  * @property-read string $nameAttribute This property is read-only.
  * @property-read array $searchAttributes Searchable attributes. This property is read-only.
- * @property-read bool|\yii\db\TableSchema $tableSchema This property is read-only.
+ * @property-read \yii\db\TableSchema|bool $tableSchema This property is read-only.
+ * @property-read string $viewPath The controller view path. This property is read-only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -35,38 +36,31 @@ class Generator extends \yii\gii\Generator
      * @var string
      */
     public $modelClass;
-
     /**
      * @var string
      */
     public $controllerClass;
-
     /**
      * @var string The controller view path
      */
     public $viewPath;
-
     /**
      * @var string
      */
     public $baseControllerClass = 'yii\web\Controller';
-
     /**
      * @var string
      */
     public $indexWidgetType = 'grid';
-
     /**
      * @var string
      */
     public $searchModelClass = '';
-
     /**
      * @var bool whether to wrap the `GridView` or `ListView` widget with the `yii\widgets\Pjax` widget
      * @since 2.0.5
      */
     public $enablePjax = false;
-
     /**
      * @var bool whether to use strict inflection for controller IDs (insert a separator between two consecutive uppercase chars)
      * @since 2.1.0
