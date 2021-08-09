@@ -72,12 +72,21 @@ class GenerateAction extends \yii\base\Action
                     if ($skipAll !== null) {
                         $answers[$file->id] = !$skipAll;
                     } else {
-                        $answer = $this->controller->select("Do you want to overwrite this file?", [
-                            'y' => 'Overwrite this file.',
-                            'n' => 'Skip this file.',
-                            'ya' => 'Overwrite this and the rest of the changed files.',
-                            'na' => 'Skip this and the rest of the changed files.',
-                        ]);
+                        do {
+                            $answer = $this->controller->select("Do you want to overwrite this file?", [
+                                'y' => 'Overwrite this file.',
+                                'n' => 'Skip this file.',
+                                'ya' => 'Overwrite this and the rest of the changed files.',
+                                'na' => 'Skip this and the rest of the changed files.',
+                                'v' => 'View difference',
+                            ]);
+
+                            if ($answer === 'v') {
+                                $diff = new \Diff(explode("\n", file_get_contents($file->path)), explode("\n", $file->content));
+                                echo $diff->render(new \Diff_Renderer_Text_Unified());
+                            }
+                        } while ($answer === 'v');
+
                         $answers[$file->id] = $answer === 'y' || $answer === 'ya';
                         if ($answer === 'ya') {
                             $skipAll = false;
