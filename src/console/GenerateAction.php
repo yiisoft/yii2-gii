@@ -62,7 +62,8 @@ class GenerateAction extends \yii\base\Action
         foreach ($files as $file) {
             $path = $file->getRelativePath();
             if (is_file($file->path)) {
-                if (file_get_contents($file->path) === $file->content) {
+                $existingFileContents = file_get_contents($file->path);
+                if ($existingFileContents === $file->content) {
                     echo '  ' . $this->controller->ansiFormat('[unchanged]', Console::FG_GREY);
                     echo $this->controller->ansiFormat(" $path\n", Console::FG_CYAN);
                     $answers[$file->id] = false;
@@ -82,7 +83,7 @@ class GenerateAction extends \yii\base\Action
                             ]);
 
                             if ($answer === 'v') {
-                                $diff = new \Diff(explode("\n", file_get_contents($file->path)), explode("\n", $file->content));
+                                $diff = new \Diff(explode("\n", $existingFileContents), explode("\n", $file->content));
                                 echo $diff->render(new \Diff_Renderer_Text_Unified());
                             }
                         } while ($answer === 'v');
