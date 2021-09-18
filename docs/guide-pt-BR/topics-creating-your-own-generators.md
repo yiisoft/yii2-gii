@@ -11,7 +11,7 @@ sobrescrever essas classes em qualquer pasta. Novamente personalizar a configura
 if (YII_ENV_DEV) {    
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',      
-        'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'],  
+        'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20', '172.16.0.0/12'],  
          'generators' => [
             'myCrud' => [
                 'class' => 'app\myTemplates\crud\Generator',

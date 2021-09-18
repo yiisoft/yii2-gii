@@ -1045,6 +1045,16 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
+     * Action to generate class name.
+     * @return string
+     * @since 2.2.2
+     */
+    public function actionGenerateClassName()
+    {
+        return $this->generateClassName($this->tableName);
+    }
+
+    /**
      * Generates a query class name from the specified model class name.
      * @param string $modelClassName model class name
      * @return string generated class name

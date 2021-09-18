@@ -1,10 +1,27 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.2.2 under development
+2.2.4 under development
 -----------------------
 
 - Enh #431: Added form model generator (ahmadasjad)
+
+
+2.2.3 August 09, 2021
+---------------------
+
+- Enh #453: Allow CRUD to work with non-RDBMS ARs (WinterSilence)
+- Enh #458: Add CIDR support for allowedIPs (rhertogh)
+- Enh #462: Add support for viewing file differences on the CLI (rhertogh)
+
+
+2.2.2 May 06, 2021
+------------------
+
+- Bug #433: Fix insufficient category validation (samdark)
+- Bug #439: Replace client-side generation of model class name with an AJAX request and a serverside implementation to take options into account (WinterSilence)
+- Enh #444: Updated reserved keywords in generator (WinterSilence)
+- Enh #450: Add behaviors merging, pagination example, sorting example, loading defaults for a model to CRUD controller (WinterSilence)
 
 
 2.2.1 May 02, 2020
