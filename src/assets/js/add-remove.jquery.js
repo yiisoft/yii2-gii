@@ -6,7 +6,7 @@
      * For example, if we are cloning some element and it has an id value `example1`, then the element after this will have id `example2`
      * @param rows_selector
      */
-    var reIndexAttributes = function(rows_selector) {
+    var reIndexAttributes = function (rows_selector) {
         var props = $(rows_selector);
         var regex = /^(.+?)(\d+)$/i;
         var name_regex = /^(.+?)(\d+)([\[\]]+)$/i;
@@ -20,7 +20,7 @@
             }
 
             $(this).find("*")
-                .each(function() {
+                .each(function () {
                     var id = this.id || "";
                     var match = id.match(regex) || [];
                     if (match.length === 3) {
@@ -52,9 +52,9 @@
                     }
 
                     target = $(this).attr('data-index') || "";
-                    if(target !== ''){
+                    if (target !== '') {
                         $(this).attr('data-index', cur_index);
-                        if($(this)[0].nodeName === 'SPAN'){
+                        if ($(this)[0].nodeName === 'SPAN') {
                             $(this).html(cur_index);
                         }
                     }
@@ -69,13 +69,13 @@
      * @param element
      * @returns {*}
      */
-    var truncateValues = function(element){
+    var truncateValues = function (element) {
         $(element).find('input:text, input:password, input:file, select, textarea')
-            .each(function() {
+            .each(function () {
                 $(this).val('');
             });
 
-        $(element).find('input:radio, input:checkbox').each(function() {
+        $(element).find('input:radio, input:checkbox').each(function () {
             console.log(this);
             $(this).removeAttr('checked');
             $(this).prop('checked', false);
@@ -87,14 +87,14 @@
 
 
     /**
-     * Give an attribute to anchor tag 'js-add' and the value of that attribute
+     * Give an attribute to anchor tag 'data-js-add' and the value of that attribute
      * to be his    parent selector which is to be copied and to be added after it.
-     * For example if you provide <a  js-add=".js-field_row">text</a>
+     * For example if you provide <a  data-js-add=".js-field_row">text</a>
      * On click of this element will copy its parent element having class js-field_row
      * and append after it.
      */
-    $(document).on('click', 'a[js-add]', function () {
-        var element_to_clone_selector = $(this).attr('js-add');
+    $(document).on('click', 'a[data-js-add]', function () {
+        var element_to_clone_selector = $(this).attr('data-js-add');
         var element_to_clone = $(this).parents(element_to_clone_selector);
         var duplicate_element = element_to_clone.clone();
         duplicate_element = truncateValues(duplicate_element);
@@ -102,14 +102,14 @@
         reIndexAttributes('.js-field_row');
     });
 
-    /*
-     * Give an attribute to anchor tag 'js-remove' and the value of that attribute
+    /**
+     * Give an attribute to anchor tag 'data-js-remove' and the value of that attribute
      * to be his    parent selector which is to be deleted.
-     * For example if you provide <a  js-remove=".js-field_row">text</a>
+     * For example if you provide <a  data-js-remove=".js-field_row">text</a>
      * On click of this element will remove its parent element having class js-field_row
-     * */
-    $(document).on('click', 'a[js-remove]', function () {
-        var removable_element_selector = $(this).attr('js-remove');
+     */
+    $(document).on('click', 'a[data-js-remove]', function () {
+        var removable_element_selector = $(this).attr('data-js-remove');
         var removable_element = $(this).parents(removable_element_selector);
         //count all siblings, if its more than 1, delete the selected element.
         var total_row = removable_element.siblings(removable_element_selector).length;

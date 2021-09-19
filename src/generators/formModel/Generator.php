@@ -10,8 +10,7 @@ use yii\gii\CodeFile;
 use yii\validators\Validator;
 
 /**
- *
- * @property void $name
+ * @inheritDoc
  */
 class Generator extends \yii\gii\Generator
 {
@@ -29,7 +28,9 @@ class Generator extends \yii\gii\Generator
         return array_merge(parent::rules(), [
             [['ns', 'base_class', 'class_name', 'properties'], 'required'],
             [['ns', 'base_class', 'class_name'], 'filter', 'filter' => 'trim'],
-            [['ns', ], 'filter', 'filter' => function ($value) { return trim($value, '\\'); }],
+            [['ns',], 'filter', 'filter' => function ($value) {
+                return trim($value, '\\');
+            }],
             [['base_class'], 'validateClass', 'params' => ['extends' => Model::className()]],
             [['properties'], 'each', 'rule' => ['required']],
             [['properties'], function ($attribute, $params, $validator) {

@@ -3,6 +3,8 @@
  * @var $ns string
  * @var $class_name string
  * @var $base_class string
+ * @var $properties array
+ * @var $rules array
  */
 ?>
 <?php
