@@ -178,15 +178,11 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     protected function findModel(<?= $actionParams ?>)
     {
 <?php
-if (count($pks) === 1) {
-    $condition = '$id';
-} else {
-    $condition = [];
-    foreach ($pks as $pk) {
-        $condition[] = "'$pk' => \$$pk";
-    }
-    $condition = '[' . implode(', ', $condition) . ']';
+$condition = [];
+foreach ($pks as $pk) {
+    $condition[] = "'$pk' => \$$pk";
 }
+$condition = '[' . implode(', ', $condition) . ']';
 ?>
         if (($model = <?= $modelClass ?>::findOne(<?= $condition ?>)) !== null) {
             return $model;
