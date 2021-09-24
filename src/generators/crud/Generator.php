@@ -495,6 +495,14 @@ class Generator extends \yii\gii\Generator
         $class = $this->modelClass;
         $pks = $class::primaryKey();
         $isMongoModel = is_subclass_of($class, '\yii\mongodb\ActiveRecord');
+        if (count($pks) === 1) {
+            if ($isMongoModel) {
+                return "'id' => (string)\$model->{$pks[0]}";
+            }
+
+            return "'id' => \$model->{$pks[0]}";
+        }
+
         $params = [];
         foreach ($pks as $pk) {
             if ($isMongoModel) {
@@ -516,6 +524,10 @@ class Generator extends \yii\gii\Generator
     {
         $class = $this->modelClass;
         $pks = $class::primaryKey();
+        if (count($pks) === 1) {
+            return '$id';
+        }
+
         return '$' . implode(', $', $pks);
     }
 
