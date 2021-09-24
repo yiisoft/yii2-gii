@@ -483,10 +483,6 @@ class Generator extends \yii\gii\Generator
      */
     private function generateManyManyRelations($table, $fks, $relations)
     {
-        if (!in_array($this->generateJunctionRelationMode, [self::JUNCTION_RELATION_VIA_TABLE, self::JUNCTION_RELATION_VIA_MODEL], true)) {
-            throw new InvalidConfigException('Unknown generateViaRelationMode ' . $this->generateJunctionRelationMode);
-        }
-
         $db = $this->getDbConnection();
 
         foreach ($fks as $pair) {
