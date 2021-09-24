@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.4 under development
 -----------------------
 
-- no changes in this release.
+- Bug #467: Fix view `generators/crud/default/controller` (WinterSilence, cjrf)
 
 
 2.2.3 August 09, 2021
