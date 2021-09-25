@@ -181,7 +181,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * @return <?=                   $modelClass ?> the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(<?= $actionParams ?>): <?= $modelClass ?>
+    protected function findModel(<?= $actionParams ?>): <?= $modelClass . "\n" ?>
     {
 <?php
 $condition = [];
