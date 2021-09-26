@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => SerialColumn::class<?= $php7 ? '' : 'Name()' ?>],
             <?php
             /** @var \yii\base\Model $model */
-            $model = new ($generator->modelClass)();
+            $model = \Yii::createObject($generator->modelClass);
             $pk = $model instanceof \yii\db\ActiveRecord ? $model::primaryKey() : [];
             $count = 1;
             $tableSchema = $generator->getTableSchema();
