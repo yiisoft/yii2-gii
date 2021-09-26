@@ -11,8 +11,7 @@
 
     $(document).on("change", "input[data-update]", function () {
         var destination = $(this).attr("data-update");
-        var value = $(this).val();
-        $(destination).html(value);
+        $(destination).html($(this).val());
     });
 })(jQuery);
 

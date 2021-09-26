@@ -24,31 +24,31 @@
                     var id = this.id || "";
                     var match = id.match(regex) || [];
                     if (match.length === 3) {
-                        this.id = match[1] + (cur_index);
+                        this.id = match[1] + cur_index;
                     }
 
                     var target = $(this).attr('data-target') || "";
                     match = target.match(regex) || [];
                     if (match.length === 3) {
-                        $(this).attr('data-target', match[1] + (cur_index));
+                        $(this).attr('data-target', match[1] + cur_index);
                     }
 
                     target = $(this).attr('aria-labelledby') || "";
                     match = target.match(regex) || [];
                     if (match.length === 3) {
-                        $(this).attr('aria-labelledby', match[1] + (cur_index));
+                        $(this).attr('aria-labelledby', match[1] + cur_index);
                     }
 
                     target = $(this).attr('data-update') || "";
                     match = target.match(regex) || [];
                     if (match.length === 3) {
-                        $(this).attr('data-update', match[1] + (cur_index));
+                        $(this).attr('data-update', match[1] + cur_index);
                     }
 
                     target = $(this).attr('name') || "";
                     match = target.match(name_regex) || [];
                     if (match.length === 4) {
-                        $(this).attr('name', match[1] + (cur_index) + match[3]);
+                        $(this).attr('name', (match[1] + cur_index + match[3]));
                     }
 
                     target = $(this).attr('data-index') || "";
