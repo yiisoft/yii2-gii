@@ -5,6 +5,7 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Enh #431: Added form model generator (ahmadasjad)
+- Bug #467: Fix view `generators/crud/default/controller` (WinterSilence, cjrf)
 
 
 2.2.3 August 09, 2021
