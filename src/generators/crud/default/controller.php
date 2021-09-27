@@ -167,7 +167,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete(<?= $actionParams ?>): Response
+    public function actionDelete(<?= $actionParams ?>)<?= ($isPhp7 ? ': Response' : '') . "\n" ?>
     {
         $this->findModel(<?= $actionParams ?>)->delete();
 
@@ -178,10 +178,10 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * Finds the <?= $modelClass ?> model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return <?=                   $modelClass ?> the loaded model
+     * @return <?= $modelClass ?> the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(<?= $actionParams ?>): <?= $modelClass . "\n" ?>
+    protected function findModel(<?= $actionParams ?>)<?= ($isPhp7 ? ': ' . $modelClass : '') . "\n" ?>
     {
 <?php
 $condition = [];
