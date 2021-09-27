@@ -24,7 +24,7 @@ $pks = $class::primaryKey();
 $urlParams = $generator->generateUrlParams();
 $actionParams = $generator->generateActionParams();
 $actionParamComments = $generator->generateActionParamComments();
-$php7 = PHP_MAJOR_VERSION === 7;
+$isPhp7 = PHP_MAJOR_VERSION === 7;
 
 echo "<?php\n";
 ?>
