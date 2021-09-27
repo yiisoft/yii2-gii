@@ -77,7 +77,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     public function actionIndex()<?= ($php7 ? ': string' : '') . "\n" ?>
     {
 <?php if (!empty($generator->searchModelClass)): ?>
-        $searchModel = Yii::createObject(<?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>::class<?= $php7 ? '' : 'Name()' ?>);
+        $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render(
