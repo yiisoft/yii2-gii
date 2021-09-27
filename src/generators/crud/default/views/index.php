@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $generator->enablePjax ? '<?php Pjax::begin(); ?>' : '' ?>
 
 <?php if(!empty($generator->searchModelClass)): ?>
-    <?= '    <?php ' . ($generator->indexWidgetType === 'grid' ? '// ' : '') ?>echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?= '<?php ' . ($generator->indexWidgetType === 'grid' ? '// ' : '') ?>echo $this->render('_search', ['model' => $searchModel]); ?>
 <?php endif; ?>
 
 <?php if ($generator->indexWidgetType === 'grid'): ?>
