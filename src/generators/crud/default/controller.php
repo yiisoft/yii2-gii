@@ -129,7 +129,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionCreate()
     {
-        $model = Yii::createObject(<?= $modelClass ?>);
+        $model = new <?= $modelClass ?>();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
