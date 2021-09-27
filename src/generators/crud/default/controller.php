@@ -51,13 +51,13 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     /**
      * @inheritDoc
      */
-    public function behaviors()<?= ($php7 ? ': array' : '') . "\n" ?>
+    public function behaviors()<?= ($isPhp7 ? ': array' : '') . "\n" ?>
     {
         return array_merge(
             parent::behaviors(),
             [
                 'verbFilter' => [
-                    'class' => VerbFilter::class<?= $php7 ? '' : 'Name()' ?>,
+                    'class' => VerbFilter::class<?= $isPhp7 ? '' : 'Name()' ?>,
                     'actions' => [
                         'index' => ['GET'],
                         'view' => ['GET'],
@@ -74,7 +74,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * Lists all <?= $modelClass ?> models.
      * @return string
      */
-    public function actionIndex()<?= ($php7 ? ': string' : '') . "\n" ?>
+    public function actionIndex()<?= ($isPhp7 ? ': string' : '') . "\n" ?>
     {
 <?php if (!empty($generator->searchModelClass)): ?>
         $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
@@ -89,7 +89,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         );
 <?php else: ?>
         $dataProvider = Yii::createObject(
-            ActiveDataProvider::class<?= $php7 ? '' : 'Name()' ?>,
+            ActiveDataProvider::class<?= $isPhp7 ? '' : 'Name()' ?>,
             [
                 'query' => <?= $modelClass ?>::find(),
                 /*
@@ -117,7 +117,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView(<?= $actionParams ?>)<?= ($php7 ? ': string' : '') . "\n" ?>
+    public function actionView(<?= $actionParams ?>)<?= ($isPhp7 ? ': string' : '') . "\n" ?>
     {
         return $this->render('view', ['model' => $this->findModel(<?= $actionParams ?>)]);
     }
