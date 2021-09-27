@@ -11,7 +11,7 @@ use yii\helpers\StringHelper;
 
 $controllerClass = StringHelper::basename($generator->controllerClass);
 $modelClass = StringHelper::basename($generator->modelClass);
-if (!empty($generator->searchModelClass)) {
+if ($generator->searchModelClass !== '') {
     $searchModelClass = StringHelper::basename($generator->searchModelClass);
     if ($modelClass === $searchModelClass) {
         $searchModelAlias = $searchModelClass . 'Search';
