@@ -18,7 +18,7 @@ if (!empty($generator->searchModelClass)) {
     }
 }
 
-/** @var $class ActiveRecord */
+/** @var $class ActiveRecordInterface */
 $class = ltrim($generator->modelClass, '\\');
 $pks = $class::primaryKey();
 $urlParams = $generator->generateUrlParams();
