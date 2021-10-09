@@ -77,7 +77,6 @@ class Generator extends \yii\gii\Generator
         return array_merge(parent::rules(), [
             [['db', 'ns', 'tableName', 'modelClass', 'baseClass', 'queryNs', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
             [['ns', 'queryNs'], 'filter', 'filter' => function ($value) { return trim($value, '\\'); }],
-
             [['db', 'ns', 'tableName', 'baseClass', 'queryNs', 'queryBaseClass'], 'required'],
             [['db', 'modelClass', 'queryClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
             [['ns', 'baseClass', 'queryNs', 'queryBaseClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
@@ -171,7 +170,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function autoCompleteData()
     {
@@ -184,16 +183,15 @@ class Generator extends \yii\gii\Generator
             ];
         }
 
-        return [];
+        return ['tableName' => []];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function requiredTemplates()
     {
-        // @todo make 'query.php' to be required before 2.1 release
-        return ['model.php'/*, 'query.php'*/];
+        return ['model.php'];
     }
 
     /**
@@ -201,7 +199,21 @@ class Generator extends \yii\gii\Generator
      */
     public function stickyAttributes()
     {
-        return array_merge(parent::stickyAttributes(), ['ns', 'db', 'baseClass', 'generateRelations', 'generateJunctionRelationMode', 'generateLabelsFromComments', 'queryNs', 'queryBaseClass', 'useTablePrefix', 'generateQuery']);
+        return array_merge(
+            parent::stickyAttributes(), 
+            [
+                'ns',
+                'db',
+                'baseClass',
+                'generateRelations',
+                'generateJunctionRelationMode',
+                'generateLabelsFromComments',
+                'queryNs',
+                'queryBaseClass',
+                'useTablePrefix',
+                'generateQuery',
+            ]
+        );
     }
 
     /**
@@ -214,15 +226,12 @@ class Generator extends \yii\gii\Generator
     public function getTablePrefix()
     {
         $db = $this->getDbConnection();
-        if ($db !== null) {
-            return $db->tablePrefix;
-        }
 
-        return '';
+        return $db === null '' : $db->tablePrefix;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function generate()
     {
@@ -1065,7 +1074,9 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return Connection the DB connection as specified by [[db]].
+     * Returns the database connection as specified by [[db]].
+     *
+     * @return Connection|null
      */
     protected function getDbConnection()
     {
@@ -1081,7 +1092,7 @@ class Generator extends \yii\gii\Generator
     {
         /** @var Connection $db */
         $db = $this->getDbConnection();
-        return $db instanceof \yii\db\Connection ? $db->driverName : null;
+        return $db === null ? $db->driverName : null;
     }
 
     /**
