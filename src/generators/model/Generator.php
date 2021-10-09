@@ -227,7 +227,7 @@ class Generator extends \yii\gii\Generator
     {
         $db = $this->getDbConnection();
 
-        return $db === null '' : $db->tablePrefix;
+        return $db === null ? '' : $db->tablePrefix;
     }
 
     /**
