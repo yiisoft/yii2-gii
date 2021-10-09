@@ -54,7 +54,7 @@ class Generator extends \yii\gii\Generator
 
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getName()
     {
@@ -62,7 +62,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getDescription()
     {
@@ -70,7 +70,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
@@ -183,7 +183,7 @@ class Generator extends \yii\gii\Generator
             ];
         }
 
-        return ['tableName' => []];
+        return [];
     }
 
     /**
@@ -1076,7 +1076,7 @@ class Generator extends \yii\gii\Generator
     /**
      * Returns the database connection as specified by [[db]].
      *
-     * @return Connection|null
+     * @return Connection|object|null
      */
     protected function getDbConnection()
     {
@@ -1085,20 +1085,19 @@ class Generator extends \yii\gii\Generator
 
     /**
      * @return string|null driver name of db connection.
-     * In case db is not instance of \yii\db\Connection null will be returned.
+     * In case [[db]] is not instance of \yii\db\Connection null will be returned.
      * @since 2.0.6
      */
     protected function getDbDriverName()
     {
-        /** @var Connection $db */
         $db = $this->getDbConnection();
-        return $db === null ? $db->driverName : null;
+        return $db instanceof Connection ? $db->driverName : null;
     }
 
     /**
      * Checks if any of the specified columns is auto incremental.
      * @param \yii\db\TableSchema $table the table schema
-     * @param array $columns columns to check for autoIncrement property
+     * @param string[] $columns columns to check for autoIncrement property
      * @return bool whether any of the specified columns is auto incremental.
      */
     protected function isColumnAutoIncremental($table, $columns)
