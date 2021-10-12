@@ -14,6 +14,7 @@ echo $form->field($generator, 'tableName')->textInput([
     'data' => [
         'table-prefix' => $generator->getTablePrefix(), 
         'action' => Url::to(['default/action', 'id' => 'model', 'name' => 'GenerateClassName'])
+        'autocomplete' => 'Off'
     ]
 ]);
 echo $form->field($generator, 'standardizeCapitals')->checkbox();
