@@ -1067,7 +1067,7 @@ class Generator extends \yii\gii\Generator
      */
     public function actionGenerateClassName()
     {
-        return $this->generateClassName($this->tableName, $this->useSchemaName);
+        return $this->generateClassName($this->tableName);
     }
 
     /**
@@ -1085,7 +1085,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return Connection the DB connection as specified by [[db]].
+     * @return Connection|null the DB connection as specified by [[db]].
      */
     protected function getDbConnection()
     {
@@ -1099,7 +1099,6 @@ class Generator extends \yii\gii\Generator
      */
     protected function getDbDriverName()
     {
-        /** @var Connection $db */
         $db = $this->getDbConnection();
         return $db instanceof \yii\db\Connection ? $db->driverName : null;
     }
