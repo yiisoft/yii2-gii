@@ -52,7 +52,15 @@ class Generator extends \yii\gii\Generator
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
 
-
+    /**
+     * @param string[]|null
+     */
+    protected $tableNames;
+    /**
+     * @param string[]
+     */
+    protected $classNames = [];
+    
     /**
      * {@inheritdoc}
      */
@@ -944,9 +952,6 @@ class Generator extends \yii\gii\Generator
         }
     }
 
-    protected $tableNames;
-    protected $classNames;
-
     /**
      * @return array the table names that match the pattern specified by [[tableName]].
      */
@@ -957,7 +962,7 @@ class Generator extends \yii\gii\Generator
         }
         $db = $this->getDbConnection();
         if ($db === null) {
-            return [];
+            return $this->tableNames = [];
         }
         $tableNames = [];
         if (strpos($this->tableName, '*') !== false) {
