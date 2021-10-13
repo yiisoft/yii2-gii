@@ -76,8 +76,7 @@ class Generator extends \yii\gii\Generator
     {
         return array_merge(parent::rules(), [
             [['db', 'ns', 'tableName', 'modelClass', 'baseClass', 'queryNs', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
-            [['ns', 'queryNs'], 'filter', 'filter' => function ($value) { return trim($value, '\\'); }],
-
+            [['ns', 'queryNs', 'baseClass', 'queryBaseClass'], 'filter', 'filter' => static function ($value) { return trim($value, '\\'); }],
             [['db', 'ns', 'tableName', 'baseClass', 'queryNs', 'queryBaseClass'], 'required'],
             [['db', 'modelClass', 'queryClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
             [['ns', 'baseClass', 'queryNs', 'queryBaseClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
@@ -379,7 +378,6 @@ class Generator extends \yii\gii\Generator
         $types = [];
         $lengths = [];
         $defaults = [];
-        $driverName = $this->getDbDriverName();
         foreach ($table->columns as $column) {
             if ($column->autoIncrement) {
                 continue;
@@ -421,7 +419,8 @@ class Generator extends \yii\gii\Generator
                     }
             }
         }
-        if ($driverName === 'pgsql' && isset($types['integer'])) {
+
+        if ($this->getDbDriverName() === 'pgsql' && isset($types['integer'])) {
             foreach ($types['integer'] as $column) {
                 $add = true;
                 foreach ($defaults as $columns) {
@@ -452,7 +451,7 @@ class Generator extends \yii\gii\Generator
         if ($db !== null) {
             // Unique indexes rules
             try {
-                $uniqueIndexes = array_merge($db->getSchema()->findUniqueIndexes($table), [$table->primaryKey]);
+                $uniqueIndexes = array_merge($db->getSchema()->findUniqueIndexes($table), (array)$table->primaryKey);
                 $uniqueIndexes = array_unique($uniqueIndexes, SORT_REGULAR);
                 foreach ($uniqueIndexes as $uniqueColumns) {
                     // Avoid validating auto incremental columns
