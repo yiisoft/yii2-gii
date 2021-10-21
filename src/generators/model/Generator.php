@@ -1027,12 +1027,13 @@ class Generator extends \yii\gii\Generator
         $patterns = [];
         $db = $this->getDbConnection();
         if ($db !== null) {
-            $patterns[] = "/^{$db->tablePrefix}(.*?)$/";
-            $patterns[] = "/^(.*?){$db->tablePrefix}$/";
+            $patterns[] = "/^{$db->tablePrefix}(.+)$/";
+            $patterns[] = "/^(.+){$db->tablePrefix}$/";
         }
         if (strpos($this->tableName, '*') !== false) {
             $pattern = $this->tableName;
-            if (($pos = strrpos($pattern, '.')) !== false) {
+            $pos = strrpos($pattern, '.');
+            if ($pos !== false) {
                 $pattern = substr($pattern, $pos + 1);
             }
             $patterns[] = '/^' . str_replace('*', '(\w+)', $pattern) . '$/';
@@ -1046,8 +1047,8 @@ class Generator extends \yii\gii\Generator
         }
 
         if ($this->standardizeCapitals) {
-            $schemaName = ctype_upper(preg_replace('/[_-]/', '', $schemaName)) ? strtolower($schemaName) : $schemaName;
-            $className = ctype_upper(preg_replace('/[_-]/', '', $className)) ? strtolower($className) : $className;
+            $schemaName = preg_match('/^[-_A-Z\d]+$/', $schemaName) === 1 ? strtolower($schemaName) : $schemaName;
+            $className = preg_match('/^[-_A-Z\d]+$/', $className) === 1 ? strtolower($className) : $className;
             $this->classNames[$fullTableName] = Inflector::camelize(Inflector::camel2words($schemaName.$className));
         } else {
             $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
@@ -1085,7 +1086,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return Connection|null the DB connection as specified by [[db]].
+     * @return Connection the DB connection as specified by [[db]].
      */
     protected function getDbConnection()
     {
@@ -1093,14 +1094,12 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return string|null driver name of db connection.
-     * In case db is not instance of \yii\db\Connection null will be returned.
+     * @return string driver name of [[db]] connection.
      * @since 2.0.6
      */
     protected function getDbDriverName()
     {
-        $db = $this->getDbConnection();
-        return $db instanceof \yii\db\Connection ? $db->driverName : null;
+        return $this->getDbConnection()->driverName;
     }
 
     /**
