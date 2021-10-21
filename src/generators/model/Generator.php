@@ -62,7 +62,7 @@ class Generator extends \yii\gii\Generator
     protected $classNames = [];
     
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getName()
     {
@@ -70,7 +70,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getDescription()
     {
@@ -78,7 +78,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
@@ -178,7 +178,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function autoCompleteData()
     {
@@ -195,7 +195,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function requiredTemplates()
     {
@@ -207,7 +207,21 @@ class Generator extends \yii\gii\Generator
      */
     public function stickyAttributes()
     {
-        return array_merge(parent::stickyAttributes(), ['ns', 'db', 'baseClass', 'generateRelations', 'generateJunctionRelationMode', 'generateLabelsFromComments', 'queryNs', 'queryBaseClass', 'useTablePrefix', 'generateQuery']);
+        return array_merge(
+            parent::stickyAttributes(), 
+            [
+                'ns',
+                'db',
+                'baseClass',
+                'generateRelations',
+                'generateJunctionRelationMode',
+                'generateLabelsFromComments',
+                'queryNs',
+                'queryBaseClass',
+                'useTablePrefix',
+                'generateQuery',
+            ]
+        );
     }
 
     /**
@@ -220,15 +234,12 @@ class Generator extends \yii\gii\Generator
     public function getTablePrefix()
     {
         $db = $this->getDbConnection();
-        if ($db !== null) {
-            return $db->tablePrefix;
-        }
 
-        return '';
+        return $db === null ? '' : $db->tablePrefix;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function generate()
     {
@@ -1086,7 +1097,9 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return Connection the DB connection as specified by [[db]].
+     * Returns the database connection as specified by [[db]].
+     *
+     * @return Connection|object|null
      */
     protected function getDbConnection()
     {
@@ -1105,7 +1118,7 @@ class Generator extends \yii\gii\Generator
     /**
      * Checks if any of the specified columns is auto incremental.
      * @param \yii\db\TableSchema $table the table schema
-     * @param array $columns columns to check for autoIncrement property
+     * @param string[] $columns columns to check for autoIncrement property
      * @return bool whether any of the specified columns is auto incremental.
      */
     protected function isColumnAutoIncremental($table, $columns)
