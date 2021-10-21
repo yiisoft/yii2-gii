@@ -793,12 +793,7 @@ class Generator extends \yii\gii\Generator
      */
     protected function generateRelationLink($refs)
     {
-        $pairs = [];
-        foreach ($refs as $a => $b) {
-            $pairs[] = "'$a' => '$b'";
-        }
-
-        return '[' . implode(', ', $pairs) . ']';
+        return \yii\helper\VarDumper::export($refs);
     }
 
     /**
@@ -1111,7 +1106,6 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Returns the database connection as specified by [[db]].
-     *
      * @return Connection
      */
     protected function getDbConnection()
@@ -1120,13 +1114,13 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return string driver name of db connection.
-     * In case [[db]] is not instance of \yii\db\Connection null will be returned.
+     * Returns the driver name of [[db]] connection.
+     * @return string
      * @since 2.0.6
      */
     protected function getDbDriverName()
     {
-         return $this->getDbConnection()->driverName;
+        return $this->getDbConnection()->driverName;
     }
 
     /**
