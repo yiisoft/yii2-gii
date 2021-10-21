@@ -52,7 +52,15 @@ class Generator extends \yii\gii\Generator
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
 
-
+    /**
+     * @param string[]|null
+     */
+    protected $tableNames;
+    /**
+     * @param string[]
+     */
+    protected $classNames = [];
+    
     /**
      * @inheritdoc
      */
@@ -76,7 +84,7 @@ class Generator extends \yii\gii\Generator
     {
         return array_merge(parent::rules(), [
             [['db', 'ns', 'tableName', 'modelClass', 'baseClass', 'queryNs', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
-            [['ns', 'queryNs'], 'filter', 'filter' => function ($value) { return trim($value, '\\'); }],
+            [['ns', 'queryNs', 'baseClass', 'queryBaseClass'], 'filter', 'filter' => static function ($value) { return trim($value, '\\'); }],
             [['db', 'ns', 'tableName', 'baseClass', 'queryNs', 'queryBaseClass'], 'required'],
             [['db', 'modelClass', 'queryClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
             [['ns', 'baseClass', 'queryNs', 'queryBaseClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
@@ -191,7 +199,7 @@ class Generator extends \yii\gii\Generator
      */
     public function requiredTemplates()
     {
-        return ['model.php'];
+        return $this->generateQuery ? ['model.php', 'query.php'] : ['model.php'];
     }
 
     /**
@@ -355,25 +363,25 @@ class Generator extends \yii\gii\Generator
      * @return array
      * @since 2.1.4
      */
-    public function generateRelationsClassHints($relations, $generateQuery){
+    public function generateRelationsClassHints($relations, $generateQuery)
+    {
         $result = [];
-        foreach ($relations as $name => $relation){
-            // The queryNs options available if generateQuery is active
+        foreach ($relations as $name => $relation) {
+            $result[$name] = '\yii\db\ActiveQuery';
+            // The queryNs options available if $generateQuery is active
             if ($generateQuery) {
                 $queryClassRealName = '\\' . $this->queryNs . '\\' . $relation[1];
                 if (class_exists($queryClassRealName, true) && is_subclass_of($queryClassRealName, '\yii\db\BaseActiveRecord')) {
                     /** @var \yii\db\ActiveQuery $activeQuery */
                     $activeQuery = $queryClassRealName::find();
                     $activeQueryClass = $activeQuery::className();
-                    if (strpos($activeQueryClass, $this->ns) === 0){
+                    if (strpos($activeQueryClass, $this->ns) === 0) {
                         $activeQueryClass = StringHelper::basename($activeQueryClass);
                     }
-                    $result[$name] = '\yii\db\ActiveQuery|' . $activeQueryClass;
+                    $result[$name] .= '|' . $activeQueryClass;
                 } else {
-                    $result[$name] = '\yii\db\ActiveQuery|' . (($this->ns === $this->queryNs) ? $relation[1]: '\\' . $this->queryNs . '\\' . $relation[1]) . 'Query';
+                    $result[$name] .= '|' . ($this->ns === $this->queryNs ? $relation[1] : '\\' . $this->queryNs . '\\' . $relation[1]) . 'Query';
                 }
-            } else {
-                $result[$name] = '\yii\db\ActiveQuery';
             }
         }
         return $result;
@@ -388,12 +396,16 @@ class Generator extends \yii\gii\Generator
     {
         $types = [];
         $lengths = [];
+        $defaults = [];
         foreach ($table->columns as $column) {
             if ($column->autoIncrement) {
                 continue;
             }
             if (!$column->allowNull && $column->defaultValue === null) {
                 $types['required'][] = $column->name;
+            } else {
+                $value = $column->defaultValue === null ? 'NULL' : $column->defaultValue;
+                $defaults[$value] = $column->name;
             }
             switch ($column->type) {
                 case Schema::TYPE_SMALLINT:
@@ -426,12 +438,28 @@ class Generator extends \yii\gii\Generator
                     }
             }
         }
-        $rules = [];
-        $driverName = $this->getDbDriverName();
-        foreach ($types as $type => $columns) {
-            if ($driverName === 'pgsql' && $type === 'integer') {
-                $rules[] = "[['" . implode("', '", $columns) . "'], 'default', 'value' => null]";
+
+        if ($this->getDbDriverName() === 'pgsql' && isset($types['integer'])) {
+            foreach ($types['integer'] as $column) {
+                $add = true;
+                foreach ($defaults as $columns) {
+                    if (in_array($column, $columns, true)) {
+                        $add = false;
+                        break;
+                    }
+                }
+                if ($add) {
+                    $defaults['NULL'][] = $column;
+                }
             }
+        }
+        
+        $rules = [];
+        foreach ($defaults as $value => $columns) {
+            $value = var_export($value === 'NULL' ? null : $value, true);
+            $rules[] = "[['" . implode("', '", $columns) . "'], 'default', 'value' => $value]";
+        }
+        foreach ($types as $type => $columns) {
             $rules[] = "[['" . implode("', '", $columns) . "'], '$type']";
         }
         foreach ($lengths as $length => $columns) {
@@ -439,26 +467,26 @@ class Generator extends \yii\gii\Generator
         }
 
         $db = $this->getDbConnection();
-
-        // Unique indexes rules
-        try {
-            $uniqueIndexes = array_merge($db->getSchema()->findUniqueIndexes($table), [$table->primaryKey]);
-            $uniqueIndexes = array_unique($uniqueIndexes, SORT_REGULAR);
-            foreach ($uniqueIndexes as $uniqueColumns) {
-                // Avoid validating auto incremental columns
-                if (!$this->isColumnAutoIncremental($table, $uniqueColumns)) {
-                    $attributesCount = count($uniqueColumns);
-
-                    if ($attributesCount === 1) {
-                        $rules[] = "[['" . $uniqueColumns[0] . "'], 'unique']";
-                    } elseif ($attributesCount > 1) {
-                        $columnsList = implode("', '", $uniqueColumns);
-                        $rules[] = "[['$columnsList'], 'unique', 'targetAttribute' => ['$columnsList']]";
+        if ($db !== null) {
+            // Unique indexes rules
+            try {
+                $uniqueIndexes = array_merge($db->getSchema()->findUniqueIndexes($table), (array)$table->primaryKey);
+                $uniqueIndexes = array_unique($uniqueIndexes, SORT_REGULAR);
+                foreach ($uniqueIndexes as $uniqueColumns) {
+                    // Avoid validating auto incremental columns
+                    if (!$this->isColumnAutoIncremental($table, $uniqueColumns)) {
+                        $attributesCount = count($uniqueColumns);
+                        if ($attributesCount === 1) {
+                            $rules[] = "[['" . $uniqueColumns[0] . "'], 'unique']";
+                        } elseif ($attributesCount > 1) {
+                            $columnsList = implode("', '", $uniqueColumns);
+                            $rules[] = "[['$columnsList'], 'unique', 'targetAttribute' => ['$columnsList']]";
+                        }
                     }
                 }
+            } catch (NotSupportedException $e) {
+                // doesn't support unique indexes information...do nothing
             }
-        } catch (NotSupportedException $e) {
-            // doesn't support unique indexes information...do nothing
         }
 
         // Exist rules for foreign keys
@@ -906,7 +934,7 @@ class Generator extends \yii\gii\Generator
         if ($this->isReservedKeyword($this->modelClass)) {
             $this->addError('modelClass', 'Class name cannot be a reserved PHP keyword.');
         }
-        if ((empty($this->tableName) || substr_compare($this->tableName, '*', -1, 1)) && $this->modelClass == '') {
+        if ($this->modelClass == '' && (empty($this->tableName) || substr_compare($this->tableName, '*', -1, 1))) {
             $this->addError('modelClass', 'Model Class cannot be blank if table name does not end with asterisk.');
         }
     }
@@ -935,9 +963,6 @@ class Generator extends \yii\gii\Generator
         }
     }
 
-    protected $tableNames;
-    protected $classNames;
-
     /**
      * @return array the table names that match the pattern specified by [[tableName]].
      */
@@ -948,7 +973,7 @@ class Generator extends \yii\gii\Generator
         }
         $db = $this->getDbConnection();
         if ($db === null) {
-            return [];
+            return $this->tableNames = [];
         }
         $tableNames = [];
         if (strpos($this->tableName, '*') !== false) {
@@ -975,29 +1000,24 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Generates the table name by considering table prefix.
-     * If [[useTablePrefix]] is false, the table name will be returned without change.
+     *
      * @param string $tableName the table name (which may contain schema prefix)
      * @return string the generated table name
      */
     public function generateTableName($tableName)
     {
-        if (!$this->useTablePrefix) {
-            return $tableName;
+        $db = $this->getDbConnection();
+        if ($this->useTablePrefix && $db !== null) {
+            $tableName = preg_replace("/(^{$db->tablePrefix}|{$db->tablePrefix}$)/", '%', $tableName);
         }
 
-        $db = $this->getDbConnection();
-        if (preg_match("/^{$db->tablePrefix}(.*?)$/", $tableName, $matches)) {
-            $tableName = '{{%' . $matches[1] . '}}';
-        } elseif (preg_match("/^(.*?){$db->tablePrefix}$/", $tableName, $matches)) {
-            $tableName = '{{' . $matches[1] . '%}}';
-        }
-        return $tableName;
+        return '{{' . $tableName . '}}';
     }
 
     /**
      * Generates a class name from the specified table name.
      * @param string $tableName the table name (which may contain schema prefix)
-     * @param bool $useSchemaName should schema name be included in the class name, if present
+     * @param bool|null $useSchemaName should schema name be included in the class name, if present
      * @return string the generated class name
      */
     protected function generateClassName($tableName, $useSchemaName = null)
@@ -1009,19 +1029,22 @@ class Generator extends \yii\gii\Generator
         $schemaName = '';
         $fullTableName = $tableName;
         if (($pos = strrpos($tableName, '.')) !== false) {
-            if (($useSchemaName === null && $this->useSchemaName) || $useSchemaName) {
+            if ($useSchemaName || ($useSchemaName === null && $this->useSchemaName)) {
                 $schemaName = substr($tableName, 0, $pos) . '_';
             }
             $tableName = substr($tableName, $pos + 1);
         }
 
-        $db = $this->getDbConnection();
         $patterns = [];
-        $patterns[] = "/^{$db->tablePrefix}(.*?)$/";
-        $patterns[] = "/^(.*?){$db->tablePrefix}$/";
+        $db = $this->getDbConnection();
+        if ($db !== null) {
+            $patterns[] = "/^{$db->tablePrefix}(.+)$/";
+            $patterns[] = "/^(.+){$db->tablePrefix}$/";
+        }
         if (strpos($this->tableName, '*') !== false) {
             $pattern = $this->tableName;
-            if (($pos = strrpos($pattern, '.')) !== false) {
+            $pos = strrpos($pattern, '.');
+            if ($pos !== false) {
                 $pattern = substr($pattern, $pos + 1);
             }
             $patterns[] = '/^' . str_replace('*', '(\w+)', $pattern) . '$/';
@@ -1035,8 +1058,8 @@ class Generator extends \yii\gii\Generator
         }
 
         if ($this->standardizeCapitals) {
-            $schemaName = ctype_upper(preg_replace('/[_-]/', '', $schemaName)) ? strtolower($schemaName) : $schemaName;
-            $className = ctype_upper(preg_replace('/[_-]/', '', $className)) ? strtolower($className) : $className;
+            $schemaName = preg_match('/^[-_A-Z\d]+$/', $schemaName) === 1 ? strtolower($schemaName) : $schemaName;
+            $className = preg_match('/^[-_A-Z\d]+$/', $className) === 1 ? strtolower($className) : $className;
             $this->classNames[$fullTableName] = Inflector::camelize(Inflector::camel2words($schemaName.$className));
         } else {
             $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
@@ -1084,14 +1107,12 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return string|null driver name of db connection.
-     * In case [[db]] is not instance of \yii\db\Connection null will be returned.
+     * @return string driver name of [[db]] connection.
      * @since 2.0.6
      */
     protected function getDbDriverName()
     {
-        $db = $this->getDbConnection();
-        return $db instanceof Connection ? $db->driverName : null;
+        return $this->getDbConnection()->driverName;
     }
 
     /**
