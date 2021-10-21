@@ -42,12 +42,10 @@ class Generator extends \yii\gii\Generator
     public $tableName;
     /**
      * @var string
-     * @psalm-var class-string
      */
     public $modelClass;
     /**
      * @var string
-     * @psalm-var class-string
      */
     public $baseClass = 'yii\db\ActiveRecord';
     public $generateRelations = self::RELATIONS_ALL;
@@ -62,12 +60,10 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     /**
      * @var string
-     * @psalm-var class-string
      */
     public $queryClass;
     /**
      * @var string
-     * @psalm-var class-string
      */
     public $queryBaseClass = 'yii\db\ActiveQuery';
 
@@ -77,7 +73,6 @@ class Generator extends \yii\gii\Generator
     protected $tableNames;
     /**
      * @var string[]
-     * @psalm-var class-string[]
      */
     protected $classNames = [];
 
@@ -108,7 +103,7 @@ class Generator extends \yii\gii\Generator
                 ['ns', 'queryNs', 'baseClass', 'queryBaseClass'],
                 'filter',
                 'filter' => static function ($value) {
-                    return empty($value) ? null : trim($value, ' \\');
+                    return $value === null ? null : trim($value, ' \\');
                 }
             ],
             [['db', 'ns', 'tableName', 'baseClass', 'queryNs', 'queryBaseClass'], 'required'],
