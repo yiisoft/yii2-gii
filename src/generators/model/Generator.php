@@ -793,7 +793,7 @@ class Generator extends \yii\gii\Generator
      */
     protected function generateRelationLink($refs)
     {
-        return preg_replace(['/\s+/', '/\n/'], [' ', ''], \yii\helpers\VarDumper::export($refs));
+        return preg_replace(['/\n/', '/\s+/'], ['', ' '], \yii\helpers\VarDumper::export($refs));
     }
 
     /**
