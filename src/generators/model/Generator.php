@@ -1106,7 +1106,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Returns the database connection as specified by [[db]].
-     * @return Connection
+     * @return Connection database connection instance
      */
     protected function getDbConnection()
     {
@@ -1115,7 +1115,8 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Returns the driver name of [[db]] connection.
-     * @return string
+     *
+     * @return string driver name of db connection.
      * @since 2.0.6
      */
     protected function getDbDriverName()
