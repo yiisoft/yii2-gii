@@ -98,9 +98,9 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['db', 'tableName', 'modelClass', 'queryClass'], 'filter', 'filter' => 'trim'],
+            [['db', 'tableName', 'modelClass', 'baseClass', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
             [
-                ['ns', 'queryNs', 'baseClass', 'queryBaseClass'],
+                ['ns', 'queryNs'],
                 'filter',
                 'filter' => static function ($value) {
                     return $value === null ? null : trim($value, ' \\');
