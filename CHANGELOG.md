@@ -5,7 +5,6 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Bug #467: Fix view `generators/crud/default/controller` (WinterSilence, cjrf)
-- Enh #474: Normalize comments in `yii\gii\Generator` (WinterSilence)
 - Bug #476: Fix stucking datalist options in form generator (WinterSilence)
 
 
