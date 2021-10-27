@@ -257,7 +257,7 @@ class Generator extends \yii\gii\Generator
      *
      * @return string
      * @since 2.0.5
-     * @see [[getDbConnection()]]
+     * @see [[getDbConnection]]
      */
     public function getTablePrefix()
     {
