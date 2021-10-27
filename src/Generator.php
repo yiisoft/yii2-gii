@@ -23,6 +23,8 @@ use yii\web\View;
  * A generator class typically needs to implement the following methods:
  *
  * - [[getName()]]: returns the name of the generator
+ * - [[getDescription()]]: returns the detailed description of the generator
+ * - [[requiredTemplates()]] returns the required template files
  * - [[generate()]]: generates the code based on the current user input and the specified code template files.
  *   This is the place where main code generation code resides.
  *
