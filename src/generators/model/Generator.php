@@ -54,7 +54,7 @@ class Generator extends \yii\gii\Generator
 
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getName()
     {
@@ -62,7 +62,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getDescription()
     {
@@ -70,14 +70,13 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
         return array_merge(parent::rules(), [
             [['db', 'ns', 'tableName', 'modelClass', 'baseClass', 'queryNs', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
             [['ns', 'queryNs'], 'filter', 'filter' => function ($value) { return trim($value, '\\'); }],
-
             [['db', 'ns', 'tableName', 'baseClass', 'queryNs', 'queryBaseClass'], 'required'],
             [['db', 'modelClass', 'queryClass'], 'match', 'pattern' => '/^\w+$/', 'message' => 'Only word characters are allowed.'],
             [['ns', 'baseClass', 'queryNs', 'queryBaseClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
@@ -171,7 +170,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function autoCompleteData()
     {
@@ -188,12 +187,11 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function requiredTemplates()
     {
-        // @todo make 'query.php' to be required before 2.1 release
-        return ['model.php'/*, 'query.php'*/];
+        return ['model.php'];
     }
 
     /**
@@ -201,7 +199,21 @@ class Generator extends \yii\gii\Generator
      */
     public function stickyAttributes()
     {
-        return array_merge(parent::stickyAttributes(), ['ns', 'db', 'baseClass', 'generateRelations', 'generateJunctionRelationMode', 'generateLabelsFromComments', 'queryNs', 'queryBaseClass', 'useTablePrefix', 'generateQuery']);
+        return array_merge(
+            parent::stickyAttributes(), 
+            [
+                'ns',
+                'db',
+                'baseClass',
+                'generateRelations',
+                'generateJunctionRelationMode',
+                'generateLabelsFromComments',
+                'queryNs',
+                'queryBaseClass',
+                'useTablePrefix',
+                'generateQuery',
+            ]
+        );
     }
 
     /**
@@ -214,15 +226,12 @@ class Generator extends \yii\gii\Generator
     public function getTablePrefix()
     {
         $db = $this->getDbConnection();
-        if ($db !== null) {
-            return $db->tablePrefix;
-        }
 
-        return '';
+        return $db === null ? '' : $db->tablePrefix;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function generate()
     {
@@ -1065,7 +1074,9 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return Connection the DB connection as specified by [[db]].
+     * Returns the database connection as specified by [[db]].
+     *
+     * @return Connection|object|null
      */
     protected function getDbConnection()
     {
@@ -1074,20 +1085,19 @@ class Generator extends \yii\gii\Generator
 
     /**
      * @return string|null driver name of db connection.
-     * In case db is not instance of \yii\db\Connection null will be returned.
+     * In case [[db]] is not instance of \yii\db\Connection null will be returned.
      * @since 2.0.6
      */
     protected function getDbDriverName()
     {
-        /** @var Connection $db */
         $db = $this->getDbConnection();
-        return $db instanceof \yii\db\Connection ? $db->driverName : null;
+        return $db instanceof Connection ? $db->driverName : null;
     }
 
     /**
      * Checks if any of the specified columns is auto incremental.
      * @param \yii\db\TableSchema $table the table schema
-     * @param array $columns columns to check for autoIncrement property
+     * @param string[] $columns columns to check for autoIncrement property
      * @return bool whether any of the specified columns is auto incremental.
      */
     protected function isColumnAutoIncremental($table, $columns)
