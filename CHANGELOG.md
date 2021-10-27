@@ -5,6 +5,7 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Bug #467: Fix view `generators/crud/default/controller` (WinterSilence, cjrf)
+- Enh #479: Minor code cleanup of model generator (WinterSilence)
 
 
 2.2.3 August 09, 2021
