@@ -43,6 +43,11 @@ class Generator extends \yii\gii\Generator
     public $generateJunctionRelationMode = self::JUNCTION_RELATION_VIA_TABLE;
     public $generateRelationsFromCurrentSchema = true;
     public $generateLabelsFromComments = false;
+    /**
+     * @var callable|null the callback returning extended list of rules, syntax: `function (TableSchema $table, array $rules): array`
+     * @see [[generateRules]]
+     */
+    public $generateCustomRules;
     public $useTablePrefix = false;
     public $standardizeCapitals = false;
     public $singularize = false;
@@ -51,7 +56,6 @@ class Generator extends \yii\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
-
 
     /**
      * @inheritdoc
@@ -478,6 +482,11 @@ class Generator extends \yii\gii\Generator
             }
             $targetAttributes = implode(', ', $targetAttributes);
             $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
+        }
+
+        if ($this->generateCustomRules !== null) {
+            // adds custom rules
+            $rules = call_user_func($this->generateCustomRules, $table, $rules);
         }
 
         return $rules;
