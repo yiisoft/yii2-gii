@@ -257,11 +257,13 @@ class Generator extends \yii\gii\Generator
      *
      * @return string
      * @since 2.0.5
-     * @see getDbConnection
+     * @see [[getDbConnection()]]
      */
     public function getTablePrefix()
     {
-        return $this->getDbConnection()->tablePrefix;
+        $db = $this->getDbConnection();
+
+        return $db === null ? '' : $db->tablePrefix;
     }
 
     /**
@@ -1106,7 +1108,8 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Returns the database connection as specified by [[db]].
-     * @return Connection database connection instance
+     *
+     * @return Connection|null database connection instance
      */
     protected function getDbConnection()
     {
@@ -1116,12 +1119,14 @@ class Generator extends \yii\gii\Generator
     /**
      * Returns the driver name of [[db]] connection.
      *
-     * @return string driver name of db connection.
+     * @return string|null driver name of db connection.
      * @since 2.0.6
      */
     protected function getDbDriverName()
     {
-        return $this->getDbConnection()->driverName;
+        $db = $this->getDbConnection();
+
+        return $db instanceof Connection ? $db->driverName : null;
     }
 
     /**
