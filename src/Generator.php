@@ -498,7 +498,7 @@ abstract class Generator extends Model
     }
 
     /**
-     * Generates a string depending on `$enableI18N` property
+     * Generates a string depending on the `$enableI18N` property
      *
      * @param string $string the text be generated
      * @param array $placeholders the placeholders to use by `Yii::t()`
