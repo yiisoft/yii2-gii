@@ -116,7 +116,7 @@ class DefaultController extends Controller
     public function actionAction($id, $name)
     {
         $generator = $this->loadGenerator($id);
-        $method = 'action' . $name;
+        $method = 'action' . ucfirst($name);
         if (method_exists($generator, $method)) {
             return $generator->$method();
         }
