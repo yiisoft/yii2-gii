@@ -1,4 +1,4 @@
-yii.gii = (function ($) {
+yii.gii = (function ($, Alert, Button, Carousel, Collapse, Dropdown, Modal, Popover, ScrollSpy, Tab, Toast, Tooltip) {
 
     var $clipboardContainer = $("#clipboard-container"),
     valueToCopy = '',
@@ -294,4 +294,4 @@ yii.gii = (function ($) {
             });
         }
     };
-})(jQuery);
+})(jQuery, BSN.Alert, BSN.Button, BSN.Carousel, BSN.Collapse, BSN.Dropdown, BSN.Modal, BSN.Popover, BSN.ScrollSpy, BSN.Tab, BSN.Toast, BSN.Tooltip);
