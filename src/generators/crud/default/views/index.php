@@ -64,7 +64,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 ?>
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => static function ($action, <?= $modelClass ?> $model, $key, $index, $column) {
+                'urlCreator' => function ($action, <?= $modelClass ?> $model, $key, $index, $column) {
                     return Url::toRoute([$action, <?= $generator->generateUrlParams() ?>]);
                  }
             ],
@@ -74,7 +74,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     <?= "<?= " ?>ListView::widget([
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
-        'itemView' => static function (<?= $modelClass ?> $model, $key, $index, $widget) {
+        'itemView' => function ($model, $key, $index, $widget) {
             return Html::a(Html::encode($model-><?= $generator->getNameAttribute() ?>), ['view', <?= $generator->generateUrlParams() ?>]);
         },
     ]) ?>
