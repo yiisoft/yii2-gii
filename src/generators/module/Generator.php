@@ -88,7 +88,7 @@ class Generator extends \yii\gii\Generator
                 'moduleID' => 'This refers to the ID of the module, e.g., <code>admin</code>.',
                 'moduleClass' => 'This is the fully qualified class name of the module, e.g., <code>app\modules\admin\Module</code>.',
             ]
-        ];
+        );
     }
 
     /**
