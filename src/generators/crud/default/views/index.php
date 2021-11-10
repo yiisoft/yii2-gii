@@ -10,6 +10,8 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\grid\ActionColumn;
 use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? 'use yii\widgets\Pjax;' : '' ?>
 
@@ -60,15 +62,19 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     }
 }
 ?>
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => ActionColumn::className(),
+                'urlCreator' => static function ($action, <?= $modelClass ?> $model, $key, $index, $column) {
+                    return Url::toRoute([$action, <?= $generator->generateUrlParams() ?>]);
+                 }
+            ],
         ],
     ]); ?>
 <?php else: ?>
     <?= "<?= " ?>ListView::widget([
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
+        'itemView' => static function (<?= $modelClass ?> $model, $key, $index, $widget) {
             return Html::a(Html::encode($model-><?= $generator->getNameAttribute() ?>), ['view', <?= $generator->generateUrlParams() ?>]);
         },
     ]) ?>
