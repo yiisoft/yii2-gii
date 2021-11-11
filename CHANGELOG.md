@@ -7,6 +7,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #467: Fix view `generators/crud/default/controller` (WinterSilence, cjrf)
 - Bug #476: Fix stucking datalist options in form generator (WinterSilence)
 - Bug #486: Update `assets/js/bs4-native.min.js` to latest version (WinterSilence)
+- Bug #488: Fix `ActionColumn::$urlCreator` in index template of CRUD generator (WinterSilence)
 
 
 2.2.3 August 09, 2021
