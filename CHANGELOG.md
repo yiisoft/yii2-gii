@@ -6,6 +6,7 @@ Yii Framework 2 gii extension Change Log
 
 - Bug #467: Fix view `generators/crud/default/controller` (WinterSilence, cjrf)
 - Bug #476: Fix stucking datalist options in form generator (WinterSilence)
+- Bug #484: Add parent's labels and hints, fix rule for attribute `moduleClass` in module generator (WinterSilence)
 
 
 2.2.3 August 09, 2021
