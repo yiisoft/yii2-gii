@@ -213,15 +213,7 @@ abstract class Generator extends Model
             [['template'], 'required', 'message' => 'A code template must be selected.'],
             [['template'], 'validateTemplate'],
             [['enableI18N'], 'boolean'],
-            [
-                ['messageCategory'],
-                'match',
-                'pattern' => '/^[-\w\/]+$/',
-                'message' => 'Only word characters, slashes and dashes are allowed.',
-                'when' => static function ($generator) {
-                    return $generator->enableI18N;
-                }
-            ],
+            [['messageCategory'], 'string'],
         ];
     }
 
