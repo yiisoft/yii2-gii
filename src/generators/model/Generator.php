@@ -50,6 +50,7 @@ class Generator extends \yii\gii\Generator
     public $baseClass = 'yii\db\ActiveRecord';
     public $generateRelations = self::RELATIONS_ALL;
     public $generateJunctionRelationMode = self::JUNCTION_RELATION_VIA_TABLE;
+    public $useClassNameResolutionConstant = false;
     public $generateRelationsFromCurrentSchema = true;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
@@ -119,7 +120,7 @@ class Generator extends \yii\gii\Generator
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
             [['generateJunctionRelationMode'], 'in', 'range' => [self::JUNCTION_RELATION_VIA_TABLE, self::JUNCTION_RELATION_VIA_MODEL]],
             [
-                ['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema', 'enableI18N', 'standardizeCapitals', 'singularize'],
+                ['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema', 'useClassNameResolutionConstant', 'enableI18N', 'standardizeCapitals', 'singularize'],
                 'boolean'
             ],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
@@ -142,6 +143,7 @@ class Generator extends \yii\gii\Generator
             'generateRelations' => 'Generate Relations',
             'generateJunctionRelationMode' => 'Generate Junction Relations As',
             'generateRelationsFromCurrentSchema' => 'Generate Relations from Current Schema',
+            'useClassNameResolutionConstant' => 'Use `::class` instead of `::className()`',
             'generateLabelsFromComments' => 'Generate Labels from DB Comments',
             'generateQuery' => 'Generate ActiveQuery',
             'queryNs' => 'ActiveQuery Namespace',
@@ -183,6 +185,7 @@ class Generator extends \yii\gii\Generator
                 Make sure you also generate the junction models when using the "Via Model" option.
             ',
             'generateRelationsFromCurrentSchema' => 'This indicates whether the generator should generate relations from current schema or from all available schemas.',
+            'useClassNameResolutionConstant' => 'Use the `::class` constant instead of the `::className()` method.',
             'generateLabelsFromComments' => 'This indicates whether the generator should generate attribute labels
                 by using the comments of the corresponding DB columns.',
             'useTablePrefix' => 'This indicates whether the table name returned by the generated ActiveRecord class
@@ -497,6 +500,8 @@ class Generator extends \yii\gii\Generator
             // doesn't support unique indexes information...do nothing
         }
 
+        $classNameMethod = $this->getClassNameMethod();
+
         // Exist rules for foreign keys
         foreach ($table->foreignKeys as $refs) {
             $refTable = $refs[0];
@@ -513,7 +518,7 @@ class Generator extends \yii\gii\Generator
                 $targetAttributes[] = "'$key' => '$value'";
             }
             $targetAttributes = implode(', ', $targetAttributes);
-            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::className(), 'targetAttribute' => [$targetAttributes]]";
+            $rules[] = "[['$attributes'], 'exist', 'skipOnError' => true, 'targetClass' => $refClassName::$classNameMethod, 'targetAttribute' => [$targetAttributes]]";
         }
 
         return $rules;
@@ -529,6 +534,8 @@ class Generator extends \yii\gii\Generator
     private function generateManyManyRelations($table, $fks, $relations)
     {
         $db = $this->getDbConnection();
+
+        $classNameMethod = $this->getClassNameMethod();
 
         foreach ($fks as $pair) {
             list($firstKey, $secondKey) = $pair;
@@ -549,7 +556,7 @@ class Generator extends \yii\gii\Generator
             $relationName = $this->generateRelationName($relations, $table0Schema, key($secondKey[0]), true);
             if ($this->generateJunctionRelationMode === self::JUNCTION_RELATION_VIA_TABLE) {
                 $relations[$table0Schema->fullName][$relationName] = [
-                    "return \$this->hasMany($className1::className(), $link)->viaTable('"
+                    "return \$this->hasMany($className1::$classNameMethod, $link)->viaTable('"
                     . $this->generateTableName($table->name) . "', " . $this->generateRelationLink($firstKey[0]) . ');',
                     $className1,
                     true,
@@ -566,7 +573,7 @@ class Generator extends \yii\gii\Generator
                     throw new Exception('Foreign key for junction table not found.');
                 }
                 $relations[$table0Schema->fullName][$relationName] = [
-                    "return \$this->hasMany($className1::className(), $link)->via('"
+                    "return \$this->hasMany($className1::$classNameMethod, $link)->via('"
                     . lcfirst($foreignRelationName) . "');",
                     $className1,
                     true,
@@ -577,7 +584,7 @@ class Generator extends \yii\gii\Generator
             $relationName = $this->generateRelationName($relations, $table1Schema, key($firstKey[0]), true);
             if ($this->generateJunctionRelationMode === self::JUNCTION_RELATION_VIA_TABLE) {
                 $relations[$table1Schema->fullName][$relationName] = [
-                    "return \$this->hasMany($className0::className(), $link)->viaTable('"
+                    "return \$this->hasMany($className0::$classNameMethod, $link)->viaTable('"
                     . $this->generateTableName($table->name) . "', " . $this->generateRelationLink($secondKey[0]) . ');',
                     $className0,
                     true,
@@ -594,7 +601,7 @@ class Generator extends \yii\gii\Generator
                     throw new Exception('Foreign key for junction table not found.');
                 }
                 $relations[$table1Schema->fullName][$relationName] = [
-                    "return \$this->hasMany($className0::className(), $link)->via('"
+                    "return \$this->hasMany($className0::$classNameMethod, $link)->via('"
                     . lcfirst($foreignRelationName) . "');",
                     $className0,
                     true,
@@ -653,6 +660,7 @@ class Generator extends \yii\gii\Generator
         $db = $this->getDbConnection();
         $relations = [];
         $schemaNames = $this->getSchemaNames();
+        $classNameMethod = $this->getClassNameMethod();
         foreach ($schemaNames as $schemaName) {
             foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
                 $className = $this->generateClassName($table->fullName);
@@ -671,7 +679,7 @@ class Generator extends \yii\gii\Generator
                     $link = $this->generateRelationLink(array_flip($refs));
                     $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
                     $relations[$table->fullName][$relationName] = [
-                        "return \$this->hasOne($refClassName::className(), $link);",
+                        "return \$this->hasOne($refClassName::$classNameMethod, $link);",
                         $refClassName,
                         false,
                         $table->fullName . '.' . $foreignKey
@@ -682,7 +690,7 @@ class Generator extends \yii\gii\Generator
                     $link = $this->generateRelationLink($refs);
                     $relationName = $this->generateRelationName($relations, $refTableSchema, $className, $hasMany);
                     $relations[$refTableSchema->fullName][$relationName] = [
-                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($className::className(), $link);",
+                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($className::$classNameMethod, $link);",
                         $className,
                         $hasMany,
                         $table->fullName . '.' . $foreignKey
@@ -870,9 +878,9 @@ class Generator extends \yii\gii\Generator
                 $baseClassWrapper =
                     'namespace ' . __NAMESPACE__ . ';'.
                     'class GiiBaseClassWrapper extends \\' . $baseClass . ' {' .
-                        'public static function tableName(){' .
-                            'return "' . addslashes($table->fullName) . '";' .
-                        '}' .
+                    'public static function tableName(){' .
+                    'return "' . addslashes($table->fullName) . '";' .
+                    '}' .
                     '};' .
                     'return new GiiBaseClassWrapper();';
                 $baseModel = eval($baseClassWrapper);
@@ -1144,5 +1152,20 @@ class Generator extends \yii\gii\Generator
         }
 
         return false;
+    }
+
+    /**
+     * Returns the method for class name resolution
+     * @return string
+     * @see $useClassNameResolutionConstant
+     * @since 2.2.4
+     */
+    protected function getClassNameMethod()
+    {
+        if ($this->useClassNameResolutionConstant) {
+            return 'class';
+        }
+
+        return 'className()';
     }
 }
