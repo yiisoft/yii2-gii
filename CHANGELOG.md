@@ -9,6 +9,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #484: Add parent's labels and hints, fix rule for attribute `moduleClass` in module generator (WinterSilence)
 - Bug #486: Update `assets/js/bs4-native.min.js` to latest version (WinterSilence)
 - Bug #488: Fix `ActionColumn::$urlCreator` in index template of CRUD generator (WinterSilence)
+- Ehn #489: Added support for the `::class` constant in model generator via the `useClassNameResolutionConstant` setting (rhertogh)
 
 
 2.2.3 August 09, 2021
