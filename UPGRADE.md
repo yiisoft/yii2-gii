@@ -8,6 +8,7 @@ Upgrade to 2.2.4
 ----------------
 
 * Update related tag (value or inner HTML) on field change by AJAX request.
+
   Add action method to `model` generator: 
   ```php
   public function actionGenerateQueryClass()
