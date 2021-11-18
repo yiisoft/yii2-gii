@@ -201,7 +201,7 @@ abstract class Generator extends Model
      * Child classes should override this method like the following so that the parent
      * rules are included:
      *
-     * ~~~
+     * ~~~php
      * return array_merge(parent::rules(), [
      *     ...rules for the child class...
      * ]);
@@ -212,6 +212,8 @@ abstract class Generator extends Model
         return [
             [['template'], 'required', 'message' => 'A code template must be selected.'],
             [['template'], 'validateTemplate'],
+            [['enableI18N'], 'boolean'],
+            [['messageCategory'], 'string'],
         ];
     }
 
