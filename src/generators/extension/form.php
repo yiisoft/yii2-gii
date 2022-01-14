@@ -1,7 +1,7 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $form yii\widgets\ActiveForm */
-/* @var $generator yii\gii\generators\extension\Generator */
+/** @var yii\web\View $this */
+/** @var yii\widgets\ActiveForm $form */
+/** @var yii\gii\generators\extension\Generator $generator */
 
 ?>
 <div class="alert alert-info">
