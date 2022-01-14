@@ -6,8 +6,8 @@
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\controller\Generator */
+/** @var yii\web\View $this */
+/** @var yii\gii\generators\controller\Generator $generator */
 
 echo "<?php\n";
 ?>
