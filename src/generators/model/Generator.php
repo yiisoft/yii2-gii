@@ -76,6 +76,7 @@ class Generator extends \yii\gii\Generator
      */
     protected $classNames = [];
 
+
     /**
      * @inheritdoc
      */

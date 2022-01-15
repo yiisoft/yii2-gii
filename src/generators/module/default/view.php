@@ -1,6 +1,6 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\module\Generator */
+/** @var yii\web\View $this */
+/** @var yii\gii\generators\module\Generator $generator */
 ?>
 <div class="<?= $generator->moduleID . '-default-index' ?>">
     <h1><?= "<?= " ?>$this->context->action->uniqueId ?></h1>
