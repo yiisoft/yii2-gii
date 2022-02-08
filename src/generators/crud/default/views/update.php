@@ -7,7 +7,8 @@ use yii\helpers\StringHelper;
 /** @var yii\gii\generators\crud\Generator $generator */
 
 $urlParams = $generator->generateUrlParams();
-$modelClassName = Inflector::camel2words(StringHelper::basename($generator->modelClass));
+$modelClass = StringHelper::basename($generator->modelClass);
+$modelClassName = Inflector::camel2words($modelClass);
 $nameAttributeTemplate = '$model->' . $generator->getNameAttribute();
 $titleTemplate = $generator->generateString('Update ' . $modelClassName . ': {name}', ['name' => '{nameAttribute}']);
 if ($generator->enableI18N) {
@@ -25,11 +26,11 @@ use yii\helpers\Html;
 /** @var <?= ltrim($generator->modelClass, '\\') ?> $model */
 
 $this->title = <?= $title ?>;
-$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words($modelClass))) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
 $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 ?>
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
+<div class="<?= Inflector::camel2id($modelClass) ?>-update">
 
     <h1><?= '<?= ' ?>Html::encode($this->title) ?></h1>
 
