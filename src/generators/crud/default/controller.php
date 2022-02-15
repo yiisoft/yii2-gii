@@ -9,6 +9,8 @@
 use yii\db\ActiveRecordInterface;
 use yii\helpers\StringHelper;
 
+/** @var yii\web\View $this */
+/** @var yii\gii\generators\crud\Generator $generator */
 $controllerClass = StringHelper::basename($generator->controllerClass);
 $modelClass = StringHelper::basename($generator->modelClass);
 if ($generator->searchModelClass !== '') {
@@ -72,6 +74,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
     /**
      * Lists all <?= $modelClass ?> models.
+     *
      * @return string
      */
     public function actionIndex()<?= ($isPhp7 ? ': string' : '') . "\n" ?>
@@ -126,6 +129,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * Creates a new <?= $modelClass ?> model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return Response|string
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
@@ -147,6 +151,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * If update is successful, the browser will be redirected to the 'view' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return Response|string
+     * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate(<?= $actionParams ?>)
@@ -165,6 +170,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return Response
+     * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete(<?= $actionParams ?>)<?= ($isPhp7 ? ': Response' : '') . "\n" ?>

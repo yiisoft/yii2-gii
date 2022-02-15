@@ -3,8 +3,8 @@
  * This is the template for generating an action view file.
  */
 
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\form\Generator */
+/** @var yii\web\View $this */
+/** @var yii\gii\generators\form\Generator $generator */
 
 $class = str_replace('/', '-', trim($generator->viewName, '_'));
 
@@ -14,9 +14,9 @@ echo "<?php\n";
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-/* @var $form ActiveForm */
+/** @var yii\web\View $this */
+/** @var <?= ltrim($generator->modelClass, '\\') ?> $model */
+/** @var ActiveForm $form */
 <?= "?>" ?>
 
 <div class="<?= $class ?>">
