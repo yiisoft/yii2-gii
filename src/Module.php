@@ -81,7 +81,8 @@ class Module extends \yii\base\Module implements BootstrapInterface
      * Defaults to 0777, meaning the directory can be read, written and executed by all users.
      */
     public $newDirMode = 0777;
-
+    
+    public $removeBundles=true
 
     /**
      * {@inheritdoc}
@@ -134,7 +135,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
      */
     protected function resetGlobalSettings()
     {
-        if (Yii::$app instanceof \yii\web\Application) {
+        if (Yii::$app instanceof \yii\web\Application && $this->removeBundles) {
             Yii::$app->assetManager->bundles = [];
         }
     }
