@@ -11,6 +11,7 @@ $modelClass = StringHelper::basename($generator->modelClass);
 echo "<?php\n";
 ?>
 
+use <?= $generator->modelClass ?>;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
