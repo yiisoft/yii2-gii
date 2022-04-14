@@ -66,4 +66,4 @@ echo $form->field($generator, 'modelClass')->textInput([
     ]
 ]);
 echo $field;
-~~~
+```
