@@ -45,4 +45,25 @@ class Generator extends \yii\gii\Generator
 }
 ```
 
-Open Gii Module and you will see a new generator appears in it.
+Open Gii module and you will see a new generator appears in it.
+
+## AJAX actions
+
+Add action method to `model` generator: 
+```php
+public function actionGenerateQueryClass()
+{
+    return $this->modelClass . 'Query';
+}
+```
+and update form view:
+```php
+$field = $form->field($generator, 'queryClass')->textInput();
+echo $form->field($generator, 'modelClass')->textInput([
+    'data' => [
+        'ajax-target' => '#' . $field->inputId,
+        'ajax-action' => yii\helpers\Url::to(['default/action', 'id' => 'model', 'name' => 'GenerateQueryClass'])
+    ]
+]);
+echo $field;
+~~~
