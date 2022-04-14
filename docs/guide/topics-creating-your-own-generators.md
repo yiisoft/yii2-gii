@@ -60,6 +60,7 @@ and update form view:
 ```php
 $field = $form->field($generator, 'queryClass')->textInput();
 echo $form->field($generator, 'modelClass')->textInput([
+    // specify attributes to update `input[name="queryClass"]` by AJAX request
     'data' => [
         'ajax-target' => '#' . $field->inputId,
         'ajax-action' => yii\helpers\Url::to(['default/action', 'id' => 'model', 'name' => 'GenerateQueryClass'])
