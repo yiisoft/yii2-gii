@@ -4,30 +4,6 @@ Upgrading Instructions
 This file contains the upgrade notes. These notes highlight changes that could break your
 application when you upgrade the package from one version to another.
 
-Upgrade to 2.2.4
-----------------
-
-* Update related tag (value or inner HTML) on field change by AJAX request.
-
-  Add action method to `model` generator: 
-  ```php
-  public function actionGenerateQueryClass()
-  {
-     return $this->modelClass . 'Query';
-  }
-  ```
-  And update form view:
-  ```php
-  $field = $form->field($generator, 'queryClass')->textInput();
-  echo $form->field($generator, 'modelClass')->textInput([
-        'data' => [
-            'ajax-target' => '#' . $field->inputId,
-            'ajax-action' => yii\helpers\Url::to(['default/action', 'id' => 'model', 'name' => 'GenerateQueryClass'])
-        ]
-    ]);
-    echo $field;
-  ```
-
 Upgrade to 2.2.0
 ----------------
 
