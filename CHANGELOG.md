@@ -15,7 +15,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #484: Add parent's labels and hints, fix rule for attribute `moduleClass` in module generator (WinterSilence)
 - Bug #486: Update `assets/js/bs4-native.min.js` to latest version (WinterSilence)
 - Bug #488: Fix `ActionColumn::$urlCreator` in index template of CRUD generator (WinterSilence)
-- Enh #490: Add related field update on field change by AJAX request in `gii.js` (WinterSilence)
+- Enh #490: Add related tag update inner HTML on field change by AJAX request in `gii.js` (WinterSilence)
 - Enh #485: Add validation rules for `enableI18N` and `messageCategory` to Generator (WinterSilence)
 
 
