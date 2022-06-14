@@ -14,7 +14,7 @@ class ModelGeneratorTest extends GiiTestCase
     {
         $generator = new ModelGenerator();
         $this->assertEquals(
-            PHP_MAJOR_VERSION > 5  || (PHP_MAJOR_VERSION === 5 && PHP_MINOR_VERSION > 5),
+            PHP_MAJOR_VERSION > 5  || (PHP_MAJOR_VERSION === 5 && PHP_MINOR_VERSION > 4),
             $generator->useClassNameResolutionConstant
         );
 
