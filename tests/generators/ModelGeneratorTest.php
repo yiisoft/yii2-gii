@@ -10,6 +10,25 @@ use yiiunit\gii\GiiTestCase;
  */
 class ModelGeneratorTest extends GiiTestCase
 {
+    public function testDefaultUseClassNameResolutionConstant()
+    {
+        $generator = new ModelGenerator();
+        $this->assertEquals(
+            PHP_MAJOR_VERSION > 5  || (PHP_MAJOR_VERSION === 5 && PHP_MINOR_VERSION > 5),
+            $generator->useClassNameResolutionConstant
+        );
+
+        $generator = new ModelGenerator([
+            'useClassNameResolutionConstant' => false,
+        ]);
+        $this->assertFalse($generator->useClassNameResolutionConstant);
+
+        $generator = new ModelGenerator([
+            'useClassNameResolutionConstant' => true,
+        ]);
+        $this->assertTrue($generator->useClassNameResolutionConstant);
+    }
+
     public function testAll()
     {
         $generator = new ModelGenerator();
