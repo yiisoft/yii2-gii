@@ -108,7 +108,7 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['db', 'tableName', 'modelClass', 'baseClass', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim'],
+            [['db', 'tableName', 'modelClass', 'baseClass', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim', 'skipOnEmpty' => true],
             [
                 ['ns', 'queryNs'],
                 'filter',
@@ -1170,7 +1170,7 @@ class Generator extends \yii\gii\Generator
      * @param string $class
      * @return string
      * @see $useClassNameResolutionConstant
-     * @since 2.2.4
+     * @since 2.2.5
      */
     protected function generateClassNameResolution($class)
     {

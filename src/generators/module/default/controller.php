@@ -3,8 +3,8 @@
  * This is the template for generating a controller class within a module.
  */
 
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\module\Generator */
+/** @var yii\web\View $this */
+/** @var yii\gii\generators\module\Generator $generator */
 
 echo "<?php\n";
 ?>

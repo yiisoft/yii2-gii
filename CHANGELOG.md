@@ -1,7 +1,13 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.2.4 under development
+2.2.5 under development
+-----------------------
+
+- Ehn #489: Added support for the `::class` constant in model generator via the `useClassNameResolutionConstant` setting (rhertogh)
+
+
+2.2.4 December 30, 2021
 -----------------------
 
 - Bug #467: Fix view `generators/crud/default/controller` (WinterSilence, cjrf)
@@ -9,7 +15,7 @@ Yii Framework 2 gii extension Change Log
 - Bug #484: Add parent's labels and hints, fix rule for attribute `moduleClass` in module generator (WinterSilence)
 - Bug #486: Update `assets/js/bs4-native.min.js` to latest version (WinterSilence)
 - Bug #488: Fix `ActionColumn::$urlCreator` in index template of CRUD generator (WinterSilence)
-- Ehn #489: Added support for the `::class` constant in model generator via the `useClassNameResolutionConstant` setting (rhertogh)
+- Enh #485: Add validation rules for `enableI18N` and `messageCategory` to Generator (WinterSilence)
 
 
 2.2.3 August 09, 2021
