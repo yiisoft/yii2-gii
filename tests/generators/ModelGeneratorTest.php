@@ -10,23 +10,23 @@ use yiiunit\gii\GiiTestCase;
  */
 class ModelGeneratorTest extends GiiTestCase
 {
-    public function testDefaultUseClassNameResolutionConstant()
+    public function testDefaultuseClassConstant()
     {
         $generator = new ModelGenerator();
         $this->assertEquals(
             PHP_MAJOR_VERSION > 5  || (PHP_MAJOR_VERSION === 5 && PHP_MINOR_VERSION > 4),
-            $generator->useClassNameResolutionConstant
+            $generator->useClassConstant
         );
 
         $generator = new ModelGenerator([
-            'useClassNameResolutionConstant' => false,
+            'useClassConstant' => false,
         ]);
-        $this->assertFalse($generator->useClassNameResolutionConstant);
+        $this->assertFalse($generator->useClassConstant);
 
         $generator = new ModelGenerator([
-            'useClassNameResolutionConstant' => true,
+            'useClassConstant' => true,
         ]);
-        $this->assertTrue($generator->useClassNameResolutionConstant);
+        $this->assertTrue($generator->useClassConstant);
     }
 
     public function testAll()
@@ -175,7 +175,7 @@ class ModelGeneratorTest extends GiiTestCase
                 ],
             ]],
 
-            // useClassNameResolutionConstant = true
+            // useClassConstant = true
             ['category', 'Category.php', true, [
                 [
                     'name' => 'function getCategoryPhotos()',
@@ -195,15 +195,15 @@ class ModelGeneratorTest extends GiiTestCase
      * @dataProvider relationsProvider
      * @param $tableName string
      * @param $fileName string
-     * @param $classNameResolution bool
+     * @param $useClassConstant bool
      * @param $relations array
      */
-    public function testRelations($tableName, $fileName, $classNameResolution, $relations)
+    public function testRelations($tableName, $fileName, $useClassConstant, $relations)
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->generateRelationsFromCurrentSchema = false;
-        $generator->useClassNameResolutionConstant = $classNameResolution;
+        $generator->useClassConstant = $useClassConstant;
         $generator->tableName = $tableName;
 
         $files = $generator->generate();
@@ -251,7 +251,7 @@ class ModelGeneratorTest extends GiiTestCase
                 "[['id', 'supplier_id'], 'unique', 'targetAttribute' => ['id', 'supplier_id']]",
             ]],
 
-            // useClassNameResolutionConstant = true
+            // useClassConstant = true
             ['product_language', 'ProductLanguage.php', true, [
                 "[['supplier_id', 'id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['supplier_id' => 'supplier_id', 'id' => 'id']],",
                 "[['supplier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::class, 'targetAttribute' => ['supplier_id' => 'id']],",
@@ -267,15 +267,15 @@ class ModelGeneratorTest extends GiiTestCase
      *
      * @param $tableName string
      * @param $fileName string
-     * @param $classNameResolution bool
+     * @param $useClassConstant bool
      * @param $rules array
      */
-    public function testRules($tableName, $fileName, $classNameResolution, $rules)
+    public function testRules($tableName, $fileName, $useClassConstant, $rules)
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->tableName = $tableName;
-        $generator->useClassNameResolutionConstant = $classNameResolution;
+        $generator->useClassConstant = $useClassConstant;
 
         $files = $generator->generate();
         $this->assertEquals(1, count($files));

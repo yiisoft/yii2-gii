@@ -35,7 +35,7 @@ class SchemaTest extends GiiTestCase
     public function relationsProvider()
     {
         return [
-            // useClassNameResolutionConstant = false
+            // useClassConstant = false
             ['default', 'schema1.*', 5, false, [
                 0 => [ // relations from junction1 table
                     "\$this->hasOne(Schema1Table1::className(), ['id' => 'table1_id']);",
@@ -85,7 +85,7 @@ class SchemaTest extends GiiTestCase
                 ],
             ]],
 
-            // useClassNameResolutionConstant = true
+            // useClassConstant = true
             ['default', 'schema1.*', 5, true, [
                 0 => [ // relations from junction1 table
                     "\$this->hasOne(Schema1Table1::class, ['id' => 'table1_id']);",
@@ -140,26 +140,26 @@ class SchemaTest extends GiiTestCase
     /**
      * @dataProvider relationsProvider
      */
-    public function testViaTableRelationsGenerator($template, $tableName, $filesCount, $classNameResolution, $relationSets)
+    public function testViaTableRelationsGenerator($template, $tableName, $filesCount, $useClassConstant, $relationSets)
     {
-        $this->relationsGeneratorTest($template, $tableName, $filesCount, $classNameResolution, $relationSets, ModelGenerator::JUNCTION_RELATION_VIA_TABLE);
+        $this->relationsGeneratorTest($template, $tableName, $filesCount, $useClassConstant, $relationSets, ModelGenerator::JUNCTION_RELATION_VIA_TABLE);
     }
 
     /**
      * @dataProvider relationsProvider
      */
-    public function testViaModelRelationsGenerator($template, $tableName, $filesCount, $classNameResolution, $relationSets)
+    public function testViaModelRelationsGenerator($template, $tableName, $filesCount, $useClassConstant, $relationSets)
     {
-        $this->relationsGeneratorTest($template, $tableName, $filesCount, $classNameResolution, $relationSets, ModelGenerator::JUNCTION_RELATION_VIA_MODEL);
+        $this->relationsGeneratorTest($template, $tableName, $filesCount, $useClassConstant, $relationSets, ModelGenerator::JUNCTION_RELATION_VIA_MODEL);
     }
 
-    protected function relationsGeneratorTest($template, $tableName, $filesCount, $classNameResolution, $relationSets, $generateViaRelationMode)
+    protected function relationsGeneratorTest($template, $tableName, $filesCount, $useClassConstant, $relationSets, $generateViaRelationMode)
     {
         $generator = new ModelGenerator();
         $generator->template = $template;
         $generator->tableName = $tableName;
         $generator->generateRelationsFromCurrentSchema = false;
-        $generator->useClassNameResolutionConstant = $classNameResolution;
+        $generator->useClassConstant = $useClassConstant;
         $generator->generateJunctionRelationMode = $generateViaRelationMode;
 
         $files = $generator->generate();
