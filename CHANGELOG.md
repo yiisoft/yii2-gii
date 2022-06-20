@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.5 under development
 -----------------------
 
-- no changes in this release.
+- Ehn #489: Added support for the `::class` constant in model generator via the `useClassConstant` setting (rhertogh)
 
 
 2.2.4 December 30, 2021
