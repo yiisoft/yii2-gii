@@ -5,6 +5,8 @@ Yii Framework 2 gii extension Change Log
 -----------------------
 
 - Bug #500: Fix missing namespace in CRUD index template (mohamed-nazim)
+- Ehn #489: Added support for the `::class` constant in model generator via the `useClassConstant` setting (rhertogh)
+- Bug #502: Setting `skipOnEmpty` to fix "trim(): Passing null to parameter" in `generators/model/Generator.php` (rhertogh)
 
 
 2.2.4 December 30, 2021

@@ -19,12 +19,11 @@ use yii\web\Controller;
 /**
  * Generates CRUD controller and views.
  *
- * @property-read array $columnNames Model column/attribute names.
+ * @property-read string[] $columnNames Model column/attribute names.
  * @property-read string $controllerID The controller ID (without the module ID prefix).
  * @property-read string $nameAttribute
- * @property-read array $searchAttributes Searchable attributes.
- * @property-read \yii\db\TableSchema|bool $tableSchema
- * @property-read string $viewPath The controller view path.
+ * @property-read string[] $searchAttributes Searchable attributes.
+ * @property-read \yii\db\TableSchema|false $tableSchema
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -90,7 +89,7 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['controllerClass', 'modelClass', 'searchModelClass', 'baseControllerClass'], 'filter', 'filter' => 'trim'],
+            [['controllerClass', 'modelClass', 'searchModelClass', 'baseControllerClass'], 'trim', 'chars' => '\ '],
             [['modelClass', 'controllerClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
             [['searchModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Search Model Class must not be equal to Model Class.'],
             [['modelClass', 'controllerClass', 'baseControllerClass', 'searchModelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
@@ -389,7 +388,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return array searchable attributes
+     * @return string[] searchable attributes
      */
     public function getSearchAttributes()
     {
@@ -398,7 +397,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Generates the attribute labels for the search model.
-     * @return array the generated attribute labels (name => label)
+     * @return string[] the generated attribute labels (name => label)
      */
     public function generateSearchLabels()
     {
@@ -551,7 +550,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Returns table schema for current model class or false if it is not an active record
-     * @return \yii\db\TableSchema|bool
+     * @return \yii\db\TableSchema|false
      */
     public function getTableSchema()
     {
@@ -564,7 +563,7 @@ class Generator extends \yii\gii\Generator
     }
 
     /**
-     * @return array model column/attribute names
+     * @return string[] model column/attribute names
      */
     public function getColumnNames()
     {
