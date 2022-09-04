@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.5 under development
 -----------------------
 
-- no changes in this release.
+- Bug #500: Fix missing namespace in CRUD index template (mohamed-nazim)
 
 
 2.2.4 December 30, 2021
