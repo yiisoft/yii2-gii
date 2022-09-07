@@ -18,7 +18,12 @@ echo $form->field($generator, 'tableName')->textInput([
     ]
 ]);
 echo $form->field($generator, 'standardizeCapitals')->checkbox();
-echo $form->field($generator, 'singularize')->checkbox();
+echo $form->field($generator, 'singularize')->checkbox([
+    'data' => [
+        'table-prefix' => $generator->getTablePrefix(),
+        'action' => Url::to(['default/action', 'id' => 'model', 'name' => 'GenerateClassName'])
+    ]
+]);
 echo $form->field($generator, 'modelClass');
 echo $form->field($generator, 'ns');
 echo $form->field($generator, 'baseClass');
