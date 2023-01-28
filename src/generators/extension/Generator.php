@@ -77,6 +77,13 @@ class Generator extends \yii\gii\Generator
                 [['keywords'], 'safe'],
                 [['authorEmail'], 'email'],
                 [
+                    ['authorName'],
+                    'filter',
+                    'filter' => function ($value) {
+                        return strip_tags($value);
+                    }
+                ],
+                [
                     ['vendorName', 'packageName'],
                     'match',
                     'pattern' => '/^[a-z0-9\-\.]+$/',
