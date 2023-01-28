@@ -134,6 +134,7 @@ class Generator extends \yii\gii\Generator
                 'boolean'
             ],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
+            [['messageCategory'], 'filter', 'filter' => function ($value) {return strip_tags($value);}],
         ]);
     }
 
