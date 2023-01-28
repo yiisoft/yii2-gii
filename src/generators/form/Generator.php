@@ -73,6 +73,7 @@ class Generator extends \yii\gii\Generator
             [['scenarioName'], 'match', 'pattern' => '/^[\w\\-]+$/', 'message' => 'Only word characters and dashes are allowed.'],
             [['enableI18N'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
+            [['messageCategory'], 'filter', 'filter' => function ($value) {return strip_tags($value);}],
         ]);
     }
 
