@@ -103,6 +103,7 @@ class Generator extends \yii\gii\Generator
             ['modelClass', 'validateModelClass'],
             [['enableI18N', 'enablePjax'], 'boolean'],
             ['messageCategory', 'validateMessageCategory', 'skipOnEmpty' => false],
+            [['messageCategory'], 'filter', 'filter' => function ($value) {return strip_tags($value);}],
             ['viewPath', 'safe'],
         ]);
     }
