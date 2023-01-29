@@ -399,9 +399,9 @@ abstract class Generator extends Model
     {
         if ($this->enableI18N) {
             if (empty($this->messageCategory)) {
-                $this->addError('messageCategory', "Message Category cannot be blank.");
-            } elseif (!preg_match('~^\w+$~', $this->messageCategory)) {
-                $this->addError('messageCategory', "Message Category is not valid. It should contain only alphanumeric characters and _.");
+                $this->addError('messageCategory', 'Message Category cannot be blank.');
+            } elseif (!preg_match('~^[\w./-]+$~', $this->messageCategory)) {
+                $this->addError('messageCategory', 'Message Category is not valid. It should contain only alphanumeric characters, ".", "-", "/", and "_".');
             }
         }
     }
