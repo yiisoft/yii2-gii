@@ -60,6 +60,10 @@
         "process-timeout": 1800,
         "fxp-asset": {
             "enabled": false
+        },
+        "allow-plugins": {
+            "cweagans/composer-patches": true,
+            "yiisoft/yii2-composer": true
         }
     },
     "repositories": [
