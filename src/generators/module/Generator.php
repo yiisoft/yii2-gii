@@ -55,7 +55,7 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['moduleID', 'moduleClass'], 'filter', 'filter' => 'trim'],
+            [['moduleID', 'moduleClass'], 'trim'],
             [['moduleID', 'moduleClass'], 'required'],
             [['moduleID'], 'match', 'pattern' => '/^[\w\\-]+$/', 'message' => 'Only word characters, slashes and dashes are allowed.'],
             [['moduleClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],

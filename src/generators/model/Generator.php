@@ -109,7 +109,7 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['db', 'tableName', 'modelClass', 'baseClass', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim', 'skipOnEmpty' => true],
+            [['db', 'tableName', 'modelClass', 'baseClass', 'queryClass', 'queryBaseClass'], 'trim', 'skipOnEmpty' => true],
             [
                 ['ns', 'queryNs'],
                 'filter',
@@ -959,7 +959,7 @@ class Generator extends \yii\gii\Generator
      */
     public function validateModelClass()
     {
-        if ($this->isReservedKeyword($this->modelClass)) {
+        if ($this->isReservedKeyword((string) $this->modelClass)) {
             $this->addError('modelClass', 'Class name cannot be a reserved PHP keyword.');
         }
         if ((empty($this->tableName) || substr_compare($this->tableName, '*', -1, 1)) && $this->modelClass == '') {
@@ -1072,8 +1072,8 @@ class Generator extends \yii\gii\Generator
         $patterns = [];
         $patterns[] = "/^{$db->tablePrefix}(.*?)$/";
         $patterns[] = "/^(.*?){$db->tablePrefix}$/";
-        if (strpos($this->tableName, '*') !== false) {
-            $pattern = $this->tableName;
+        if (strpos($tableName, '*') !== false) {
+            $pattern = $tableName;
             if (($pos = strrpos($pattern, '.')) !== false) {
                 $pattern = substr($pattern, $pos + 1);
             }

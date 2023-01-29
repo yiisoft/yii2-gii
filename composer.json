@@ -23,7 +23,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2": "~2.0.46",
         "phpspec/php-diff": "^1.1.0"
     },
     "require-dev": {

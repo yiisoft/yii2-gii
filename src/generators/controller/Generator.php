@@ -68,7 +68,7 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['controllerClass', 'actions', 'baseClass'], 'filter', 'filter' => 'trim'],
+            [['controllerClass', 'actions', 'baseClass'], 'trim'],
             [['controllerClass', 'baseClass'], 'required'],
             ['controllerClass', 'match', 'pattern' => '/^[\w\\\\]*Controller$/', 'message' => 'Only word characters and backslashes are allowed, and the class name must end with "Controller".'],
             ['controllerClass', 'validateNewClass'],
