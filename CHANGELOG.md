@@ -6,6 +6,7 @@ Yii Framework 2 gii extension Change Log
 
 - Bug #510: Fix possible XSS (rob006)
 - Bug #511: Fix validation for `messageCategory` in Generator (rob006)
+- Enh #514: Fix compatibility with PHP 8.1 and 8.2 (rob006)
 
 
 2.2.5 September 04, 2022
