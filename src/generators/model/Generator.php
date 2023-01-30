@@ -39,18 +39,18 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string
      */
-    public $tableName;
+    public $tableName = '';
     /**
      * @var string
      */
-    public $modelClass;
+    public $modelClass = '';
     /**
      * @var string
      */
     public $baseClass = 'yii\db\ActiveRecord';
     public $generateRelations = self::RELATIONS_ALL;
     public $generateJunctionRelationMode = self::JUNCTION_RELATION_VIA_TABLE;
-    public $useClassConstant = null;
+    public $useClassConstant;
     public $generateRelationsFromCurrentSchema = true;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
@@ -60,7 +60,7 @@ class Generator extends \yii\gii\Generator
     public $generateQuery = false;
     public $queryNs = 'app\models';
     /**
-     * @var string
+     * @var string|null
      */
     public $queryClass;
     /**
@@ -959,7 +959,7 @@ class Generator extends \yii\gii\Generator
      */
     public function validateModelClass()
     {
-        if ($this->isReservedKeyword((string) $this->modelClass)) {
+        if ($this->isReservedKeyword($this->modelClass)) {
             $this->addError('modelClass', 'Class name cannot be a reserved PHP keyword.');
         }
         if ((empty($this->tableName) || substr_compare($this->tableName, '*', -1, 1)) && $this->modelClass == '') {
@@ -1055,7 +1055,7 @@ class Generator extends \yii\gii\Generator
      */
     protected function generateClassName($tableName, $useSchemaName = null)
     {
-        if (isset($this->classNames[$tableName])) {
+        if (!empty($this->classNames[$tableName])) {
             return $this->classNames[$tableName];
         }
 
@@ -1072,8 +1072,8 @@ class Generator extends \yii\gii\Generator
         $patterns = [];
         $patterns[] = "/^{$db->tablePrefix}(.*?)$/";
         $patterns[] = "/^(.*?){$db->tablePrefix}$/";
-        if (strpos($tableName, '*') !== false) {
-            $pattern = $tableName;
+        if (strpos($this->tableName, '*') !== false) {
+            $pattern = $this->tableName;
             if (($pos = strrpos($pattern, '.')) !== false) {
                 $pattern = substr($pattern, $pos + 1);
             }
