@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.6 under development
 -----------------------
 
+- Bug #510: Fix possible XSS (rob006)
 - Bug #511: Fix validation for `messageCategory` in Generator (rob006)
 
 

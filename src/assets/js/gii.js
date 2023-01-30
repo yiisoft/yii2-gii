@@ -47,7 +47,7 @@ yii.gii = (function ($) {
             }
             element.classList.add('sticky-value');
             element.title = value;
-            element.innerHTML = value;
+            element.innerText = value;
             new Tooltip(element, {placement: 'right'});
             $(this).before(element).hide();
         });
