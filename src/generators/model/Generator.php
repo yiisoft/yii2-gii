@@ -39,18 +39,18 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string
      */
-    public $tableName;
+    public $tableName = '';
     /**
      * @var string
      */
-    public $modelClass;
+    public $modelClass = '';
     /**
      * @var string
      */
     public $baseClass = 'yii\db\ActiveRecord';
     public $generateRelations = self::RELATIONS_ALL;
     public $generateJunctionRelationMode = self::JUNCTION_RELATION_VIA_TABLE;
-    public $useClassConstant = null;
+    public $useClassConstant;
     public $generateRelationsFromCurrentSchema = true;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
@@ -60,7 +60,7 @@ class Generator extends \yii\gii\Generator
     public $generateQuery = false;
     public $queryNs = 'app\models';
     /**
-     * @var string
+     * @var string|null
      */
     public $queryClass;
     /**
@@ -109,7 +109,7 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['db', 'tableName', 'modelClass', 'baseClass', 'queryClass', 'queryBaseClass'], 'filter', 'filter' => 'trim', 'skipOnEmpty' => true],
+            [['db', 'tableName', 'modelClass', 'baseClass', 'queryClass', 'queryBaseClass'], 'trim'],
             [
                 ['ns', 'queryNs'],
                 'filter',
@@ -1055,7 +1055,7 @@ class Generator extends \yii\gii\Generator
      */
     protected function generateClassName($tableName, $useSchemaName = null)
     {
-        if (isset($this->classNames[$tableName])) {
+        if (!empty($this->classNames[$tableName])) {
             return $this->classNames[$tableName];
         }
 
