@@ -30,7 +30,7 @@ e o que vai ser gerado. Neste caso, você também pode escolher quais arquivos d
 
 > Dica: Ao utilizar o Modelo Generator para atualizar modelos após a mudança de banco de dados, você pode copiar o código da pré-visualização do Gii 
   e mesclar as alterações com o seu próprio código. Você pode usar recursos de uma IDE como PHPStorms.
-  [compare with clipboard](http://www.jetbrains.com/phpstorm/webhelp/comparing-files.html), [Aptana Studio](http://www.aptana.com/products/studio3/download) ou [Eclipse](http://www.eclipse.org/pdt/) based também permitem [compare with clipboard](http://andrei.gmxhome.de/anyedit/examples.html) por usar [AnyEdit tools plugin](http://andrei.gmxhome.de/anyedit/) para isso, que lhe permite unir as mudanças relevantes e deixar de fora outros que podem reverter o seu próprio código.
+  [compare with clipboard](https://www.jetbrains.com/phpstorm/webhelp/comparing-files.html), [Aptana Studio](https://www.aptana.com/products/studio3/download) ou [Eclipse](https://www.eclipse.org/pdt/) based também permitem [compare with clipboard](https://andrei.gmxhome.de/anyedit/examples.html) por usar [AnyEdit tools plugin](https://andrei.gmxhome.de/anyedit/) para isso, que lhe permite unir as mudanças relevantes e deixar de fora outros que podem reverter o seu próprio código.
   
 Depois de revisar o código e selecionar os arquivos a serem gerados você pode clicar no botão "Gerar" para criar
 os arquivos. Se tudo correu bem está pronto. Quando você vê erros que Gii não é capaz de gerar os arquivos e que você tem que

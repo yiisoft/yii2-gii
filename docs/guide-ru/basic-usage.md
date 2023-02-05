@@ -28,7 +28,7 @@
 В этом случае, выбор остается за Вами - какие файлы оставить как есть, а какие перезаписать.
 
 > Tip: При использовании Model-генератора для обновления моделей после изменений в БД, просто скопируйте код из превью и
-  встройте его в свой код. Вы можете использовать возможности разных IDE: [сравнение с буфером обмена](http://www.jetbrains.com/phpstorm/webhelp/comparing-files.html) в PHPStorm, [Aptana Studio](http://www.aptana.com/products/studio3/download). В редакторах, основанных на [Eclipse](http://www.eclipse.org/pdt/) можно [сравнивать код с буфером обмена](http://andrei.gmxhome.de/anyedit/examples.html), используя для этого [AnyEdit tools plugin](http://andrei.gmxhome.de/anyedit/). Всё это позволит вам объединить только нужные изменения и пропустить изменения, которые заменят уже существующий полезный код.
+  встройте его в свой код. Вы можете использовать возможности разных IDE: [сравнение с буфером обмена](https://www.jetbrains.com/phpstorm/webhelp/comparing-files.html) в PHPStorm, [Aptana Studio](https://www.aptana.com/products/studio3/download). В редакторах, основанных на [Eclipse](https://www.eclipse.org/pdt/) можно [сравнивать код с буфером обмена](https://andrei.gmxhome.de/anyedit/examples.html), используя для этого [AnyEdit tools plugin](https://andrei.gmxhome.de/anyedit/). Всё это позволит вам объединить только нужные изменения и пропустить изменения, которые заменят уже существующий полезный код.
 
 После просмотра кода и выбора файлов для генерирования кликните на кнопке "Generate" чтобы создать файлы. Если нет ошибок - на этом всё!
 Если появятся ошибки, значит Gii не смог сгенерировать файлы и Вам нужно установить права на запись для директорий, чтобы веб-сервер мог

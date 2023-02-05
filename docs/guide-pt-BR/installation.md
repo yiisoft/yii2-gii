@@ -3,7 +3,7 @@ Instalação
 
 ## Instalado o pocote composer
 
-A maneira preferida para instalar essa extensão é via [composer](http://getcomposer.org/download/).
+A maneira preferida para instalar essa extensão é via [composer](https://getcomposer.org/download/).
 
 Então rode
 

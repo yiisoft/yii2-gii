@@ -25,8 +25,8 @@ Gii にアクセスすると、最初に、ジェネレータを選択できる�
 その場合は、どのファイルを上書きし、どのファイルを上書きしないかを選択することも出来ます。
 
 > Tip: データベースに変更を加えた後で、モデル・ジェネレータを使ってモデルを更新したい場合は、Gii のプレビューからコードをコピーして、あなたのコードに変更をマージすることが出来ます。
-PHPStorm の [クリップボードと比較](http://www.jetbrains.com/phpstorm/webhelp/comparing-files.html) のような IDE の機能を使うと良いでしょう。
-[Aptana Studio](http://www.aptana.com/products/studio3/download) や [Eclipse](http://www.eclipse.org/pdt/) ベースのエディタも [AnyEdit tools plugin](http://andrei.gmxhome.de/anyedit/) を使って [クリップボードと比較](http://andrei.gmxhome.de/anyedit/examples.html) をすることが出来ます。
+PHPStorm の [クリップボードと比較](https://www.jetbrains.com/phpstorm/webhelp/comparing-files.html) のような IDE の機能を使うと良いでしょう。
+[Aptana Studio](https://www.aptana.com/products/studio3/download) や [Eclipse](https://www.eclipse.org/pdt/) ベースのエディタも [AnyEdit tools plugin](https://andrei.gmxhome.de/anyedit/) を使って [クリップボードと比較](https://andrei.gmxhome.de/anyedit/examples.html) をすることが出来ます。
 この機能を使うと、関係のある変更だけを取り込んで、あなた自身のコードを取り消すような他の変更は放っておくことが出来ます。
 
 コードをレビューして、生成すべきファイルを選択し、"Generate" ボタンをクリックするとファイルが生成されます。

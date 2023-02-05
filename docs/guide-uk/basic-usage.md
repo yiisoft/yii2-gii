@@ -30,8 +30,8 @@
 
 > Підказка: Коли використовуєте генератор моделі для оновлення моделей після змін у базі даних, ви можете скопіювати код із попереднього перегляду Gii
   та поєднати зміни з вашим власним кодом. Ви можете використовувати функціонал Інтегрованого Середовища Розробки (IDE), як наприклад,
-  [порівняння з буфером обміну в PHPStorms](http://www.jetbrains.com/phpstorm/webhelp/comparing-files.html).
-  [Aptana Studio](http://www.aptana.com/products/studio3/download) або редактори на базі [Eclipse](http://www.eclipse.org/pdt/) також дозволяють [порівняння з буфером обміну](http://andrei.gmxhome.de/anyedit/examples.html) при використанні [плагіну інструментів AnyEdit](http://andrei.gmxhome.de/anyedit/) для цього, який дозволяє вам приєднувати актуальні зміни, не враховуючи те, що повторює ваш власний код.
+  [порівняння з буфером обміну в PHPStorms](https://www.jetbrains.com/phpstorm/webhelp/comparing-files.html).
+  [Aptana Studio](https://www.aptana.com/products/studio3/download) або редактори на базі [Eclipse](https://www.eclipse.org/pdt/) також дозволяють [порівняння з буфером обміну](https://andrei.gmxhome.de/anyedit/examples.html) при використанні [плагіну інструментів AnyEdit](https://andrei.gmxhome.de/anyedit/) для цього, який дозволяє вам приєднувати актуальні зміни, не враховуючи те, що повторює ваш власний код.
   
 
 Після того, як ви оглянули код та обрали файли для генерування, ви можете натиснути на кнопку "Generate" для створення
