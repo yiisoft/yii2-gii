@@ -30,7 +30,7 @@ and the one that will be generated. In this case you can also choose which files
 
 > Tip: When using the Model Generator to update models after database change, you can copy the code from Gii preview
   and merge the changes with your own code. You can use IDE features like PHPStorms
-  [compare with clipboard](http://www.jetbrains.com/phpstorm/webhelp/comparing-files.html), [Aptana Studio](http://www.aptana.com/products/studio3/download) or [Eclipse](http://www.eclipse.org/pdt/) based editor also allows [compare with clipboard](http://andrei.gmxhome.de/anyedit/examples.html) by using [AnyEdit tools plugin](http://andrei.gmxhome.de/anyedit/) for this, which allows you to merge in relevant changes and leave out others that may revert your own code.
+  [compare with clipboard](https://www.jetbrains.com/phpstorm/webhelp/comparing-files.html), [Aptana Studio](https://www.aptana.com/products/studio3/download) or [Eclipse](https://www.eclipse.org/pdt/) based editor also allows [compare with clipboard](https://andrei.gmxhome.de/anyedit/examples.html) by using [AnyEdit tools plugin](https://andrei.gmxhome.de/anyedit/) for this, which allows you to merge in relevant changes and leave out others that may revert your own code.
   
 
 After you have reviewed the code and selected the files to be generated you can click the "Generate" button to create
