@@ -49,6 +49,9 @@
     transform: translate(0, 0);
   }
 }
+.modal.show {
+  opacity: 1;
+}
 
 .modal-dialog-centered {
   display: flex;
