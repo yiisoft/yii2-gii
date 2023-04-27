@@ -76,6 +76,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 <?php else: ?>
     <?= "<?= " ?>ListView::widget([
         'dataProvider' => $dataProvider,
+        'pager' => ['class' => 'yii\bootstrap5\LinkPager'],
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
             return Html::a(Html::encode($model-><?= $generator->getNameAttribute() ?>), ['view', <?= $generator->generateUrlParams() ?>]);
