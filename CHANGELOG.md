@@ -1,13 +1,13 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.2.6 under development
------------------------
+2.2.6 May 22, 2023
+------------------
 
 - Bug #510: Fix possible XSS (rob006)
 - Bug #511: Fix validation for `messageCategory` in Generator (rob006)
-- Enh #514: Fix compatibility with PHP 8.1 and 8.2 (rob006)
 - Bug #525: Fix of the modal dialog visibility with a preview of generated migration (glodov)
+- Enh #514: Fix compatibility with PHP 8.1 and 8.2 (rob006)
 
 
 2.2.5 September 04, 2022
