@@ -32,6 +32,7 @@ class ActiveField extends \yii\widgets\ActiveField
      */
     public function init()
     {
+        parent::init();
         $stickyAttributes = $this->model->stickyAttributes();
         if (in_array($this->attribute, $stickyAttributes, true)) {
             $this->sticky();
