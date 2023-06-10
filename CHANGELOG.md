@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.7 under development
 -----------------------
 
-- #532 Added after displayValidationErrors: return ExitCode::USAGE (egmsystems)
+- Bug #532: Return `ExitCode::USAGE` on command input validation error (egmsystems)
 
 
 2.2.6 May 22, 2023
