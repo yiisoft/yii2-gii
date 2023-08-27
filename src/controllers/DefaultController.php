@@ -104,6 +104,21 @@ class DefaultController extends Controller
         throw new NotFoundHttpException("Code file not found: $file");
     }
 
+    public function actionCacheIt($id, $file)
+    {
+        $generator = $this->loadGenerator($id);
+        if ($generator->validate()) {
+            foreach ($generator->generate() as $f) {
+                if ($f->id === $file) {
+                    $f->setCache();
+                    $data = $f->getCache();
+                    return ($data ? 'success' : 'fail');
+                }
+            }
+        }
+        throw new NotFoundHttpException("Code file not found: $file");
+    }
+
     /**
      * Runs an action defined in the generator.
      * Given an action named "xyz", the method "actionXyz()" in the generator will be called.

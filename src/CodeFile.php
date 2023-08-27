@@ -68,7 +68,16 @@ class CodeFile extends BaseObject
         $this->content = $content;
         $this->id = md5($this->path);
         if (is_file($path)) {
-            $this->operation = file_get_contents($path) === $content ? self::OP_SKIP : self::OP_OVERWRITE;
+            $origContent = file_get_contents($path);
+            if ($data = $this->getCache()) {
+                if ($content != $data['content'] or $origContent != $data['original']) {
+                    $this->operation = self::OP_OVERWRITE;
+                } else {
+                    $this->operation = self::OP_SKIP;
+                }
+            } else {
+                $this->operation = $origContent === $content ? self::OP_SKIP : self::OP_OVERWRITE;
+            }
         } else {
             $this->operation = self::OP_CREATE;
         }
@@ -99,6 +108,7 @@ class CodeFile extends BaseObject
         if (@file_put_contents($this->path, $this->content) === false) {
             return "Unable to write the file '{$this->path}'.";
         }
+        $this->setCache();
 
         if ($module instanceof \yii\gii\Module) {
             $mask = @umask(0);
@@ -146,10 +156,11 @@ class CodeFile extends BaseObject
             $type = 'unknown';
         }
 
+        $data = $this->getCache();
         if ($type === 'php') {
-            return highlight_string($this->content, true);
+            return highlight_string($data ? $data['original'] : $this->content, true);
         } elseif (!in_array($type, ['jpg', 'gif', 'png', 'exe'])) {
-            return nl2br(Html::encode($this->content));
+            return nl2br(Html::encode($data ? $data['original'] : $this->content));
         }
 
         return false;
@@ -166,7 +177,18 @@ class CodeFile extends BaseObject
         if (in_array($type, ['jpg', 'gif', 'png', 'exe'])) {
             return false;
         } elseif ($this->operation === self::OP_OVERWRITE) {
-            return $this->renderDiff(file($this->path), $this->content);
+            $html = '';
+            if ($data = $this->getCache()) {
+                $html .= '<h3>Diff: Old and New Table</h3>';
+                $html .= ($this->renderDiff($data['content'], $this->content) ?: 'Identical.');
+                $html .= '<hr/>';
+                $html .= '<h3>Diff: Old and New File</h3>';
+                $html .= ($this->renderDiff($data['original'], file_get_contents($this->path)) ?: 'Identical.');
+                $html .= '<hr/>';
+            }
+            $html .= '<h3>Diff: File and Table</h3>';
+            $html .= ($this->renderDiff(file($this->path), $this->content) ?: 'Identical.');
+            return $html;
         }
 
         return '';
@@ -198,5 +220,22 @@ class CodeFile extends BaseObject
         $diff = new \Diff($lines1, $lines2);
 
         return $diff->render($renderer);
+    }
+
+    public function setCache()
+    {
+        $cache = Yii::$app->cache;
+        $key = $this->id;
+        $cache->set($key, [
+            'content' => $this->content,
+            'original' => strval(is_file($this->path) ? file_get_contents($this->path) : $this->content),
+        ]);
+    }
+
+    public function getCache()
+    {
+        $cache = Yii::$app->cache;
+        $key = $this->id;
+        return $cache->get($key);
     }
 }

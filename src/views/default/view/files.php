@@ -36,6 +36,7 @@ use yii\helpers\Html;
         <thead>
             <tr>
                 <th class="file">Code File</th>
+                <th class="cache">Cache It</th>
                 <th class="action">Action</th>
                 <?php
                 $fileChangeExists = false;
@@ -70,6 +71,11 @@ use yii\helpers\Html;
                         <?= Html::a('diff', ['diff', 'id' => $id, 'file' => $file->id], ['class' => 'diff-code badge badge-warning', 'data-title' => $file->getRelativePath()]) ?>
                     <?php endif; ?>
                 </td>
+                <td colspan="cache">
+                    <?php if (!$file->getCache() or $file->operation !== CodeFile::OP_SKIP): ?>
+                        <?= Html::a('cache it', ['cache-it', 'id' => $id, 'file' => $file->id], ['class' => 'cache-it badge badge-primary', 'data-hideit' => intval($file->operation != CodeFile::OP_CREATE)]) ?>
+                    <?php endif; ?>
+                </td>
                 <td class="action">
                     <?php
                     if ($file->operation === CodeFile::OP_SKIP) {
@@ -94,7 +100,37 @@ use yii\helpers\Html;
             <?php endforeach; ?>
         </tbody>
     </table>
-
+<?php
+$this->registerJs(<<<'NOWDOC'
+    $(function (){
+        $('.cache-it').click(function (){
+            let $that = $(this);
+            let $cbox = $that.closest('tr').find('input[type="checkbox"]');
+            let $diff = $that.closest('tr').find('.diff-code');
+            let $actn = $that.closest('tr').find('.action'); 
+            let hideit = $that.data('hideit'); 
+            let url = $(this).attr('href');
+            ajaxRequest = $.ajax({
+                type: 'POST',
+                cache: false,
+                url: url,
+                data: $('.default-view form').serializeArray(),
+                success: function (data) {
+                    if (data === 'success') {
+                        $that.remove();
+                        $diff.remove();
+                        if (hideit) {
+                            $cbox.remove();
+                            $actn.text('cached');
+                        }
+                    }
+                },
+            });
+            return false;
+        });
+    });
+NOWDOC, $this::POS_END);
+?>
     <div class="modal fade" id="preview-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
