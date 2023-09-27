@@ -438,12 +438,21 @@ class Generator extends \yii\gii\Generator
     {
         $types = [];
         $lengths = [];
+        $nullable = [];
+        $defaultValues = [];
         foreach ($table->columns as $column) {
             if ($column->autoIncrement) {
                 continue;
             }
             if (!$column->allowNull && $column->defaultValue === null) {
                 $types['required'][] = $column->name;
+            } elseif ($column->allowNull && $column->defaultValue === null) {
+                $nullable[] = $column->name;
+            } elseif (is_scalar($column->defaultValue)) {
+                if (array_key_exists($column->defaultValue, $defaultValues)) {
+                    $defaultValues[$column->defaultValue] = [];
+                }
+                $defaultValues[$column->defaultValue][] = $column->name;
             }
             switch ($column->type) {
                 case Schema::TYPE_SMALLINT:
@@ -477,6 +486,14 @@ class Generator extends \yii\gii\Generator
             }
         }
         $rules = [];
+        if (!empty($nullable)) {
+            $rules[] = "[['" . implode("', '", $nullable) . "'], 'default', 'value' => null]";
+        }
+        if (!empty($defaultValues)) {
+            foreach ($defaultValues as $defaultValue => $defaultValueColumns) {
+                $rules[] = "[['" . implode("', '", $defaultValueColumns) . "'], 'default', 'value' => '$defaultValue']";
+            }
+        }
         $driverName = $this->getDbDriverName();
         foreach ($types as $type => $columns) {
             if ($driverName === 'pgsql' && $type === 'integer') {
