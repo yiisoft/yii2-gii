@@ -491,7 +491,8 @@ class Generator extends \yii\gii\Generator
         }
         if (!empty($defaultValues)) {
             foreach ($defaultValues as $defaultValue => $defaultValueColumns) {
-                $rules[] = "[['" . implode("', '", $defaultValueColumns) . "'], 'default', 'value' => '$defaultValue']";
+                $defaultValue = is_numeric($defaultValue) ? $defaultValue : "'$defaultValue'";
+                $rules[] = "[['" . implode("', '", $defaultValueColumns) . "'], 'default', 'value' => $defaultValue]";
             }
         }
         $driverName = $this->getDbDriverName();
