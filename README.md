@@ -16,7 +16,12 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-gii/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-gii)
 [![Total Downloads](https://poser.pugx.org/yiisoft/yii2-gii/downloads.png)](https://packagist.org/packages/yiisoft/yii2-gii)
 [![Build Status](https://github.com/yiisoft/yii2-gii/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-gii/actions)
+[![codecov](https://codecov.io/gh/yiisoft/yii2-gii/graph/badge.svg?token=cp8aJ7tGka)](https://codecov.io/gh/yiisoft/yii2-gii)
 
+Requirements
+------------
+
+- PHP 7.3 or higher.
 
 Installation
 ------------
