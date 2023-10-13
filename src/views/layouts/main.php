@@ -60,7 +60,7 @@ $asset = yii\gii\GiiAsset::register($this);
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <p>A Product of <a href="http://www.yiisoft.com/">Yii Software LLC</a></p>
+                    <p>A Product of <a href="https://www.yiisoft.com/">Yii Software LLC</a></p>
                 </div>
                 <div class="col-6">
                     <p class="text-right"><?= Yii::powered() ?></p>
