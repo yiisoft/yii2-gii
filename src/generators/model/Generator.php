@@ -682,6 +682,7 @@ class Generator extends \yii\gii\Generator
                         // Foreign key could point to non-existing table: https://github.com/yiisoft/yii2-gii/issues/34
                         continue;
                     }
+                    $relName = $refs[0];
                     unset($refs[0]);
                     $fks = array_keys($refs);
                     $refClassName = $this->generateClassName($refTable);
@@ -689,7 +690,7 @@ class Generator extends \yii\gii\Generator
 
                     // Add relation for this table
                     $link = $this->generateRelationLink(array_flip($refs));
-                    $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
+                    $relationName = $this->generateRelationName($relations, $table, $relName, false);
                     $relations[$table->fullName][$relationName] = [
                         "return \$this->hasOne($refClassNameResolution, $link);",
                         $refClassName,
