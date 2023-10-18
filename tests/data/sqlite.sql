@@ -27,7 +27,7 @@ CREATE TABLE "customer" (
   id INTEGER NOT NULL,
   email varchar(128) NOT NULL,
   name varchar(128),
-  address text,
+  address text  DEFAULT '-',
   status INTEGER DEFAULT 0,
   profile_id INTEGER,
   PRIMARY KEY (id)

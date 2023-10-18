@@ -433,11 +433,68 @@ class Generator extends \yii\gii\Generator
      * Generates validation rules for the specified table.
      * @param \yii\db\TableSchema $table the table schema
      * @return array the generated validation rules
+     * @throws NotSupportedException
      */
     public function generateRules($table)
     {
         $types = [];
         $lengths = [];
+        $rules = [];
+        $driverName = $this->getDbDriverName();
+
+        if (in_array($driverName, ['mysql', 'sqlite'], true)) {
+
+            $db = $this->getDbConnection();
+            $columnsDefaultNull = [];
+            $columnsDefaultValues = [];
+
+            foreach ($table->columns as $column) {
+                
+                if ($column->defaultValue === null) {
+                    if ($column->allowNull) {
+                        $columnsDefaultNull[] = $column->name;
+                    }
+                    continue;
+                }
+                switch ($column->type) {
+                    case Schema::TYPE_SMALLINT:
+                    case Schema::TYPE_INTEGER:
+                    case Schema::TYPE_BIGINT:
+                    case Schema::TYPE_TINYINT:
+                    case Schema::TYPE_BOOLEAN:
+                    case Schema::TYPE_FLOAT:
+                    case Schema::TYPE_DOUBLE:
+                    case Schema::TYPE_DECIMAL:
+                    case Schema::TYPE_MONEY:
+                        $defaultValue = $column->defaultValue;
+                        break;
+
+                    case Schema::TYPE_DATETIME:
+                    case Schema::TYPE_TIMESTAMP:
+                        if(strtoupper($column->defaultValue) === 'CURRENT_TIMESTAMP'){
+                            $defaultValue = 'date(\'Y-m-d H:i:s\')';
+                        }else{
+                            $defaultValue = $db->getSchema()->quoteValue($column->defaultValue);
+                        }
+                        break;
+
+                    default:
+                        $defaultValue = $db->getSchema()->quoteValue($column->defaultValue);
+                }
+                $columnsDefaultValues[$defaultValue][] = $column->name;
+            }
+           
+            foreach($columnsDefaultValues as $defaultValue => $columnNameList){
+                $rules[] = "[['" . implode("', '", $columnNameList) . "'], 'default', 'value' => $defaultValue]";
+            }
+            
+            if ($columnsDefaultNull) {
+                $rules[] = "[['" . implode("', '", $columnsDefaultNull) . "'], 'default', 'value' => null]";
+            }
+        }
+
+
+
         foreach ($table->columns as $column) {
             if ($column->autoIncrement) {
                 continue;
@@ -476,8 +533,6 @@ class Generator extends \yii\gii\Generator
                     }
             }
         }
-        $rules = [];
-        $driverName = $this->getDbDriverName();
         foreach ($types as $type => $columns) {
             if ($driverName === 'pgsql' && $type === 'integer') {
                 $rules[] = "[['" . implode("', '", $columns) . "'], 'default', 'value' => null]";
