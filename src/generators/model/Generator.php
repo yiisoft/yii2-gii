@@ -1242,6 +1242,7 @@ class Generator extends \yii\gii\Generator
         return !empty($column->enumValues) || stripos($column->dbType, 'ENUM') === 0;
     }
 
+    /**
      * Returns the class name resolution
      * @param string $class
      * @return string
