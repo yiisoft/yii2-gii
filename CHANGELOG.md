@@ -1,10 +1,56 @@
 Yii Framework 2 gii extension Change Log
 ========================================
 
-2.2.2 under development
+2.2.7 under development
 -----------------------
 
-- no changes in this release.
+- Bug #532: Return `ExitCode::USAGE` on command input validation error (egmsystems)
+- Enh #537: Generating rules for the fields with default values (manky)
+
+
+2.2.6 May 22, 2023
+------------------
+
+- Bug #510: Fix possible XSS (rob006)
+- Bug #511: Fix validation for `messageCategory` in Generator (rob006)
+- Bug #525: Fix of the modal dialog visibility with a preview of generated migration (glodov)
+- Enh #514: Fix compatibility with PHP 8.1 and 8.2 (rob006)
+
+
+2.2.5 September 04, 2022
+------------------------
+
+- Ehn #489: Added support for the `::class` constant in model generator via the `useClassConstant` setting (rhertogh)
+- Bug #500: Fix missing namespace in CRUD index template (mohamed-nazim)
+- Bug #502: Setting `skipOnEmpty` to fix "trim(): Passing null to parameter" in `generators/model/Generator.php` (rhertogh)
+
+
+2.2.4 December 30, 2021
+-----------------------
+
+- Bug #467: Fix view `generators/crud/default/controller` (WinterSilence, cjrf)
+- Bug #476: Fix stucking datalist options in form generator (WinterSilence)
+- Bug #484: Add parent's labels and hints, fix rule for attribute `moduleClass` in module generator (WinterSilence)
+- Bug #486: Update `assets/js/bs4-native.min.js` to the latest version (WinterSilence)
+- Bug #488: Fix `ActionColumn::$urlCreator` in index template of CRUD generator (WinterSilence)
+- Enh #485: Add validation rules for `enableI18N` and `messageCategory` to Generator (WinterSilence)
+
+
+2.2.3 August 09, 2021
+---------------------
+
+- Enh #453: Allow CRUD to work with non-RDBMS ARs (WinterSilence)
+- Enh #458: Add CIDR support for allowedIPs (rhertogh)
+- Enh #462: Add support for viewing file differences on the CLI (rhertogh)
+
+
+2.2.2 May 06, 2021
+------------------
+
+- Bug #433: Fix insufficient category validation (samdark)
+- Bug #439: Replace client-side generation of model class name with an AJAX request and a serverside implementation to take options into account (WinterSilence)
+- Enh #444: Updated reserved keywords in generator (WinterSilence)
+- Enh #450: Add behaviors merging, pagination example, sorting example, loading defaults for a model to CRUD controller (WinterSilence)
 
 
 2.2.1 May 02, 2020

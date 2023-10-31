@@ -3,8 +3,8 @@
 use yii\widgets\Menu;
 use yii\helpers\Html;
 
-/* @var $this \yii\web\View */
-/* @var $content string */
+/** @var \yii\web\View $this */
+/** @var string $content */
 
 $asset = yii\gii\GiiAsset::register($this);
 ?>
@@ -43,7 +43,7 @@ $asset = yii\gii\GiiAsset::register($this);
                         'linkTemplate' => '<a class="nav-link" href="{url}">{label}</a>',
                         'items' => [
                             ['label' => 'Home', 'url' => ['default/index']],
-                            ['label' => 'Help', 'url' => 'http://www.yiiframework.com/doc-2.0/ext-gii-index.html'],
+                            ['label' => 'Help', 'url' => 'https://www.yiiframework.com/doc-2.0/ext-gii-index.html'],
                             ['label' => 'Application', 'url' => Yii::$app->homeUrl],
                         ]
                     ]);
@@ -60,7 +60,7 @@ $asset = yii\gii\GiiAsset::register($this);
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <p>A Product of <a href="http://www.yiisoft.com/">Yii Software LLC</a></p>
+                    <p>A Product of <a href="https://www.yiisoft.com/">Yii Software LLC</a></p>
                 </div>
                 <div class="col-6">
                     <p class="text-right"><?= Yii::powered() ?></p>

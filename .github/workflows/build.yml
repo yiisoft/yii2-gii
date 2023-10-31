@@ -8,6 +8,7 @@ env:
 jobs:
     phpunit:
         name: PHP ${{ matrix.php }} on ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
         services:
             postgres:
                 image: postgres:9.6
@@ -18,25 +19,27 @@ jobs:
                 ports:
                     - 5432:5432
                 options: --name=postgres --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
-        runs-on: ${{ matrix.os }}
         strategy:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+                php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Install PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
+                  tools: pecl
+                  extensions: apc, curl, dom, imagick, intl, mbstring, mcrypt, memcached, mysql, pdo, pdo_mysql, pdo_pgsql, pdo_sqlite, pgsql, sqlite
+                  ini-values: date.timezone='UTC', session.save_path="${{ runner.temp }}"
             - name: Get composer cache directory
               id: composer-cache
-              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+              run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
             - name: Cache composer dependencies
-              uses: actions/cache@v1
+              uses: actions/cache@v3
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -51,7 +54,7 @@ jobs:
                   PGPASSWORD: postgres
                   PGPORT: ${{ job.services.postgres.ports['5432'] }}
               run: |
-                sudo apt-get update && sudo apt-get install -y postgresql-client
+                sudo apt update && sudo apt --fix-broken install && sudo apt install -y postgresql-client
                 psql -U postgres yiitest < tests/data/pgsql.sql
                 echo "<?php unset(\$config['databases']['pgsql']['fixture']);" > tests/data/config.local.php
             - name: Run unit tests with coverage

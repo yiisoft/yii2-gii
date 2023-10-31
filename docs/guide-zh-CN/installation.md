@@ -3,7 +3,7 @@
 
 ## 获取 Composer 包
 
-安装此扩展的首选方法是通过 [composer](http://getcomposer.org/download/).
+安装此扩展的首选方法是通过 [composer](https://getcomposer.org/download/).
 
 执行
 
@@ -53,7 +53,7 @@ http://localhost/path/to/index.php/gii
 ```php
 'gii' => [
     'class' => 'yii\gii\Module',
-    'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'] // adjust this to your needs
+    'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20', '172.16.0.0/12'] // adjust this to your needs
 ],
 ```
 
@@ -100,7 +100,7 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'],
+        'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20', '172.16.0.0/12'],
     ];
 }
 ```

@@ -1,8 +1,8 @@
 <?php
 /**
- * @link http://www.yiiframework.com/
+ * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
+ * @license https://www.yiiframework.com/license/
  */
 
 namespace yii\gii\generators\module;
@@ -15,15 +15,21 @@ use yii\helpers\StringHelper;
 /**
  * This generator will generate the skeleton code needed by a module.
  *
- * @property string $controllerNamespace The controller namespace of the module. This property is read-only.
- * @property bool $modulePath The directory that contains the module class. This property is read-only.
- *
+ * @inheritdoc
+ * @property-read string $controllerNamespace The controller namespace of the module.
+ * @property-read string $modulePath The directory that contains the module class.
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
 class Generator extends \yii\gii\Generator
 {
+    /**
+     * @var string
+     */
     public $moduleClass;
+    /**
+     * @var string
+     */
     public $moduleID;
 
 
@@ -49,10 +55,10 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['moduleID', 'moduleClass'], 'filter', 'filter' => 'trim'],
+            [['moduleID', 'moduleClass'], 'trim'],
             [['moduleID', 'moduleClass'], 'required'],
-            [['moduleID'], 'match', 'pattern' => '/^[\w\\-]+$/', 'message' => 'Only word characters and dashes are allowed.'],
-            [['moduleClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
+            [['moduleID'], 'match', 'pattern' => '/^[\w\\-]+$/', 'message' => 'Only word characters, slashes and dashes are allowed.'],
+            [['moduleClass'], 'match', 'pattern' => '/^[\w\\\\]+$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['moduleClass'], 'validateModuleClass'],
         ]);
     }
@@ -62,10 +68,13 @@ class Generator extends \yii\gii\Generator
      */
     public function attributeLabels()
     {
-        return [
-            'moduleID' => 'Module ID',
-            'moduleClass' => 'Module Class',
-        ];
+        return array_merge(
+            parent::attributeLabels(),
+            [
+                'moduleID' => 'Module ID',
+                'moduleClass' => 'Module Class',
+            ]
+        );
     }
 
     /**
@@ -73,10 +82,13 @@ class Generator extends \yii\gii\Generator
      */
     public function hints()
     {
-        return [
-            'moduleID' => 'This refers to the ID of the module, e.g., <code>admin</code>.',
-            'moduleClass' => 'This is the fully qualified class name of the module, e.g., <code>app\modules\admin\Module</code>.',
-        ];
+        return array_merge(
+            parent::hints(),
+            [
+                'moduleID' => 'This refers to the ID of the module, e.g., <code>admin</code>.',
+                'moduleClass' => 'This is the fully qualified class name of the module, e.g., <code>app\modules\admin\Module</code>.',
+            ]
+        );
     }
 
     /**
@@ -144,16 +156,16 @@ EOD;
      */
     public function validateModuleClass()
     {
+        if (empty($this->moduleClass) || substr_compare($this->moduleClass, '\\', -1, 1) === 0) {
+            $this->addError('moduleClass', 'Module class name must not be empty. Please enter a fully qualified class name. e.g. "app\modules\admin\Module".');
+        }
         if (strpos($this->moduleClass, '\\') === false || Yii::getAlias('@' . str_replace('\\', '/', $this->moduleClass), false) === false) {
             $this->addError('moduleClass', 'Module class must be properly namespaced.');
-        }
-        if (empty($this->moduleClass) || substr_compare($this->moduleClass, '\\', -1, 1) === 0) {
-            $this->addError('moduleClass', 'Module class name must not be empty. Please enter a fully qualified class name. e.g. "app\\modules\\admin\\Module".');
         }
     }
 
     /**
-     * @return bool the directory that contains the module class
+     * @return string the directory that contains the module class
      */
     public function getModulePath()
     {

@@ -1,8 +1,8 @@
 <?php
 /**
- * @link http://www.yiiframework.com/
+ * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
+ * @license https://www.yiiframework.com/license/
  */
 
 namespace yii\gii\generators\form;
@@ -14,7 +14,7 @@ use yii\gii\CodeFile;
 /**
  * This generator will generate an action view file based on the specified model class.
  *
- * @property array $modelAttributes List of safe attributes of [[modelClass]]. This property is read-only.
+ * @property-read array $modelAttributes List of safe attributes of [[modelClass]].
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -63,7 +63,7 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['modelClass', 'viewName', 'scenarioName', 'viewPath'], 'filter', 'filter' => 'trim'],
+            [['modelClass', 'viewName', 'scenarioName', 'viewPath'], 'trim'],
             [['modelClass', 'viewName', 'viewPath'], 'required'],
             [['modelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['modelClass'], 'validateClass', 'params' => ['extends' => Model::className()]],

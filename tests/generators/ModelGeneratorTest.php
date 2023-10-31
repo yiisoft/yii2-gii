@@ -12,6 +12,25 @@ use yiiunit\gii\GiiTestCase;
  */
 class ModelGeneratorTest extends GiiTestCase
 {
+    public function testDefaultuseClassConstant()
+    {
+        $generator = new ModelGenerator();
+        $this->assertEquals(
+            PHP_MAJOR_VERSION > 5  || (PHP_MAJOR_VERSION === 5 && PHP_MINOR_VERSION > 4),
+            $generator->useClassConstant
+        );
+
+        $generator = new ModelGenerator([
+            'useClassConstant' => false,
+        ]);
+        $this->assertFalse($generator->useClassConstant);
+
+        $generator = new ModelGenerator([
+            'useClassConstant' => true,
+        ]);
+        $this->assertTrue($generator->useClassConstant);
+    }
+
     public function testAll()
     {
         $generator = new ModelGenerator();
@@ -58,7 +77,7 @@ class ModelGeneratorTest extends GiiTestCase
     public function relationsProvider()
     {
         return [
-            ['category', 'Category.php', [
+            ['category', 'Category.php', false, [
                 [
                     'name' => 'function getCategoryPhotos()',
                     'relation' => "\$this->hasMany(CategoryPhoto::className(), ['category_id' => 'id']);",
@@ -70,14 +89,14 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
             ]],
-            ['category_photo', 'CategoryPhoto.php', [
+            ['category_photo', 'CategoryPhoto.php', false, [
                 [
                     'name' => 'function getCategory()',
                     'relation' => "\$this->hasOne(Category::className(), ['id' => 'category_id']);",
                     'expected' => true,
                 ],
             ]],
-            ['supplier', 'Supplier.php', [
+            ['supplier', 'Supplier.php', false, [
                 [
                     'name' => 'function getProducts()',
                     'relation' => "\$this->hasMany(Product::className(), ['supplier_id' => 'id']);",
@@ -99,7 +118,7 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
             ]],
-            ['product', 'Product.php', [
+            ['product', 'Product.php', false, [
                 [
                     'name' => 'function getSupplier()',
                     'relation' => "\$this->hasOne(Supplier::className(), ['id' => 'supplier_id']);",
@@ -116,7 +135,7 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
             ]],
-            ['product_language', 'ProductLanguage.php', [
+            ['product_language', 'ProductLanguage.php', false, [
                 [
                     'name' => 'function getSupplier()',
                     'relation' => "\$this->hasOne(Product::className(), ['supplier_id' => 'supplier_id', 'id' => 'id']);",
@@ -129,31 +148,45 @@ class ModelGeneratorTest extends GiiTestCase
                 ],
             ]],
 
-            ['organization', 'Organization.php', [
+            ['organization', 'Organization.php', false, [
                 [
                     'name' => 'function getIdentityProviders()',
                     'relation' => "\$this->hasMany(IdentityProvider::className(), ['organization_id' => 'id']);",
                     'expected' => true,
                 ],
             ]],
-            ['identity_provider', 'IdentityProvider.php', [
+            ['identity_provider', 'IdentityProvider.php', false, [
                 [
                     'name' => 'function getOrganization()',
                     'relation' => "\$this->hasOne(Organization::className(), ['id' => 'organization_id']);",
                     'expected' => true,
                 ],
             ]],
-            ['user_rtl', 'UserRtl.php', [
+            ['user_rtl', 'UserRtl.php', false, [
                 [
                     'name' => 'function getBlogRtls()',
                     'relation' => "\$this->hasMany(BlogRtl::className(), ['id_user' => 'id']);",
                     'expected' => true,
                 ],
             ]],
-            ['blog_rtl', 'BlogRtl.php', [
+            ['blog_rtl', 'BlogRtl.php', false, [
                 [
                     'name' => 'function getUser()',
                     'relation' => "\$this->hasOne(UserRtl::className(), ['id' => 'id_user']);",
+                    'expected' => true,
+                ],
+            ]],
+
+            // useClassConstant = true
+            ['category', 'Category.php', true, [
+                [
+                    'name' => 'function getCategoryPhotos()',
+                    'relation' => "\$this->hasMany(CategoryPhoto::class, ['category_id' => 'id']);",
+                    'expected' => true,
+                ],
+                [
+                    'name' => 'function getProduct()',
+                    'relation' => "\$this->hasOne(Product::class, ['category_id' => 'id', 'category_language_code' => 'language_code']);",
                     'expected' => true,
                 ],
             ]],
@@ -164,13 +197,15 @@ class ModelGeneratorTest extends GiiTestCase
      * @dataProvider relationsProvider
      * @param $tableName string
      * @param $fileName string
+     * @param $useClassConstant bool
      * @param $relations array
      */
-    public function testRelations($tableName, $fileName, $relations)
+    public function testRelations($tableName, $fileName, $useClassConstant, $relations)
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->generateRelationsFromCurrentSchema = false;
+        $generator->useClassConstant = $useClassConstant;
         $generator->tableName = $tableName;
 
         $files = $generator->generate();
@@ -201,18 +236,27 @@ class ModelGeneratorTest extends GiiTestCase
     public function rulesProvider()
     {
         return [
-            ['category_photo', 'CategoryPhoto.php', [
+            ['category_photo', 'CategoryPhoto.php', false, [
                 "[['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],",
                 "[['category_id', 'display_number'], 'unique', 'targetAttribute' => ['category_id', 'display_number']],",
             ]],
-            ['product', 'Product.php', [
+            ['product', 'Product.php', false, [
                 "[['supplier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::className(), 'targetAttribute' => ['supplier_id' => 'id']],",
                 "[['category_id', 'category_language_code'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id', 'category_language_code' => 'language_code']],",
                 "[['category_id', 'category_language_code'], 'unique', 'targetAttribute' => ['category_id', 'category_language_code']],"
             ]],
-            ['product_language', 'ProductLanguage.php', [
+            ['product_language', 'ProductLanguage.php', false, [
                 "[['supplier_id', 'id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['supplier_id' => 'supplier_id', 'id' => 'id']],",
                 "[['supplier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::className(), 'targetAttribute' => ['supplier_id' => 'id']],",
+                "[['supplier_id'], 'unique']",
+                "[['id', 'supplier_id', 'language_code'], 'unique', 'targetAttribute' => ['id', 'supplier_id', 'language_code']]",
+                "[['id', 'supplier_id'], 'unique', 'targetAttribute' => ['id', 'supplier_id']]",
+            ]],
+
+            // useClassConstant = true
+            ['product_language', 'ProductLanguage.php', true, [
+                "[['supplier_id', 'id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['supplier_id' => 'supplier_id', 'id' => 'id']],",
+                "[['supplier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::class, 'targetAttribute' => ['supplier_id' => 'id']],",
                 "[['supplier_id'], 'unique']",
                 "[['id', 'supplier_id', 'language_code'], 'unique', 'targetAttribute' => ['id', 'supplier_id', 'language_code']]",
                 "[['id', 'supplier_id'], 'unique', 'targetAttribute' => ['id', 'supplier_id']]",
@@ -225,13 +269,15 @@ class ModelGeneratorTest extends GiiTestCase
      *
      * @param $tableName string
      * @param $fileName string
+     * @param $useClassConstant bool
      * @param $rules array
      */
-    public function testRules($tableName, $fileName, $rules)
+    public function testRules($tableName, $fileName, $useClassConstant, $rules)
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->tableName = $tableName;
+        $generator->useClassConstant = $useClassConstant;
 
         $files = $generator->generate();
         $this->assertEquals(1, count($files));

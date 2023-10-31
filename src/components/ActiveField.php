@@ -1,8 +1,8 @@
 <?php
 /**
- * @link http://www.yiiframework.com/
+ * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
+ * @license https://www.yiiframework.com/license/
  */
 
 namespace yii\gii\components;
@@ -32,6 +32,7 @@ class ActiveField extends \yii\widgets\ActiveField
      */
     public function init()
     {
+        parent::init();
         $stickyAttributes = $this->model->stickyAttributes();
         if (in_array($this->attribute, $stickyAttributes, true)) {
             $this->sticky();

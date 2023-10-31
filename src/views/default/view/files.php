@@ -3,11 +3,11 @@
 use yii\gii\CodeFile;
 use yii\helpers\Html;
 
-/* @var $this \yii\web\View */
-/* @var $generator \yii\gii\Generator */
-/* @var $files CodeFile[] */
-/* @var $answers array */
-/* @var $id string panel ID */
+/** @var \yii\web\View $this */
+/** @var \yii\gii\Generator $generator */
+/** @var CodeFile[] $files */
+/** @var array $answers */
+/** @var string $id panel ID */
 
 ?>
 <div class="default-view-files">
@@ -85,7 +85,7 @@ use yii\helpers\Html;
                     if ($file->operation === CodeFile::OP_SKIP) {
                         echo '&nbsp;';
                     } else {
-                        echo Html::checkBox("answers[{$file->id}]", isset($answers) ? isset($answers[$file->id]) : ($file->operation === CodeFile::OP_CREATE));
+                        echo Html::checkbox("answers[{$file->id}]", isset($answers) ? isset($answers[$file->id]) : ($file->operation === CodeFile::OP_CREATE));
                     }
                     ?>
                 </td>
