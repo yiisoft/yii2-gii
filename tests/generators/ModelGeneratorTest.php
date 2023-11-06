@@ -169,7 +169,7 @@ class ModelGeneratorTest extends GiiTestCase
             ]],
             ['blog_rtl', 'BlogRtl.php', false, [
                 [
-                    'name' => 'function getUser()',
+                    'name' => 'function getUserRtl()',
                     'relation' => "\$this->hasOne(UserRtl::className(), ['id' => 'id_user']);",
                     'expected' => true,
                 ],
