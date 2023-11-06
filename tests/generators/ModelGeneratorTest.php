@@ -135,12 +135,12 @@ class ModelGeneratorTest extends GiiTestCase
             ]],
             ['product_language', 'ProductLanguage.php', false, [
                 [
-                    'name' => 'function getSupplier()',
+                    'name' => 'function getProduct()',
                     'relation' => "\$this->hasOne(Product::className(), ['supplier_id' => 'supplier_id', 'id' => 'id']);",
                     'expected' => true,
                 ],
                 [
-                    'name' => 'function getSupplier0()',
+                    'name' => 'function getSupplier()',
                     'relation' => "\$this->hasOne(Supplier::className(), ['id' => 'supplier_id']);",
                     'expected' => true,
                 ],
