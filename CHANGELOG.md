@@ -6,6 +6,7 @@ Yii Framework 2 gii extension Change Log
 
 - Bug #532: Return `ExitCode::USAGE` on command input validation error (egmsystems)
 - Enh #537: Generating rules for the fields with default values (manky)
+- Enh #542: Use the table name to create the relation (thiagotalma)
 
 
 2.2.6 May 22, 2023
