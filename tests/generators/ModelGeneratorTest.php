@@ -203,6 +203,7 @@ class ModelGeneratorTest extends GiiTestCase
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->generateRelationsFromCurrentSchema = false;
+        $generator->generateRelationNameFromDestinationTable = false;
         $generator->useClassConstant = $useClassConstant;
         $generator->tableName = $tableName;
 
