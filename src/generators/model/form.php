@@ -32,6 +32,7 @@ echo $form->field($generator, 'generateJunctionRelationMode')->dropDownList([
     Generator::JUNCTION_RELATION_VIA_MODEL => 'Via Model',
 ]);
 echo $form->field($generator, 'generateRelationsFromCurrentSchema')->checkbox();
+echo $form->field($generator, 'generateRelationNameFromDestinationTable')->checkbox();
 echo $form->field($generator, 'useClassConstant')->checkbox();
 echo $form->field($generator, 'generateLabelsFromComments')->checkbox();
 echo $form->field($generator, 'generateQuery')->checkbox();

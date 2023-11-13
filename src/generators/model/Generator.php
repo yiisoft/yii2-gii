@@ -52,6 +52,7 @@ class Generator extends \yii\gii\Generator
     public $generateJunctionRelationMode = self::JUNCTION_RELATION_VIA_TABLE;
     public $useClassConstant;
     public $generateRelationsFromCurrentSchema = true;
+    public $generateRelationNameFromDestinationTable = false;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
     public $standardizeCapitals = false;
@@ -130,7 +131,7 @@ class Generator extends \yii\gii\Generator
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
             [['generateJunctionRelationMode'], 'in', 'range' => [self::JUNCTION_RELATION_VIA_TABLE, self::JUNCTION_RELATION_VIA_MODEL]],
             [
-                ['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema', 'useClassConstant', 'enableI18N', 'standardizeCapitals', 'singularize'],
+                ['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema', 'generateRelationNameFromDestinationTable', 'useClassConstant', 'enableI18N', 'standardizeCapitals', 'singularize'],
                 'boolean'
             ],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
@@ -153,6 +154,7 @@ class Generator extends \yii\gii\Generator
             'generateRelations' => 'Generate Relations',
             'generateJunctionRelationMode' => 'Generate Junction Relations As',
             'generateRelationsFromCurrentSchema' => 'Generate Relations from Current Schema',
+            'generateRelationNameFromDestinationTable' => 'Generate Relations Name Using Destination Table Name',
             'useClassConstant' => 'Use `::class`',
             'generateLabelsFromComments' => 'Generate Labels from DB Comments',
             'generateQuery' => 'Generate ActiveQuery',
@@ -195,6 +197,7 @@ class Generator extends \yii\gii\Generator
                 Make sure you also generate the junction models when using the "Via Model" option.
             ',
             'generateRelationsFromCurrentSchema' => 'This indicates whether the generator should generate relations from current schema or from all available schemas.',
+            'generateRelationNameFromDestinationTable' => 'This indicates whether the relation name should reflect the target table name.',
             'useClassConstant' => 'Use the `::class` constant instead of the `::className()` method.',
             'generateLabelsFromComments' => 'This indicates whether the generator should generate attribute labels
                 by using the comments of the corresponding DB columns.',
@@ -438,21 +441,12 @@ class Generator extends \yii\gii\Generator
     {
         $types = [];
         $lengths = [];
-        $nullable = [];
-        $defaultValues = [];
         foreach ($table->columns as $column) {
             if ($column->autoIncrement) {
                 continue;
             }
             if (!$column->allowNull && $column->defaultValue === null) {
                 $types['required'][] = $column->name;
-            } elseif ($column->allowNull && $column->defaultValue === null) {
-                $nullable[] = $column->name;
-            } elseif (is_scalar($column->defaultValue)) {
-                if (array_key_exists($column->defaultValue, $defaultValues)) {
-                    $defaultValues[$column->defaultValue] = [];
-                }
-                $defaultValues[$column->defaultValue][] = $column->name;
             }
             switch ($column->type) {
                 case Schema::TYPE_SMALLINT:
@@ -486,15 +480,6 @@ class Generator extends \yii\gii\Generator
             }
         }
         $rules = [];
-        if (!empty($nullable)) {
-            $rules[] = "[['" . implode("', '", $nullable) . "'], 'default', 'value' => null]";
-        }
-        if (!empty($defaultValues)) {
-            foreach ($defaultValues as $defaultValue => $defaultValueColumns) {
-                $defaultValue = is_numeric($defaultValue) ? $defaultValue : "'$defaultValue'";
-                $rules[] = "[['" . implode("', '", $defaultValueColumns) . "'], 'default', 'value' => $defaultValue]";
-            }
-        }
         $driverName = $this->getDbDriverName();
         foreach ($types as $type => $columns) {
             if ($driverName === 'pgsql' && $type === 'integer') {
@@ -700,9 +685,9 @@ class Generator extends \yii\gii\Generator
                         // Foreign key could point to non-existing table: https://github.com/yiisoft/yii2-gii/issues/34
                         continue;
                     }
-                    $relName = $refs[0];
                     unset($refs[0]);
                     $fks = array_keys($refs);
+                    $relName = $this->generateRelationNameFromDestinationTable ? $refTable : $fks[0];
                     $refClassName = $this->generateClassName($refTable);
                     $refClassNameResolution = $this->generateClassNameResolution($refClassName);
 
