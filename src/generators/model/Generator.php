@@ -154,7 +154,7 @@ class Generator extends \yii\gii\Generator
             'generateRelations' => 'Generate Relations',
             'generateJunctionRelationMode' => 'Generate Junction Relations As',
             'generateRelationsFromCurrentSchema' => 'Generate Relations from Current Schema',
-            'generateRelationNameFromDestinationTable' => 'Generate Relations Name Using Destination Table Name',
+            'generateRelationNameFromDestinationTable' => 'Generate Relation Names Using Target Table Name',
             'useClassConstant' => 'Use `::class`',
             'generateLabelsFromComments' => 'Generate Labels from DB Comments',
             'generateQuery' => 'Generate ActiveQuery',
@@ -197,7 +197,7 @@ class Generator extends \yii\gii\Generator
                 Make sure you also generate the junction models when using the "Via Model" option.
             ',
             'generateRelationsFromCurrentSchema' => 'This indicates whether the generator should generate relations from current schema or from all available schemas.',
-            'generateRelationNameFromDestinationTable' => 'This indicates whether the relation name should reflect the target table name.',
+            'generateRelationNameFromDestinationTable' => 'This indicates whether the relation names should use target table name.',
             'useClassConstant' => 'Use the `::class` constant instead of the `::className()` method.',
             'generateLabelsFromComments' => 'This indicates whether the generator should generate attribute labels
                 by using the comments of the corresponding DB columns.',
