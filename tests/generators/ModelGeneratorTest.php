@@ -220,6 +220,7 @@ class ModelGeneratorTest extends GiiTestCase
      * @param $fileName string
      * @param $useClassConstant bool
      * @param $relations array
+     * @param $fromDestTable bool
      */
     public function testRelations($tableName, $fileName, $useClassConstant, $relations, $fromDestTable = false)
     {
