@@ -36,6 +36,7 @@ class GenerateAction extends \yii\base\Action
             $this->generateCode();
         } else {
             $this->displayValidationErrors();
+            return \yii\console\ExitCode::USAGE;
         }
     }
 
