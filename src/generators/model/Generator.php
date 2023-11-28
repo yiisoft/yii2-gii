@@ -53,6 +53,7 @@ class Generator extends \yii\gii\Generator
     public $generateJunctionRelationMode = self::JUNCTION_RELATION_VIA_TABLE;
     public $useClassConstant;
     public $generateRelationsFromCurrentSchema = true;
+    public $generateRelationNameFromDestinationTable = false;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
     public $standardizeCapitals = false;
@@ -131,7 +132,7 @@ class Generator extends \yii\gii\Generator
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
             [['generateJunctionRelationMode'], 'in', 'range' => [self::JUNCTION_RELATION_VIA_TABLE, self::JUNCTION_RELATION_VIA_MODEL]],
             [
-                ['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema', 'useClassConstant', 'enableI18N', 'standardizeCapitals', 'singularize'],
+                ['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery', 'generateRelationsFromCurrentSchema', 'generateRelationNameFromDestinationTable', 'useClassConstant', 'enableI18N', 'standardizeCapitals', 'singularize'],
                 'boolean'
             ],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
@@ -154,6 +155,7 @@ class Generator extends \yii\gii\Generator
             'generateRelations' => 'Generate Relations',
             'generateJunctionRelationMode' => 'Generate Junction Relations As',
             'generateRelationsFromCurrentSchema' => 'Generate Relations from Current Schema',
+            'generateRelationNameFromDestinationTable' => 'Generate Relation Names Using Target Table Name',
             'useClassConstant' => 'Use `::class`',
             'generateLabelsFromComments' => 'Generate Labels from DB Comments',
             'generateQuery' => 'Generate ActiveQuery',
@@ -196,6 +198,7 @@ class Generator extends \yii\gii\Generator
                 Make sure you also generate the junction models when using the "Via Model" option.
             ',
             'generateRelationsFromCurrentSchema' => 'This indicates whether the generator should generate relations from current schema or from all available schemas.',
+            'generateRelationNameFromDestinationTable' => 'This indicates whether the relation names should use target table name.',
             'useClassConstant' => 'Use the `::class` constant instead of the `::className()` method.',
             'generateLabelsFromComments' => 'This indicates whether the generator should generate attribute labels
                 by using the comments of the corresponding DB columns.',
@@ -709,12 +712,13 @@ class Generator extends \yii\gii\Generator
                     }
                     unset($refs[0]);
                     $fks = array_keys($refs);
+                    $relName = $this->generateRelationNameFromDestinationTable ? $refTable : $fks[0];
                     $refClassName = $this->generateClassName($refTable);
                     $refClassNameResolution = $this->generateClassNameResolution($refClassName);
 
                     // Add relation for this table
                     $link = $this->generateRelationLink(array_flip($refs));
-                    $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
+                    $relationName = $this->generateRelationName($relations, $table, $relName, false);
                     $relations[$table->fullName][$relationName] = [
                         "return \$this->hasOne($refClassNameResolution, $link);",
                         $refClassName,

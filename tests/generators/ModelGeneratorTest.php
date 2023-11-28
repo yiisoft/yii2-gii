@@ -147,6 +147,20 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
             ]],
+            ['product_language', 'ProductLanguage.php', false, [
+                [
+                    'name' => 'function getProduct()',
+                    'relation' => "\$this->hasOne(Product::className(), ['supplier_id' => 'supplier_id', 'id' => 'id']);",
+                    'expected' => true,
+                ],
+                [
+                    'name' => 'function getSupplier()',
+                    'relation' => "\$this->hasOne(Supplier::className(), ['id' => 'supplier_id']);",
+                    'expected' => true,
+                ],
+            ],
+             true // $fromDestTable
+            ],
 
             ['organization', 'Organization.php', false, [
                 [
@@ -176,6 +190,15 @@ class ModelGeneratorTest extends GiiTestCase
                     'expected' => true,
                 ],
             ]],
+            ['blog_rtl', 'BlogRtl.php', false, [
+                [
+                    'name' => 'function getUserRtl()',
+                    'relation' => "\$this->hasOne(UserRtl::className(), ['id' => 'id_user']);",
+                    'expected' => true,
+                ],
+            ],
+             true
+            ],
 
             // useClassConstant = true
             ['category', 'Category.php', true, [
@@ -199,12 +222,14 @@ class ModelGeneratorTest extends GiiTestCase
      * @param $fileName string
      * @param $useClassConstant bool
      * @param $relations array
+     * @param $fromDestTable bool
      */
-    public function testRelations($tableName, $fileName, $useClassConstant, $relations)
+    public function testRelations($tableName, $fileName, $useClassConstant, $relations, $fromDestTable = false)
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->generateRelationsFromCurrentSchema = false;
+        $generator->generateRelationNameFromDestinationTable = $fromDestTable;
         $generator->useClassConstant = $useClassConstant;
         $generator->tableName = $tableName;
 
