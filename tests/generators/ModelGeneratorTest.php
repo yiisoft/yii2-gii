@@ -1,6 +1,8 @@
 <?php
 namespace yiiunit\gii\generators;
 
+use yii\db\mysql\ColumnSchema;
+use yii\db\TableSchema;
 use yii\gii\generators\model\Generator as ModelGenerator;
 use yiiunit\gii\GiiTestCase;
 
@@ -483,5 +485,112 @@ class ModelGeneratorTest extends GiiTestCase
             );
         }
 
+    }
+
+    public function testEnum()
+    {
+        $generator = new ModelGenerator();
+        $generator->template = 'default';
+        $generator->tableName = 'category_photo';
+
+        $tableSchema = $this->createEnumTableSchema();
+        $params = [
+            'tableName' => $tableSchema->name,
+            'className' => 'TestEnumModel',
+            'queryClassName' => false,
+            'tableSchema' => $tableSchema,
+            'properties' => [],
+            'labels' => $generator->generateLabels($tableSchema),
+            'rules' => $generator->generateRules($tableSchema),
+            'relations' => [],
+            'relationsClassHints' => [],
+            'enum' => $generator->getEnum($tableSchema->columns),
+        ];
+        $codeFile = $generator->render('model.php', $params);
+
+        /**
+         * Fix class code for eval - remove ?php, namespace and use Yii
+         */
+        $classCode = str_replace('<?php', '', $codeFile);
+        $classCode = str_replace('namespace app\models;', '', $classCode);
+        $classCode = str_replace('use Yii;', '', $classCode);
+
+        /**
+         * Add method getTableSchema for setting test schema
+         */
+        $classCode = substr($classCode, 0, strrpos($classCode, "\n"));
+        $classCode = substr($classCode, 0, strrpos($classCode, "\n"));
+        $classCode .= '
+    public static $testTableSchema;
+    public static function getTableSchema(){
+        return self::$testTableSchema;
+    }
+}
+        ';
+        if (!class_exists('TestEnumModel')) {
+            eval($classCode);
+        }
+
+        $testEnumModel = new \TestEnumModel();
+        $testEnumModel::$testTableSchema = $this->createEnumTableSchema();
+
+        /** test assigning and method is... */
+        $testEnumModel->type = \TestEnumModel::TYPE_CLIENT;
+        $this->assertTrue($testEnumModel->isTypeClient());
+        $this->assertFalse($testEnumModel->isTypeConsignees());
+
+        $testEnumModel->type = \TestEnumModel::TYPE_CONSIGNEES;
+        $this->assertFalse($testEnumModel->isTypeClient());
+        $this->assertTrue($testEnumModel->isTypeConsignees());
+        $this->assertEquals(\TestEnumModel::TYPE_CONSIGNEES,$testEnumModel->displayType());
+
+        /** test validate */
+        $this->assertTrue($testEnumModel->validate());
+        $testEnumModel->type = '11111';
+        $this->assertFalse($testEnumModel->validate());
+
+    }
+
+    public function createEnumTableSchema()
+    {
+        $schema = new TableSchema();
+        $schema->name = 'company_type';
+        $schema->fullName = 'company_type';
+        $schema->primaryKey = ['id'];
+        $schema->columns = [
+            'id' => new ColumnSchema([
+                'name' => 'id',
+                'allowNull' => false,
+                'type' => 'smallint',
+                'phpType' => 'integer',
+                'dbType' => 'smallint(5) unsigned',
+                'size' => 5,
+                'precision' => 5,
+                'isPrimaryKey' => true,
+                'autoIncrement' => true,
+                'unsigned' => true,
+                'comment' => ''
+            ]),
+            'type' => new ColumnSchema([
+                'name' => 'type',
+                'allowNull' => true,
+                'type' => 'string',
+                'phpType' => 'string',
+                'dbType' => 'enum(\'Client\',\'Consignees\',\'Car cleaner\')',
+                'enumValues' => [
+                    0 => 'Client',
+                    1 => 'Consignees',
+                    2 => 'Car cleaner',
+                ],
+                'size' => null,
+                'precision' => null,
+                'isPrimaryKey' => false,
+                'autoIncrement' => false,
+                'unsigned' => false,
+                'comment' => ''
+            ]),
+        ];
+
+        return $schema;
     }
 }
