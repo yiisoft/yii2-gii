@@ -38,6 +38,7 @@ use yii\data\ActiveDataProvider;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
@@ -47,7 +48,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     /**
      * @inheritDoc
      */
-    public function behaviors()
+    public function behaviors() : array
     {
         return array_merge(
             parent::behaviors(),
@@ -67,7 +68,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex() : string
     {
 <?php if (!empty($generator->searchModelClass)): ?>
         $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
@@ -106,7 +107,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView(<?= $actionParams ?>)
+    public function actionView(<?= $actionParams ?>) : string
     {
         return $this->render('view', [
             'model' => $this->findModel(<?= $actionParams ?>),
@@ -116,9 +117,9 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     /**
      * Creates a new <?= $modelClass ?> model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
-    public function actionCreate()
+    public function actionCreate() : string|Response
     {
         $model = new <?= $modelClass ?>();
 
@@ -139,10 +140,10 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * Updates an existing <?= $modelClass ?> model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate(<?= $actionParams ?>)
+    public function actionUpdate(<?= $actionParams ?>) : string|Response
     {
         $model = $this->findModel(<?= $actionParams ?>);
 
@@ -159,10 +160,10 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * Deletes an existing <?= $modelClass ?> model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return \yii\web\Response
+     * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete(<?= $actionParams ?>)
+    public function actionDelete(<?= $actionParams ?>) : Response
     {
         $this->findModel(<?= $actionParams ?>)->delete();
 
@@ -176,7 +177,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * @return <?= $modelClass ?> the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(<?= $actionParams ?>)
+    protected function findModel(<?= $actionParams ?>) : <?= $modelClass ?>
     {
 <?php
 $condition = [];

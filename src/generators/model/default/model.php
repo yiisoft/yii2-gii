@@ -20,8 +20,7 @@ echo "<?php\n";
 
 namespace <?= $generator->ns ?>;
 
-use Yii;
-
+use \yii\db\Connection;
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
  *
@@ -54,16 +53,16 @@ endif
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName() : string
     {
         return '<?= $generator->generateTableName($tableName) ?>';
     }
 <?php if ($generator->db !== 'db'): ?>
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
-    public static function getDb()
+    public static function getDb() : Connection
     {
         return Yii::$app->get('<?= $generator->db ?>');
     }
@@ -72,7 +71,7 @@ endif
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [<?= empty($rules) ? '' : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>];
     }
@@ -80,7 +79,7 @@ endif
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
 <?php foreach ($labels as $name => $label): ?>
@@ -95,7 +94,7 @@ endif
      *
      * @return <?= $relationsClassHints[$name] . "\n" ?>
      */
-    public function get<?= $name ?>()
+    public function get<?= $name ?>() : <?= $relationsClassHints[$name] ?>
     {
         <?= $relation[0] . "\n" ?>
     }
@@ -109,7 +108,7 @@ endif
      * {@inheritdoc}
      * @return <?= $queryClassFullName ?> the active query used by this AR class.
      */
-    public static function find()
+    public static function find() : <?= $queryClassFullName ?>
     {
         return new <?= $queryClassFullName ?>(get_called_class());
     }
@@ -122,7 +121,7 @@ endif
      * column <?= $columnName ?> ENUM value labels
      * @return string[]
      */
-    public static function <?= $columnData['funcOptsName'] ?>()
+    public static function <?= $columnData['funcOptsName'] ?>() : array
     {
         return [
 <?php         foreach ($columnData['values'] as $k => $value): ?>
@@ -142,7 +141,7 @@ endif
     /**
      * @return string
      */
-    public function <?= $columnData['displayFunctionPrefix'] ?>()
+    public function <?= $columnData['displayFunctionPrefix'] ?>() : string
     {
         return self::<?= $columnData['funcOptsName'] ?>()[$this-><?=$columnName?>];
     }
@@ -151,7 +150,7 @@ endif
     /**
      * @return bool
      */
-    public function <?= $columnData['isFunctionPrefix'] . $enumValue['functionSuffix'] ?>()
+    public function <?= $columnData['isFunctionPrefix'] . $enumValue['functionSuffix'] ?>() : bool
     {
         return $this-><?= $columnName ?> === self::<?= $enumValue['constName'] ?>;
     }
