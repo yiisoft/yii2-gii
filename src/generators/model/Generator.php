@@ -310,9 +310,12 @@ class Generator extends \yii\gii\Generator
                 'relationsClassHints' => $this->generateRelationsClassHints($tableRelations, $this->generateQuery),
                 'enum' => $this->getEnum($tableSchema->columns),
             ];
+
+            $template = phpversion() < '7' ? 'model.php': 'model_from_7.php';
+
             $files[] = new CodeFile(
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
-                $this->render('model.php', $params)
+                $this->render($template, $params)
             );
 
             // query:
