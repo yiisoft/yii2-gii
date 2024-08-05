@@ -14,6 +14,7 @@
 /** @var string[] $labels list of attribute labels (name => label) */
 /** @var string[] $rules list of validation rules */
 /** @var array $relations list of relations (name => relation declaration) */
+/** @var array $relationsClassHints */
 
 echo "<?php\n";
 ?>
