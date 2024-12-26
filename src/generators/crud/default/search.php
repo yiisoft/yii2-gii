@@ -57,10 +57,11 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
      * Creates data provider instance with search query applied
      *
      * @param array $params
+     * @param string $formName Form name to be used into `->load()` method. By default it is equal to the class name.
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $formName = '<?= $searchModelClass ?>')
     {
         $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
 
@@ -70,7 +71,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $this->load($params, $formName);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
