@@ -3,7 +3,7 @@ Yii Framework 2 gii extension Change Log
 
 2.2.7 under development
 -----------------------
-- Bug #551: Add optional parameter `$formName` to `SearchModel::search()` method (evil1)
+- Enh #551: Add optional parameter `$formName` to `SearchModel::search()` method (evil1)
 - Bug #531: Fix `yii\gii\console\GenerateAction` to use `stdout()` instead of echoing the output (egmsystems)
 - Bug #532: Return `ExitCode::USAGE` on command input validation error (egmsystems)
 - Enh #537: Generating rules for the fields with default values (manky)
