@@ -57,7 +57,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
      * Creates data provider instance with search query applied
      *
      * @param array $params
-     * @param string $formName Form name to be used into `->load()` method.
+     * @param string|null $formName Form name to be used into `->load()` method.
      *
      * @return ActiveDataProvider
      */
