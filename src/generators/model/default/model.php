@@ -3,6 +3,7 @@
  * This is the template for generating the model class of a specified table.
  */
 
+/** @var $enum array list of ENUM fields */
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\model\Generator $generator */
 /** @var string $tableName full table name */
@@ -13,6 +14,7 @@
 /** @var string[] $labels list of attribute labels (name => label) */
 /** @var string[] $rules list of validation rules */
 /** @var array $relations list of relations (name => relation declaration) */
+/** @var array $relationsClassHints */
 
 echo "<?php\n";
 ?>
@@ -36,6 +38,20 @@ use Yii;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+
+<?php if (!empty($enum)): ?>
+    /**
+     * ENUM field values
+     */
+<?php
+    foreach($enum as $columnName => $columnData) {
+        foreach ($columnData['values'] as $enumValue){
+            echo '    const ' . $enumValue['constName'] . ' = \'' . $enumValue['value'] . '\';' . PHP_EOL;
+        }
+    }
+endif
+?>
+
     /**
      * {@inheritdoc}
      */
@@ -98,5 +114,54 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         return new <?= $queryClassFullName ?>(get_called_class());
     }
+<?php endif; ?>
+
+<?php if ($enum): ?>
+<?php     foreach ($enum as $columnName => $columnData): ?>
+
+    /**
+     * column <?= $columnName ?> ENUM value labels
+     * @return string[]
+     */
+    public static function <?= $columnData['funcOptsName'] ?>()
+    {
+        return [
+<?php         foreach ($columnData['values'] as $k => $value): ?>
+<?php
+        if ($generator->enableI18N) {
+            echo '            self::' . $value['constName'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
+        } else {
+            echo '            self::' . $value['constName'] . ' => \'' . $value['value'] . "',\n";
+        }
+    ?>
+<?php         endforeach; ?>
+        ];
+    }
+<?php     endforeach; ?>
+<?php     foreach ($enum as $columnName => $columnData): ?>
+
+    /**
+     * @return string
+     */
+    public function <?= $columnData['displayFunctionPrefix'] ?>()
+    {
+        return self::<?= $columnData['funcOptsName'] ?>()[$this-><?=$columnName?>];
+    }
+<?php         foreach ($columnData['values'] as $enumValue): ?>
+
+    /**
+     * @return bool
+     */
+    public function <?= $columnData['isFunctionPrefix'] . $enumValue['functionSuffix'] ?>()
+    {
+        return $this-><?= $columnName ?> === self::<?= $enumValue['constName'] ?>;
+    }
+
+    public function <?= $columnData['setFunctionPrefix'] . $enumValue['functionSuffix'] ?>()
+    {
+        $this-><?= $columnName ?> = self::<?= $enumValue['constName'] ?>;
+    }
+<?php         endforeach; ?>
+<?php     endforeach; ?>
 <?php endif; ?>
 }

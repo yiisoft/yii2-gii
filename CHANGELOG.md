@@ -3,10 +3,12 @@ Yii Framework 2 gii extension Change Log
 
 2.2.7 under development
 -----------------------
-
+- Enh #551: Add optional parameter `$formName` to `SearchModel::search()` method (evil1)
+- Bug #531: Fix `yii\gii\console\GenerateAction` to use `stdout()` instead of echoing the output (egmsystems)
 - Bug #532: Return `ExitCode::USAGE` on command input validation error (egmsystems)
 - Enh #537: Generating rules for the fields with default values (manky)
 - Enh #542: Use the table name to create the relation (thiagotalma)
+- Enh #534: Generating in model ENUM fields value constants, setter and getter methods (uldisn)
 
 
 2.2.6 May 22, 2023

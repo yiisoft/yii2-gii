@@ -44,9 +44,9 @@ class GenerateAction extends \yii\base\Action
     {
         $this->controller->stdout("Code not generated. Please fix the following errors:\n\n", Console::FG_RED);
         foreach ($this->generator->errors as $attribute => $errors) {
-            echo ' - ' . $this->controller->ansiFormat($attribute, Console::FG_CYAN) . ': ' . implode('; ', $errors) . "\n";
+            $this->controller->stdout(' - ' . $this->controller->ansiFormat($attribute, Console::FG_CYAN) . ': ' . implode('; ', $errors) . "\n");
         }
-        echo "\n";
+        $this->controller->stdout("\n");
     }
 
     protected function generateCode()
