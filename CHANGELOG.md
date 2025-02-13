@@ -9,6 +9,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #537: Generating rules for the fields with default values (manky)
 - Enh #542: Use the table name to create the relation (thiagotalma)
 - Enh #534: Generating in model ENUM fields value constants, setter and getter methods (uldisn)
+- Bug #545: Fix CRUD for non-relational databases (spzgy)
 
 
 2.2.6 May 22, 2023
