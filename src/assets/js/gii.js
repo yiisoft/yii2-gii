@@ -292,6 +292,39 @@ yii.gii = (function ($) {
                     $idInput.val(value[1]);
                 }
             });
+
+            /**
+             * Update value or inner HTML of target tag on field change by AJAX request to generator's action.
+             * Required field attributes:
+             *
+             * - `data-ajax-action` - URL to generator action
+             * - `data-ajax-target` - CSS selector to save action result as field value or inner HTML
+             *
+             * Use `Url::to()` to generate action URL in form view. For example: if generator ID is `demo` and action
+             * is `actionToDo()`, then action URL is `Url::to(['default/action', 'id' => 'demo', 'name' => 'ToDo'])`.
+             */
+            $('#form-fields').on('change', '.form-control[data-ajax-action][data-ajax-target]', function () {
+                var $field = $(this),
+                    $target = $($field.data('ajax-target'));
+                if ($target.length < 1) {
+                    alert('Target element not exists');
+                } else {
+                    var targetIsField = $.inArray($target.tagName, ['INPUT', 'SELECT']) !== -1;
+                    if (!targetIsField || $target.val() === '') {
+                        $.post(
+                            $field.data('ajax-action'),
+                            $field.parents('form').serializeArray(),
+                            function (response) {
+                                if (targetIsField) {
+                                    $target.val(response).blur();
+                                } else {
+                                    $target.html(response);
+                                }
+                            }
+                        );
+                    }
+                }
+            });
         }
     };
 })(jQuery);
