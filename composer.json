@@ -42,11 +42,6 @@
             "yiiunit\\gii\\": "tests"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "22.0.x-dev"
-        }
-    },
     "config": {
         "process-timeout": 1800,
         "fxp-asset": {
