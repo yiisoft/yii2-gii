@@ -35,6 +35,42 @@ class Generator extends \yii\gii\Generator
     const JUNCTION_RELATION_VIA_TABLE = 'table';
     const JUNCTION_RELATION_VIA_MODEL = 'model';
 
+    const  SYMBOLS_ABBREVIATION = [
+        '!' => 'exclamation',
+        '@' => 'at',
+        '#' => 'number',
+        '$' => 'dollar',
+        '%' => 'percent',
+        '^' => 'caret',
+        '&' => 'and',
+        '*' => 'asterisk',
+        '(' => 'open_parenthesis',
+        ')' => 'close_parenthesis',
+        '-' => 'dash',
+        '_' => 'underscore',
+        '=' => 'equals',
+        '+' => 'plus',
+        '{' => 'open_curly_brace',
+        '}' => 'close_curly_brace',
+        '[' => 'open_square_bracket',
+        ']' => 'close_square_bracket',
+        '|' => 'pipe',
+        '\\' => 'backslash',
+        '/' => 'forward_slash',
+        ':' => 'colon',
+        ';' => 'semicolon',
+        '"' => 'double_quote',
+        '\'' => 'single_quote',
+        '<' => 'less_than',
+        '>' => 'greater_than',
+        ',' => 'comma',
+        '.' => 'dot',
+        '?' => 'question_mark',
+        '~' => 'tilde',
+        '`' => 'backtick'
+    ];
+
+
     public $db = 'db';
     public $ns = 'app\models';
     /**
@@ -1218,8 +1254,12 @@ class Generator extends \yii\gii\Generator
             $enum[$column->name]['columnName'] = $column->name;
             $enum[$column->name]['values'] = [];
 
-            foreach ($column->enumValues as $value) {
+            $abbreviations = array_map(function($item) {
+                return ' ' . $item . ' ';
+            }, self::SYMBOLS_ABBREVIATION);
 
+            foreach ($column->enumValues as $value) {
+                $value = strtr($value, $abbreviations);
                 $constantName = strtoupper(Inflector::slug($column->name . ' ' . $value, '_'));
                 $label = Inflector::camel2words($value);
 

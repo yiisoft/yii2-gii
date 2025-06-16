@@ -544,6 +544,12 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertTrue($testEnumModel->isTypeConsignees());
         $this->assertEquals(\TestEnumModel::TYPE_CONSIGNEES,$testEnumModel->displayType());
 
+        /** test enum value with symbols */
+        $testEnumModel->type = \TestEnumModel::TYPE_B_PLUS;
+        $this->assertTrue($testEnumModel->isTypeBPlus());
+        $this->assertFalse($testEnumModel->isTypeConsignees());
+
+
         /** test validate */
         $this->assertTrue($testEnumModel->validate());
         $testEnumModel->type = '11111';
@@ -576,7 +582,7 @@ class ModelGeneratorTest extends GiiTestCase
                 'allowNull' => true,
                 'type' => 'string',
                 'phpType' => 'string',
-                'dbType' => 'enum(\'Client\',\'Consignees\',\'Car cleaner\')',
+                'dbType' => 'enum(\'Client\',\'Consignees\',\'Car cleaner\',\'B +\')',
                 'enumValues' => [
                     0 => 'Client',
                     1 => 'Consignees',
