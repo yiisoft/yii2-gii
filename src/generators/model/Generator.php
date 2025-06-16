@@ -47,7 +47,7 @@ class Generator extends \yii\gii\Generator
         '(' => 'open_parenthesis',
         ')' => 'close_parenthesis',
         '-' => 'dash',
-        '_' => 'underscore',
+//        '_' => 'underscore',
         '=' => 'equals',
         '+' => 'plus',
         '{' => 'open_curly_brace',
@@ -1241,6 +1241,10 @@ class Generator extends \yii\gii\Generator
     public function getEnum($columns)
     {
         $enum = [];
+        $abbreviations = array_map(function($item) {
+            return ' ' . $item . ' ';
+        }, self::SYMBOLS_ABBREVIATION);
+
         foreach ($columns as $column) {
             if (!$this->isEnum($column)) {
                 continue;
@@ -1254,20 +1258,16 @@ class Generator extends \yii\gii\Generator
             $enum[$column->name]['columnName'] = $column->name;
             $enum[$column->name]['values'] = [];
 
-            $abbreviations = array_map(function($item) {
-                return ' ' . $item . ' ';
-            }, self::SYMBOLS_ABBREVIATION);
-
             foreach ($column->enumValues as $value) {
-                $value = strtr($value, $abbreviations);
-                $constantName = strtoupper(Inflector::slug($column->name . ' ' . $value, '_'));
+                $valueForName = strtr($value, $abbreviations);
+                $constantName = strtoupper(Inflector::slug($column->name . ' ' . $valueForName, '_'));
                 $label = Inflector::camel2words($value);
 
                 $enum[$column->name]['values'][] = [
                     'value' => $value,
                     'constName' => $constantName,
                     'label' => $label,
-                    'functionSuffix' => Inflector::id2camel(Inflector::slug($value))
+                    'functionSuffix' => Inflector::id2camel(Inflector::slug($valueForName))
                 ];
             }
         }
