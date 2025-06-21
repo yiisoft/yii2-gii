@@ -1254,12 +1254,17 @@ class Generator extends \yii\gii\Generator
             $enum[$column->name]['displayFunctionPrefix'] = 'display' . $columnCamelName;
             $enum[$column->name]['columnName'] = $column->name;
             $enum[$column->name]['values'] = [];
-
+            $enumConstantNames = [];
             foreach ($column->enumValues as $value) {
                 $valueForName = strtr($value, $abbreviations);
+                /** special case for replacing "-" to "minus"  */
+                $valueForName = preg_replace('#( -|-$)#',' minus ', $valueForName);
                 $constantName = strtoupper(Inflector::slug($column->name . ' ' . $valueForName, '_'));
                 $label = Inflector::camel2words($value);
-
+                if (in_array($constantName, $enumConstantNames, true)) {
+                    $this->addError('tableName', "Enum column '{$column->name}' has generated duplicate constant name '{$constantName}' for enum value '{$value}'.");
+                }
+                $enumConstantNames[] = $constantName;
                 $enum[$column->name]['values'][] = [
                     'value' => $value,
                     'constName' => $constantName,
