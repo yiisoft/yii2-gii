@@ -35,7 +35,7 @@ class Generator extends \yii\gii\Generator
     const JUNCTION_RELATION_VIA_TABLE = 'table';
     const JUNCTION_RELATION_VIA_MODEL = 'model';
 
-    const  SYMBOLS_ABBREVIATION = [
+    const SYMBOLS_ABBREVIATION = [
         '!' => 'exclamation',
         '@' => 'at',
         '#' => 'number',
@@ -46,8 +46,6 @@ class Generator extends \yii\gii\Generator
         '*' => 'asterisk',
         '(' => 'open_parenthesis',
         ')' => 'close_parenthesis',
-        '-' => 'dash',
-//        '_' => 'underscore',
         '=' => 'equals',
         '+' => 'plus',
         '{' => 'open_curly_brace',
@@ -69,7 +67,6 @@ class Generator extends \yii\gii\Generator
         '~' => 'tilde',
         '`' => 'backtick'
     ];
-
 
     public $db = 'db';
     public $ns = 'app\models';

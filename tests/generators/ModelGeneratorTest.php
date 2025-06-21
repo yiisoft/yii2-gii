@@ -545,6 +545,7 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertEquals(\TestEnumModel::TYPE_CONSIGNEES,$testEnumModel->displayType());
 
         /** test enum value with symbols */
+        $this->assertTrue(defined('\TestEnumModel::TYPE_B_PLUS'), 'Constant TYPE_B_PLUS should be defined. ' . $classCode);
         $testEnumModel->type = \TestEnumModel::TYPE_B_PLUS;
         $this->assertTrue($testEnumModel->isTypeBPlus());
         $this->assertFalse($testEnumModel->isTypeConsignees());
