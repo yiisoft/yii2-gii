@@ -35,7 +35,7 @@ class Generator extends \yii\gii\Generator
     const JUNCTION_RELATION_VIA_TABLE = 'table';
     const JUNCTION_RELATION_VIA_MODEL = 'model';
 
-    const SYMBOLS_ABBREVIATION = [
+    public $symbolsAbbrevation = [
         '!' => 'exclamation',
         '@' => 'at',
         '#' => 'number',
@@ -1240,7 +1240,7 @@ class Generator extends \yii\gii\Generator
         $enum = [];
         $abbreviations = array_map(function($item) {
             return ' ' . $item . ' ';
-        }, self::SYMBOLS_ABBREVIATION);
+        }, $this->symbolsAbbrevation);
 
         foreach ($columns as $column) {
             if (!$this->isEnum($column)) {
