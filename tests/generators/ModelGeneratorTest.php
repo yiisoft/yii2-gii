@@ -562,7 +562,7 @@ class ModelGeneratorTest extends GiiTestCase
 
         $this->assertTrue(defined('\TestEnumModel::TYPE_MINUS_A'), 'Constant TYPE_MINUS_A should be defined. ' . $classCode);
         $testEnumModel->type = \TestEnumModel::TYPE_MINUS_A;
-        $this->assertTrue($testEnumModel->isTypeABar());
+        $this->assertTrue($testEnumModel->isTypeMinusA());
         $this->assertFalse($testEnumModel->isTypeConsignees());
 
 
