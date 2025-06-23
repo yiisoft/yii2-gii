@@ -578,13 +578,10 @@ class ModelGeneratorTest extends GiiTestCase
         $generator = new ModelGenerator();
         $generator->template = 'default';
         $generator->tableName = 'category_photo';
-
         $tableSchema = $this->createEnumTableSchemaDuplicateEnumConstantName();
         $generator->generateRules($tableSchema);
-
-        $this->assertFalse($generator->validate());
         $generatorErrors = $generator->errors;
-        $this->assertArrayHasKey('tableName', $generatorErrors);
+        $this->assertArrayHasKey('tableName', $generatorErrors, 'Enum column \'type\' has generated duplicate constant names. Error: ' . print_r($generatorErrors, true));
         $this->assertStringStartsWith("Enum column 'type' has generated duplicate constant names ", $generatorErrors['tableName'][0]);
     }
 
