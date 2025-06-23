@@ -1241,7 +1241,7 @@ class Generator extends \yii\gii\Generator
         $abbreviations = array_map(function($item) {
             return ' ' . $item . ' ';
         }, $this->symbolsAbbrevation);
-
+        $enumConstantNames = [];
         foreach ($columns as $column) {
             if (!$this->isEnum($column)) {
                 continue;
@@ -1256,15 +1256,29 @@ class Generator extends \yii\gii\Generator
             $enum[$column->name]['values'] = [];
             $enumConstantNames = [];
             foreach ($column->enumValues as $value) {
+
+                /**
+                 * Replaces all non-alphabetical symbols with their respective names.
+                 * Exceptions:
+                 * - "_" and " " - considered as separators
+                 * - "-" - treated as a special case and processed in the next statement
+                 */
                 $valueForName = strtr($value, $abbreviations);
-                /** special case for replacing "-" to "minus"  */
-                $valueForName = preg_replace('#( -|-$)#',' minus ', $valueForName);
+
+                /**
+                 * Replaces "-" with "minus":
+                 *  - if "-" is at the beginning of the string
+                 *  - if "space" precedes "-"
+                 *  - if "-" is at the end of the string
+                 * In all other cases, it is treated as a separator.
+                 */
+                $valueForName = preg_replace('#^-| -|-$#',' minus ', $valueForName);
                 $constantName = strtoupper(Inflector::slug($column->name . ' ' . $valueForName, '_'));
                 $label = Inflector::camel2words($value);
                 if (in_array($constantName, $enumConstantNames, true)) {
                     $this->addError('tableName', "Enum column '{$column->name}' has generated duplicate constant name '{$constantName}' for enum value '{$value}'.");
                 }
-                $enumConstantNames[] = $constantName;
+                $enumConstantNames[$column->name][$constantName][] = $value;
                 $enum[$column->name]['values'][] = [
                     'value' => $value,
                     'constName' => $constantName,
@@ -1274,6 +1288,20 @@ class Generator extends \yii\gii\Generator
             }
         }
 
+        /**
+         * validate duplicate enum constants
+         */
+        foreach ($enumConstantNames as $columnName => $columnEnum) {
+            foreach ($columnEnum as $enumConstant => $enumValues) {
+                if (count($enumValues) === 1) {
+                    continue;
+                }
+                $values = implode("', '", $enumValues);
+                $this->addError(
+                    'tableName',
+                    "Enum column '{$columnName}' has generated duplicate constant names '{$enumConstant}' for enum values '{$values}'.");
+            }
+        }
         return $enum;
     }
 

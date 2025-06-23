@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.8 under development
 -----------------------
 
-- no changes in this release.
+- Bug #556: Non-alphabetical symbols in Enum values are replaced with their names when generating constants and function names.  (uldisn)
 
 
 2.2.7 February 13, 2025

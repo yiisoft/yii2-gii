@@ -560,8 +560,8 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertTrue($testEnumModel->isTypeAFoo());
         $this->assertFalse($testEnumModel->isTypeConsignees());
 
-        $this->assertTrue(defined('\TestEnumModel::TYPE_A_BAR'), 'Constant TYPE_A_BAR should be defined. ' . $classCode);
-        $testEnumModel->type = \TestEnumModel::TYPE_A_BAR;
+        $this->assertTrue(defined('\TestEnumModel::TYPE_MINUS_A'), 'Constant TYPE_MINUS_A should be defined. ' . $classCode);
+        $testEnumModel->type = \TestEnumModel::TYPE_MINUS_A;
         $this->assertTrue($testEnumModel->isTypeABar());
         $this->assertFalse($testEnumModel->isTypeConsignees());
 
@@ -571,6 +571,21 @@ class ModelGeneratorTest extends GiiTestCase
         $testEnumModel->type = '11111';
         $this->assertFalse($testEnumModel->validate());
 
+    }
+
+    public function testEnumDuplicateEnumNames()
+    {
+        $generator = new ModelGenerator();
+        $generator->template = 'default';
+        $generator->tableName = 'category_photo';
+
+        $tableSchema = $this->createEnumTableSchemaDuplicateEnumConstantName();
+        $generator->generateRules($tableSchema);
+
+        $this->assertFalse($generator->validate());
+        $generatorErrors = $generator->errors;
+        $this->assertArrayHasKey('tableName', $generatorErrors);
+        $this->assertStringStartsWith("Enum column 'type' has generated duplicate constant names ", $generatorErrors['tableName'][0]);
     }
 
     public function createEnumTableSchema()
@@ -598,15 +613,57 @@ class ModelGeneratorTest extends GiiTestCase
                 'allowNull' => true,
                 'type' => 'string',
                 'phpType' => 'string',
-                'dbType' => 'enum(\'Client\',\'Consignees\',\'Car cleaner\',\'B +\',\'B -\',\'A-Foo\',\'A-Bar\')',
+                'dbType' => 'enum(\'Client\',\'Consignees\',\'Car cleaner\',\'B+\',\'B-\',\'A-Foo\',\'-A\')',
                 'enumValues' => [
                     0 => 'Client',
                     1 => 'Consignees',
                     2 => 'Car cleaner',
-                    3 => 'B +',
-                    4 => 'B -',
+                    3 => 'B+',
+                    4 => 'B-',
                     5 => 'A-Foo',
-                    6 => 'A-Bar',
+                    6 => '-A',
+                ],
+                'size' => null,
+                'precision' => null,
+                'isPrimaryKey' => false,
+                'autoIncrement' => false,
+                'unsigned' => false,
+                'comment' => ''
+            ]),
+        ];
+
+        return $schema;
+    }
+
+    public function createEnumTableSchemaDuplicateEnumConstantName()
+    {
+        $schema = new TableSchema();
+        $schema->name = 'company_type';
+        $schema->fullName = 'company_type';
+        $schema->primaryKey = ['id'];
+        $schema->columns = [
+            'id' => new ColumnSchema([
+                'name' => 'id',
+                'allowNull' => false,
+                'type' => 'smallint',
+                'phpType' => 'integer',
+                'dbType' => 'smallint(5) unsigned',
+                'size' => 5,
+                'precision' => 5,
+                'isPrimaryKey' => true,
+                'autoIncrement' => true,
+                'unsigned' => true,
+                'comment' => ''
+            ]),
+            'type' => new ColumnSchema([
+                'name' => 'type',
+                'allowNull' => true,
+                'type' => 'string',
+                'phpType' => 'string',
+                'dbType' => 'enum(\'B -\',\'B-\')',
+                'enumValues' => [
+                    0 => 'B -',
+                    1 => 'B-'
                 ],
                 'size' => null,
                 'precision' => null,
