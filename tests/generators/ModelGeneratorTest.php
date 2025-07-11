@@ -576,7 +576,7 @@ class ModelGeneratorTest extends GiiTestCase
                     'value' => '-A',
                     'constant'=>'TYPE_MINUS_A',
                     'set' => 'setTypeToMinusA',
-                    'isSet' => 'isTypeMinusB',
+                    'isSet' => 'isTypeMinusA',
                 ]
             ] as $tesEnum
         ) {
