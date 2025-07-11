@@ -539,44 +539,44 @@ class ModelGeneratorTest extends GiiTestCase
                 [
                     'value'=>'Client',
                     'constant'=>'TYPE_CLIENT',
-                    'set'=>'setClient',
-                    'isSet'=>'isSetClient',
+                    'set'=>'setTypeClient',
+                    'isSet'=>'isTypeClient',
                 ],
                 [
                     'value' => 'Consignees',
                     'constant'=>'TYPE_CONSIGNEES',
-                    'set' => 'setConsignees',
-                    'isSet' => 'isSetConsignees',
+                    'set' => 'setTypeConsignees',
+                    'isSet' => 'isTypeConsignees',
                 ],
                 [
                     'value' => 'Car cleaner',
                     'constant'=>'TYPE_CAR_CLEANER',
-                    'set' => 'setCarCleaner',
-                    'isSet' => 'isSetCarCleaner',
+                    'set' => 'setTypeCarCleaner',
+                    'isSet' => 'isTypeCarCleaner',
                 ],
                 [
                     'value' => 'B+',
                     'constant'=>'TYPE_B_PLUS',
-                    'set' => 'setBPlus',
-                    'isSet' => 'isSetBPlus',
+                    'set' => 'setTypeBPlus',
+                    'isSet' => 'isTypeBPlus',
                 ],
                 [
                     'value' => 'B-',
                     'constant'=>'TYPE_B_MINUS',
-                    'set' => 'setBMinus',
-                    'isSet' => 'isSetBMinus',
+                    'set' => 'setTypeBMinus',
+                    'isSet' => 'isTypeBMinus',
                 ],
                 [
                     'value' => 'A-Foo',
                     'constant'=>'TYPE_A_FOO',
-                    'set' => 'setAFoo',
-                    'isSet' => 'isSetAFoo',
+                    'set' => 'setTypeAFoo',
+                    'isSet' => 'isTypeAFoo',
                 ],
                 [
                     'value' => '-A',
                     'constant'=>'TYPE_MINUS_A',
-                    'set' => 'setMinusA',
-                    'isSet' => 'isSetMinusB',
+                    'set' => 'setTypeMinusA',
+                    'isSet' => 'isTypeMinusB',
                 ]
             ] as $tesEnum
         ) {
@@ -593,9 +593,13 @@ class ModelGeneratorTest extends GiiTestCase
                 'Moethod  ' . $tesEnum['isSet'] . ' not exist. ' . $classCode
             );
             $testEnumModel->type = constant('\TestEnumModel::'.$tesEnum['constant']);
-            $this->assertTrue($testEnumModel->{$tesEnum['isSet']}());
+            $this->assertTrrue($testEnumModel->validate());
             $testEnumModel->{$tesEnum['set']}();
             $this->assertTrue($testEnumModel->{$tesEnum['isSet']}());
+
+            $opts = $testEnumModel::optsType();
+            $this->assertArrayHasKey($tesEnum['value'], $opts, 'Enum value ' . $tesEnum['value'] . ' should be in optsType. ' . print_r($opts, true));
+
         }
 
         /** test validate */
