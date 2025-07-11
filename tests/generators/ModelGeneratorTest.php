@@ -585,11 +585,11 @@ class ModelGeneratorTest extends GiiTestCase
                 'Constant ' . $tesEnum['constant'] . ' should be defined. ' . $classCode
             );
             $this->assertTrue(
-                method_exists(\TestEnumModel,$tesEnum['set']),
+                method_exists($testEnumModel, $tesEnum['set']),
                 'Moethod  ' . $tesEnum['set'] . ' not exist. ' . $classCode
             );
             $this->assertTrue(
-                method_exists(\TestEnumModel,$tesEnum['isSet']),
+                method_exists($testEnumModel,$tesEnum['isSet']),
                 'Moethod  ' . $tesEnum['isSet'] . ' not exist. ' . $classCode
             );
             $testEnumModel->type = constant('\TestEnumModel::'.$tesEnum['constant']);
