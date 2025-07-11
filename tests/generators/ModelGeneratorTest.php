@@ -534,37 +534,69 @@ class ModelGeneratorTest extends GiiTestCase
         $testEnumModel = new \TestEnumModel();
         $testEnumModel::$testTableSchema = $this->createEnumTableSchema();
 
-        /** test assigning and method is... */
-        $testEnumModel->type = \TestEnumModel::TYPE_CLIENT;
-        $this->assertTrue($testEnumModel->isTypeClient());
-        $this->assertFalse($testEnumModel->isTypeConsignees());
-
-        $testEnumModel->type = \TestEnumModel::TYPE_CONSIGNEES;
-        $this->assertFalse($testEnumModel->isTypeClient());
-        $this->assertTrue($testEnumModel->isTypeConsignees());
-        $this->assertEquals(\TestEnumModel::TYPE_CONSIGNEES,$testEnumModel->displayType());
-
-        /** test enum value with symbols */
-        $this->assertTrue(defined('\TestEnumModel::TYPE_B_PLUS'), 'Constant TYPE_B_PLUS should be defined. ' . $classCode);
-        $testEnumModel->type = \TestEnumModel::TYPE_B_PLUS;
-        $this->assertTrue($testEnumModel->isTypeBPlus());
-        $this->assertFalse($testEnumModel->isTypeConsignees());
-
-        $this->assertTrue(defined('\TestEnumModel::TYPE_B_MINUS'), 'Constant TYPE_B_MINUS should be defined. ' . $classCode);
-        $testEnumModel->type = \TestEnumModel::TYPE_B_MINUS;
-        $this->assertTrue($testEnumModel->isTypeBMinus());
-        $this->assertFalse($testEnumModel->isTypeConsignees());
-
-        $this->assertTrue(defined('\TestEnumModel::TYPE_A_FOO'), 'Constant TYPE_A_FOO should be defined. ' . $classCode);
-        $testEnumModel->type = \TestEnumModel::TYPE_A_FOO;
-        $this->assertTrue($testEnumModel->isTypeAFoo());
-        $this->assertFalse($testEnumModel->isTypeConsignees());
-
-        $this->assertTrue(defined('\TestEnumModel::TYPE_MINUS_A'), 'Constant TYPE_MINUS_A should be defined. ' . $classCode);
-        $testEnumModel->type = \TestEnumModel::TYPE_MINUS_A;
-        $this->assertTrue($testEnumModel->isTypeMinusA());
-        $this->assertFalse($testEnumModel->isTypeConsignees());
-
+        foreach(
+            [
+                [
+                    'value'=>'Client',
+                    'constant'=>'TYPE_CLIENT',
+                    'set'=>'setClient',
+                    'isSet'=>'isSetClient',
+                ],
+                [
+                    'value' => 'Consignees',
+                    'constant'=>'TYPE_CONSIGNEES',
+                    'set' => 'setConsignees',
+                    'isSet' => 'isSetConsignees',
+                ],
+                [
+                    'value' => 'Car cleaner',
+                    'constant'=>'TYPE_CAR_CLEANER',
+                    'set' => 'setCarCleaner',
+                    'isSet' => 'isSetCarCleaner',
+                ],
+                [
+                    'value' => 'B+',
+                    'constant'=>'TYPE_B_PLUS',
+                    'set' => 'setBPlus',
+                    'isSet' => 'isSetBPlus',
+                ],
+                [
+                    'value' => 'B-',
+                    'constant'=>'TYPE_B_MINUS',
+                    'set' => 'setBMinus',
+                    'isSet' => 'isSetBMinus',
+                ],
+                [
+                    'value' => 'A-Foo',
+                    'constant'=>'TYPE_A_FOO',
+                    'set' => 'setAFoo',
+                    'isSet' => 'isSetAFoo',
+                ],
+                [
+                    'value' => '-A',
+                    'constant'=>'TYPE_MINUS_A',
+                    'set' => 'setMinusA',
+                    'isSet' => 'isSetMinusB',
+                ]
+            ] as $tesEnum
+        ) {
+            $this->assertTrue(
+                defined('\TestEnumModel::'.$tesEnum['constant']),
+                'Constant ' . $tesEnum['constant'] . ' should be defined. ' . $classCode
+            );
+            $this->assertTrue(
+                method_exists(\TestEnumModel,$tesEnum['set']),
+                'Moethod  ' . $tesEnum['set'] . ' not exist. ' . $classCode
+            );
+            $this->assertTrue(
+                method_exists(\TestEnumModel,$tesEnum['isSet']),
+                'Moethod  ' . $tesEnum['isSet'] . ' not exist. ' . $classCode
+            );
+            $testEnumModel->type = constant('\TestEnumModel::'.$tesEnum['constant']);
+            $this->assertTrue($testEnumModel->{$tesEnum['isSet']}());
+            $testEnumModel->{$tesEnum['set']}();
+            $this->assertTrue($testEnumModel->{$tesEnum['isSet']}());
+        }
 
         /** test validate */
         $this->assertTrue($testEnumModel->validate());
