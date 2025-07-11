@@ -539,43 +539,43 @@ class ModelGeneratorTest extends GiiTestCase
                 [
                     'value'=>'Client',
                     'constant'=>'TYPE_CLIENT',
-                    'set'=>'setTypeClient',
+                    'set'=>'setTypeToClient',
                     'isSet'=>'isTypeClient',
                 ],
                 [
                     'value' => 'Consignees',
                     'constant'=>'TYPE_CONSIGNEES',
-                    'set' => 'setTypeConsignees',
+                    'set' => 'setTypeToConsignees',
                     'isSet' => 'isTypeConsignees',
                 ],
                 [
                     'value' => 'Car cleaner',
                     'constant'=>'TYPE_CAR_CLEANER',
-                    'set' => 'setTypeCarCleaner',
+                    'set' => 'setTypeToCarCleaner',
                     'isSet' => 'isTypeCarCleaner',
                 ],
                 [
                     'value' => 'B+',
                     'constant'=>'TYPE_B_PLUS',
-                    'set' => 'setTypeBPlus',
+                    'set' => 'setTypeToBPlus',
                     'isSet' => 'isTypeBPlus',
                 ],
                 [
                     'value' => 'B-',
                     'constant'=>'TYPE_B_MINUS',
-                    'set' => 'setTypeBMinus',
+                    'set' => 'setTypeToBMinus',
                     'isSet' => 'isTypeBMinus',
                 ],
                 [
                     'value' => 'A-Foo',
                     'constant'=>'TYPE_A_FOO',
-                    'set' => 'setTypeAFoo',
+                    'set' => 'setTypeToAFoo',
                     'isSet' => 'isTypeAFoo',
                 ],
                 [
                     'value' => '-A',
                     'constant'=>'TYPE_MINUS_A',
-                    'set' => 'setTypeMinusA',
+                    'set' => 'setTypeToMinusA',
                     'isSet' => 'isTypeMinusB',
                 ]
             ] as $tesEnum
