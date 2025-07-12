@@ -4,7 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.8 under development
 -----------------------
 
-- no changes in this release.
+- Bug #558: Fix an issue with creating rules for multiple fields with the same default values (carono)
 
 
 2.2.7 February 13, 2025

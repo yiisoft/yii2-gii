@@ -454,7 +454,7 @@ class Generator extends \yii\gii\Generator
             } elseif ($column->allowNull && $column->defaultValue === null) {
                 $nullable[] = $column->name;
             } elseif (is_scalar($column->defaultValue)) {
-                if (array_key_exists($column->defaultValue, $defaultValues)) {
+                if (!array_key_exists($column->defaultValue, $defaultValues)) {
                     $defaultValues[$column->defaultValue] = [];
                 }
                 $defaultValues[$column->defaultValue][] = $column->name;
