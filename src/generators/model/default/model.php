@@ -3,7 +3,7 @@
  * This is the template for generating the model class of a specified table.
  */
 
-/** @var $enum array list of ENUM fields */
+/** @var $enum EnumGenerator[] list of ENUM fields */
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\model\Generator $generator */
 /** @var string $tableName full table name */
@@ -15,6 +15,8 @@
 /** @var string[] $rules list of validation rules */
 /** @var array $relations list of relations (name => relation declaration) */
 /** @var array $relationsClassHints */
+
+use yii\gii\generators\model\EnumGenerator;
 
 echo "<?php\n";
 ?>
@@ -44,9 +46,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      * ENUM field values
      */
 <?php
-    foreach($enum as $columnName => $columnData) {
-        foreach ($columnData['values'] as $enumValue){
-            echo '    const ' . $enumValue['constName'] . ' = \'' . $enumValue['value'] . '\';' . PHP_EOL;
+    foreach($enum as $enumColumn) {
+        foreach ($enumColumn->enumConstantList() as $enumConstant){
+            echo '    const ' . $enumConstant['constantName'] . ' = \'' . $enumConstant['value'] . '\';' . PHP_EOL;
         }
     }
 endif
@@ -117,49 +119,49 @@ endif
 <?php endif; ?>
 
 <?php if ($enum): ?>
-<?php     foreach ($enum as $columnName => $columnData): ?>
+<?php     foreach ($enum as  $enumColumn): ?>
 
     /**
-     * column <?= $columnName ?> ENUM value labels
+     * column <?= $enumColumn->getColumnsName() ?> ENUM value labels
      * @return string[]
      */
-    public static function <?= $columnData['funcOptsName'] ?>()
+    public static function <?= $enumColumn->createOptsFunctionName()?>()
     {
         return [
-<?php         foreach ($columnData['values'] as $k => $value): ?>
+<?php         foreach ($enumColumn->enumConstantList() as $enumConstantData): ?>
 <?php
         if ($generator->enableI18N) {
-            echo '            self::' . $value['constName'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
+            echo '            self::' . $enumConstantData['constantName'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $enumConstantData['value'] . "'),\n";
         } else {
-            echo '            self::' . $value['constName'] . ' => \'' . $value['value'] . "',\n";
+            echo '            self::' . $enumConstantData['constantName'] . ' => \'' . $enumConstantData['value'] . "',\n";
         }
     ?>
 <?php         endforeach; ?>
         ];
     }
 <?php     endforeach; ?>
-<?php     foreach ($enum as $columnName => $columnData): ?>
+<?php     foreach ($enum as $enumColumn): ?>
 
     /**
      * @return string
      */
-    public function <?= $columnData['displayFunctionPrefix'] ?>()
+    public function <?= $enumColumn->createDisplayFunctionName()?>()
     {
-        return self::<?= $columnData['funcOptsName'] ?>()[$this-><?=$columnName?>];
+        return self::<?= $enumColumn->createOptsFunctionName()?>()[$this-><?=$enumColumn->getColumnsName()?>];
     }
-<?php         foreach ($columnData['values'] as $enumValue): ?>
+<?php         foreach ($enumColumn->enumConstantList() as $enumConstantData): ?>
 
     /**
      * @return bool
      */
-    public function <?= $columnData['isFunctionPrefix'] . $enumValue['functionSuffix'] ?>()
+    public function <?=$enumColumn->createIsFunctionName($enumConstantData['value'])?>()
     {
-        return $this-><?= $columnName ?> === self::<?= $enumValue['constName'] ?>;
+        return $this-><?=$enumColumn->getColumnsName() ?> === self::<?= $enumConstantData['constantName'] ?>;
     }
 
-    public function <?= $columnData['setFunctionPrefix'] . $enumValue['functionSuffix'] ?>()
+    public function <?= $enumColumn->createSetFunctionName($enumConstantData['value'])?>()
     {
-        $this-><?= $columnName ?> = self::<?= $enumValue['constName'] ?>;
+        $this-><?=$enumColumn->getColumnsName() ?> = self::<?= $enumConstantData['constantName'] ?>;
     }
 <?php         endforeach; ?>
 <?php     endforeach; ?>

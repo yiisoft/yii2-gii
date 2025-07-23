@@ -3,6 +3,7 @@ namespace yiiunit\gii\generators;
 
 use yii\db\mysql\ColumnSchema;
 use yii\db\TableSchema;
+use yii\gii\generators\model\EnumGenerator;
 use yii\gii\generators\model\Generator as ModelGenerator;
 use yiiunit\gii\GiiTestCase;
 
@@ -504,7 +505,7 @@ class ModelGeneratorTest extends GiiTestCase
             'rules' => $generator->generateRules($tableSchema),
             'relations' => [],
             'relationsClassHints' => [],
-            'enum' => $generator->getEnum($tableSchema->columns),
+            'enum' => EnumGenerator::loadEnumColumns($generator, $tableSchema->columns),
         ];
         $codeFile = $generator->render('model.php', $params);
 
@@ -534,21 +535,92 @@ class ModelGeneratorTest extends GiiTestCase
         $testEnumModel = new \TestEnumModel();
         $testEnumModel::$testTableSchema = $this->createEnumTableSchema();
 
-        /** test assigning and method is... */
-        $testEnumModel->type = \TestEnumModel::TYPE_CLIENT;
-        $this->assertTrue($testEnumModel->isTypeClient());
-        $this->assertFalse($testEnumModel->isTypeConsignees());
+        foreach(
+            [
+                [
+                    'value'=>'Client',
+                    'constant'=>'TYPE_CLIENT',
+                    'set'=>'setTypeToClient',
+                    'isSet'=>'isTypeClient',
+                ],
+                [
+                    'value' => 'Consignees',
+                    'constant'=>'TYPE_CONSIGNEES',
+                    'set' => 'setTypeToConsignees',
+                    'isSet' => 'isTypeConsignees',
+                ],
+                [
+                    'value' => 'Car cleaner',
+                    'constant'=>'TYPE_CAR_CLEANER',
+                    'set' => 'setTypeToCarCleaner',
+                    'isSet' => 'isTypeCarCleaner',
+                ],
+                [
+                    'value' => 'B+',
+                    'constant'=>'TYPE_B_PLUS',
+                    'set' => 'setTypeToBPlus',
+                    'isSet' => 'isTypeBPlus',
+                ],
+                [
+                    'value' => 'B-',
+                    'constant'=>'TYPE_B_MINUS',
+                    'set' => 'setTypeToBMinus',
+                    'isSet' => 'isTypeBMinus',
+                ],
+                [
+                    'value' => 'A-Foo',
+                    'constant'=>'TYPE_A_FOO',
+                    'set' => 'setTypeToAFoo',
+                    'isSet' => 'isTypeAFoo',
+                ],
+                [
+                    'value' => '-A',
+                    'constant'=>'TYPE_MINUS_A',
+                    'set' => 'setTypeToMinusA',
+                    'isSet' => 'isTypeMinusA',
+                ]
+            ] as $tesEnum
+        ) {
+            $this->assertTrue(
+                defined('\TestEnumModel::'.$tesEnum['constant']),
+                'Constant ' . $tesEnum['constant'] . ' should be defined. ' . $classCode
+            );
+            $this->assertTrue(
+                method_exists($testEnumModel, $tesEnum['set']),
+                'Moethod  ' . $tesEnum['set'] . ' not exist. ' . $classCode
+            );
+            $this->assertTrue(
+                method_exists($testEnumModel,$tesEnum['isSet']),
+                'Moethod  ' . $tesEnum['isSet'] . ' not exist. ' . $classCode
+            );
+            $testEnumModel->type = constant('\TestEnumModel::'.$tesEnum['constant']);
+            $this->assertTrue($testEnumModel->validate());
+            $testEnumModel->{$tesEnum['set']}();
+            $this->assertTrue($testEnumModel->{$tesEnum['isSet']}());
 
-        $testEnumModel->type = \TestEnumModel::TYPE_CONSIGNEES;
-        $this->assertFalse($testEnumModel->isTypeClient());
-        $this->assertTrue($testEnumModel->isTypeConsignees());
-        $this->assertEquals(\TestEnumModel::TYPE_CONSIGNEES,$testEnumModel->displayType());
+            $opts = $testEnumModel::optsType();
+            $this->assertArrayHasKey($tesEnum['value'], $opts, 'Enum value ' . $tesEnum['value'] . ' should be in optsType. ' . print_r($opts, true));
+
+        }
 
         /** test validate */
         $this->assertTrue($testEnumModel->validate());
         $testEnumModel->type = '11111';
         $this->assertFalse($testEnumModel->validate());
 
+    }
+
+    public function testEnumDuplicateEnumNames()
+    {
+        $generator = new ModelGenerator();
+        $generator->template = 'default';
+        $generator->tableName = 'category_photo';
+        $tableSchema = $this->createEnumTableSchemaDuplicateEnumConstantName();
+        $enumColumns = EnumGenerator::loadEnumColumns($generator, $tableSchema->columns);
+        $enumColumns['type']->enumConstantList();
+        $generatorErrors = $generator->errors;
+        $this->assertArrayHasKey('tableName', $generatorErrors, 'Enum column \'type\' has generated duplicate constant names. Error: ' . print_r($generatorErrors, true));
+        $this->assertStringStartsWith("Enum column 'type' has generated duplicate constant names ", $generatorErrors['tableName'][0]);
     }
 
     public function createEnumTableSchema()
@@ -576,11 +648,57 @@ class ModelGeneratorTest extends GiiTestCase
                 'allowNull' => true,
                 'type' => 'string',
                 'phpType' => 'string',
-                'dbType' => 'enum(\'Client\',\'Consignees\',\'Car cleaner\')',
+                'dbType' => 'enum(\'Client\',\'Consignees\',\'Car cleaner\',\'B+\',\'B-\',\'A-Foo\',\'-A\')',
                 'enumValues' => [
                     0 => 'Client',
                     1 => 'Consignees',
                     2 => 'Car cleaner',
+                    3 => 'B+',
+                    4 => 'B-',
+                    5 => 'A-Foo',
+                    6 => '-A',
+                ],
+                'size' => null,
+                'precision' => null,
+                'isPrimaryKey' => false,
+                'autoIncrement' => false,
+                'unsigned' => false,
+                'comment' => ''
+            ]),
+        ];
+
+        return $schema;
+    }
+
+    public function createEnumTableSchemaDuplicateEnumConstantName()
+    {
+        $schema = new TableSchema();
+        $schema->name = 'company_type';
+        $schema->fullName = 'company_type';
+        $schema->primaryKey = ['id'];
+        $schema->columns = [
+            'id' => new ColumnSchema([
+                'name' => 'id',
+                'allowNull' => false,
+                'type' => 'smallint',
+                'phpType' => 'integer',
+                'dbType' => 'smallint(5) unsigned',
+                'size' => 5,
+                'precision' => 5,
+                'isPrimaryKey' => true,
+                'autoIncrement' => true,
+                'unsigned' => true,
+                'comment' => ''
+            ]),
+            'type' => new ColumnSchema([
+                'name' => 'type',
+                'allowNull' => true,
+                'type' => 'string',
+                'phpType' => 'string',
+                'dbType' => 'enum(\'B -\',\'B-\')',
+                'enumValues' => [
+                    0 => 'B -',
+                    1 => 'B-'
                 ],
                 'size' => null,
                 'precision' => null,
