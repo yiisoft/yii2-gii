@@ -4,6 +4,7 @@ Yii Framework 2 gii extension Change Log
 2.2.8 under development
 -----------------------
 
+- Bug #558: Fix an issue with creating rules for multiple fields with the same default values (carono)
 - Bug #556: Non-alphabetical symbols in Enum values are replaced with their names when generating constants and function names.  (uldisn)
 
 
