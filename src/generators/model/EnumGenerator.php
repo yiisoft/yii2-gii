@@ -70,7 +70,7 @@ class EnumGenerator
             if (stripos($column->dbType, 'ENUM') !== 0) {
                 continue;
             }
-            $enumColumns[] = new self($generator, $column);
+            $enumColumns[$column->name] = new self($generator, $column);
         }
         return $enumColumns;
     }
@@ -118,7 +118,7 @@ class EnumGenerator
                 ->_generator
                 ->addError(
                     'tableName',
-                    "Enum column '{$enumConstantName}' has generated duplicate constant names '{$enumConstantName}' for enum values '{$values}'."
+                    "Enum column '{$this->getColumnsName()}' has generated duplicate constant names '{$enumConstantName}' for enum values '{$values}'."
                 );
         }
         return $this->_constantList = $list;
