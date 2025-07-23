@@ -175,7 +175,7 @@ class EnumGenerator
     {
         return 'is'
             . $this->createColumnCamelName()
-            . self::createValueForName($value);
+            . self::createValueForFunction($value);
     }
 
     /**
@@ -186,7 +186,16 @@ class EnumGenerator
         return 'set'
             . $this->createColumnCamelName()
             . 'To'
-            . self::createValueForName($value);
+            . self::createValueForFunction($value);
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    private static function createValueForFunction($value)
+    {
+        return Inflector::id2camel(Inflector::slug(self::createValueForName($value)));
     }
 
     private static function createConstantName($columnName, $value)
