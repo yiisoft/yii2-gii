@@ -505,7 +505,7 @@ class ModelGeneratorTest extends GiiTestCase
             'rules' => $generator->generateRules($tableSchema),
             'relations' => [],
             'relationsClassHints' => [],
-            'enum' => EnumGenerator::loadEnumColumns($tableSchema->columns),
+            'enum' => EnumGenerator::loadEnumColumns($generator, $tableSchema->columns),
         ];
         $codeFile = $generator->render('model.php', $params);
 

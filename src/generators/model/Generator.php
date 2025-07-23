@@ -308,7 +308,7 @@ class Generator extends \yii\gii\Generator
                 'rules' => $this->generateRules($tableSchema),
                 'relations' => $tableRelations,
                 'relationsClassHints' => $this->generateRelationsClassHints($tableRelations, $this->generateQuery),
-                'enum' => EnumGenerator::loadEnumColumns($tableSchema->columns),
+                'enum' => EnumGenerator::loadEnumColumns($this, $tableSchema->columns),
             ];
             $files[] = new CodeFile(
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
@@ -511,7 +511,7 @@ class Generator extends \yii\gii\Generator
             $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
         }
 
-        foreach (EnumGenerator::loadEnumColumns($table->columns) as $columnEnum) {
+        foreach (EnumGenerator::loadEnumColumns($this, $table->columns) as $columnEnum) {
             $rules['enum-' . $columnEnum->getColumnsName()] = "['" . $columnEnum->getColumnsName() . "', 'in', 'range' => array_keys(self::" . $columnEnum->createOptsFunctionName() . '())]';
         }
 

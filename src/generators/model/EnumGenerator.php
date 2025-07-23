@@ -46,7 +46,7 @@ class EnumGenerator
     private static $_symbolsAbbrevationList;
 
     /** @var ColumnSchema */
-    private ColumnSchema $column;
+    private $column;
 
 
     /**
@@ -54,11 +54,13 @@ class EnumGenerator
      */
     private $_constantList;
 
+    private $_generator;
+
     /**
      * @param ColumnSchema[] $columns
      * @return EnumGenerator[]
      */
-    public static function loadEnumColumns($columns)
+    public static function loadEnumColumns($generator, $columns)
     {
         $enumColumns = [];
         foreach ($columns as $column) {
@@ -68,7 +70,7 @@ class EnumGenerator
             if (stripos($column->dbType, 'ENUM') !== 0) {
                 continue;
             }
-            $enumColumns[] = new self($column);
+            $enumColumns[] = new self($generator, $column);
         }
         return $enumColumns;
     }
@@ -83,8 +85,9 @@ class EnumGenerator
         }, self::$symbolsAbbrevation);
     }
 
-    public function __construct(ColumnSchema $column)
+    public function __construct($generator, $column)
     {
+        $this->_generator = $generator;
         $this->column = $column;
     }
 
@@ -108,9 +111,12 @@ class EnumGenerator
                 continue;
             }
             $values = implode("', '", $enumValues);
-            $this->addError(
-                'tableName',
-                "Enum column '{$enumConstantName}' has generated duplicate constant names '{$enumConstantName}' for enum values '{$values}'.");
+            $this
+                ->_generator
+                ->addError(
+                    'tableName',
+                    "Enum column '{$enumConstantName}' has generated duplicate constant names '{$enumConstantName}' for enum values '{$values}'."
+                );
         }
         return $this->_constantList = $list;
     }
