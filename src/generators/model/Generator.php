@@ -35,39 +35,6 @@ class Generator extends \yii\gii\Generator
     const JUNCTION_RELATION_VIA_TABLE = 'table';
     const JUNCTION_RELATION_VIA_MODEL = 'model';
 
-    public $symbolsAbbrevation = [
-        '!' => 'exclamation',
-        '@' => 'at',
-        '#' => 'number',
-        '$' => 'dollar',
-        '%' => 'percent',
-        '^' => 'caret',
-        '&' => 'and',
-        '*' => 'asterisk',
-        '(' => 'open_parenthesis',
-        ')' => 'close_parenthesis',
-        '=' => 'equals',
-        '+' => 'plus',
-        '{' => 'open_curly_brace',
-        '}' => 'close_curly_brace',
-        '[' => 'open_square_bracket',
-        ']' => 'close_square_bracket',
-        '|' => 'pipe',
-        '\\' => 'backslash',
-        '/' => 'forward_slash',
-        ':' => 'colon',
-        ';' => 'semicolon',
-        '"' => 'double_quote',
-        '\'' => 'single_quote',
-        '<' => 'less_than',
-        '>' => 'greater_than',
-        ',' => 'comma',
-        '.' => 'dot',
-        '?' => 'question_mark',
-        '~' => 'tilde',
-        '`' => 'backtick'
-    ];
-
     public $db = 'db';
     public $ns = 'app\models';
     /**
@@ -341,7 +308,7 @@ class Generator extends \yii\gii\Generator
                 'rules' => $this->generateRules($tableSchema),
                 'relations' => $tableRelations,
                 'relationsClassHints' => $this->generateRelationsClassHints($tableRelations, $this->generateQuery),
-                'enum' => $this->getEnum($tableSchema->columns),
+                'enum' => EnumGenerator::loadEnumColumns($tableSchema->columns),
             ];
             $files[] = new CodeFile(
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
@@ -544,9 +511,8 @@ class Generator extends \yii\gii\Generator
             $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
         }
 
-        $columnsEnum = $this->getEnum($table->columns);
-        foreach ($columnsEnum as $fieldName => $columnEnum) {
-            $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => array_keys(self::" . $columnEnum['funcOptsName'] . '())]';
+        foreach (EnumGenerator::loadEnumColumns($table->columns) as $columnEnum) {
+            $rules['enum-' . $columnEnum->getColumnsName()] = "['" . $columnEnum->getColumnsName() . "', 'in', 'range' => array_keys(self::" . $columnEnum->createOptsFunctionName() . '())]';
         }
 
         $db = $this->getDbConnection();
@@ -1226,94 +1192,6 @@ class Generator extends \yii\gii\Generator
         }
 
         return false;
-    }
-
-    /**
-     * Prepares ENUM field values.
-     *
-     * @param ColumnSchema[] $columns
-     *
-     * @return array
-     */
-    public function getEnum($columns)
-    {
-        $enum = [];
-        $abbreviations = array_map(function($item) {
-            return ' ' . $item . ' ';
-        }, $this->symbolsAbbrevation);
-        $enumConstantNames = [];
-        foreach ($columns as $column) {
-            if (!$this->isEnum($column)) {
-                continue;
-            }
-
-            $columnCamelName = Inflector::id2camel($column->name, '_');
-            $enum[$column->name]['funcOptsName'] = 'opts' . $columnCamelName;
-            $enum[$column->name]['isFunctionPrefix'] = 'is' . $columnCamelName;
-            $enum[$column->name]['setFunctionPrefix'] = 'set' . $columnCamelName . 'To';
-            $enum[$column->name]['displayFunctionPrefix'] = 'display' . $columnCamelName;
-            $enum[$column->name]['columnName'] = $column->name;
-            $enum[$column->name]['values'] = [];
-            $enumConstantNames = [];
-            foreach ($column->enumValues as $value) {
-
-                /**
-                 * Replaces all non-alphabetical symbols with their respective names.
-                 * Exceptions:
-                 * - "_" and " " - considered as separators
-                 * - "-" - treated as a special case and processed in the next statement
-                 */
-                $valueForName = strtr($value, $abbreviations);
-
-                /**
-                 * Replaces "-" with "minus":
-                 *  - if "-" is at the beginning of the string
-                 *  - if "space" precedes "-"
-                 *  - if "-" is at the end of the string
-                 * In all other cases, it is treated as a separator.
-                 */
-                $valueForName = preg_replace('#^-| -|-$#',' minus ', $valueForName);
-                $constantName = strtoupper(Inflector::slug($column->name . ' ' . $valueForName, '_'));
-                $label = Inflector::camel2words($value);
-                if (in_array($constantName, $enumConstantNames, true)) {
-                    $this->addError('tableName', "Enum column '{$column->name}' has generated duplicate constant name '{$constantName}' for enum value '{$value}'.");
-                }
-                $enumConstantNames[$column->name][$constantName][] = $value;
-                $enum[$column->name]['values'][] = [
-                    'value' => $value,
-                    'constName' => $constantName,
-                    'label' => $label,
-                    'functionSuffix' => Inflector::id2camel(Inflector::slug($valueForName))
-                ];
-            }
-        }
-
-        /**
-         * validate duplicate enum constants
-         */
-        foreach ($enumConstantNames as $columnName => $columnEnum) {
-            foreach ($columnEnum as $enumConstant => $enumValues) {
-                if (count($enumValues) === 1) {
-                    continue;
-                }
-                $values = implode("', '", $enumValues);
-                $this->addError(
-                    'tableName',
-                    "Enum column '{$columnName}' has generated duplicate constant names '{$enumConstant}' for enum values '{$values}'.");
-            }
-        }
-        return $enum;
-    }
-
-    /**
-     * Checks if column is of ENUM type.
-     *
-     * @param ColumnSchema $column Column instance
-     * @return bool
-     */
-    protected function isEnum($column)
-    {
-        return !empty($column->enumValues) || stripos($column->dbType, 'ENUM') === 0;
     }
 
     /**

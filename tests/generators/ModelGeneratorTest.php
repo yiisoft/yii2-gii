@@ -3,6 +3,7 @@ namespace yiiunit\gii\generators;
 
 use yii\db\mysql\ColumnSchema;
 use yii\db\TableSchema;
+use yii\gii\generators\model\EnumGenerator;
 use yii\gii\generators\model\Generator as ModelGenerator;
 use yiiunit\gii\GiiTestCase;
 
@@ -504,7 +505,7 @@ class ModelGeneratorTest extends GiiTestCase
             'rules' => $generator->generateRules($tableSchema),
             'relations' => [],
             'relationsClassHints' => [],
-            'enum' => $generator->getEnum($tableSchema->columns),
+            'enum' => EnumGenerator::loadEnumColumns($tableSchema->columns),
         ];
         $codeFile = $generator->render('model.php', $params);
 
