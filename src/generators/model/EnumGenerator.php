@@ -100,7 +100,10 @@ class EnumGenerator
         $constantEnumValues = [];
         foreach ($this->column->enumValues as $value) {
             $constantName = self::createConstantName($this->column->name, $value);
-            $list[] = [
+            if (in_array($constantName, $list, true)) {
+                $this->_generator->addError('tableName', "Enum column '{$this->column->name}' has generated duplicate constant name '{$constantName}' for enum value '{$value}'.");
+            }
+            $list[$constantName] = [
                 'constantName' => $constantName,
                 'value' => $value,
             ];
@@ -194,7 +197,7 @@ class EnumGenerator
     /**
      * @return string
      */
-    private function createColumnCamelName(): string
+    private function createColumnCamelName()
     {
         return Inflector::id2camel(Inflector::id2camel($this->column->name, '_'));
     }
