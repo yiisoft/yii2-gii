@@ -267,6 +267,18 @@ class Generator extends \yii\gii\Generator
             return "\$form->field(\$model, '$attribute')->checkbox()";
         }
 
+        if ($column->type === Schema::TYPE_DATE) {
+            return "\$form->field(\$model, '$attribute')->textInput(['type' => 'date'])";
+        }
+
+        if ($column->type === Schema::TYPE_DATETIME) {
+            return "\$form->field(\$model, '$attribute')->textInput(['type' => 'datetime-local'])";
+        }
+
+        if ($column->type === Schema::TYPE_TIME) {
+            return "\$form->field(\$model, '$attribute')->textInput(['type' => 'time'])";
+        }
+
         if ($column->type === 'text') {
             return "\$form->field(\$model, '$attribute')->textarea(['rows' => 6])";
         }
@@ -308,6 +320,18 @@ class Generator extends \yii\gii\Generator
         $column = $tableSchema->columns[$attribute];
         if ($column->phpType === 'boolean') {
             return "\$form->field(\$model, '$attribute')->checkbox()";
+        }
+
+        if ($column->type === Schema::TYPE_DATE) {
+            return "\$form->field(\$model, '$attribute')->textInput(['type' => 'date'])";
+        }
+
+        if ($column->type === Schema::TYPE_DATETIME) {
+            return "\$form->field(\$model, '$attribute')->textInput(['type' => 'datetime-local'])";
+        }
+
+        if ($column->type === Schema::TYPE_TIME) {
+            return "\$form->field(\$model, '$attribute')->textInput(['type' => 'time'])";
         }
 
         return "\$form->field(\$model, '$attribute')";
