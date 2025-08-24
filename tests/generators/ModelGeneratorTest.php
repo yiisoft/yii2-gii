@@ -506,7 +506,9 @@ class ModelGeneratorTest extends GiiTestCase
             'relationsClassHints' => [],
             'enum' => $generator->getEnum($tableSchema->columns),
         ];
-        $codeFile = $generator->render('model.php', $params);
+
+        $template = phpversion() < '7' ? 'model.php': 'model_from_7.php';
+        $codeFile = $generator->render($template, $params);
 
         /**
          * Fix class code for eval - remove ?php, namespace and use Yii
