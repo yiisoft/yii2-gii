@@ -308,7 +308,7 @@ class Generator extends \yii\gii\Generator
                 'rules' => $this->generateRules($tableSchema),
                 'relations' => $tableRelations,
                 'relationsClassHints' => $this->generateRelationsClassHints($tableRelations, $this->generateQuery),
-                'enum' => $this->getEnum($tableSchema->columns),
+                'enum' => EnumGenerator::loadEnumColumns($this, $tableSchema->columns),
             ];
             $files[] = new CodeFile(
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
@@ -511,9 +511,8 @@ class Generator extends \yii\gii\Generator
             $rules[] = "[['" . implode("', '", $columns) . "'], 'string', 'max' => $length]";
         }
 
-        $columnsEnum = $this->getEnum($table->columns);
-        foreach ($columnsEnum as $fieldName => $columnEnum) {
-            $rules['enum-' . $fieldName] = "['" . $fieldName . "', 'in', 'range' => array_keys(self::" . $columnEnum['funcOptsName'] . '())]';
+        foreach (EnumGenerator::loadEnumColumns($this, $table->columns) as $columnEnum) {
+            $rules['enum-' . $columnEnum->getColumnsName()] = "['" . $columnEnum->getColumnsName() . "', 'in', 'range' => array_keys(self::" . $columnEnum->createOptsFunctionName() . '())]';
         }
 
         $db = $this->getDbConnection();
@@ -1193,57 +1192,6 @@ class Generator extends \yii\gii\Generator
         }
 
         return false;
-    }
-
-    /**
-     * Prepares ENUM field values.
-     *
-     * @param ColumnSchema[] $columns
-     *
-     * @return array
-     */
-    public function getEnum($columns)
-    {
-        $enum = [];
-        foreach ($columns as $column) {
-            if (!$this->isEnum($column)) {
-                continue;
-            }
-
-            $columnCamelName = Inflector::id2camel($column->name, '_');
-            $enum[$column->name]['funcOptsName'] = 'opts' . $columnCamelName;
-            $enum[$column->name]['isFunctionPrefix'] = 'is' . $columnCamelName;
-            $enum[$column->name]['setFunctionPrefix'] = 'set' . $columnCamelName . 'To';
-            $enum[$column->name]['displayFunctionPrefix'] = 'display' . $columnCamelName;
-            $enum[$column->name]['columnName'] = $column->name;
-            $enum[$column->name]['values'] = [];
-
-            foreach ($column->enumValues as $value) {
-
-                $constantName = strtoupper(Inflector::slug($column->name . ' ' . $value, '_'));
-                $label = Inflector::camel2words($value);
-
-                $enum[$column->name]['values'][] = [
-                    'value' => $value,
-                    'constName' => $constantName,
-                    'label' => $label,
-                    'functionSuffix' => Inflector::id2camel(Inflector::slug($value))
-                ];
-            }
-        }
-
-        return $enum;
-    }
-
-    /**
-     * Checks if column is of ENUM type.
-     *
-     * @param ColumnSchema $column Column instance
-     * @return bool
-     */
-    protected function isEnum($column)
-    {
-        return !empty($column->enumValues) || stripos($column->dbType, 'ENUM') === 0;
     }
 
     /**
