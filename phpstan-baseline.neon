@@ -1,0 +1,1627 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method yii\\gii\\CodeFile\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CodeFile.php
+
+		-
+			message: '#^Binary operation "\." between array and ''/'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:autoCompleteData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:generateString\(\) has parameter \$placeholders with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:getTemplatePath\(\) should return string but returns array\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:hints\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:init\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:loadStickyAttributes\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:render\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:requiredTemplates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:save\(\) has parameter \$answers with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:saveStickyAttributes\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:stickyAttributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:validateClass\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:validateClass\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:validateMessageCategory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:validateNewClass\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:validateNewClass\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\Generator\:\:validateTemplate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$alias of static method yii\\BaseYii\<yii\\web\\IdentityInterface\>\:\:getAlias\(\) expects string, array\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$json of function json_decode expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$path of function dirname expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\Generator\:\:\$templates \(array\<array\>\) does not accept array\<array\|string\>\.$#'
+			identifier: assign.propertyType
+			count: 2
+			path: src/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\Generator\:\:\$templates type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Generator.php
+
+		-
+			message: '#^Call to an undefined method yii\\console\\Request\|yii\\web\\Request\:\:getUserIP\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Method yii\\gii\\Module\:\:bootstrap\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Method yii\\gii\\Module\:\:checkAccess\(\) should return int but returns false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Method yii\\gii\\Module\:\:checkAccess\(\) should return int but returns true\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Method yii\\gii\\Module\:\:coreGenerators\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Method yii\\gii\\Module\:\:resetGlobalSettings\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Parameter \#1 \$json of static method yii\\helpers\\BaseJson\:\:decode\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Parameter \#1 \$str1 of function strncmp expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Parameter \#1 \$subnet of static method yii\\helpers\\BaseIpHelper\:\:inRange\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Property yii\\gii\\Module\:\:\$allowedIPs type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Property yii\\gii\\Module\:\:\$generators \(array\<yii\\gii\\Generator\>\) does not accept array\<object\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Unable to resolve the template type T in call to static method yii\\BaseYii\<yii\\web\\IdentityInterface\>\:\:createObject\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: src/Module.php
+
+		-
+			message: '#^Method yii\\gii\\components\\ActiveField\:\:autoComplete\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/components/ActiveField.php
+
+		-
+			message: '#^Method yii\\gii\\components\\ActiveField\:\:checkbox\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/components/ActiveField.php
+
+		-
+			message: '#^Method yii\\gii\\components\\ActiveField\:\:hint\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/components/ActiveField.php
+
+		-
+			message: '#^Method yii\\gii\\components\\ActiveField\:\:init\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/components/ActiveField.php
+
+		-
+			message: '#^Method yii\\gii\\components\\ActiveField\:\:radio\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/components/ActiveField.php
+
+		-
+			message: '#^Return type \(string\) of method yii\\gii\\components\\DiffRendererHtmlInline\:\:render\(\) should be compatible with return type \(array\) of method Diff_Renderer_Html_Array\:\:render\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: src/components/DiffRendererHtmlInline.php
+
+		-
+			message: '#^Class yii\\gii\\console\\GenerateAction extends generic class yii\\base\\Action but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/console/GenerateAction.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateAction\:\:displayValidationErrors\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/console/GenerateAction.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateAction\:\:generateCode\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/console/GenerateAction.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateAction\:\:run\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/console/GenerateAction.php
+
+		-
+			message: '#^Parameter \#2 \$str of function explode expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/console/GenerateAction.php
+
+		-
+			message: '#^Access to an undefined property yii\\base\\Action\<\$this\(yii\\gii\\console\\GenerateController\)\>\:\:\$generator\.$#'
+			identifier: property.notFound
+			count: 5
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Cannot access property \$generator on yii\\base\\Action\<\$this\(yii\\gii\\console\\GenerateController\)\>\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Class yii\\gii\\console\\GenerateController extends generic class yii\\console\\Controller but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateController\:\:actionIndex\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateController\:\:formatHint\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateController\:\:formatHint\(\) has parameter \$hint with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateController\:\:getActionArgsHelp\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateController\:\:getActionOptionsHelp\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateController\:\:init\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateController\:\:options\(\) should return array\<string\> but returns array\<int\|string\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^PHPDoc tag @var has invalid value \(\$action GenerateAction\)\: Unexpected token "\$action", expected type at offset 9 on line 1$#'
+			identifier: phpDoc.parseError
+			count: 4
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Parameter \#1 \$str of function wordwrap expects string, array\<string\>\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Property yii\\gii\\console\\GenerateController\:\:\$_options type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Property yii\\gii\\console\\GenerateController\:\:\$generators type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/console/GenerateController.php
+
+		-
+			message: '#^Access to an undefined property yii\\console\\Response\|yii\\web\\Response\:\:\$format\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Call to an undefined method yii\\console\\Request\|yii\\web\\Request\:\:post\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Class yii\\gii\\controllers\\DefaultController extends generic class yii\\web\\Controller but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionDiff\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionDiff\(\) has parameter \$file with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionDiff\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionIndex\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionPreview\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionPreview\(\) has parameter \$file with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionPreview\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionView\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionView\(\) has parameter \$id with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/controllers/DefaultController.php
+
+		-
+			message: '#^Class yii\\gii\\generators\\controller\\Generator has PHPDoc tag @property\-read for property \$actionIDs with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/controller/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\controller\\Generator\:\:getActionIDs\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/controller/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\controller\\Generator\:\:hints\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/controller/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\controller\\Generator\:\:requiredTemplates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/controller/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\controller\\Generator\:\:stickyAttributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/controller/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_unique expects array, list\<string\>\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/controller/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$array_arg of function sort contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: src/generators/controller/Generator.php
+
+		-
+			message: '#^Call to an undefined method object\:\:attributeLabels\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Call to an undefined method object\:\:attributes\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Instanceof between yii\\db\\Connection and yii\\db\\Connection will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\crud\\Generator\:\:generateSearchConditions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\crud\\Generator\:\:generateSearchRules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\crud\\Generator\:\:hints\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\crud\\Generator\:\:requiredTemplates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\crud\\Generator\:\:stickyAttributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\crud\\Generator\:\:validateModelClass\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/generators/crud/Generator.php
+
+		-
+			message: '#^Call to an undefined method object\:\:attributes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/generators/crud/default/views/_form.php
+
+		-
+			message: '#^Call to an undefined method object\:\:safeAttributes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/generators/crud/default/views/_form.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\extension\\Generator\:\:getKeywordsArrayJson\(\) should return string but returns string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\extension\\Generator\:\:getOutputPath\(\) should return bool but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\extension\\Generator\:\:hints\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\extension\\Generator\:\:optsLicense\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\extension\\Generator\:\:optsType\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\extension\\Generator\:\:requiredTemplates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\extension\\Generator\:\:stickyAttributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$alias of static method yii\\BaseYii\<yii\\web\\IdentityInterface\>\:\:getAlias\(\) expects string, bool given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function str_replace expects array\<string\>\|string, bool given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$authorEmail has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$authorName has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$description has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$keywords has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$license has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$namespace has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$outputPath has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$packageName has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$title has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$type has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$vendorName has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/extension/Generator.php
+
+		-
+			message: '#^Variable \$generator might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/generators/extension/default/AutoloadExample.php
+
+		-
+			message: '#^Call to an undefined method object\:\:safeAttributes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Call to an undefined method object\:\:setScenario\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Class yii\\gii\\generators\\form\\Generator has PHPDoc tag @property\-read for property \$modelAttributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\form\\Generator\:\:getModelAttributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\form\\Generator\:\:hints\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\form\\Generator\:\:requiredTemplates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\form\\Generator\:\:stickyAttributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\form\\Generator\:\:validateViewPath\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\form\\Generator\:\:\$modelClass has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\form\\Generator\:\:\$scenarioName has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\form\\Generator\:\:\$viewName has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\form\\Generator\:\:\$viewPath has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/form/Generator.php
+
+		-
+			message: '#^Cannot access property \$columns on yii\\db\\TableSchema\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Cannot access property \$schema on yii\\db\\Connection\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Cannot access property \$tablePrefix on yii\\db\\Connection\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Cannot assign new offset to list\<array\<string, mixed\>\>\|string\.$#'
+			identifier: offsetAssign.dimType
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Cannot call method getSchema\(\) on yii\\db\\Connection\|null\.$#'
+			identifier: method.nonObject
+			count: 6
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Cannot call method getTableSchema\(\) on yii\\db\\Connection\|null\.$#'
+			identifier: method.nonObject
+			count: 6
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Comparison operation "\>\=" between int\<70400, 80500\> and 50500 is always true\.$#'
+			identifier: greaterOrEqual.alwaysTrue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:addInverseRelations\(\) has parameter \$relations with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:addInverseRelations\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:autoCompleteData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:autoCompleteData\(\) should return array\<array\> but returns array\<string, Closure\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:checkJunctionTable\(\) has parameter \$table with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:checkJunctionTable\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateLabels\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateManyManyRelations\(\) has parameter \$fks with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateManyManyRelations\(\) has parameter \$relations with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateManyManyRelations\(\) has parameter \$table with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateManyManyRelations\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateProperties\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateRelationLink\(\) has parameter \$refs with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateRelationName\(\) has parameter \$relations with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateRelations\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateRelationsClassHints\(\) has parameter \$relations with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateRelationsClassHints\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateRules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:getDbConnection\(\) should return yii\\db\\Connection\|null but returns object\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:getEnum\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:getTableNames\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:hints\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:init\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:isHasManyRelation\(\) has parameter \$fks with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:requiredTemplates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:stickyAttributes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:validateDb\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:validateModelClass\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:validateNamespace\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:validateTableName\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\\yii\\db\\TableSchema the table being checked\)\: Unexpected token "the", expected variable at offset 149 on line 3$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\\yii\\db\\TableSchema the table being checked\)\: Unexpected token "the", expected variable at offset 166 on line 3$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^PHPDoc tag @var for variable \$activeQuery contains generic class yii\\db\\ActiveQuery but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$key of function array_key_exists expects int\|string, bool\|float\|int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$table of method yii\\gii\\generators\\model\\Generator\:\:generateLabels\(\) expects yii\\db\\TableSchema, yii\\db\\TableSchema\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$table of method yii\\gii\\generators\\model\\Generator\:\:generateProperties\(\) expects yii\\db\\TableSchema, yii\\db\\TableSchema\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Parameter \#1 \$table of method yii\\gii\\generators\\model\\Generator\:\:generateRules\(\) expects yii\\db\\TableSchema, yii\\db\\TableSchema\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Parameter \#2 \$fks of method yii\\gii\\generators\\model\\Generator\:\:generateManyManyRelations\(\) expects array, array\|true given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Parameter \#3 \$key of method yii\\gii\\generators\\model\\Generator\:\:generateRelationName\(\) expects string, int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$db has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$generateJunctionRelationMode has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$generateLabelsFromComments has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$generateQuery has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$generateRelationNameFromDestinationTable has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$generateRelations has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$generateRelationsFromCurrentSchema has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$ns has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$queryNs has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$singularize has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$standardizeCapitals has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$useClassConstant has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$useSchemaName has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$useTablePrefix has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/generators/model/Generator.php
+
+		-
+			message: '#^PHPDoc tag @var for variable \$relationsClassHints has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/model/default/model.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\module\\Generator\:\:hints\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/module/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\module\\Generator\:\:requiredTemplates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/generators/module/Generator.php
+
+		-
+			message: '#^Method yii\\gii\\generators\\module\\Generator\:\:validateModuleClass\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/generators/module/Generator.php
+
+		-
+			message: '#^Parameter \#3 \$length of function substr expects int, int\<0, max\>\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/generators/module/Generator.php
+
+		-
+			message: '#^Parameter \#3 \$length of function substr expects int, int\<0, max\>\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/generators/module/default/module.php
+
+		-
+			message: '#^Access to an undefined property yii\\base\\Module\:\:\$generators\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/views/default/index.php
+
+		-
+			message: '#^Cannot access property \$module on yii\\console\\Controller\<yii\\base\\Module\>\|yii\\web\\Controller\<yii\\base\\Module\>\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/views/default/index.php
+
+		-
+			message: '#^Call to an undefined method yii\\widgets\\ActiveField\:\:sticky\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/views/default/view.php
+
+		-
+			message: '#^PHPDoc tag @var for variable \$answers has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/views/default/view.php
+
+		-
+			message: '#^Part \$path \(array\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/views/default/view.php
+
+		-
+			message: '#^Variable \$files in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 2
+			path: src/views/default/view.php
+
+		-
+			message: '#^Variable \$results in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/views/default/view.php
+
+		-
+			message: '#^Variable \$answers in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/views/default/view/files.php
+
+		-
+			message: '#^Access to an undefined property yii\\base\\Module\:\:\$generators\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/views/layouts/generator.php
+
+		-
+			message: '#^Cannot access property \$generator on yii\\console\\Controller\<yii\\base\\Module\>\|yii\\web\\Controller\<yii\\base\\Module\>\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/views/layouts/generator.php
+
+		-
+			message: '#^Cannot access property \$module on yii\\console\\Controller\<yii\\base\\Module\>\|yii\\web\\Controller\<yii\\base\\Module\>\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/views/layouts/generator.php
+
+		-
+			message: '#^Access to an undefined property yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\:\:\$homeUrl\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/views/layouts/main.php
+
+		-
+			message: '#^Property yii\\gii\\Generator\:\:\$templates \(array\<array\>\) does not accept array\<string, string\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/GeneratorsTest.php
+
+		-
+			message: '#^Cannot call method exec\(\) on PDO\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/GiiTestCase.php
+
+		-
+			message: '#^Parameter \#2 \$str of function explode expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/GiiTestCase.php
+
+		-
+			message: '#^Property yiiunit\\gii\\GiiTestCase\:\:\$driverName has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: tests/GiiTestCase.php
+
+		-
+			message: '#^Method yiiunit\\gii\\ModuleTest\:\:dataProviderCheckAccess\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/ModuleTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\ModuleTest\:\:testCheckAccess\(\) has parameter \$allowedIPs with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/ModuleTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:relationsGeneratorTest\(\) has parameter \$filesCount with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:relationsGeneratorTest\(\) has parameter \$generateViaRelationMode with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:relationsGeneratorTest\(\) has parameter \$relationSets with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:relationsGeneratorTest\(\) has parameter \$tableName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:relationsGeneratorTest\(\) has parameter \$template with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:relationsGeneratorTest\(\) has parameter \$useClassConstant with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:relationsProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaModelRelationsGenerator\(\) has parameter \$filesCount with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaModelRelationsGenerator\(\) has parameter \$relationSets with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaModelRelationsGenerator\(\) has parameter \$tableName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaModelRelationsGenerator\(\) has parameter \$template with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaModelRelationsGenerator\(\) has parameter \$useClassConstant with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaTableRelationsGenerator\(\) has parameter \$filesCount with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaTableRelationsGenerator\(\) has parameter \$relationSets with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaTableRelationsGenerator\(\) has parameter \$tableName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaTableRelationsGenerator\(\) has parameter \$template with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\SchemaTest\:\:testViaTableRelationsGenerator\(\) has parameter \$useClassConstant with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Property yiiunit\\gii\\SchemaTest\:\:\$driverName has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: tests/SchemaTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\TestCase\:\:destroyApplication\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/TestCase.php
+
+		-
+			message: '#^Method yiiunit\\gii\\TestCase\:\:invoke\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/TestCase.php
+
+		-
+			message: '#^Method yiiunit\\gii\\TestCase\:\:mockApplication\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/TestCase.php
+
+		-
+			message: '#^Method yiiunit\\gii\\TestCase\:\:mockApplication\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/TestCase.php
+
+		-
+			message: '#^Method yiiunit\\gii\\TestCase\:\:mockWebApplication\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/TestCase.php
+
+		-
+			message: '#^Method yiiunit\\gii\\TestCase\:\:mockWebApplication\(\) has parameter \$appClass with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/TestCase.php
+
+		-
+			message: '#^Method yiiunit\\gii\\TestCase\:\:mockWebApplication\(\) has parameter \$config with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/TestCase.php
+
+		-
+			message: '#^Static property yii\\BaseYii\<yii\\web\\IdentityInterface\>\:\:\$app \(yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/TestCase.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ControllerGeneratorTest\:\:controllerData\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/generators/ControllerGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ControllerGeneratorTest\:\:testSimpleWithNamespace\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/generators/ControllerGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ControllerGeneratorTest\:\:testSimpleWithNamespace\(\) has parameter \$controllerClass with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ControllerGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ControllerGeneratorTest\:\:testSimpleWithNamespace\(\) has parameter \$expectedNames with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ControllerGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorMock\:\:publicGenerateClassName\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/generators/ModelGeneratorMock.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorMock\:\:publicGenerateClassName\(\) has parameter \$tableName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorMock.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorMock\:\:publicGenerateClassName\(\) has parameter \$useSchemaName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorMock.php
+
+		-
+			message: '#^Access to constant TYPE_CLIENT on an unknown class TestEnumModel\.$#'
+			identifier: class.notFound
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Access to constant TYPE_CONSIGNEES on an unknown class TestEnumModel\.$#'
+			identifier: class.notFound
+			count: 2
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Access to property \$type on an unknown class TestEnumModel\.$#'
+			identifier: class.notFound
+			count: 6
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Access to static property \$testTableSchema on an unknown class TestEnumModel\.$#'
+			identifier: class.notFound
+			count: 2
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Call to method displayType\(\) on an unknown class TestEnumModel\.$#'
+			identifier: class.notFound
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Call to method isTypeClient\(\) on an unknown class TestEnumModel\.$#'
+			identifier: class.notFound
+			count: 2
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Call to method isTypeConsignees\(\) on an unknown class TestEnumModel\.$#'
+			identifier: class.notFound
+			count: 2
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Call to method validate\(\) on an unknown class TestEnumModel\.$#'
+			identifier: class.notFound
+			count: 2
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Comparison operation "\>" between int\<7, 8\> and 5 is always true\.$#'
+			identifier: greater.alwaysTrue
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Instantiated class TestEnumModel not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:createEnumTableSchema\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:relationsProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:rulesProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:tablePropertiesProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testGenerateProperties\(\) has parameter \$columns with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRelations\(\) has parameter \$fileName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRelations\(\) has parameter \$fromDestTable with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRelations\(\) has parameter \$relations with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRelations\(\) has parameter \$tableName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRelations\(\) has parameter \$useClassConstant with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRules\(\) has parameter \$fileName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRules\(\) has parameter \$rules with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRules\(\) has parameter \$tableName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRules\(\) has parameter \$useClassConstant with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Parameter \#3 \$length of function substr expects int, int\<0, max\>\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Result of \|\| is always true\.$#'
+			identifier: booleanOr.alwaysTrue
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between \*NEVER\* and 5 will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: tests/generators/ModelGeneratorTest.php

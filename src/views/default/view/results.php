@@ -1,4 +1,5 @@
 <?php
+
 /** @var yii\web\View $this */
 /** @var yii\gii\Generator $generator */
 /** @var string $results */

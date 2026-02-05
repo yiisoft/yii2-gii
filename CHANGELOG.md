@@ -6,6 +6,8 @@ Yii Framework 2 gii extension Change Log
 
 - Bug #558: Fix an issue with creating rules for multiple fields with the same default values (carono)
 - Enh #560: Remove unnecessary files from Composer package (@s1lver)
+- Enh #: Applying Yii2 coding standards (@s1lver)
+- Enh #: Raise min version to PHP 7.4 (@s1lver)
 
 2.2.7 February 13, 2025
 -----------------------

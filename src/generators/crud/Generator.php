@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -94,8 +95,8 @@ class Generator extends \yii\gii\Generator
             [['modelClass', 'controllerClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
             [['searchModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Search Model Class must not be equal to Model Class.'],
             [['modelClass', 'controllerClass', 'baseControllerClass', 'searchModelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
-            ['modelClass', 'validateClass', 'params' => ['extends' => BaseActiveRecord::className()]],
-            [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::className()]],
+            ['modelClass', 'validateClass', 'params' => ['extends' => BaseActiveRecord::class]],
+            [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::class]],
             [['controllerClass'], 'match', 'pattern' => '/Controller$/', 'message' => 'Controller class name must be suffixed with "Controller".'],
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
             [['controllerClass', 'searchModelClass'], 'validateNewClass'],
@@ -283,7 +284,7 @@ class Generator extends \yii\gii\Generator
                 $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
             }
             return "\$form->field(\$model, '$attribute')->dropDownList("
-                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)).", ['prompt' => ''])";
+                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
         }
 
         if ($column->phpType !== 'string' || $column->size === null) {
@@ -467,7 +468,7 @@ class Generator extends \yii\gii\Generator
                     break;
                 default:
                     $likeKeyword = $this->getClassDbDriverName() === 'pgsql' ? 'ilike' : 'like';
-                    $likeConditions[] = "->andFilterWhere(['{$likeKeyword}', '{$column}', \$this->{$column}])";                    
+                    $likeConditions[] = "->andFilterWhere(['{$likeKeyword}', '{$column}', \$this->{$column}])";
                     break;
             }
         }
@@ -479,7 +480,7 @@ class Generator extends \yii\gii\Generator
                 . "\n" . str_repeat(' ', 8) . "]);\n";
         }
         if (!empty($likeConditions)) {
-            $conditions[] = "\$query" . implode("\n" . str_repeat(' ', 12), $likeConditions) . ";\n";
+            $conditions[] = '$query' . implode("\n" . str_repeat(' ', 12), $likeConditions) . ";\n";
         }
 
         return $conditions;

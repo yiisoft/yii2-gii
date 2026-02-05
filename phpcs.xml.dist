@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Yii2">
+    <rule ref="vendor/yiisoft/yii2-coding-standards/Yii2"></rule>
+
+    <!-- generate relative paths -->
+    <arg name="basepath" value="src"/>
+
+    <rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+        <exclude-pattern>/*\.php$</exclude-pattern>
+    </rule>
+    <rule ref="Generic.WhiteSpace.ScopeIndent.Incorrect">
+        <exclude-pattern>/src/generators/model/default/model\.php$</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen">
+        <exclude-pattern>/src/generators/model/default/model\.php$</exclude-pattern>
+    </rule>
+    <rule ref="Generic.WhiteSpace.ScopeIndent.IncorrectExact">
+        <exclude-pattern>/src/generators/model/default/model\.php$</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired">
+        <exclude-pattern>/src/generators/crud/default/views/_form\.php$</exclude-pattern>
+        <exclude-pattern>/src/generators/crud/default/views/_search\.php$</exclude-pattern>
+        <exclude-pattern>/src/generators/crud/default/views/index\.php$</exclude-pattern>
+        <exclude-pattern>/src/generators/form/default/form\.php$</exclude-pattern>
+    </rule>
+    <rule ref="Generic.WhiteSpace.ScopeIndent.Incorrect">
+        <exclude-pattern>/src/generators/crud/default/views/index\.php$</exclude-pattern>
+        <exclude-pattern>/src/generators/crud/default/controller\.php$</exclude-pattern>
+        <exclude-pattern>/src/generators/form/default/form\.php$</exclude-pattern>
+    </rule>
+    <rule ref="Generic.WhiteSpace.ScopeIndent.IncorrectExact">
+        <exclude-pattern>/src/generators/crud/default/views/index\.php$</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace">
+        <exclude-pattern>/src/components/DiffRendererHtmlInline\.php$</exclude-pattern>
+    </rule>
+</ruleset>
