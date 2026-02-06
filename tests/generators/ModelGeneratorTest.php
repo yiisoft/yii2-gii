@@ -407,9 +407,6 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
-    /**
-     * @return array
-     */
     public function tablePropertiesProvider(): array
     {
         return [
