@@ -1,4 +1,5 @@
 <?php
+
 namespace yiiunit\gii\generators;
 
 use yii\db\mysql\ColumnSchema;
@@ -12,7 +13,7 @@ use yiiunit\gii\GiiTestCase;
  */
 class ModelGeneratorTest extends GiiTestCase
 {
-    public function testDefaultuseClassConstant()
+    public function testDefaultuseClassConstant(): void
     {
         $generator = new ModelGenerator();
         $this->assertEquals(
@@ -31,7 +32,7 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertTrue($generator->useClassConstant);
     }
 
-    public function testAll()
+    public function testAll(): void
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
@@ -74,7 +75,7 @@ class ModelGeneratorTest extends GiiTestCase
     /**
      * @return array
      */
-    public function relationsProvider()
+    public function relationsProvider(): array
     {
         return [
             ['category', 'Category.php', false, [
@@ -224,7 +225,7 @@ class ModelGeneratorTest extends GiiTestCase
      * @param $relations array
      * @param $fromDestTable bool
      */
-    public function testRelations($tableName, $fileName, $useClassConstant, $relations, $fromDestTable = false)
+    public function testRelations($tableName, $fileName, $useClassConstant, $relations, $fromDestTable = false): void
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
@@ -243,14 +244,14 @@ class ModelGeneratorTest extends GiiTestCase
             $this->assertTrue(
                 $relation['expected'] === $found,
                 "Relation \"{$relation['relation']}\" should"
-                . ($relation['expected'] ? '' : ' not')." be there:\n" . $code
+                . ($relation['expected'] ? '' : ' not') . " be there:\n" . $code
             );
 
             $found = strpos($code, $relation['name']) !== false;
             $this->assertTrue(
                 $relation['expected'] === $found,
                 "Relation Name \"{$relation['name']}\" should"
-                . ($relation['expected'] ? '' : ' not')." be there:\n" . $code
+                . ($relation['expected'] ? '' : ' not') . " be there:\n" . $code
             );
         }
     }
@@ -258,7 +259,7 @@ class ModelGeneratorTest extends GiiTestCase
     /**
      * @return array
      */
-    public function rulesProvider()
+    public function rulesProvider(): array
     {
         return [
             ['category_photo', 'CategoryPhoto.php', false, [
@@ -297,7 +298,7 @@ class ModelGeneratorTest extends GiiTestCase
      * @param $useClassConstant bool
      * @param $rules array
      */
-    public function testRules($tableName, $fileName, $useClassConstant, $rules)
+    public function testRules($tableName, $fileName, $useClassConstant, $rules): void
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
@@ -311,15 +312,13 @@ class ModelGeneratorTest extends GiiTestCase
         $code = $files[0]->content;
         foreach ($rules as $rule) {
             $location = strpos($code, $rule);
-            $this->assertTrue($location !== false,
-                "Rule \"{$rule}\" should be there:\n" . $code
-            );
+            $this->assertTrue($location !== false, "Rule \"{$rule}\" should be there:\n" . $code);
         }
     }
 
-    public function testGenerateStandardizedCapitalsForClassNames()
+    public function testGenerateStandardizedCapitalsForClassNames(): void
     {
-        $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator = new ModelGeneratorMock();
         $modelGenerator->standardizeCapitals = true;
 
         $tableNames = [
@@ -341,9 +340,9 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
-    public function testGenerateNotStandardizedCapitalsForClassNames()
+    public function testGenerateNotStandardizedCapitalsForClassNames(): void
     {
-        $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator = new ModelGeneratorMock();
         $modelGenerator->standardizeCapitals = false;
 
         $tableNames = [
@@ -367,9 +366,9 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
-    public function testGenerateSingularizedClassNames()
+    public function testGenerateSingularizedClassNames(): void
     {
-        $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator = new ModelGeneratorMock();
         $modelGenerator->singularize = true;
 
         $tableNames = [
@@ -388,9 +387,9 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
-    public function testGenerateNotSingularizedClassNames()
+    public function testGenerateNotSingularizedClassNames(): void
     {
-        $modelGenerator = new ModelGeneratorMock;
+        $modelGenerator = new ModelGeneratorMock();
 
         $tableNames = [
             'clients' => 'Clients',
@@ -408,10 +407,7 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
-    /**
-     * @return array
-     */
-    public function tablePropertiesProvider()
+    public function tablePropertiesProvider(): array
     {
         return [
             [
@@ -459,7 +455,6 @@ class ModelGeneratorTest extends GiiTestCase
                 ]
             ],
         ];
-
     }
 
     /**
@@ -468,7 +463,7 @@ class ModelGeneratorTest extends GiiTestCase
      * @param string $tableName
      * @param array $columns
      */
-    public function testGenerateProperties($tableName, $columns)
+    public function testGenerateProperties($tableName, $columns): void
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
@@ -484,10 +479,9 @@ class ModelGeneratorTest extends GiiTestCase
                 "Column \"{$column['columnName']}\" properties should be there:\n" . $column['propertyRow']
             );
         }
-
     }
 
-    public function testEnum()
+    public function testEnum(): void
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
@@ -542,13 +536,12 @@ class ModelGeneratorTest extends GiiTestCase
         $testEnumModel->type = \TestEnumModel::TYPE_CONSIGNEES;
         $this->assertFalse($testEnumModel->isTypeClient());
         $this->assertTrue($testEnumModel->isTypeConsignees());
-        $this->assertEquals(\TestEnumModel::TYPE_CONSIGNEES,$testEnumModel->displayType());
+        $this->assertEquals(\TestEnumModel::TYPE_CONSIGNEES, $testEnumModel->displayType());
 
         /** test validate */
         $this->assertTrue($testEnumModel->validate());
         $testEnumModel->type = '11111';
         $this->assertFalse($testEnumModel->validate());
-
     }
 
     public function createEnumTableSchema()

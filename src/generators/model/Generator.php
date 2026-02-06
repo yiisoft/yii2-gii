@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -29,11 +30,11 @@ use yii\helpers\StringHelper;
  */
 class Generator extends \yii\gii\Generator
 {
-    const RELATIONS_NONE = 'none';
-    const RELATIONS_ALL = 'all';
-    const RELATIONS_ALL_INVERSE = 'all-inverse';
-    const JUNCTION_RELATION_VIA_TABLE = 'table';
-    const JUNCTION_RELATION_VIA_MODEL = 'model';
+    public const RELATIONS_NONE = 'none';
+    public const RELATIONS_ALL = 'all';
+    public const RELATIONS_ALL_INVERSE = 'all-inverse';
+    public const JUNCTION_RELATION_VIA_TABLE = 'table';
+    public const JUNCTION_RELATION_VIA_MODEL = 'model';
 
     public $db = 'db';
     public $ns = 'app\models';
@@ -127,8 +128,8 @@ class Generator extends \yii\gii\Generator
             [['ns', 'queryNs'], 'validateNamespace'],
             [['tableName'], 'validateTableName'],
             [['modelClass'], 'validateModelClass', 'skipOnEmpty' => false],
-            [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
-            [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
+            [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::class]],
+            [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::class]],
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
             [['generateJunctionRelationMode'], 'in', 'range' => [self::JUNCTION_RELATION_VIA_TABLE, self::JUNCTION_RELATION_VIA_MODEL]],
             [
@@ -365,7 +366,7 @@ class Generator extends \yii\gii\Generator
                 default:
                     $type = $column->phpType;
             }
-            if ($column->allowNull){
+            if ($column->allowNull) {
                 $type .= '|null';
             }
             $properties[$column->name] = [
@@ -410,9 +411,10 @@ class Generator extends \yii\gii\Generator
      * @return array
      * @since 2.1.4
      */
-    public function generateRelationsClassHints($relations, $generateQuery){
+    public function generateRelationsClassHints($relations, $generateQuery)
+    {
         $result = [];
-        foreach ($relations as $name => $relation){
+        foreach ($relations as $name => $relation) {
             // The queryNs options available if generateQuery is active
             if ($generateQuery) {
                 $queryClassRealName = '\\' . $this->queryNs . '\\' . $relation[1];
@@ -420,12 +422,12 @@ class Generator extends \yii\gii\Generator
                     /** @var \yii\db\ActiveQuery $activeQuery */
                     $activeQuery = $queryClassRealName::find();
                     $activeQueryClass = $activeQuery::className();
-                    if (strpos($activeQueryClass, $this->ns) === 0){
+                    if (strpos($activeQueryClass, $this->ns) === 0) {
                         $activeQueryClass = StringHelper::basename($activeQueryClass);
                     }
                     $result[$name] = '\yii\db\ActiveQuery|' . $activeQueryClass;
                 } else {
-                    $result[$name] = '\yii\db\ActiveQuery|' . (($this->ns === $this->queryNs) ? $relation[1]: '\\' . $this->queryNs . '\\' . $relation[1]) . 'Query';
+                    $result[$name] = '\yii\db\ActiveQuery|' . (($this->ns === $this->queryNs) ? $relation[1] : '\\' . $this->queryNs . '\\' . $relation[1]) . 'Query';
                 }
             } else {
                 $result[$name] = '\yii\db\ActiveQuery';
@@ -731,7 +733,7 @@ class Generator extends \yii\gii\Generator
                     $link = $this->generateRelationLink($refs);
                     $relationName = $this->generateRelationName($relations, $refTableSchema, $className, $hasMany);
                     $relations[$refTableSchema->fullName][$relationName] = [
-                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($classNameResolution, $link);",
+                        'return $this->' . ($hasMany ? 'hasMany' : 'hasOne') . "($classNameResolution, $link);",
                         $className,
                         $hasMany,
                         $table->fullName . '.' . $foreignKey
@@ -798,10 +800,10 @@ class Generator extends \yii\gii\Generator
 
                     $relations[$table->fullName][$leftRelationName][0] =
                         rtrim($relations[$table->fullName][$leftRelationName][0], ';')
-                        . "->inverseOf('".lcfirst($rightRelationName)."');";
+                        . "->inverseOf('" . lcfirst($rightRelationName) . "');";
                     $relations[$refTableSchema->fullName][$rightRelationName][0] =
                         rtrim($relations[$refTableSchema->fullName][$rightRelationName][0], ';')
-                        . "->inverseOf('".lcfirst($leftRelationName)."');";
+                        . "->inverseOf('" . lcfirst($leftRelationName) . "');";
                 }
             }
         }
@@ -917,7 +919,7 @@ class Generator extends \yii\gii\Generator
             $baseClassReflector = new \ReflectionClass($baseClass);
             if ($baseClassReflector->isAbstract()) {
                 $baseClassWrapper =
-                    'namespace ' . __NAMESPACE__ . ';'.
+                    'namespace ' . __NAMESPACE__ . ';' .
                     'class GiiBaseClassWrapper extends \\' . $baseClass . ' {' .
                         'public static function tableName(){' .
                             'return "' . addslashes($table->fullName) . '";' .
@@ -1119,9 +1121,9 @@ class Generator extends \yii\gii\Generator
         if ($this->standardizeCapitals) {
             $schemaName = ctype_upper(preg_replace('/[_-]/', '', $schemaName)) ? strtolower($schemaName) : $schemaName;
             $className = ctype_upper(preg_replace('/[_-]/', '', $className)) ? strtolower($className) : $className;
-            $this->classNames[$fullTableName] = Inflector::camelize(Inflector::camel2words($schemaName.$className));
+            $this->classNames[$fullTableName] = Inflector::camelize(Inflector::camel2words($schemaName . $className));
         } else {
-            $this->classNames[$fullTableName] = Inflector::id2camel($schemaName.$className, '_');
+            $this->classNames[$fullTableName] = Inflector::id2camel($schemaName . $className, '_');
         }
 
         if ($this->singularize) {
@@ -1219,7 +1221,6 @@ class Generator extends \yii\gii\Generator
             $enum[$column->name]['values'] = [];
 
             foreach ($column->enumValues as $value) {
-
                 $constantName = strtoupper(Inflector::slug($column->name . ' ' . $value, '_'));
                 $label = Inflector::camel2words($value);
 

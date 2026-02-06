@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -137,15 +138,15 @@ EOD;
         $modulePath = $this->getModulePath();
         $files[] = new CodeFile(
             $modulePath . '/' . StringHelper::basename($this->moduleClass) . '.php',
-            $this->render("module.php")
+            $this->render('module.php')
         );
         $files[] = new CodeFile(
             $modulePath . '/controllers/DefaultController.php',
-            $this->render("controller.php")
+            $this->render('controller.php')
         );
         $files[] = new CodeFile(
             $modulePath . '/views/default/index.php',
-            $this->render("view.php")
+            $this->render('view.php')
         );
 
         return $files;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -380,7 +381,7 @@ abstract class Generator extends Model
     {
         $class = ltrim($this->$attribute, '\\');
         if (($pos = strrpos($class, '\\')) === false) {
-            $this->addError($attribute, "The class name must contain fully qualified namespace name.");
+            $this->addError($attribute, 'The class name must contain fully qualified namespace name.');
         } else {
             $ns = substr($class, 0, $pos);
             $path = Yii::getAlias('@' . str_replace('\\', '/', $ns), false);
@@ -516,11 +517,11 @@ abstract class Generator extends Model
             } else {
                 $ph = '';
             }
-            $str = "Yii::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
+            $str = "Yii::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ')';
         } else {
             // No I18N, replace placeholders by real words, if any
             if (!empty($placeholders)) {
-                $phKeys = array_map(function($word) {
+                $phKeys = array_map(function ($word) {
                     return '{' . $word . '}';
                 }, array_keys($placeholders));
                 $phValues = array_values($placeholders);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -26,15 +27,15 @@ class CodeFile extends BaseObject
     /**
      * The code file is new.
      */
-    const OP_CREATE = 'create';
+    public const OP_CREATE = 'create';
     /**
      * The code file already exists, and the new one may need to overwrite it.
      */
-    const OP_OVERWRITE = 'overwrite';
+    public const OP_OVERWRITE = 'overwrite';
     /**
      * The new code file and the existing one are identical.
      */
-    const OP_SKIP = 'skip';
+    public const OP_SKIP = 'skip';
 
     /**
      * @var string an ID that uniquely identifies this code file.

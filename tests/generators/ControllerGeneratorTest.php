@@ -1,4 +1,5 @@
 <?php
+
 namespace yiiunit\gii\generators;
 
 use Yii;

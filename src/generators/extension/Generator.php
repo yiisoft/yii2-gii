@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -22,13 +23,13 @@ use yii\gii\CodeFile;
 class Generator extends \yii\gii\Generator
 {
     public $vendorName;
-    public $packageName = "yii2-";
+    public $packageName = 'yii2-';
     public $namespace;
-    public $type = "yii2-extension";
-    public $keywords = "yii2,extension";
+    public $type = 'yii2-extension';
+    public $keywords = 'yii2,extension';
     public $title;
     public $description;
-    public $outputPath = "@app/runtime/tmp-extensions";
+    public $outputPath = '@app/runtime/tmp-extensions';
     public $license;
     public $authorName;
     public $authorEmail;
@@ -203,15 +204,15 @@ EOD;
         $modulePath = $this->getOutputPath();
         $files[] = new CodeFile(
             $modulePath . '/' . $this->packageName . '/composer.json',
-            $this->render("composer.json")
+            $this->render('composer.json')
         );
         $files[] = new CodeFile(
             $modulePath . '/' . $this->packageName . '/AutoloadExample.php',
-            $this->render("AutoloadExample.php")
+            $this->render('AutoloadExample.php')
         );
         $files[] = new CodeFile(
             $modulePath . '/' . $this->packageName . '/README.md',
-            $this->render("README.md")
+            $this->render('README.md')
         );
 
         return $files;
