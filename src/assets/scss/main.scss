@@ -371,3 +371,13 @@ body {
     height: 1px;
     padding: 0;
 }
+
+#preview-modal {
+    .modal-header {
+        display: flex;
+    }
+    .modal-body {
+        white-space: pre;
+        overflow: auto;
+    }
+}
