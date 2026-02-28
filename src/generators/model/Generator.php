@@ -1101,8 +1101,6 @@ class Generator extends \yii\gii\Generator
 
         $db = $this->getDbConnection();
         $patterns = [];
-        $patterns[] = "/^{$db->tablePrefix}(.*?)$/";
-        $patterns[] = "/^(.*?){$db->tablePrefix}$/";
         if (strpos($this->tableName, '*') !== false) {
             $pattern = $this->tableName;
             if (($pos = strrpos($pattern, '.')) !== false) {
@@ -1110,6 +1108,8 @@ class Generator extends \yii\gii\Generator
             }
             $patterns[] = '/^' . str_replace('*', '(\w+)', $pattern) . '$/';
         }
+        $patterns[] = "/^{$db->tablePrefix}(.*?)$/";
+        $patterns[] = "/^(.*?){$db->tablePrefix}$/";
         $className = $tableName;
         foreach ($patterns as $pattern) {
             if (preg_match($pattern, $tableName, $matches)) {
