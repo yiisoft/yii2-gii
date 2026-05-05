@@ -8,8 +8,8 @@ Yii Framework 2 gii extension Change Log
 - Enh #560: Remove unnecessary files from Composer package (@s1lver)
 - Enh #561: Applying Yii2 coding standards (@s1lver)
 - Enh #561: Raise min version to PHP 7.4 (@s1lver)
-- Enh #: Improved strict types of the code (@s1lver)
-- Enh #: Now the functions `tableName(): string`, `rules(): array`, `attributeLabels(): array`, `behaviors(): array` are generated with return types (@s1lver)
+- Enh #562: Improved strict types of the code (@s1lver)
+- Enh #562: Now the functions `tableName(): string`, `rules(): array`, `attributeLabels(): array`, `behaviors(): array` are generated with return types (@s1lver)
 
 
 2.2.7 February 13, 2025

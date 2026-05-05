@@ -220,9 +220,9 @@ EOD;
     }
 
     /**
-     * @return bool the directory that contains the module class
+     * @return bool|string the directory that contains the module class
      */
-    public function getOutputPath(): bool
+    public function getOutputPath()
     {
         return Yii::getAlias(str_replace('\\', '/', $this->outputPath));
     }
