@@ -4,6 +4,8 @@
  * This is the template for generating CRUD search class of the specified model.
  */
 
+declare(strict_types=1);
+
 use yii\helpers\StringHelper;
 
 /** @var yii\web\View $this */
@@ -37,7 +39,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             <?= implode(",\n            ", $rules) ?>,

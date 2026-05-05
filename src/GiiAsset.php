@@ -6,9 +6,12 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii;
 
 use yii\web\AssetBundle;
+use yii\web\YiiAsset;
 
 /**
  * This declares the asset files required by Gii.
@@ -27,6 +30,6 @@ class GiiAsset extends AssetBundle
         'js/gii.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset'
+        YiiAsset::class
     ];
 }

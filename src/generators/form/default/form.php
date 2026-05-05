@@ -4,6 +4,8 @@
  * This is the template for generating an action view file.
  */
 
+declare(strict_types=1);
+
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\form\Generator $generator */
 

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\crud\Generator $generator */
-
 /* @var $model \yii\db\ActiveRecord */
+
 $model = new $generator->modelClass();
 $safeAttributes = $model->safeAttributes();
 if (empty($safeAttributes)) {

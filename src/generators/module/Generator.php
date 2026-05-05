@@ -6,6 +6,8 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\generators\module;
 
 use yii\gii\CodeFile;
@@ -27,17 +29,16 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string
      */
-    public $moduleClass;
+    public string $moduleClass;
     /**
      * @var string
      */
-    public $moduleID;
-
+    public string $moduleID;
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Module Generator';
     }
@@ -45,7 +46,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'This generator helps you to generate the skeleton code needed by a Yii module.';
     }
@@ -53,7 +54,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return array_merge(parent::rules(), [
             [['moduleID', 'moduleClass'], 'trim'],
@@ -67,7 +68,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return array_merge(
             parent::attributeLabels(),
@@ -81,7 +82,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function hints()
+    public function hints(): array
     {
         return array_merge(
             parent::hints(),
@@ -95,7 +96,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function successMessage()
+    public function successMessage(): string
     {
         if (Yii::$app->hasModule($this->moduleID)) {
             $link = Html::a('try it now', Yii::$app->getUrlManager()->createUrl($this->moduleID), ['target' => '_blank']);
@@ -124,7 +125,7 @@ EOD;
     /**
      * {@inheritdoc}
      */
-    public function requiredTemplates()
+    public function requiredTemplates(): array
     {
         return ['module.php', 'controller.php', 'view.php'];
     }
@@ -132,7 +133,7 @@ EOD;
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): array
     {
         $files = [];
         $modulePath = $this->getModulePath();
@@ -155,7 +156,7 @@ EOD;
     /**
      * Validates [[moduleClass]] to make sure it is a fully qualified class name.
      */
-    public function validateModuleClass()
+    public function validateModuleClass(): void
     {
         if (empty($this->moduleClass) || substr_compare($this->moduleClass, '\\', -1, 1) === 0) {
             $this->addError('moduleClass', 'Module class name must not be empty. Please enter a fully qualified class name. e.g. "app\modules\admin\Module".');
@@ -168,7 +169,7 @@ EOD;
     /**
      * @return string the directory that contains the module class
      */
-    public function getModulePath()
+    public function getModulePath(): string
     {
         return Yii::getAlias('@' . str_replace('\\', '/', substr($this->moduleClass, 0, strrpos($this->moduleClass, '\\'))));
     }
@@ -176,7 +177,7 @@ EOD;
     /**
      * @return string the controller namespace of the module.
      */
-    public function getControllerNamespace()
+    public function getControllerNamespace(): string
     {
         return substr($this->moduleClass, 0, strrpos($this->moduleClass, '\\')) . '\controllers';
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use yii\widgets\Menu;
 use yii\helpers\Html;
 

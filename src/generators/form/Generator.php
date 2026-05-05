@@ -6,6 +6,8 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\generators\form;
 
 use Yii;
@@ -27,11 +29,10 @@ class Generator extends \yii\gii\Generator
     public $viewName;
     public $scenarioName;
 
-
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Form Generator';
     }
@@ -39,7 +40,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'This generator generates a view script file that displays a form to collect input for the specified model class.';
     }
@@ -47,7 +48,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): array
     {
         $files = [];
         $files[] = new CodeFile(
@@ -61,7 +62,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return array_merge(parent::rules(), [
             [['modelClass', 'viewName', 'scenarioName', 'viewPath'], 'trim'],
@@ -80,7 +81,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return array_merge(parent::attributeLabels(), [
             'modelClass' => 'Model Class',
@@ -93,7 +94,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function requiredTemplates()
+    public function requiredTemplates(): array
     {
         return ['form.php', 'action.php'];
     }
@@ -101,7 +102,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function stickyAttributes()
+    public function stickyAttributes(): array
     {
         return array_merge(parent::stickyAttributes(), ['viewPath', 'scenarioName']);
     }
@@ -109,7 +110,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function hints()
+    public function hints(): array
     {
         return array_merge(parent::hints(), [
             'modelClass' => 'This is the model class for collecting the form input. You should provide a fully qualified class name, e.g., <code>app\models\Post</code>.',
@@ -122,7 +123,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function successMessage()
+    public function successMessage(): string
     {
         $code = highlight_string($this->render('action.php'), true);
 
@@ -147,7 +148,7 @@ EOD;
     /**
      * @return array list of safe attributes of [[modelClass]]
      */
-    public function getModelAttributes()
+    public function getModelAttributes(): array
     {
         /* @var $model Model */
         $model = new $this->modelClass();

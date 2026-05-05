@@ -6,20 +6,21 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\console;
 
+use yii\base\Action;
 use yii\helpers\Console;
+use yii\gii\Generator;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class GenerateAction extends \yii\base\Action
+class GenerateAction extends Action
 {
-    /**
-     * @var \yii\gii\Generator
-     */
-    public $generator;
+    public Generator $generator;
     /**
      * @var GenerateController
      */
@@ -41,7 +42,7 @@ class GenerateAction extends \yii\base\Action
         }
     }
 
-    protected function displayValidationErrors()
+    protected function displayValidationErrors(): void
     {
         $this->controller->stdout("Code not generated. Please fix the following errors:\n\n", Console::FG_RED);
         foreach ($this->generator->errors as $attribute => $errors) {
@@ -50,7 +51,7 @@ class GenerateAction extends \yii\base\Action
         $this->controller->stdout("\n");
     }
 
-    protected function generateCode()
+    protected function generateCode(): void
     {
         $files = $this->generator->generate();
         $n = count($files);

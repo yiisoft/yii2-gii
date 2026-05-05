@@ -4,6 +4,8 @@
  * This is the template for generating the model class of a specified table.
  */
 
+declare(strict_types=1);
+
 /** @var $enum array list of ENUM fields */
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\model\Generator $generator */
@@ -56,7 +58,7 @@ endif
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return '<?= $generator->generateTableName($tableName) ?>';
     }
@@ -74,7 +76,7 @@ endif
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [<?= empty($rules) ? '' : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>];
     }
@@ -82,7 +84,7 @@ endif
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
 <?php foreach ($labels as $name => $label): ?>

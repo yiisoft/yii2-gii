@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace yiiunit\gii\generators;
 
 use yii\gii\generators\model\Generator;

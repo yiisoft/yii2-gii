@@ -6,6 +6,8 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\generators\extension;
 
 use Yii;
@@ -34,11 +36,10 @@ class Generator extends \yii\gii\Generator
     public $authorName;
     public $authorEmail;
 
-
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Extension Generator';
     }
@@ -46,7 +47,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'This generator helps you to generate the files needed by a Yii extension.';
     }
@@ -54,7 +55,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return array_merge(
             parent::rules(),
@@ -96,7 +97,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'vendorName'  => 'Vendor Name',
@@ -108,7 +109,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function hints()
+    public function hints(): array
     {
         return [
             'vendorName'  => 'This refers to the name of the publisher, your GitHub user name is usually a good choice, eg. <code>myself</code>.',
@@ -124,7 +125,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function stickyAttributes()
+    public function stickyAttributes(): array
     {
         return ['vendorName', 'outputPath', 'authorName', 'authorEmail'];
     }
@@ -132,9 +133,9 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function successMessage()
+    public function successMessage(): string
     {
-        $outputPath = realpath(\Yii::getAlias($this->outputPath));
+        $outputPath = realpath(Yii::getAlias($this->outputPath));
         $output1 = <<<EOD
 <p><em>The extension has been generated successfully.</em></p>
 <p>To enable it in your application, you need to create a git repository
@@ -190,7 +191,7 @@ EOD;
     /**
      * {@inheritdoc}
      */
-    public function requiredTemplates()
+    public function requiredTemplates(): array
     {
         return ['composer.json', 'AutoloadExample.php', 'README.md'];
     }
@@ -198,7 +199,7 @@ EOD;
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): array
     {
         $files = [];
         $modulePath = $this->getOutputPath();
@@ -221,7 +222,7 @@ EOD;
     /**
      * @return bool the directory that contains the module class
      */
-    public function getOutputPath()
+    public function getOutputPath(): bool
     {
         return Yii::getAlias(str_replace('\\', '/', $this->outputPath));
     }
@@ -237,7 +238,7 @@ EOD;
     /**
      * @return array options for type drop-down
      */
-    public function optsType()
+    public function optsType(): array
     {
         $types = [
             'yii2-extension',
@@ -250,7 +251,7 @@ EOD;
     /**
      * @return array options for license drop-down
      */
-    public function optsLicense()
+    public function optsLicense(): array
     {
         $licenses = [
             'Apache-2.0',

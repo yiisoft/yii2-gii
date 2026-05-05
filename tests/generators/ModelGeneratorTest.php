@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace yiiunit\gii\generators;
 
 use yii\db\mysql\ColumnSchema;
@@ -13,7 +15,7 @@ use yiiunit\gii\GiiTestCase;
  */
 class ModelGeneratorTest extends GiiTestCase
 {
-    public function testDefaultuseClassConstant(): void
+    public function testDefaultUseClassConstant(): void
     {
         $generator = new ModelGenerator();
         $this->assertEquals(

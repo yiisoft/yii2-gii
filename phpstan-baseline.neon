@@ -37,18 +37,6 @@ parameters:
 			path: src/Generator.php
 
 		-
-			message: '#^Method yii\\gii\\Generator\:\:init\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\Generator\:\:loadStickyAttributes\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/Generator.php
-
-		-
 			message: '#^Method yii\\gii\\Generator\:\:render\(\) has parameter \$params with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -63,12 +51,6 @@ parameters:
 		-
 			message: '#^Method yii\\gii\\Generator\:\:save\(\) has parameter \$answers with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\Generator\:\:saveStickyAttributes\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: src/Generator.php
 
@@ -91,12 +73,6 @@ parameters:
 			path: src/Generator.php
 
 		-
-			message: '#^Method yii\\gii\\Generator\:\:validateMessageCategory\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/Generator.php
-
-		-
 			message: '#^Method yii\\gii\\Generator\:\:validateNewClass\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -105,12 +81,6 @@ parameters:
 		-
 			message: '#^Method yii\\gii\\Generator\:\:validateNewClass\(\) has parameter \$params with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\Generator\:\:validateTemplate\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: src/Generator.php
 
@@ -157,26 +127,8 @@ parameters:
 			path: src/Module.php
 
 		-
-			message: '#^Method yii\\gii\\Module\:\:checkAccess\(\) should return int but returns false\.$#'
-			identifier: return.type
-			count: 1
-			path: src/Module.php
-
-		-
-			message: '#^Method yii\\gii\\Module\:\:checkAccess\(\) should return int but returns true\.$#'
-			identifier: return.type
-			count: 1
-			path: src/Module.php
-
-		-
 			message: '#^Method yii\\gii\\Module\:\:coreGenerators\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/Module.php
-
-		-
-			message: '#^Method yii\\gii\\Module\:\:resetGlobalSettings\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: src/Module.php
 
@@ -235,12 +187,6 @@ parameters:
 			path: src/components/ActiveField.php
 
 		-
-			message: '#^Method yii\\gii\\components\\ActiveField\:\:init\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/components/ActiveField.php
-
-		-
 			message: '#^Method yii\\gii\\components\\ActiveField\:\:radio\(\) has parameter \$options with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -255,18 +201,6 @@ parameters:
 		-
 			message: '#^Class yii\\gii\\console\\GenerateAction extends generic class yii\\base\\Action but does not specify its types\: T$#'
 			identifier: missingType.generics
-			count: 1
-			path: src/console/GenerateAction.php
-
-		-
-			message: '#^Method yii\\gii\\console\\GenerateAction\:\:displayValidationErrors\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/console/GenerateAction.php
-
-		-
-			message: '#^Method yii\\gii\\console\\GenerateAction\:\:generateCode\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: src/console/GenerateAction.php
 
@@ -297,18 +231,6 @@ parameters:
 		-
 			message: '#^Class yii\\gii\\console\\GenerateController extends generic class yii\\console\\Controller but does not specify its types\: T$#'
 			identifier: missingType.generics
-			count: 1
-			path: src/console/GenerateController.php
-
-		-
-			message: '#^Method yii\\gii\\console\\GenerateController\:\:actionIndex\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/console/GenerateController.php
-
-		-
-			message: '#^Method yii\\gii\\console\\GenerateController\:\:formatHint\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: src/console/GenerateController.php
 
@@ -399,12 +321,6 @@ parameters:
 		-
 			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionDiff\(\) has parameter \$id with no type specified\.$#'
 			identifier: missingType.parameter
-			count: 1
-			path: src/controllers/DefaultController.php
-
-		-
-			message: '#^Method yii\\gii\\controllers\\DefaultController\:\:actionIndex\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: src/controllers/DefaultController.php
 
@@ -531,12 +447,6 @@ parameters:
 		-
 			message: '#^Method yii\\gii\\generators\\crud\\Generator\:\:stickyAttributes\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/generators/crud/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\generators\\crud\\Generator\:\:validateModelClass\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: src/generators/crud/Generator.php
 
@@ -817,12 +727,6 @@ parameters:
 			path: src/generators/model/Generator.php
 
 		-
-			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:checkJunctionTable\(\) has parameter \$table with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
 			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:checkJunctionTable\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -843,12 +747,6 @@ parameters:
 		-
 			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateManyManyRelations\(\) has parameter \$relations with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:generateManyManyRelations\(\) has parameter \$table with no type specified\.$#'
-			identifier: missingType.parameter
 			count: 1
 			path: src/generators/model/Generator.php
 
@@ -925,12 +823,6 @@ parameters:
 			path: src/generators/model/Generator.php
 
 		-
-			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:init\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
 			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:isHasManyRelation\(\) has parameter \$fks with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -945,42 +837,6 @@ parameters:
 		-
 			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:stickyAttributes\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:validateDb\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:validateModelClass\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:validateNamespace\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\generators\\model\\Generator\:\:validateTableName\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\\yii\\db\\TableSchema the table being checked\)\: Unexpected token "the", expected variable at offset 149 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\\yii\\db\\TableSchema the table being checked\)\: Unexpected token "the", expected variable at offset 166 on line 3$#'
-			identifier: phpDoc.parseError
 			count: 1
 			path: src/generators/model/Generator.php
 
@@ -1131,12 +987,6 @@ parameters:
 		-
 			message: '#^Method yii\\gii\\generators\\module\\Generator\:\:requiredTemplates\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/generators/module/Generator.php
-
-		-
-			message: '#^Method yii\\gii\\generators\\module\\Generator\:\:validateModuleClass\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: src/generators/module/Generator.php
 

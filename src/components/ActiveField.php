@@ -6,6 +6,8 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\components;
 
 use yii\gii\Generator;
@@ -27,11 +29,10 @@ class ActiveField extends \yii\widgets\ActiveField
      */
     public $model;
 
-
     /**
      * {@inheritdoc}
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         $stickyAttributes = $this->model->stickyAttributes();
@@ -58,7 +59,7 @@ class ActiveField extends \yii\widgets\ActiveField
      * Makes field remember its value between page reloads
      * @return $this the field object itself
      */
-    public function sticky()
+    public function sticky(): self
     {
         Html::addCssClass($this->options, 'sticky');
 
@@ -70,7 +71,7 @@ class ActiveField extends \yii\widgets\ActiveField
      * @param array $data auto complete data (array of callables or scalars)
      * @return $this the field object itself
      */
-    public function autoComplete($data)
+    public function autoComplete($data): self
     {
         $inputID = $this->getInputId();
         ArrayHelper::setValue($this->inputOptions, 'list', "$inputID-list");

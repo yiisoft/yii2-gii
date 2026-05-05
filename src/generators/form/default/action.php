@@ -4,6 +4,8 @@
  * This is the template for generating an action view file.
  */
 
+declare(strict_types=1);
+
 use yii\helpers\Inflector;
 
 /** @var yii\web\View $this */

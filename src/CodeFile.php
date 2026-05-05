@@ -6,8 +6,11 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii;
 
+use Diff;
 use Yii;
 use yii\base\BaseObject;
 use yii\gii\components\DiffRendererHtmlInline;
@@ -40,20 +43,19 @@ class CodeFile extends BaseObject
     /**
      * @var string an ID that uniquely identifies this code file.
      */
-    public $id;
+    public string $id;
     /**
      * @var string the file path that the new code should be saved to.
      */
-    public $path;
+    public string $path;
     /**
      * @var string the newly generated code content
      */
-    public $content;
+    public string $content;
     /**
      * @var string the operation to be performed. This can be [[OP_CREATE]], [[OP_OVERWRITE]] or [[OP_SKIP]].
      */
-    public $operation;
-
+    public string $operation;
 
     /**
      * Constructor.
@@ -85,7 +87,7 @@ class CodeFile extends BaseObject
         if ($this->operation === self::OP_CREATE) {
             $dir = dirname($this->path);
             if (!is_dir($dir)) {
-                if ($module instanceof \yii\gii\Module) {
+                if ($module instanceof Module) {
                     $mask = @umask(0);
                     $result = @mkdir($dir, $module->newDirMode, true);
                     @umask($mask);
@@ -101,7 +103,7 @@ class CodeFile extends BaseObject
             return "Unable to write the file '{$this->path}'.";
         }
 
-        if ($module instanceof \yii\gii\Module) {
+        if ($module instanceof Module) {
             $mask = @umask(0);
             @chmod($this->path, $module->newFileMode);
             @umask($mask);
@@ -113,7 +115,7 @@ class CodeFile extends BaseObject
     /**
      * @return string the code file path relative to the application base path.
      */
-    public function getRelativePath()
+    public function getRelativePath(): string
     {
         if (strpos($this->path, Yii::$app->basePath) === 0) {
             return substr($this->path, strlen(Yii::$app->basePath) + 1);
@@ -125,7 +127,7 @@ class CodeFile extends BaseObject
     /**
      * @return string the code file extension (e.g. php, txt)
      */
-    public function getType()
+    public function getType(): string
     {
         if (($pos = strrpos($this->path, '.')) !== false) {
             return substr($this->path, $pos + 1);
@@ -180,7 +182,7 @@ class CodeFile extends BaseObject
      * @param mixed $lines2
      * @return string
      */
-    private function renderDiff($lines1, $lines2)
+    private function renderDiff($lines1, $lines2): string
     {
         if (!is_array($lines1)) {
             $lines1 = explode("\n", $lines1);
@@ -196,8 +198,6 @@ class CodeFile extends BaseObject
         }
 
         $renderer = new DiffRendererHtmlInline();
-        $diff = new \Diff($lines1, $lines2);
-
-        return $diff->render($renderer);
+        return (new Diff($lines1, $lines2))->render($renderer);
     }
 }

@@ -6,6 +6,8 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\components;
 
 /**
@@ -22,7 +24,7 @@ class DiffRendererHtmlInline extends \Diff_Renderer_Html_Array
      *
      * @return string The generated inline diff.
      */
-    public function render()
+    public function render(): string
     {
         $changes = parent::render();
         $html = '';

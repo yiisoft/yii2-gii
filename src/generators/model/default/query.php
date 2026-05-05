@@ -4,6 +4,8 @@
  * This is the template for generating the ActiveQuery class.
  */
 
+declare(strict_types=1);
+
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\model\Generator $generator */
 /** @var string $tableName full table name */

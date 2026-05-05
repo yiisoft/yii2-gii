@@ -6,8 +6,11 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii;
 
+use Exception;
 use Yii;
 use ReflectionClass;
 use yii\base\InvalidConfigException;
@@ -43,28 +46,27 @@ abstract class Generator extends Model
      * @var array[] a list of available code templates. The array keys are the template names,
      * the array values are the corresponding template paths or path aliases.
      */
-    public $templates = [];
+    public array $templates = [];
     /**
      * @var string the name of the code template that the user has selected.
      * The value of this property is internally managed by this class.
      */
-    public $template = 'default';
+    public string $template = 'default';
     /**
      * @var bool whether the strings will be generated using `Yii::t()` or PHP strings.
      */
-    public $enableI18N = false;
+    public bool $enableI18N = false;
     /**
      * @var string the message category used by `Yii::t()` when `$enableI18N` is `true`, defaults to `app`.
      */
-    public $messageCategory = 'app';
-
+    public string $messageCategory = 'app';
 
     /**
      * Returns the name of the code generator.
      *
      * @return string
      */
-    abstract public function getName();
+    abstract public function getName(): string;
 
     /**
      * Generates the code based on the current user input and the specified code template files.
@@ -78,7 +80,7 @@ abstract class Generator extends Model
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         if (!isset($this->templates['default'])) {
@@ -92,7 +94,7 @@ abstract class Generator extends Model
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'template' => 'Template/view group',
@@ -108,7 +110,7 @@ abstract class Generator extends Model
      * @return array list of code template files that are required. They should be file paths
      * relative to [[templatePath]].
      */
-    public function requiredTemplates()
+    public function requiredTemplates(): array
     {
         return [];
     }
@@ -119,7 +121,7 @@ abstract class Generator extends Model
      * when the generator is restarted.
      * @return array list of sticky attributes
      */
-    public function stickyAttributes()
+    public function stickyAttributes(): array
     {
         return ['template', 'enableI18N', 'messageCategory'];
     }
@@ -130,7 +132,7 @@ abstract class Generator extends Model
      * Hint messages will be displayed to end users when they are filling the form for the generator.
      * @return array the list of hint messages
      */
-    public function hints()
+    public function hints(): array
     {
         return [
             'enableI18N' => 'This indicates whether the generator should generate strings using <code>Yii::t()</code> method.
@@ -145,7 +147,7 @@ abstract class Generator extends Model
      * Auto complete values can also be callable typed in order one want to make postponed data generation.
      * @return array[] the list of auto complete values
      */
-    public function autoCompleteData()
+    public function autoCompleteData(): array
     {
         return [];
     }
@@ -155,7 +157,7 @@ abstract class Generator extends Model
      * Child classes may override this method to customize the message.
      * @return string the message to be displayed when the newly generated code is saved successfully.
      */
-    public function successMessage()
+    public function successMessage(): string
     {
         return 'The code has been generated successfully.';
     }
@@ -166,7 +168,7 @@ abstract class Generator extends Model
      * that contains the generator class file.
      * @return string the view file for the input form of the generator.
      */
-    public function formView()
+    public function formView(): string
     {
         $class = new ReflectionClass($this);
 
@@ -179,7 +181,7 @@ abstract class Generator extends Model
      * directory containing the generator class file.
      * @return string the root path to the default code template files.
      */
-    public function defaultTemplate()
+    public function defaultTemplate(): string
     {
         $class = new ReflectionClass($this);
 
@@ -191,7 +193,7 @@ abstract class Generator extends Model
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return '';
     }
@@ -208,7 +210,7 @@ abstract class Generator extends Model
      * ]);
      * ~~~
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['template'], 'required', 'message' => 'A code template must be selected.'],
@@ -222,7 +224,7 @@ abstract class Generator extends Model
      * Loads sticky attributes from an internal file and populates them into the generator.
      * @internal
      */
-    public function loadStickyAttributes()
+    public function loadStickyAttributes(): void
     {
         $stickyAttributes = $this->stickyAttributes();
         $path = $this->getStickyDataFile();
@@ -242,7 +244,7 @@ abstract class Generator extends Model
      * Saves sticky attributes into an internal file.
      * @internal
      */
-    public function saveStickyAttributes()
+    public function saveStickyAttributes(): void
     {
         $stickyAttributes = $this->stickyAttributes();
         $stickyAttributes[] = 'template';
@@ -260,7 +262,7 @@ abstract class Generator extends Model
      *
      * @return string
      */
-    public function getStickyDataFile()
+    public function getStickyDataFile(): string
     {
         return Yii::$app->getRuntimePath() . '/gii-' . Yii::getVersion() . '/' . str_replace('\\', '-', get_class($this)) . '.json';
     }
@@ -273,7 +275,7 @@ abstract class Generator extends Model
      * generated while saving the code files.
      * @return bool whether files are successfully saved without any error.
      */
-    public function save($files, $answers, &$results)
+    public function save(array $files, array $answers, &$results)
     {
         $lines = ['Generating code using template "' . $this->getTemplatePath() . '"...'];
         $hasError = false;
@@ -318,7 +320,7 @@ abstract class Generator extends Model
      * @param array $params list of parameters to be passed to the template file.
      * @return string the generated code
      */
-    public function render($template, $params = [])
+    public function render(string $template, array $params = []): string
     {
         $view = new View();
         $params['generator'] = $this;
@@ -331,7 +333,7 @@ abstract class Generator extends Model
      * This method validates whether the user selects an existing template
      * and the template contains all required template files as specified in [[requiredTemplates()]].
      */
-    public function validateTemplate()
+    public function validateTemplate(): void
     {
         $templates = $this->templates;
         if (!isset($templates[$this->template])) {
@@ -353,7 +355,7 @@ abstract class Generator extends Model
      * @param string $attribute the attribute being validated
      * @param array $params the validation options
      */
-    public function validateClass($attribute, $params)
+    public function validateClass(string $attribute, array $params)
     {
         $class = $this->$attribute;
         try {
@@ -366,7 +368,7 @@ abstract class Generator extends Model
             } else {
                 $this->addError($attribute, "Class '$class' does not exist or has syntax error.");
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addError($attribute, "Class '$class' does not exist or has syntax error.");
         }
     }
@@ -377,7 +379,7 @@ abstract class Generator extends Model
      * @param string $attribute the attribute being validated
      * @param array $params the validation options
      */
-    public function validateNewClass($attribute, $params)
+    public function validateNewClass(string $attribute, $params)
     {
         $class = ltrim($this->$attribute, '\\');
         if (($pos = strrpos($class, '\\')) === false) {
@@ -396,7 +398,7 @@ abstract class Generator extends Model
     /**
      * Checks if message category is not empty when I18N is enabled.
      */
-    public function validateMessageCategory()
+    public function validateMessageCategory(): void
     {
         if ($this->enableI18N) {
             if (empty($this->messageCategory)) {
@@ -411,7 +413,7 @@ abstract class Generator extends Model
      * @param string $value the attribute to be validated
      * @return bool whether the value is a reserved PHP keyword.
      */
-    public function isReservedKeyword($value)
+    public function isReservedKeyword(string $value): bool
     {
         static $keywords = [
             '__class__',
@@ -507,7 +509,7 @@ abstract class Generator extends Model
      * @param array $placeholders the placeholders to use by `Yii::t()`
      * @return string
      */
-    public function generateString($string = '', $placeholders = [])
+    public function generateString(string $string = '', array $placeholders = []): string
     {
         $string = addslashes($string);
         if ($this->enableI18N) {
