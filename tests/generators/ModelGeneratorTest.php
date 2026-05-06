@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @link https://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license https://www.yiiframework.com/license/
+ */
+
 declare(strict_types=1);
 
 namespace yiiunit\gii\generators;
@@ -300,7 +306,7 @@ class ModelGeneratorTest extends GiiTestCase
      * @param $useClassConstant bool
      * @param $rules array
      */
-    public function testRules($tableName, $fileName, $useClassConstant, $rules): void
+    public function testRules(string $tableName, string $fileName, bool $useClassConstant, array $rules): void
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
@@ -465,7 +471,7 @@ class ModelGeneratorTest extends GiiTestCase
      * @param string $tableName
      * @param array $columns
      */
-    public function testGenerateProperties($tableName, $columns): void
+    public function testGenerateProperties(string $tableName, array $columns): void
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
@@ -546,7 +552,7 @@ class ModelGeneratorTest extends GiiTestCase
         $this->assertFalse($testEnumModel->validate());
     }
 
-    public function createEnumTableSchema()
+    public function createEnumTableSchema(): TableSchema
     {
         $schema = new TableSchema();
         $schema->name = 'company_type';

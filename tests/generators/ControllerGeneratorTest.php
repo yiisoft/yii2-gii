@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @link https://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license https://www.yiiframework.com/license/
+ */
+
 declare(strict_types=1);
 
 namespace yiiunit\gii\generators;
@@ -15,7 +21,7 @@ use yiiunit\gii\GiiTestCase;
  */
 class ControllerGeneratorTest extends GiiTestCase
 {
-    public function controllerData()
+    public function controllerData(): array
     {
         return [
             ['\app\runtime\controllers\ProductController', ['ProductController.php', 'index.php']],
@@ -26,7 +32,7 @@ class ControllerGeneratorTest extends GiiTestCase
     /**
      * @dataProvider controllerData
      */
-    public function testSimpleWithNamespace($controllerClass, $expectedNames)
+    public function testSimpleWithNamespace($controllerClass, $expectedNames): void
     {
         FileHelper::createDirectory(Yii::getAlias('@app/runtime/controllers'));
 
@@ -38,7 +44,7 @@ class ControllerGeneratorTest extends GiiTestCase
         $this->assertTrue($valid, print_r($generator->getErrors(), true));
 
         $files = $generator->generate();
-        $fileNames = array_map(function ($f) {
+        $fileNames = array_map(static function ($f) {
             return basename($f->path);
         }, $files);
         sort($fileNames);

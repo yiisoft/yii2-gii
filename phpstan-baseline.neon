@@ -1153,12 +1153,6 @@ parameters:
 			path: tests/GiiTestCase.php
 
 		-
-			message: '#^Property yiiunit\\gii\\GiiTestCase\:\:\$driverName has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: tests/GiiTestCase.php
-
-		-
 			message: '#^Cannot access property \$extensions on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
 			identifier: property.nonObject
 			count: 1
@@ -1279,26 +1273,8 @@ parameters:
 			path: tests/SchemaTest.php
 
 		-
-			message: '#^Property yiiunit\\gii\\SchemaTest\:\:\$driverName has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: tests/SchemaTest.php
-
-		-
-			message: '#^Method yiiunit\\gii\\TestCase\:\:destroyApplication\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: tests/TestCase.php
-
-		-
 			message: '#^Method yiiunit\\gii\\TestCase\:\:invoke\(\) has parameter \$args with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: tests/TestCase.php
-
-		-
-			message: '#^Method yiiunit\\gii\\TestCase\:\:mockApplication\(\) has no return type specified\.$#'
-			identifier: missingType.return
 			count: 1
 			path: tests/TestCase.php
 
@@ -1309,32 +1285,14 @@ parameters:
 			path: tests/TestCase.php
 
 		-
-			message: '#^Method yiiunit\\gii\\TestCase\:\:mockWebApplication\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method yiiunit\\gii\\TestCase\:\:mockWebApplication\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/TestCase.php
 
 		-
-			message: '#^Method yiiunit\\gii\\TestCase\:\:mockWebApplication\(\) has parameter \$appClass with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: tests/TestCase.php
-
-		-
-			message: '#^Method yiiunit\\gii\\TestCase\:\:mockWebApplication\(\) has parameter \$config with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: tests/TestCase.php
-
-		-
-			message: '#^Method yiiunit\\gii\\generators\\ControllerGeneratorTest\:\:controllerData\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: tests/generators/ControllerGeneratorTest.php
-
-		-
-			message: '#^Method yiiunit\\gii\\generators\\ControllerGeneratorTest\:\:testSimpleWithNamespace\(\) has no return type specified\.$#'
-			identifier: missingType.return
+			message: '#^Method yiiunit\\gii\\generators\\ControllerGeneratorTest\:\:controllerData\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/generators/ControllerGeneratorTest.php
 
@@ -1349,12 +1307,6 @@ parameters:
 			identifier: missingType.parameter
 			count: 1
 			path: tests/generators/ControllerGeneratorTest.php
-
-		-
-			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorMock\:\:publicGenerateClassName\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: tests/generators/ModelGeneratorMock.php
 
 		-
 			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorMock\:\:publicGenerateClassName\(\) has parameter \$tableName with no type specified\.$#'
@@ -1429,12 +1381,6 @@ parameters:
 			path: tests/generators/ModelGeneratorTest.php
 
 		-
-			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:createEnumTableSchema\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: tests/generators/ModelGeneratorTest.php
-
-		-
 			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:relationsProvider\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -1489,26 +1435,8 @@ parameters:
 			path: tests/generators/ModelGeneratorTest.php
 
 		-
-			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRules\(\) has parameter \$fileName with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: tests/generators/ModelGeneratorTest.php
-
-		-
-			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRules\(\) has parameter \$rules with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: tests/generators/ModelGeneratorTest.php
-
-		-
-			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRules\(\) has parameter \$tableName with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: tests/generators/ModelGeneratorTest.php
-
-		-
-			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRules\(\) has parameter \$useClassConstant with no type specified\.$#'
-			identifier: missingType.parameter
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorTest\:\:testRules\(\) has parameter \$rules with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: tests/generators/ModelGeneratorTest.php
 

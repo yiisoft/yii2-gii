@@ -1,10 +1,16 @@
 <?php
 
+/**
+ * @link https://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license https://www.yiiframework.com/license/
+ */
+
 declare(strict_types=1);
 
 namespace yiiunit\gii;
 
-use yii\gii\CodeFile;
+use Yii;
 use yii\gii\generators\controller\Generator as ControllerGenerator;
 use yii\gii\generators\crud\Generator as CRUDGenerator;
 use yii\gii\generators\extension\Generator as ExtensionGenerator;
@@ -115,7 +121,7 @@ class GeneratorsTest extends GiiTestCase
         $this->assertTrue($generator->validate(['template']));
 
         // Validate custom template
-        \Yii::setAlias('@customTemplate', __DIR__ . '/data/templates');
+        Yii::setAlias('@customTemplate', __DIR__ . '/data/templates');
         $generator->templates = [
             'custom' => '@customTemplate/custom'
         ];
