@@ -12,6 +12,7 @@ services:
       XDEBUG_MODE: ${XDEBUG_MODE:-coverage} # Setup "debug" to enable debugging
       XDEBUG_CONFIG: "client_host=host.docker.internal"
       XDEBUG_TRIGGER: ${XDEBUG_TRIGGER:-yes}
+      POSTGRES_HOST: postgres
     command: >
       bash -c "
       docker-php-ext-enable xdebug;

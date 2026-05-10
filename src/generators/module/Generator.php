@@ -29,11 +29,11 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string
      */
-    public string $moduleClass;
+    public string $moduleClass = '';
     /**
      * @var string
      */
-    public string $moduleID;
+    public string $moduleID = '';
 
     /**
      * {@inheritdoc}

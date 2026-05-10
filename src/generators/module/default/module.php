@@ -17,6 +17,8 @@ $className = substr($className, $pos + 1);
 echo "<?php\n";
 ?>
 
+declare(strict_types=1);
+
 namespace <?= $ns ?>;
 
 /**
@@ -32,7 +34,7 @@ class <?= $className ?> extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
 
