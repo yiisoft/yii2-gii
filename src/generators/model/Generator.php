@@ -68,7 +68,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string|null
      */
-    public $queryClass;
+    public ?string $queryClass = null;
     /**
      * @var string
      */
@@ -299,7 +299,7 @@ class Generator extends \yii\gii\Generator
             // model:
             $modelClassName = $this->generateClassName($tableName);
             $queryClassName = $this->generateQuery ? $this->generateQueryClassName($modelClassName) : false;
-            $tableRelations = isset($relations[$tableName]) ? $relations[$tableName] : [];
+            $tableRelations = $relations[$tableName] ?? [];
             $tableSchema = $db->getTableSchema($tableName);
             $params = [
                 'tableName' => $tableName,
@@ -634,7 +634,7 @@ class Generator extends \yii\gii\Generator
             } elseif ($this->generateJunctionRelationMode === self::JUNCTION_RELATION_VIA_MODEL) {
                 $foreignRelationName = null;
                 foreach ($relations[$table1Schema->fullName] as $key => $foreignRelationConfig) {
-                    if ($foreignRelationConfig[3] == $secondKey[1]) {
+                    if ($foreignRelationConfig[3] === $secondKey[1]) {
                         $foreignRelationName = $key;
                         break;
                     }

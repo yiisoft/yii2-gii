@@ -10,6 +10,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #561: Raise min version to PHP 7.4 (@s1lver)
 - Enh #562: Improved strict types of the code (@s1lver)
 - Enh #562: Now the functions `tableName(): string`, `rules(): array`, `attributeLabels(): array`, `behaviors(): array`, `init(): void` are generated with return types (@s1lver)
+- Enh #562: Now the model generator and the module generator add `declare(strict_types=1);` (@s1lver)
 
 
 2.2.7 February 13, 2025
