@@ -937,12 +937,6 @@ parameters:
 			path: src/generators/model/Generator.php
 
 		-
-			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$generateQuery has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: src/generators/model/Generator.php
-
-		-
 			message: '#^Property yii\\gii\\generators\\model\\Generator\:\:\$generateRelationNameFromDestinationTable has no type specified\.$#'
 			identifier: missingType.property
 			count: 1
@@ -1129,6 +1123,24 @@ parameters:
 			path: src/views/layouts/main.php
 
 		-
+			message: '#^Cannot call method setModule\(\) on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/CodeFileExtendedTest.php
+
+		-
+			message: '#^Cannot access property \$controller on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: property.nonObject
+			count: 9
+			path: tests/CodeFileModuleSaveTest.php
+
+		-
+			message: '#^Cannot call method setModule\(\) on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: tests/CodeFileModuleSaveTest.php
+
+		-
 			message: '#^Property yii\\gii\\Generator\:\:\$templates \(array\<array\>\) does not accept array\<string, string\>\.$#'
 			identifier: assign.propertyType
 			count: 1
@@ -1151,6 +1163,48 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: tests/GiiTestCase.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/ModuleExtendedTest.php
+
+		-
+			message: '#^Cannot access property \$assetManager on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/ModuleExtendedTest.php
+
+		-
+			message: '#^Cannot access property \$controllerMap on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/ModuleExtendedTest.php
+
+		-
+			message: '#^Cannot access property \$extensions on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/ModuleExtendedTest.php
+
+		-
+			message: '#^Cannot call method getUrlManager\(\) on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/ModuleExtendedTest.php
+
+		-
+			message: '#^Parameter \#1 \$action of method yii\\gii\\Module\:\:beforeAction\(\) expects yii\\base\\Action\<yii\\base\\Controller\<yii\\gii\\Module\>\>, yii\\base\\Action\<yii\\web\\Controller\<yii\\gii\\Module\>\> given\.$#'
+			identifier: argument.type
+			count: 4
+			path: tests/ModuleExtendedTest.php
+
+		-
+			message: '#^Parameter \#1 \$app of method yii\\gii\\Module\:\:bootstrap\(\) expects yii\\base\\Application, yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/ModuleExtendedTest.php
 
 		-
 			message: '#^Cannot access property \$extensions on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
@@ -1291,6 +1345,192 @@ parameters:
 			path: tests/TestCase.php
 
 		-
+			message: '#^Parameter \#2 \$haystack of method PHPUnit\\Framework\\Assert\:\:assertStringContainsString\(\) expects string, bool\|string given\.$#'
+			identifier: argument.type
+			count: 7
+			path: tests/components/DiffRendererHtmlInlineTest.php
+
+		-
+			message: '#^Method yii\\gii\\console\\GenerateController@anonymous/tests/console/GenerateActionExtendedTest\.php\:30\:\:stdout\(\) never returns bool so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: tests/console/GenerateActionExtendedTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\console\\GenerateActionExtendedTest\:\:createSilentController\(\) has parameter \$generators with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/console/GenerateActionExtendedTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of method PHPUnit\\Framework\\Assert\:\:assertStringContainsString\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 5
+			path: tests/console/GenerateActionExtendedTest.php
+
+		-
+			message: '#^Parameter \#2 \$module of class yii\\gii\\console\\GenerateController@anonymous/tests/console/GenerateActionExtendedTest\.php\:30 constructor expects yii\\base\\Module, yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/console/GenerateActionExtendedTest.php
+
+		-
+			message: '#^Access to an undefined property yii\\gii\\console\\GenerateController\:\:\$outputBuffer\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/console/GenerateActionTest.php
+
+		-
+			message: '#^Method yiiunit\\gii\\console\\GenerateActionTest\:\:createSilentController\(\) has parameter \$generators with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/console/GenerateActionTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of method PHPUnit\\Framework\\Assert\:\:assertStringContainsString\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/console/GenerateActionTest.php
+
+		-
+			message: '#^Parameter \#2 \$module of class yii\\gii\\console\\GenerateController@anonymous/tests/console/GenerateActionTest\.php\:30 constructor expects yii\\base\\Module, yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/console/GenerateActionTest.php
+
+		-
+			message: '#^Access to an undefined property yii\\gii\\console\\GenerateController\:\:\$enableI18N\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Access to an undefined property yii\\gii\\console\\GenerateController\:\:\$nonexistentOption\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Access to an undefined property yii\\gii\\console\\GenerateController\:\:\$someOption\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 2
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Offset ''class'' might not exist on array\{class\: class\-string\}\|class\-string\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Offset ''generator'' does not exist on array\{class\: class\-string\}\|class\-string\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Parameter \#1 \$action of method yii\\gii\\console\\GenerateController\:\:getActionHelp\(\) expects yii\\base\\Action\<yii\\gii\\console\\GenerateController\>, yii\\gii\\console\\GenerateAction given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Parameter \#1 \$action of method yii\\gii\\console\\GenerateController\:\:getActionHelpSummary\(\) expects yii\\base\\Action\<yii\\gii\\console\\GenerateController\>, yii\\gii\\console\\GenerateAction given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Parameter \#1 \$action of method yii\\gii\\console\\GenerateController\:\:getActionOptionsHelp\(\) expects yii\\base\\Action\<yii\\gii\\console\\GenerateController\>, yii\\gii\\console\\GenerateAction given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Parameter \#2 \$module of class yii\\gii\\console\\GenerateController constructor expects yii\\base\\Module, yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null given\.$#'
+			identifier: argument.type
+			count: 16
+			path: tests/console/GenerateControllerTest.php
+
+		-
+			message: '#^Cannot call method setModule\(\) on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: tests/controllers/DefaultControllerActionTest.php
+
+		-
+			message: '#^Call to an undefined method yii\\console\\Request\|yii\\web\\Request\:\:setBodyParams\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/controllers/DefaultControllerExtendedTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/controllers/DefaultControllerExtendedTest.php
+
+		-
+			message: '#^Cannot access property \$request on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/controllers/DefaultControllerExtendedTest.php
+
+		-
+			message: '#^Cannot call method setModule\(\) on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: tests/controllers/DefaultControllerExtendedTest.php
+
+		-
+			message: '#^Access to an undefined property yii\\console\\Response\|yii\\web\\Response\:\:\$format\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/controllers/DefaultControllerTest.php
+
+		-
+			message: '#^Cannot access property \$response on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/controllers/DefaultControllerTest.php
+
+		-
+			message: '#^Cannot call method setModule\(\) on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: tests/controllers/DefaultControllerTest.php
+
+		-
+			message: '#^Property yiiunit\\gii\\controllers\\DefaultControllerTest\:\:\$module \(yii\\gii\\Module\|null\) is never assigned yii\\gii\\Module so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: tests/controllers/DefaultControllerTest.php
+
+		-
+			message: '#^Property yiiunit\\gii\\controllers\\DefaultControllerTest\:\:\$module is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: tests/controllers/DefaultControllerTest.php
+
+		-
+			message: '#^Cannot access property \$controllerNamespace on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: property.nonObject
+			count: 5
+			path: tests/generators/ControllerGeneratorSuccessMessageTest.php
+
+		-
 			message: '#^Method yiiunit\\gii\\generators\\ControllerGeneratorTest\:\:controllerData\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -1307,6 +1547,54 @@ parameters:
 			identifier: missingType.parameter
 			count: 1
 			path: tests/generators/ControllerGeneratorTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/generators/CrudGeneratorMethodsTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsString\(\) with string will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/generators/ModelGeneratorExtendedTest.php
+
+		-
+			message: '#^Cannot access property \$db on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: tests/generators/ModelGeneratorExtendedTest.php
+
+		-
+			message: '#^Cannot call method set\(\) on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/generators/ModelGeneratorExtendedTest.php
+
+		-
+			message: '#^Cannot access property \$columns on yii\\db\\TableSchema\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: tests/generators/ModelGeneratorMethodsTest.php
+
+		-
+			message: '#^Cannot access property \$db on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: property.nonObject
+			count: 7
+			path: tests/generators/ModelGeneratorMethodsTest.php
+
+		-
+			message: '#^Parameter \#1 \$table of method yii\\gii\\generators\\model\\Generator\:\:generateLabels\(\) expects yii\\db\\TableSchema, yii\\db\\TableSchema\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/generators/ModelGeneratorMethodsTest.php
+
+		-
+			message: '#^Parameter \#1 \$table of method yii\\gii\\generators\\model\\Generator\:\:generateRules\(\) expects yii\\db\\TableSchema, yii\\db\\TableSchema\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/generators/ModelGeneratorMethodsTest.php
 
 		-
 			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorMock\:\:publicGenerateClassName\(\) has parameter \$tableName with no type specified\.$#'
@@ -1463,3 +1751,9 @@ parameters:
 			identifier: identical.alwaysFalse
 			count: 1
 			path: tests/generators/ModelGeneratorTest.php
+
+		-
+			message: '#^Cannot call method setModule\(\) on yii\\console\\Application\|yii\\web\\Application\<yii\\web\\IdentityInterface\>\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/generators/ModuleGeneratorExtendedTest.php

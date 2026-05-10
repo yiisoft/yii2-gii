@@ -27,7 +27,7 @@ class GenerateActionExtendedTest extends TestCase
 
     private function createSilentController(array $generators = []): GenerateController
     {
-        return new class('gii', Yii::$app, ['generators' => $generators]) extends GenerateController {
+        return new class ('gii', Yii::$app, ['generators' => $generators]) extends GenerateController {
             public string $outputBuffer = '';
 
             public function stdout($string)
@@ -40,11 +40,11 @@ class GenerateActionExtendedTest extends TestCase
 
     public function testGenerateCodeWithNewFiles(): void
     {
-        $dir = Yii::getAlias('@app/runtime/gii_action_test_' . uniqid());
+        $dir = Yii::getAlias('@app/runtime/gii_action_test_' . uniqid('', true));
         @mkdir($dir, 0777, true);
 
-        $generator = new class() extends ConcreteGenerator {
-            public $testOutputDir = '';
+        $generator = new class () extends ConcreteGenerator {
+            public string $testOutputDir = '';
 
             public function generate(): array
             {
@@ -74,13 +74,13 @@ class GenerateActionExtendedTest extends TestCase
 
     public function testGenerateCodeWithUnchangedFiles(): void
     {
-        $dir = Yii::getAlias('@app/runtime/gii_unchanged_test_' . uniqid());
+        $dir = Yii::getAlias('@app/runtime/gii_unchanged_test_' . uniqid('', true));
         @mkdir($dir, 0777, true);
         $filePath = $dir . '/TestFile.php';
         file_put_contents($filePath, '<?php echo "test";');
 
-        $generator = new class() extends ConcreteGenerator {
-            public $testOutputDir = '';
+        $generator = new class () extends ConcreteGenerator {
+            public string $testOutputDir = '';
 
             public function generate(): array
             {
@@ -108,13 +108,13 @@ class GenerateActionExtendedTest extends TestCase
 
     public function testGenerateCodeWithChangedFiles(): void
     {
-        $dir = Yii::getAlias('@app/runtime/gii_changed_test_' . uniqid());
+        $dir = Yii::getAlias('@app/runtime/gii_changed_test_' . uniqid('', true));
         @mkdir($dir, 0777, true);
         $filePath = $dir . '/TestFile.php';
         file_put_contents($filePath, 'old content');
 
-        $generator = new class() extends ConcreteGenerator {
-            public $testOutputDir = '';
+        $generator = new class () extends ConcreteGenerator {
+            public string $testOutputDir = '';
 
             public function generate(): array
             {

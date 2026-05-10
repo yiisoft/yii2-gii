@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace yiiunit\gii\console;
 
 use Yii;
+use yii\console\ExitCode;
 use yii\gii\console\GenerateAction;
 use yii\gii\console\GenerateController;
 use yiiunit\gii\TestCase;
@@ -26,10 +27,10 @@ class GenerateActionTest extends TestCase
 
     private function createSilentController(array $generators = []): GenerateController
     {
-        return new class('gii', Yii::$app, ['generators' => $generators]) extends GenerateController {
+        return new class ('gii', Yii::$app, ['generators' => $generators]) extends GenerateController {
             public string $outputBuffer = '';
 
-            public function stdout($string)
+            public function stdout($string): int
             {
                 $this->outputBuffer .= $string;
                 return strlen($string);
@@ -50,7 +51,7 @@ class GenerateActionTest extends TestCase
         ob_start();
         $result = $action->run();
         ob_end_clean();
-        $this->assertEquals(\yii\console\ExitCode::USAGE, $result);
+        $this->assertEquals(ExitCode::USAGE, $result);
     }
 
     public function testRunWithValidGenerator(): void
