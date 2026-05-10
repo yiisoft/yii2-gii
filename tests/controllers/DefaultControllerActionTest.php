@@ -13,8 +13,7 @@ namespace yiiunit\gii\controllers;
 use Yii;
 use yii\gii\controllers\DefaultController;
 use yii\gii\Module;
-use yii\gii\CodeFile;
-use yii\helpers\FileHelper;
+use yii\web\NotFoundHttpException;
 use yiiunit\gii\TestCase;
 use yiiunit\gii\generators\ConcreteGenerator;
 
@@ -37,7 +36,7 @@ class DefaultControllerActionTest extends TestCase
 
         $controller = new DefaultController('default', $module);
 
-        $this->expectException(\yii\web\NotFoundHttpException::class);
+        $this->expectException(NotFoundHttpException::class);
         $controller->actionPreview('test', 'invalid_file_id');
     }
 
@@ -52,7 +51,7 @@ class DefaultControllerActionTest extends TestCase
 
         $controller = new DefaultController('default', $module);
 
-        $this->expectException(\yii\web\NotFoundHttpException::class);
+        $this->expectException(NotFoundHttpException::class);
         $controller->actionDiff('test', 'invalid_file_id');
     }
 

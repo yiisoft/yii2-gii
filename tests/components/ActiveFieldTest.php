@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace yiiunit\gii\components;
 
-use Yii;
 use yii\gii\components\ActiveField;
 use yii\helpers\Html;
 use yiiunit\gii\TestCase;
@@ -28,12 +27,10 @@ class ActiveFieldTest extends TestCase
     {
         $generator = new ConcreteGenerator();
 
-        $field = new ActiveField([
+        return new ActiveField([
             'model' => $generator,
             'attribute' => $attribute,
         ]);
-
-        return $field;
     }
 
     public function testStickyAddsCssClass(): void

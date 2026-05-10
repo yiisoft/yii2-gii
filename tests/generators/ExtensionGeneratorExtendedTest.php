@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace yiiunit\gii\generators;
 
-use Yii;
 use yii\gii\generators\extension\Generator as ExtensionGenerator;
 use yiiunit\gii\TestCase;
 

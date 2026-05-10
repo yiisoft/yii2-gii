@@ -11,10 +11,11 @@ declare(strict_types=1);
 namespace yiiunit\gii\controllers;
 
 use Yii;
+use yii\base\Action;
 use yii\gii\controllers\DefaultController;
 use yii\gii\Module;
-use yii\gii\Generator;
-use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yiiunit\gii\TestCase;
 use yiiunit\gii\generators\ConcreteGenerator;
 
@@ -44,11 +45,11 @@ class DefaultControllerTest extends TestCase
         Yii::$app->setModule('gii', $module);
 
         $controller = new DefaultController('default', $module);
-        $action = new \yii\base\Action('index', $controller);
+        $action = new Action('index', $controller);
 
         $controller->beforeAction($action);
 
-        $this->assertEquals(\yii\web\Response::FORMAT_HTML, Yii::$app->response->format);
+        $this->assertEquals(Response::FORMAT_HTML, Yii::$app->response->format);
     }
 
     public function testLoadGeneratorThrowsForUnknownId(): void
@@ -58,7 +59,7 @@ class DefaultControllerTest extends TestCase
 
         $controller = new DefaultController('default', $module);
 
-        $this->expectException(\yii\web\NotFoundHttpException::class);
+        $this->expectException(NotFoundHttpException::class);
         $this->expectExceptionMessage('Code generator not found');
         $this->invoke($controller, 'loadGenerator', ['nonexistent']);
     }
@@ -89,7 +90,7 @@ class DefaultControllerTest extends TestCase
 
         $controller = new DefaultController('default', $module);
 
-        $this->expectException(\yii\web\NotFoundHttpException::class);
+        $this->expectException(NotFoundHttpException::class);
         $controller->actionAction('test', 'nonexistent');
     }
 }

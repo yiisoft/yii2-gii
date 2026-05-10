@@ -11,10 +11,10 @@ declare(strict_types=1);
 namespace yiiunit\gii\controllers;
 
 use Yii;
+use yii\base\ViewNotFoundException;
 use yii\gii\controllers\DefaultController;
 use yii\gii\Module;
-use yii\gii\Generator;
-use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yiiunit\gii\TestCase;
 use yiiunit\gii\generators\ConcreteGenerator;
 
@@ -50,8 +50,8 @@ class DefaultControllerExtendedTest extends TestCase
         $controller = new DefaultController('default', $module);
 
         try {
-            $result = $controller->actionView('test');
-        } catch (\yii\base\ViewNotFoundException $e) {
+            $controller->actionView('test');
+        } catch (ViewNotFoundException $e) {
             $this->assertTrue(true);
         }
 
@@ -65,7 +65,7 @@ class DefaultControllerExtendedTest extends TestCase
 
         $controller = new DefaultController('default', $module);
 
-        $this->expectException(\yii\web\NotFoundHttpException::class);
+        $this->expectException(NotFoundHttpException::class);
         $controller->actionPreview('test', 'invalid_file_id');
     }
 
@@ -76,7 +76,7 @@ class DefaultControllerExtendedTest extends TestCase
 
         $controller = new DefaultController('default', $module);
 
-        $this->expectException(\yii\web\NotFoundHttpException::class);
+        $this->expectException(NotFoundHttpException::class);
         $controller->actionDiff('test', 'invalid_file_id');
     }
 
@@ -95,7 +95,7 @@ class DefaultControllerExtendedTest extends TestCase
 
         $controller = new DefaultController('default', $module);
 
-        $this->expectException(\yii\web\NotFoundHttpException::class);
+        $this->expectException(NotFoundHttpException::class);
         $controller->actionAction('test', 'nonexistent');
     }
 }

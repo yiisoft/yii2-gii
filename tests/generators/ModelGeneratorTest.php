@@ -243,7 +243,7 @@ class ModelGeneratorTest extends GiiTestCase
         $generator->tableName = $tableName;
 
         $files = $generator->generate();
-        $this->assertEquals(1, count($files));
+        $this->assertCount(1, $files);
         $this->assertEquals($fileName, basename($files[0]->path));
 
         $code = $files[0]->content;
@@ -314,7 +314,7 @@ class ModelGeneratorTest extends GiiTestCase
         $generator->useClassConstant = $useClassConstant;
 
         $files = $generator->generate();
-        $this->assertEquals(1, count($files));
+        $this->assertCount(1, $files);
         $this->assertEquals($fileName, basename($files[0]->path));
 
         $code = $files[0]->content;

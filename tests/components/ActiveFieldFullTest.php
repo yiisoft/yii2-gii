@@ -10,9 +10,8 @@ declare(strict_types=1);
 
 namespace yiiunit\gii\components;
 
-use Yii;
 use yii\gii\components\ActiveField;
-use yii\helpers\Html;
+use yii\helpers\FileHelper;
 use yii\widgets\ActiveForm;
 use yiiunit\gii\TestCase;
 use yiiunit\gii\generators\ConcreteGenerator;
@@ -31,12 +30,12 @@ class ActiveFieldFullTest extends TestCase
                 ],
             ],
         ]);
-        \yii\helpers\FileHelper::createDirectory(__DIR__ . '/runtime/assets');
+        FileHelper::createDirectory(__DIR__ . '/runtime/assets');
     }
 
     protected function tearDown(): void
     {
-        \yii\helpers\FileHelper::removeDirectory(__DIR__ . '/runtime');
+        FileHelper::removeDirectory(__DIR__ . '/runtime');
         parent::tearDown();
     }
 

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace yiiunit\gii\generators;
 
 use Yii;
+use yii\db\ColumnSchema;
 use yii\gii\generators\model\Generator as ModelGenerator;
 use yiiunit\gii\GiiTestCase;
 
@@ -267,7 +268,7 @@ class ModelGeneratorExtendedTest extends GiiTestCase
     public function testIsEnumWithEnumColumn(): void
     {
         $generator = new ModelGenerator();
-        $column = new \yii\db\ColumnSchema([
+        $column = new ColumnSchema([
             'name' => 'type',
             'dbType' => "enum('a','b')",
             'enumValues' => ['a', 'b'],
@@ -279,7 +280,7 @@ class ModelGeneratorExtendedTest extends GiiTestCase
     public function testIsEnumWithNonEnumColumn(): void
     {
         $generator = new ModelGenerator();
-        $column = new \yii\db\ColumnSchema([
+        $column = new ColumnSchema([
             'name' => 'id',
             'dbType' => 'integer',
             'enumValues' => null,

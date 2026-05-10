@@ -17,7 +17,7 @@ use yii\gii\CodeFile;
  * This generator will generate the skeleton files needed by an extension.
  *
  * @property-read string $keywordsArrayJson A json encoded array with the given keywords.
- * @property-read bool $outputPath The directory that contains the module class.
+ * @property string $outputPath The directory that contains the module class.
  *
  * @author Tobias Munk <schmunk@usrbin.de>
  * @since 2.0
@@ -31,7 +31,7 @@ class Generator extends \yii\gii\Generator
     public $keywords = 'yii2,extension';
     public $title;
     public $description;
-    public $outputPath = '@runtime/tmp-extensions';
+    public string $outputPath = '@app/runtime/tmp-extensions';
     public $license;
     public $authorName;
     public $authorEmail;

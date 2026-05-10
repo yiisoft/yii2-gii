@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace yiiunit\gii\components;
 
-use yii\gii\components\DiffRendererHtmlInline;
+use yii\gii\CodeFile;
 use yiiunit\gii\TestCase;
 
 class DiffRendererHtmlInlineTest extends TestCase
@@ -20,8 +20,8 @@ class DiffRendererHtmlInlineTest extends TestCase
         $path = tempnam(sys_get_temp_dir(), 'gii_diff_test_');
         file_put_contents($path, "line1\nline2\nline3\n");
 
-        $codeFile = new \yii\gii\CodeFile($path, "line1\nmodified\nline3\n");
-        $this->assertEquals(\yii\gii\CodeFile::OP_OVERWRITE, $codeFile->operation);
+        $codeFile = new CodeFile($path, "line1\nmodified\nline3\n");
+        $this->assertEquals(CodeFile::OP_OVERWRITE, $codeFile->operation);
 
         $diff = $codeFile->diff();
         $this->assertIsString($diff);
@@ -36,7 +36,7 @@ class DiffRendererHtmlInlineTest extends TestCase
         $path = tempnam(sys_get_temp_dir(), 'gii_diff_ins_');
         file_put_contents($path, "line1\n");
 
-        $codeFile = new \yii\gii\CodeFile($path, "line1\nnew line\n");
+        $codeFile = new CodeFile($path, "line1\nnew line\n");
         $diff = $codeFile->diff();
         $this->assertIsString($diff);
         $this->assertStringContainsString('ChangeInsert', $diff);
@@ -49,7 +49,7 @@ class DiffRendererHtmlInlineTest extends TestCase
         $path = tempnam(sys_get_temp_dir(), 'gii_diff_rep_');
         file_put_contents($path, "old line\n");
 
-        $codeFile = new \yii\gii\CodeFile($path, "new line\n");
+        $codeFile = new CodeFile($path, "new line\n");
         $diff = $codeFile->diff();
         $this->assertIsString($diff);
         $this->assertStringContainsString('ChangeReplace', $diff);
@@ -62,7 +62,7 @@ class DiffRendererHtmlInlineTest extends TestCase
         $path = tempnam(sys_get_temp_dir(), 'gii_diff_tbl_');
         file_put_contents($path, "line1\n");
 
-        $codeFile = new \yii\gii\CodeFile($path, "line2\n");
+        $codeFile = new CodeFile($path, "line2\n");
         $diff = $codeFile->diff();
         $this->assertStringContainsString('<table', $diff);
         $this->assertStringContainsString('<thead>', $diff);
@@ -78,7 +78,7 @@ class DiffRendererHtmlInlineTest extends TestCase
         $path = tempnam(sys_get_temp_dir(), 'gii_diff_eq_');
         file_put_contents($path, "line1\nline2\nline3\n");
 
-        $codeFile = new \yii\gii\CodeFile($path, "line1\nchanged\nline3\n");
+        $codeFile = new CodeFile($path, "line1\nchanged\nline3\n");
         $diff = $codeFile->diff();
         $this->assertStringContainsString('ChangeEqual', $diff);
         $this->assertStringContainsString('ChangeReplace', $diff);
@@ -91,7 +91,7 @@ class DiffRendererHtmlInlineTest extends TestCase
         $path = tempnam(sys_get_temp_dir(), 'gii_diff_seq_');
         file_put_contents($path, "a\nb\nc\nd\ne\nf\ng\n");
 
-        $codeFile = new \yii\gii\CodeFile($path, "a\nB\nc\nD\ne\nf\ng\n");
+        $codeFile = new CodeFile($path, "a\nB\nc\nD\ne\nf\ng\n");
         $diff = $codeFile->diff();
         $this->assertIsString($diff);
         $this->assertNotEmpty($diff);

@@ -11,10 +11,9 @@ declare(strict_types=1);
 namespace yiiunit\gii\console;
 
 use Yii;
+use yii\base\InlineAction;
 use yii\gii\console\GenerateAction;
 use yii\gii\console\GenerateController;
-use yii\gii\Generator;
-use yii\gii\Module;
 use yiiunit\gii\TestCase;
 use yiiunit\gii\generators\ConcreteGenerator;
 
@@ -90,7 +89,7 @@ class GenerateControllerTest extends TestCase
             'generators' => [],
         ]);
 
-        $action = new \yii\base\InlineAction('index', $controller, 'actionIndex');
+        $action = new InlineAction('index', $controller, 'actionIndex');
         $summary = $controller->getActionHelpSummary($action);
         $this->assertIsString($summary);
     }
@@ -113,7 +112,7 @@ class GenerateControllerTest extends TestCase
             'generators' => [],
         ]);
 
-        $action = new \yii\base\InlineAction('index', $controller, 'actionIndex');
+        $action = new InlineAction('index', $controller, 'actionIndex');
         $help = $controller->getActionHelp($action);
         $this->assertIsString($help);
     }
@@ -124,7 +123,7 @@ class GenerateControllerTest extends TestCase
             'generators' => [],
         ]);
 
-        $this->assertEquals([], $controller->getActionArgsHelp(new \yii\base\InlineAction('test', $controller, 'test')));
+        $this->assertEquals([], $controller->getActionArgsHelp(new InlineAction('test', $controller, 'test')));
     }
 
     public function testGetActionOptionsHelpForGenerateAction(): void
@@ -147,7 +146,7 @@ class GenerateControllerTest extends TestCase
             'generators' => [],
         ]);
 
-        $action = new \yii\base\InlineAction('index', $controller, 'actionIndex');
+        $action = new InlineAction('index', $controller, 'actionIndex');
         $help = $controller->getActionOptionsHelp($action);
         $this->assertIsArray($help);
     }

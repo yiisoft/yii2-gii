@@ -529,18 +529,6 @@ parameters:
 			path: src/generators/extension/Generator.php
 
 		-
-			message: '#^Parameter \#1 \$alias of static method yii\\BaseYii\<yii\\web\\IdentityInterface\>\:\:getAlias\(\) expects string, bool given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/generators/extension/Generator.php
-
-		-
-			message: '#^Parameter \#3 \$subject of function str_replace expects array\<string\>\|string, bool given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/generators/extension/Generator.php
-
-		-
 			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$authorEmail has no type specified\.$#'
 			identifier: missingType.property
 			count: 1
@@ -572,12 +560,6 @@ parameters:
 
 		-
 			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$namespace has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: src/generators/extension/Generator.php
-
-		-
-			message: '#^Property yii\\gii\\generators\\extension\\Generator\:\:\$outputPath has no type specified\.$#'
 			identifier: missingType.property
 			count: 1
 			path: src/generators/extension/Generator.php
