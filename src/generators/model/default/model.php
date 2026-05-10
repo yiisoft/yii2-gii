@@ -22,6 +22,8 @@ declare(strict_types=1);
 echo "<?php\n";
 ?>
 
+declare(strict_types=1);
+
 namespace <?= $generator->ns ?>;
 
 use Yii;
@@ -41,7 +43,6 @@ use Yii;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
-
 <?php if (!empty($enum)): ?>
     /**
      * ENUM field values

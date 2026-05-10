@@ -43,11 +43,11 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string
      */
-    public $tableName = '';
+    public string $tableName = '';
     /**
      * @var string
      */
-    public $modelClass = '';
+    public string $modelClass = '';
     /**
      * @var string
      */
@@ -62,6 +62,7 @@ class Generator extends \yii\gii\Generator
     public $standardizeCapitals = false;
     public $singularize = false;
     public $useSchemaName = true;
+    /** @var bool|string $generateQuery */
     public $generateQuery = false;
     public $queryNs = 'app\models';
     /**
@@ -408,11 +409,11 @@ class Generator extends \yii\gii\Generator
     /**
      * Generates the relation class hints for the relation methods
      * @param array $relations the relation array for single table
-     * @param bool $generateQuery generates ActiveQuery class (for ActiveQuery namespace available)
+     * @param bool|string $generateQuery generates ActiveQuery class (for ActiveQuery namespace available)
      * @return array
      * @since 2.1.4
      */
-    public function generateRelationsClassHints(array $relations, bool $generateQuery): array
+    public function generateRelationsClassHints(array $relations, $generateQuery): array
     {
         $result = [];
         foreach ($relations as $name => $relation) {
