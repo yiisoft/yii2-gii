@@ -20,7 +20,7 @@ class FormGeneratorExtendedTest extends GiiTestCase
         $generator = new FormGenerator();
         $generator->modelClass = 'yiiunit\gii\Profile';
         $generator->viewName = 'profile';
-        $generator->viewPath = '@app/runtime';
+        $generator->viewPath = '@runtime';
 
         $message = $generator->successMessage();
         $this->assertStringContainsString('generated successfully', $message);
@@ -32,7 +32,7 @@ class FormGeneratorExtendedTest extends GiiTestCase
         $generator->template = 'default';
         $generator->modelClass = 'yiiunit\gii\Profile';
         $generator->viewName = 'profile';
-        $generator->viewPath = '@app/runtime';
+        $generator->viewPath = '@runtime';
 
         $files = $generator->generate();
         $this->assertCount(1, $files);

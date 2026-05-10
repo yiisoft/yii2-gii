@@ -31,7 +31,7 @@ class Generator extends \yii\gii\Generator
     public $keywords = 'yii2,extension';
     public $title;
     public $description;
-    public $outputPath = '@app/runtime/tmp-extensions';
+    public $outputPath = '@runtime/tmp-extensions';
     public $license;
     public $authorName;
     public $authorEmail;

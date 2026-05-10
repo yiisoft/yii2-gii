@@ -40,7 +40,7 @@ class GenerateActionExtendedTest extends TestCase
 
     public function testGenerateCodeWithNewFiles(): void
     {
-        $dir = Yii::getAlias('@app/runtime/gii_action_test_' . uniqid('', true));
+        $dir = Yii::getAlias('@runtime/gii_action_test_' . uniqid('', true));
         @mkdir($dir, 0777, true);
 
         $generator = new class () extends ConcreteGenerator {
@@ -74,7 +74,7 @@ class GenerateActionExtendedTest extends TestCase
 
     public function testGenerateCodeWithUnchangedFiles(): void
     {
-        $dir = Yii::getAlias('@app/runtime/gii_unchanged_test_' . uniqid('', true));
+        $dir = Yii::getAlias('@runtime/gii_unchanged_test_' . uniqid('', true));
         @mkdir($dir, 0777, true);
         $filePath = $dir . '/TestFile.php';
         file_put_contents($filePath, '<?php echo "test";');
@@ -108,7 +108,7 @@ class GenerateActionExtendedTest extends TestCase
 
     public function testGenerateCodeWithChangedFiles(): void
     {
-        $dir = Yii::getAlias('@app/runtime/gii_changed_test_' . uniqid('', true));
+        $dir = Yii::getAlias('@runtime/gii_changed_test_' . uniqid('', true));
         @mkdir($dir, 0777, true);
         $filePath = $dir . '/TestFile.php';
         file_put_contents($filePath, 'old content');

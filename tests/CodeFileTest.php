@@ -23,7 +23,7 @@ class CodeFileTest extends TestCase
 
     public function testCreateOperationForNewFile(): void
     {
-        $path = Yii::getAlias('@app/runtime/test_new_file_' . uniqid('', true) . '.php');
+        $path = Yii::getAlias('@runtime/test_new_file_' . uniqid('', true) . '.php');
         $codeFile = new CodeFile($path, '<?php echo "hello";');
 
         $this->assertEquals(CodeFile::OP_CREATE, $codeFile->operation);
@@ -33,7 +33,7 @@ class CodeFileTest extends TestCase
 
     public function testSkipOperationForIdenticalFile(): void
     {
-        $path = Yii::getAlias('@app/runtime/test_skip_' . uniqid('', true) . '.txt');
+        $path = Yii::getAlias('@runtime/test_skip_' . uniqid('', true) . '.txt');
         @mkdir(dirname($path), 0777, true);
         file_put_contents($path, 'same content');
 
@@ -45,7 +45,7 @@ class CodeFileTest extends TestCase
 
     public function testOverwriteOperationForDifferentFile(): void
     {
-        $path = Yii::getAlias('@app/runtime/test_overwrite_' . uniqid('', true) . '.txt');
+        $path = Yii::getAlias('@runtime/test_overwrite_' . uniqid('', true) . '.txt');
         @mkdir(dirname($path), 0777, true);
         file_put_contents($path, 'old content');
 
@@ -57,7 +57,7 @@ class CodeFileTest extends TestCase
 
     public function testSaveCreatesNewFile(): void
     {
-        $dir = Yii::getAlias('@app/runtime/gii_test_' . uniqid('', true));
+        $dir = Yii::getAlias('@runtime/gii_test_' . uniqid('', true));
         $path = $dir . '/TestFile.php';
         $codeFile = new CodeFile($path, '<?php echo "test";');
 
@@ -72,7 +72,7 @@ class CodeFileTest extends TestCase
 
     public function testSaveOverwritesExistingFile(): void
     {
-        $dir = Yii::getAlias('@app/runtime/gii_test_' . uniqid('', true));
+        $dir = Yii::getAlias('@runtime/gii_test_' . uniqid('', true));
         @mkdir($dir, 0777, true);
         $path = $dir . '/TestFile.php';
         file_put_contents($path, 'old');
@@ -165,7 +165,7 @@ class CodeFileTest extends TestCase
 
     public function testDiffForOverwriteFile(): void
     {
-        $path = Yii::getAlias('@app/runtime/test_diff_' . uniqid('', true) . '.txt');
+        $path = Yii::getAlias('@runtime/test_diff_' . uniqid('', true) . '.txt');
         @mkdir(dirname($path), 0777, true);
         file_put_contents($path, "line1\nline2\n");
 

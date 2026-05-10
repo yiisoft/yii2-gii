@@ -24,8 +24,8 @@ class ControllerGeneratorTest extends GiiTestCase
     public function controllerData(): array
     {
         return [
-            ['\app\runtime\controllers\ProductController', ['ProductController.php', 'index.php']],
-            ['app\runtime\controllers\ProductController', ['ProductController.php', 'index.php']],
+            ['\app\controllers\ProductController', ['ProductController.php', 'index.php']],
+            ['app\controllers\ProductController', ['ProductController.php', 'index.php']],
         ];
     }
 
@@ -34,7 +34,7 @@ class ControllerGeneratorTest extends GiiTestCase
      */
     public function testSimpleWithNamespace($controllerClass, $expectedNames): void
     {
-        FileHelper::createDirectory(Yii::getAlias('@app/runtime/controllers'));
+        FileHelper::createDirectory(Yii::getAlias('@app/controllers'));
 
         $generator = new ControllerGenerator();
         $generator->template = 'default';

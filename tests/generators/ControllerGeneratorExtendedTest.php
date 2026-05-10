@@ -116,11 +116,11 @@ class ControllerGeneratorExtendedTest extends GiiTestCase
 
     public function testValidateControllerClass(): void
     {
-        FileHelper::createDirectory(Yii::getAlias('@app/runtime/controllers'));
+        FileHelper::createDirectory(Yii::getAlias('@app/controllers'));
 
         $generator = new ControllerGenerator();
         $generator->template = 'default';
-        $generator->controllerClass = 'app\runtime\controllers\TestController';
+        $generator->controllerClass = 'app\controllers\TestController';
         $this->assertTrue($generator->validate(), print_r($generator->getErrors(), true));
     }
 
@@ -134,11 +134,11 @@ class ControllerGeneratorExtendedTest extends GiiTestCase
 
     public function testGenerateMultipleActions(): void
     {
-        FileHelper::createDirectory(Yii::getAlias('@app/runtime/controllers'));
+        FileHelper::createDirectory(Yii::getAlias('@app/controllers'));
 
         $generator = new ControllerGenerator();
         $generator->template = 'default';
-        $generator->controllerClass = 'app\runtime\controllers\MultiActionController';
+        $generator->controllerClass = 'app\controllers\MultiActionController';
         $generator->actions = 'index, create, update';
 
         $valid = $generator->validate();

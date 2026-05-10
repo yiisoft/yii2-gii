@@ -37,7 +37,7 @@ class ExtensionGeneratorTest extends TestCase
     public function testGetOutputPath(): void
     {
         $generator = new ExtensionGenerator();
-        $this->assertEquals(Yii::getAlias('@app/runtime/tmp-extensions'), $generator->getOutputPath());
+        $this->assertEquals(Yii::getAlias('@runtime/tmp-extensions'), $generator->getOutputPath());
     }
 
     public function testGetKeywordsArrayJson(): void

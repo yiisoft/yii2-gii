@@ -17,6 +17,7 @@ use yii\gii\generators\extension\Generator as ExtensionGenerator;
 use yii\gii\generators\form\Generator as FormGenerator;
 use yii\gii\generators\model\Generator as ModelGenerator;
 use yii\gii\generators\module\Generator as ModuleGenerator;
+use yii\helpers\FileHelper;
 
 /**
  * GeneratorsTest checks that Gii generators aren't throwing any errors during generation
@@ -26,9 +27,11 @@ class GeneratorsTest extends GiiTestCase
 {
     public function testControllerGenerator(): void
     {
+        FileHelper::createDirectory(Yii::getAlias('@app/controllers'));
+
         $generator = new ControllerGenerator();
         $generator->template = 'default';
-        $generator->controllerClass = 'app\runtime\TestController';
+        $generator->controllerClass = 'app\controllers\TestController';
 
         $valid = $generator->validate();
         $this->assertTrue($valid, 'Validation failed: ' . print_r($generator->getErrors(), true));
@@ -67,8 +70,8 @@ class GeneratorsTest extends GiiTestCase
         $files = $generator->generate();
         $modelCode = $files[0]->content;
 
-        $this->assertTrue(strpos($modelCode, "'id' => 'ID'") !== false, "ID label should be there:\n" . $modelCode);
-        $this->assertTrue(strpos($modelCode, "'description' => 'Description',") !== false, "Description label should be there:\n" . $modelCode);
+        $this->assertNotFalse(strpos($modelCode, "'id' => 'ID'"), "ID label should be there:\n" . $modelCode);
+        $this->assertNotFalse(strpos($modelCode, "'description' => 'Description',"), "Description label should be there:\n" . $modelCode);
     }
 
     public function testModuleGenerator(): void
@@ -91,7 +94,7 @@ class GeneratorsTest extends GiiTestCase
         $generator->template = 'default';
         $generator->modelClass = 'yiiunit\gii\Profile';
         $generator->viewName = 'profile';
-        $generator->viewPath = '@app/runtime';
+        $generator->viewPath = '@runtime';
 
         $valid = $generator->validate();
         $this->assertTrue($valid, 'Validation failed: ' . print_r($generator->getErrors(), true));

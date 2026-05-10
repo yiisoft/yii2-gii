@@ -6,8 +6,10 @@ namespace yiiunit\gii;
 
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\gii\CodeFile;
 use yii\gii\Generator;
 use yiiunit\gii\generators\ConcreteGenerator;
+use yii\db\Connection;
 
 class GeneratorBaseTest extends TestCase
 {
@@ -136,7 +138,7 @@ class GeneratorBaseTest extends TestCase
     {
         $generator = new ConcreteGenerator();
         $generator->testClass = Generator::class;
-        $generator->validateClass('testClass', ['extends' => 'yii\db\Connection']);
+        $generator->validateClass('testClass', ['extends' => Connection::class]);
         $this->assertArrayHasKey('testClass', $generator->getErrors());
     }
 
@@ -294,12 +296,12 @@ class GeneratorBaseTest extends TestCase
 
     public function testSaveCodeFiles(): void
     {
-        $dir = Yii::getAlias('@app/runtime/gii_save_test_' . uniqid());
+        $dir = Yii::getAlias('@runtime/gii_save_test_' . uniqid('', true));
         @mkdir($dir, 0777, true);
 
         $generator = new ConcreteGenerator();
         $filePath = $dir . '/TestFile.php';
-        $file = new \yii\gii\CodeFile($filePath, '<?php echo "test";');
+        $file = new CodeFile($filePath, '<?php echo "test";');
 
         $results = '';
         $success = $generator->save([$file], [$file->id => '1'], $results);
@@ -315,7 +317,7 @@ class GeneratorBaseTest extends TestCase
     public function testSaveCodeFilesSkipped(): void
     {
         $generator = new ConcreteGenerator();
-        $file = new \yii\gii\CodeFile('/some/skipped/file.php', '<?php');
+        $file = new CodeFile('/some/skipped/file.php', '<?php');
 
         $results = '';
         $success = $generator->save([$file], [], $results);

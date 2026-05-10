@@ -83,11 +83,11 @@ class ControllerGeneratorSuccessMessageTest extends TestCase
 
     public function testValidateControllerClassWithLeadingBackslash(): void
     {
-        FileHelper::createDirectory(Yii::getAlias('@app/runtime/controllers'));
+        FileHelper::createDirectory(Yii::getAlias('@app/controllers'));
 
         $generator = new ControllerGenerator();
         $generator->template = 'default';
-        $generator->controllerClass = '\app\runtime\controllers\TestController';
+        $generator->controllerClass = '\app\controllers\TestController';
 
         $valid = $generator->validate();
         $this->assertTrue($valid, print_r($generator->getErrors(), true));
@@ -95,11 +95,11 @@ class ControllerGeneratorSuccessMessageTest extends TestCase
 
     public function testValidateControllerClassWithoutBackslash(): void
     {
-        FileHelper::createDirectory(Yii::getAlias('@app/runtime/controllers'));
+        FileHelper::createDirectory(Yii::getAlias('@app/controllers'));
 
         $generator = new ControllerGenerator();
         $generator->template = 'default';
-        $generator->controllerClass = 'app\runtime\controllers\TestController';
+        $generator->controllerClass = 'app\controllers\TestController';
 
         $valid = $generator->validate();
         $this->assertTrue($valid, print_r($generator->getErrors(), true));

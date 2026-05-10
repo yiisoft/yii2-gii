@@ -32,7 +32,7 @@ class CodeFileModuleSaveTest extends TestCase
         Yii::$app->controller = new Controller('test', $module);
         Yii::$app->controller->action = new Action('test', Yii::$app->controller);
 
-        $dir = Yii::getAlias('@app/runtime/gii_module_save_' . uniqid('', true));
+        $dir = Yii::getAlias('@runtime/gii_module_save_' . uniqid('', true));
         $path = $dir . '/subdir/TestFile.php';
         $codeFile = new CodeFile($path, '<?php echo "module save test";');
 
@@ -54,7 +54,7 @@ class CodeFileModuleSaveTest extends TestCase
         Yii::$app->controller = new Controller('test', $module);
         Yii::$app->controller->action = new Action('test', Yii::$app->controller);
 
-        $path = Yii::getAlias('@app/runtime/gii_file_mode_test_' . uniqid('', true) . '.php');
+        $path = Yii::getAlias('@runtime/gii_file_mode_test_' . uniqid('', true) . '.php');
         $codeFile = new CodeFile($path, '<?php echo "file mode test";');
 
         $result = $codeFile->save();
@@ -73,7 +73,7 @@ class CodeFileModuleSaveTest extends TestCase
         Yii::$app->controller = new Controller('test', $module);
         Yii::$app->controller->action = new Action('test', Yii::$app->controller);
 
-        $dir = Yii::getAlias('@app/runtime/gii_dir_mode_' . uniqid('', true));
+        $dir = Yii::getAlias('@runtime/gii_dir_mode_' . uniqid('', true));
         $path = $dir . '/TestFile.php';
         $codeFile = new CodeFile($path, '<?php echo "dir mode test";');
 

@@ -27,7 +27,7 @@ class CodeFileExtendedTest extends TestCase
         $module = new Module('gii');
         Yii::$app->setModule('gii', $module);
 
-        $dir = Yii::getAlias('@app/runtime/gii_module_test_' . uniqid('', true));
+        $dir = Yii::getAlias('@runtime/gii_module_test_' . uniqid('', true));
         $path = $dir . '/TestFile.php';
         $codeFile = new CodeFile($path, '<?php echo "module test";');
 
@@ -41,7 +41,7 @@ class CodeFileExtendedTest extends TestCase
 
     public function testSaveOverwriteExistingFile(): void
     {
-        $path = Yii::getAlias('@app/runtime/gii_overwrite_test_' . uniqid('', true) . '.php');
+        $path = Yii::getAlias('@runtime/gii_overwrite_test_' . uniqid('', true) . '.php');
         file_put_contents($path, 'old content');
 
         $codeFile = new CodeFile($path, 'new content');
@@ -56,7 +56,7 @@ class CodeFileExtendedTest extends TestCase
 
     public function testDiffForSkipOperation(): void
     {
-        $path = Yii::getAlias('@app/runtime/gii_skip_diff_test_' . uniqid('', true) . '.txt');
+        $path = Yii::getAlias('@runtime/gii_skip_diff_test_' . uniqid('', true) . '.txt');
         file_put_contents($path, 'same content');
 
         $codeFile = new CodeFile($path, 'same content');
@@ -84,7 +84,7 @@ class CodeFileExtendedTest extends TestCase
 
     public function testDiffForOverwriteWithActualContent(): void
     {
-        $path = Yii::getAlias('@app/runtime/gii_diff_test_' . uniqid('', true) . '.txt');
+        $path = Yii::getAlias('@runtime/gii_diff_test_' . uniqid('', true) . '.txt');
         file_put_contents($path, "line1\nline2\nline3\n");
 
         $codeFile = new CodeFile($path, "line1\nmodified\nline3\n");

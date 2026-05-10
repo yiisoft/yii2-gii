@@ -52,7 +52,7 @@ class FormGeneratorTest extends GiiTestCase
     public function testValidateViewPathWithValidPath(): void
     {
         $generator = new FormGenerator();
-        $generator->viewPath = '@app/runtime';
+        $generator->viewPath = '@runtime';
         $generator->validateViewPath();
         $this->assertArrayNotHasKey('viewPath', $generator->getErrors());
     }
