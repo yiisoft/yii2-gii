@@ -6,6 +6,8 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\generators\controller;
 
 use Yii;
@@ -13,6 +15,7 @@ use yii\gii\CodeFile;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
+use yii\web\Controller;
 
 /**
  * This generator will generate a controller and one or a few action view files.
@@ -31,25 +34,24 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string the controller class name
      */
-    public $controllerClass;
+    public string $controllerClass;
     /**
      * @var string the controller's view path
      */
-    public $viewPath;
+    public string $viewPath;
     /**
      * @var string the base class of the controller
      */
-    public $baseClass = 'yii\web\Controller';
+    public string $baseClass = Controller::class;
     /**
      * @var string list of action IDs separated by commas or spaces
      */
-    public $actions = 'index';
-
+    public string $actions = 'index';
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Controller Generator';
     }
@@ -57,7 +59,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'This generator helps you to quickly generate a new controller class with
             one or several controller actions and their corresponding views.';
@@ -66,7 +68,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return array_merge(parent::rules(), [
             [['controllerClass', 'actions', 'baseClass'], 'trim'],
@@ -82,7 +84,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'baseClass' => 'Base Class',
@@ -95,7 +97,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function requiredTemplates()
+    public function requiredTemplates(): array
     {
         return [
             'controller.php',
@@ -106,7 +108,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function stickyAttributes()
+    public function stickyAttributes(): array
     {
         return ['baseClass'];
     }
@@ -114,7 +116,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function hints()
+    public function hints(): array
     {
         return [
             'controllerClass' => 'This is the name of the controller class to be generated. You should
@@ -137,7 +139,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function successMessage()
+    public function successMessage(): string
     {
         return 'The controller has been generated successfully.' . $this->getLinkToTry();
     }
@@ -148,7 +150,7 @@ class Generator extends \yii\gii\Generator
      * @return string
      * @since 2.0.6
      */
-    private function getLinkToTry()
+    private function getLinkToTry(): string
     {
         if (strpos($this->controllerNamespace, Yii::$app->controllerNamespace) !== 0) {
             return '';
@@ -166,7 +168,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): array
     {
         $files = [];
 
@@ -189,7 +191,7 @@ class Generator extends \yii\gii\Generator
      * Normalizes [[actions]] into an array of action IDs.
      * @return array an array of action IDs entered by the user
      */
-    public function getActionIDs()
+    public function getActionIDs(): array
     {
         $actions = array_unique(preg_split('/[\s,]+/', $this->actions, -1, PREG_SPLIT_NO_EMPTY));
         sort($actions);
@@ -200,7 +202,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @return string the controller class file path
      */
-    public function getControllerFile()
+    public function getControllerFile(): string
     {
         return Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\'))) . '.php';
     }
@@ -208,7 +210,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @return string the controller ID
      */
-    public function getControllerID()
+    public function getControllerID(): string
     {
         $name = StringHelper::basename($this->controllerClass);
         return Inflector::camel2id(substr($name, 0, strlen($name) - 10));
@@ -221,7 +223,7 @@ class Generator extends \yii\gii\Generator
      * @since 2.0.6
      * @return string the controller sub path
      */
-    public function getControllerSubPath()
+    public function getControllerSubPath(): string
     {
         $subPath = '';
         $controllerNamespace = $this->getControllerNamespace();
@@ -236,7 +238,7 @@ class Generator extends \yii\gii\Generator
      * @param string $action the action ID
      * @return string the action view file path
      */
-    public function getViewFile($action)
+    public function getViewFile($action): string
     {
         if (empty($this->viewPath)) {
             return Yii::getAlias('@app/views/' . $this->getControllerSubPath() . $this->getControllerID() . "/$action.php");
@@ -248,7 +250,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @return string the namespace of the controller class
      */
-    public function getControllerNamespace()
+    public function getControllerNamespace(): string
     {
         $name = StringHelper::basename($this->controllerClass);
         return ltrim(substr($this->controllerClass, 0, - (strlen($name) + 1)), '\\');

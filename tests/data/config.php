@@ -12,6 +12,12 @@
  * $config['databases']['pgsql']['password'] = 'changeme';
  */
 
+/** @var string|false $hostEnv */
+$hostEnv = getenv('POSTGRES_HOST');
+$host = false === $hostEnv ? 'localhost' : $hostEnv;
+
+$dsn = "pgsql:host=$host;port=5432;dbname=yiitest";
+
 $config = [
     'databases' => [
         'sqlite' => [
@@ -19,7 +25,7 @@ $config = [
             'fixture' => __DIR__ . '/sqlite.sql',
         ],
         'pgsql' => [
-            'dsn' => 'pgsql:host=localhost;port=5432;dbname=yiitest',
+            'dsn' => $dsn,
             'username' => 'postgres',
             'password' => 'postgres',
             'fixture' => __DIR__ . '/pgsql.sql',

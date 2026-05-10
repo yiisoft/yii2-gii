@@ -4,11 +4,15 @@
  * This is the template for generating a controller class within a module.
  */
 
+declare(strict_types=1);
+
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\module\Generator $generator */
 
 echo "<?php\n";
 ?>
+
+declare(strict_types=1);
 
 namespace <?= $generator->getControllerNamespace() ?>;
 

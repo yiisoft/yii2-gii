@@ -1,7 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\module\Generator $generator */
+
+echo "<?php\n";
+
+?>
+
+declare(strict_types=1);
+
 ?>
 <div class="<?= $generator->moduleID . '-default-index' ?>">
     <h1><?= '<?= ' ?>$this->context->action->uniqueId ?></h1>

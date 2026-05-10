@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @link https://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license https://www.yiiframework.com/license/
+ */
+
+declare(strict_types=1);
+
 namespace yiiunit\gii;
 
 use Yii;
@@ -11,7 +19,7 @@ use yii\helpers\FileHelper;
  */
 class GiiTestCase extends TestCase
 {
-    protected $driverName = 'sqlite';
+    protected string $driverName = 'sqlite';
 
     protected function setUp(): void
     {

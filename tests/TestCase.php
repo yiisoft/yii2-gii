@@ -1,7 +1,18 @@
 <?php
 
+/**
+ * @link https://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license https://www.yiiframework.com/license/
+ */
+
+declare(strict_types=1);
+
 namespace yiiunit\gii;
 
+use ReflectionClass;
+use ReflectionException;
+use RuntimeException;
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
 use Yii;
@@ -27,20 +38,32 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param array $config The application configuration, if needed
      * @param string $appClass name of the application class to create
      */
-    protected function mockApplication($config = [], $appClass = '\yii\console\Application')
+    protected function mockApplication(array $config = [], string $appClass = '\yii\console\Application'): void
     {
+        $runtimePath = __DIR__ . '/runtime';
+        $appPath = $runtimePath . '/app';
+        if (!is_dir($appPath) && !mkdir($appPath, 0777, true) && !is_dir($appPath)) {
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $appPath));
+        }
         new $appClass(ArrayHelper::merge([
             'id' => 'testapp',
-            'basePath' => __DIR__,
+            'basePath' => $appPath,
+            'runtimePath' => $runtimePath,
             'vendorPath' => dirname(__DIR__) . '/vendor',
         ], $config));
     }
 
-    protected function mockWebApplication($config = [], $appClass = '\yii\web\Application')
+    protected function mockWebApplication(array $config = [], string $appClass = '\yii\web\Application'): void
     {
+        $runtimePath = __DIR__ . '/runtime';
+        $appPath = $runtimePath . '/app';
+        if (!is_dir($appPath) && !mkdir($appPath, 0777, true) && !is_dir($appPath)) {
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $appPath));
+        }
         new $appClass(ArrayHelper::merge([
             'id' => 'testapp',
-            'basePath' => __DIR__,
+            'basePath' => $appPath,
+            'runtimePath' => $runtimePath,
             'vendorPath' => dirname(__DIR__) . '/vendor',
             'components' => [
                 'request' => [
@@ -55,7 +78,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Destroys application in Yii::$app by setting it to null.
      */
-    protected function destroyApplication()
+    protected function destroyApplication(): void
     {
         Yii::$app = null;
         Yii::$container = new Container();
@@ -67,15 +90,15 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param string $method method name.
      * @param array $args method arguments
      * @return mixed method result
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    protected function invoke($object, $method, array $args = [])
+    protected function invoke(object $object, string $method, array $args = [])
     {
-        $classReflection = new \ReflectionClass(get_class($object));
+        $classReflection = new ReflectionClass(get_class($object));
         $methodReflection = $classReflection->getMethod($method);
-        $methodReflection->setAccessible(true);
-        $result = $methodReflection->invokeArgs($object, $args);
-        $methodReflection->setAccessible(false);
-        return $result;
+        if (PHP_VERSION_ID < 80100) {
+            $methodReflection->setAccessible(true);
+        }
+        return $methodReflection->invokeArgs($object, $args);
     }
 }

@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 /** @var yii\web\View $this */
 /** @var yii\widgets\ActiveForm $form */
 /** @var yii\gii\generators\extension\Generator $generator */
 
+use yii\helpers\Html;
+
 ?>
 <div class="alert alert-info">
     Please read the
-    <?= \yii\helpers\Html::a('Extension Guidelines', 'https://www.yiiframework.com/doc-2.0/guide-structure-extensions.html', ['target' => 'new']) ?>
+    <?= Html::a('Extension Guidelines', 'https://www.yiiframework.com/doc-2.0/guide-structure-extensions.html', ['target' => 'new']) ?>
     before creating an extension.
 </div>
 <div class="module-form">

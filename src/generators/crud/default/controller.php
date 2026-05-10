@@ -4,6 +4,8 @@
  * This is the template for generating a CRUD controller class file.
  */
 
+declare(strict_types=1);
+
 use yii\db\ActiveRecordInterface;
 use yii\helpers\StringHelper;
 
@@ -47,7 +49,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     /**
      * @inheritDoc
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(
             parent::behaviors(),

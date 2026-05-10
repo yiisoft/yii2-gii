@@ -4,6 +4,8 @@
  * This is the template for generating a module class file.
  */
 
+declare(strict_types=1);
+
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\module\Generator $generator */
 
@@ -14,6 +16,8 @@ $className = substr($className, $pos + 1);
 
 echo "<?php\n";
 ?>
+
+declare(strict_types=1);
 
 namespace <?= $ns ?>;
 
@@ -30,7 +34,7 @@ class <?= $className ?> extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
 

@@ -6,16 +6,21 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\generators\crud;
 
 use Yii;
-use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
+use yii\db\ColumnSchema;
+use yii\db\Connection;
 use yii\db\Schema;
+use yii\db\TableSchema;
 use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
+use yii\db\ActiveRecord;
 
 /**
  * Generates CRUD controller and views.
@@ -24,7 +29,7 @@ use yii\web\Controller;
  * @property-read string $controllerID The controller ID (without the module ID prefix).
  * @property-read string $nameAttribute
  * @property-read string[] $searchAttributes Searchable attributes.
- * @property-read \yii\db\TableSchema|false $tableSchema
+ * @property-read TableSchema|false $tableSchema
  * @property-read string $viewPath The controller view path.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -35,11 +40,11 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string
      */
-    public $modelClass;
+    public string $modelClass;
     /**
      * @var string
      */
-    public $controllerClass;
+    public string $controllerClass;
     /**
      * @var string The controller view path
      */
@@ -47,31 +52,30 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string
      */
-    public $baseControllerClass = 'yii\web\Controller';
+    public string $baseControllerClass = Controller::class;
     /**
      * @var string
      */
-    public $indexWidgetType = 'grid';
+    public string $indexWidgetType = 'grid';
     /**
      * @var string
      */
-    public $searchModelClass = '';
+    public string $searchModelClass = '';
     /**
      * @var bool whether to wrap the `GridView` or `ListView` widget with the `yii\widgets\Pjax` widget
      * @since 2.0.5
      */
-    public $enablePjax = false;
+    public bool $enablePjax = false;
     /**
      * @var bool whether to use strict inflection for controller IDs (insert a separator between two consecutive uppercase chars)
      * @since 2.1.0
      */
-    public $strictInflector = true;
-
+    public bool $strictInflector = true;
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'CRUD Generator';
     }
@@ -79,7 +83,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'This generator generates a controller and views that implement CRUD (Create, Read, Update, Delete)
             operations for the specified data model.';
@@ -88,7 +92,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return array_merge(parent::rules(), [
             [['controllerClass', 'modelClass', 'searchModelClass', 'baseControllerClass'], 'trim', 'chars' => '\ '],
@@ -111,7 +115,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return array_merge(parent::attributeLabels(), [
             'modelClass' => 'Model Class',
@@ -127,7 +131,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function hints()
+    public function hints(): array
     {
         return array_merge(parent::hints(), [
             'modelClass' => 'This is the <code>BaseActiveRecord</code> class associated with the table that CRUD will be built upon.
@@ -154,7 +158,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function requiredTemplates()
+    public function requiredTemplates(): array
     {
         return ['controller.php'];
     }
@@ -162,7 +166,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function stickyAttributes()
+    public function stickyAttributes(): array
     {
         return array_merge(parent::stickyAttributes(), ['baseControllerClass', 'indexWidgetType']);
     }
@@ -170,7 +174,7 @@ class Generator extends \yii\gii\Generator
     /**
      * Checks if model class is valid
      */
-    public function validateModelClass()
+    public function validateModelClass(): void
     {
         $class = $this->modelClass;
         if (!method_exists($class, 'primaryKey') || !$class::primaryKey()) {
@@ -181,7 +185,7 @@ class Generator extends \yii\gii\Generator
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): array
     {
         $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
 
@@ -211,7 +215,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @return string the controller ID (without the module ID prefix)
      */
-    public function getControllerID()
+    public function getControllerID(): string
     {
         $pos = strrpos($this->controllerClass, '\\');
         $class = substr($this->controllerClass, $pos + 1, -10);
@@ -222,7 +226,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @return string the controller view path
      */
-    public function getViewPath()
+    public function getViewPath(): string
     {
         if (empty($this->viewPath)) {
             return Yii::getAlias('@app/views/' . $this->getControllerID());
@@ -234,7 +238,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @return string
      */
-    public function getNameAttribute()
+    public function getNameAttribute(): string
     {
         foreach ($this->getColumnNames() as $name) {
             if (!strcasecmp($name, 'name') || !strcasecmp($name, 'title')) {
@@ -299,7 +303,7 @@ class Generator extends \yii\gii\Generator
      * @param string $attribute
      * @return string
      */
-    public function generateActiveSearchField($attribute)
+    public function generateActiveSearchField(string $attribute): string
     {
         $tableSchema = $this->getTableSchema();
         if ($tableSchema === false) {
@@ -316,10 +320,10 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Generates column format
-     * @param \yii\db\ColumnSchema $column
+     * @param ColumnSchema $column
      * @return string
      */
-    public function generateColumnFormat($column)
+    public function generateColumnFormat(ColumnSchema $column)
     {
         if ($column->phpType === 'boolean') {
             return 'boolean';
@@ -348,7 +352,7 @@ class Generator extends \yii\gii\Generator
      * Generates validation rules for the search model.
      * @return array the generated validation rules
      */
-    public function generateSearchRules()
+    public function generateSearchRules(): array
     {
         if (($table = $this->getTableSchema()) === false) {
             return ["[['" . implode("', '", $this->getColumnNames()) . "'], 'safe']"];
@@ -392,7 +396,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @return string[] searchable attributes
      */
-    public function getSearchAttributes()
+    public function getSearchAttributes(): array
     {
         return $this->getColumnNames();
     }
@@ -401,10 +405,10 @@ class Generator extends \yii\gii\Generator
      * Generates the attribute labels for the search model.
      * @return string[] the generated attribute labels (name => label)
      */
-    public function generateSearchLabels()
+    public function generateSearchLabels(): array
     {
         $class = $this->modelClass;
-        /* @var $model \yii\db\BaseActiveRecord */
+        /* @var $model BaseActiveRecord */
         $model = new $class();
         $attributeLabels = $model->attributeLabels();
         $labels = [];
@@ -431,12 +435,12 @@ class Generator extends \yii\gii\Generator
      * Generates search conditions
      * @return array
      */
-    public function generateSearchConditions()
+    public function generateSearchConditions(): array
     {
         $columns = [];
         if (($table = $this->getTableSchema()) === false) {
             $class = $this->modelClass;
-            /* @var $model \yii\db\BaseActiveRecord */
+            /* @var $model BaseActiveRecord */
             $model = new $class();
             foreach ($model->attributes() as $attribute) {
                 $columns[$attribute] = 'unknown';
@@ -490,7 +494,7 @@ class Generator extends \yii\gii\Generator
      * Generates URL parameters
      * @return string
      */
-    public function generateUrlParams()
+    public function generateUrlParams(): string
     {
         $class = $this->modelClass;
         $pks = $class::primaryKey();
@@ -512,7 +516,7 @@ class Generator extends \yii\gii\Generator
      *
      * @return string
      */
-    public function generateActionParams()
+    public function generateActionParams(): string
     {
         $class = $this->modelClass;
         $pks = $class::primaryKey();
@@ -524,7 +528,7 @@ class Generator extends \yii\gii\Generator
      *
      * @return string[]
      */
-    public function generateActionParamComments()
+    public function generateActionParamComments(): array
     {
         $table = $this->getTableSchema();
         $class = $this->modelClass;
@@ -552,7 +556,7 @@ class Generator extends \yii\gii\Generator
 
     /**
      * Returns table schema for current model class or false if it is not an active record
-     * @return \yii\db\TableSchema|false
+     * @return TableSchema|false
      */
     public function getTableSchema()
     {
@@ -567,7 +571,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @return string[] model column/attribute names
      */
-    public function getColumnNames()
+    public function getColumnNames(): array
     {
         $schema = $this->getTableSchema();
         if ($schema) {
@@ -575,7 +579,7 @@ class Generator extends \yii\gii\Generator
         }
 
         $class = $this->modelClass;
-        /* @var $model \yii\db\BaseActiveRecord */
+        /* @var $model BaseActiveRecord */
         $model = new $class();
 
         return $model->attributes();
@@ -586,12 +590,12 @@ class Generator extends \yii\gii\Generator
      * In case db is not instance of \yii\db\Connection null will be returned.
      * @since 2.0.6
      */
-    protected function getClassDbDriverName()
+    protected function getClassDbDriverName(): ?string
     {
-        if (is_subclass_of($this->modelClass, '\yii\db\ActiveRecord')) {
+        if (is_subclass_of($this->modelClass, ActiveRecord::class)) {
             $class = $this->modelClass;
             $db = $class::getDb();
-            return $db instanceof \yii\db\Connection ? $db->driverName : null;
+            return $db instanceof Connection ? $db->driverName : null;
         }
 
         return null;

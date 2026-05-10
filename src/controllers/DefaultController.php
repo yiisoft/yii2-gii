@@ -6,9 +6,12 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\controllers;
 
 use Yii;
+use yii\gii\Generator;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -25,10 +28,9 @@ class DefaultController extends Controller
      */
     public $module;
     /**
-     * @var \yii\gii\Generator
+     * @var Generator
      */
-    public $generator;
-
+    public Generator $generator;
 
     /**
      * {@inheritdoc}
@@ -39,8 +41,7 @@ class DefaultController extends Controller
         return parent::beforeAction($action);
     }
 
-
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $this->layout = 'main';
 
@@ -114,7 +115,7 @@ class DefaultController extends Controller
      * @return mixed the result of the action.
      * @throws NotFoundHttpException if the action method does not exist.
      */
-    public function actionAction($id, $name)
+    public function actionAction(string $id, string $name)
     {
         $generator = $this->loadGenerator($id);
         $method = 'action' . $name;
@@ -127,10 +128,10 @@ class DefaultController extends Controller
     /**
      * Loads the generator with the specified ID.
      * @param string $id the ID of the generator to be loaded.
-     * @return \yii\gii\Generator the loaded generator
+     * @return Generator the loaded generator
      * @throws NotFoundHttpException
      */
-    protected function loadGenerator($id)
+    protected function loadGenerator(string $id)
     {
         if (isset($this->module->generators[$id])) {
             $this->generator = $this->module->generators[$id];

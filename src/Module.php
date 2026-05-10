@@ -6,12 +6,15 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii;
 
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\helpers\IpHelper;
 use yii\helpers\Json;
+use yii\web\Application;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -57,7 +60,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
      *   The default value is `['127.0.0.1', '::1']`, which means the module can only be accessed
      *   by localhost.
      */
-    public $allowedIPs = ['127.0.0.1', '::1'];
+    public array $allowedIPs = ['127.0.0.1', '::1'];
     /**
      * @var array|Generator[] a list of generator configurations or instances. The array keys
      * are the generator IDs (e.g. "crud"), and the array elements are the corresponding generator
@@ -69,27 +72,26 @@ class Module extends \yii\base\Module implements BootstrapInterface
      * Newly assigned generators will be merged with the [[coreGenerators()|core ones]], and the former
      * takes precedence in case when they have the same generator ID.
      */
-    public $generators = [];
+    public array $generators = [];
     /**
      * @var int the permission to be set for newly generated code files.
      * This value will be used by PHP chmod function.
      * Defaults to 0666, meaning the file is read-writable by all users.
      */
-    public $newFileMode = 0666;
+    public int $newFileMode = 0666;
     /**
      * @var int the permission to be set for newly generated directories.
      * This value will be used by PHP chmod function.
      * Defaults to 0777, meaning the directory can be read, written and executed by all users.
      */
-    public $newDirMode = 0777;
-
+    public int $newDirMode = 0777;
 
     /**
      * {@inheritdoc}
      */
     public function bootstrap($app)
     {
-        if ($app instanceof \yii\web\Application) {
+        if ($app instanceof Application) {
             $app->getUrlManager()->addRules([
                 ['class' => 'yii\web\UrlRule', 'pattern' => $this->id, 'route' => $this->id . '/default/index'],
                 ['class' => 'yii\web\UrlRule', 'pattern' => $this->id . '/<id:\w+>', 'route' => $this->id . '/default/view'],
@@ -107,13 +109,13 @@ class Module extends \yii\base\Module implements BootstrapInterface
     /**
      * {@inheritdoc}
      */
-    public function beforeAction($action)
+    public function beforeAction($action): bool
     {
         if (!parent::beforeAction($action)) {
             return false;
         }
 
-        if (Yii::$app instanceof \yii\web\Application && !$this->checkAccess()) {
+        if (Yii::$app instanceof Application && !$this->checkAccess()) {
             throw new ForbiddenHttpException('You are not allowed to access this page.');
         }
 
@@ -133,17 +135,17 @@ class Module extends \yii\base\Module implements BootstrapInterface
     /**
      * Resets potentially incompatible global settings done in app config.
      */
-    protected function resetGlobalSettings()
+    protected function resetGlobalSettings(): void
     {
-        if (Yii::$app instanceof \yii\web\Application) {
+        if (Yii::$app instanceof Application) {
             Yii::$app->assetManager->bundles = [];
         }
     }
 
     /**
-     * @return int whether the module can be accessed by the current user
+     * @return bool whether the module can be accessed by the current user
      */
-    protected function checkAccess()
+    protected function checkAccess(): bool
     {
         $ip = Yii::$app->getRequest()->getUserIP();
         foreach ($this->allowedIPs as $filter) {
@@ -171,7 +173,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
      * Returns the list of the core code generator configurations.
      * @return array the list of the core code generator configurations.
      */
-    protected function coreGenerators()
+    protected function coreGenerators(): array
     {
         return [
             'model' => ['class' => 'yii\gii\generators\model\Generator'],

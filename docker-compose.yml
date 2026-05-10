@@ -4,7 +4,7 @@ services:
 
   php:
     image: "yiisoftware/yii2-php:${PHP_VERSION:-8.1}-apache"
-    networks:
+    networks: &network
       - yii2-gii
     volumes:
       - .:/app # Mount source-code for development
@@ -12,10 +12,29 @@ services:
       XDEBUG_MODE: ${XDEBUG_MODE:-coverage} # Setup "debug" to enable debugging
       XDEBUG_CONFIG: "client_host=host.docker.internal"
       XDEBUG_TRIGGER: ${XDEBUG_TRIGGER:-yes}
+      POSTGRES_HOST: postgres
     command: >
       bash -c "
       docker-php-ext-enable xdebug;
       apache2-foreground"
+
+  postgres:
+    container_name: yii2-gii-postgres
+    image: postgres:9.6
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME:-yiitest}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    networks: *network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_NAME:-yiitest}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
 
 networks:
   yii2-gii:

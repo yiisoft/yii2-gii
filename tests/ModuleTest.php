@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * @link https://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license https://www.yiiframework.com/license/
+ */
+
+declare(strict_types=1);
+
 namespace yiiunit\gii;
 
+use ReflectionException;
 use Yii;
 use yii\gii\Module;
 
@@ -88,9 +97,9 @@ class ModuleTest extends TestCase
      * @param array $allowedIPs
      * @param string $userIp
      * @param bool $expectedResult
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    public function testCheckAccess(array $allowedIPs, $userIp, $expectedResult): void
+    public function testCheckAccess(array $allowedIPs, string $userIp, bool $expectedResult): void
     {
         $module = new Module('gii');
         $module->allowedIPs = $allowedIPs;

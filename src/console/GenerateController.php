@@ -6,13 +6,15 @@
  * @license https://www.yiiframework.com/license/
  */
 
+declare(strict_types=1);
+
 namespace yii\gii\console;
 
-use Yii;
 use yii\base\InlineAction;
 use yii\console\Controller;
 use yii\di\Instance;
 use yii\gii\Generator;
+use yii\gii\Module;
 
 /**
  * This is the command line version of Gii - a code generator.
@@ -31,7 +33,7 @@ use yii\gii\Generator;
 class GenerateController extends Controller
 {
     /**
-     * @var \yii\gii\Module
+     * @var Module
      */
     public $module;
     /**
@@ -39,24 +41,23 @@ class GenerateController extends Controller
      * Defaults to false, meaning none of the existing code files will be overwritten.
      * This option is used only when `--interactive=0`.
      */
-    public $overwrite = false;
+    public bool $overwrite = false;
     /**
      * @var array a list of the available code generators
      */
-    public $generators = [];
+    public array $generators = [];
 
     /**
      * @var array generator option values
      */
-    private $_options = [];
-
+    private array $_options = [];
 
     /**
      * {@inheritdoc}
      */
     public function __get($name)
     {
-        return isset($this->_options[$name]) ? $this->_options[$name] : null;
+        return $this->_options[$name] ?? null;
     }
 
     /**
@@ -99,17 +100,15 @@ class GenerateController extends Controller
      */
     public function actions()
     {
-        $actions = [];
-        foreach ($this->generators as $name => $generator) {
-            $actions[$name] = [
-                'class' => 'yii\gii\console\GenerateAction',
+        return array_map(static function ($generator) {
+            return [
+                'class' => GenerateAction::class,
                 'generator' => $generator,
             ];
-        }
-        return $actions;
+        }, $this->generators);
     }
 
-    public function actionIndex()
+    public function actionIndex(): void
     {
         $this->run('/help', ['gii']);
     }
@@ -205,7 +204,7 @@ class GenerateController extends Controller
         return $options;
     }
 
-    protected function formatHint($hint)
+    protected function formatHint($hint): string
     {
         $hint = preg_replace('%<code>(.*?)</code>%', '\1', $hint);
         $hint = preg_replace('/\s+/', ' ', $hint);
