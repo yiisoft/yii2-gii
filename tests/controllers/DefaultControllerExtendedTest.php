@@ -49,11 +49,8 @@ class DefaultControllerExtendedTest extends TestCase
 
         $controller = new DefaultController('default', $module);
 
-        try {
-            $controller->actionView('test');
-        } catch (ViewNotFoundException $e) {
-            $this->assertTrue(true);
-        }
+        $this->expectException(ViewNotFoundException::class);
+        $controller->actionView('test');
 
         $_POST = [];
     }
