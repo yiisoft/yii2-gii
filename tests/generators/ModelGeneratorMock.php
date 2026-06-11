@@ -2,6 +2,7 @@
 
 namespace yiiunit\gii\generators;
 
+use yii\db\TableSchema;
 use yii\gii\generators\model\Generator;
 
 /**
@@ -21,7 +22,7 @@ class ModelGeneratorMock extends Generator
         return $this->generateClassName($tableName, $useSchemaName);
     }
 
-    public function publicGenerateProperties($table)
+    public function publicGenerateProperties(TableSchema $table): array
     {
         return $this->generateProperties($table);
     }
