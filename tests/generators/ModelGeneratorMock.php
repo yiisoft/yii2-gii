@@ -11,6 +11,11 @@ use yii\gii\generators\model\Generator;
  */
 class ModelGeneratorMock extends Generator
 {
+    public function defaultTemplate()
+    {
+        return dirname(__DIR__, 2) . '/src/generators/model/default';
+    }
+
     public function publicGenerateClassName($tableName, $useSchemaName = null)
     {
         return $this->generateClassName($tableName, $useSchemaName);
