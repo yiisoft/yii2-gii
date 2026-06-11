@@ -15,4 +15,9 @@ class ModelGeneratorMock extends Generator
     {
         return $this->generateClassName($tableName, $useSchemaName);
     }
+
+    public function publicGenerateProperties($table)
+    {
+        return $this->generateProperties($table);
+    }
 }

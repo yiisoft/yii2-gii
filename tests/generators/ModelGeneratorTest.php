@@ -481,6 +481,62 @@ class ModelGeneratorTest extends GiiTestCase
         }
     }
 
+    public function testGenerateDecimalAndMoneyProperties(): void
+    {
+        $generator = new ModelGeneratorMock();
+        $schema = new TableSchema();
+        $schema->name = 'financial_record';
+        $schema->columns = [
+            'amount' => new ColumnSchema([
+                'name' => 'amount',
+                'allowNull' => false,
+                'type' => 'decimal',
+                'phpType' => 'string',
+                'dbType' => 'decimal(20,2)',
+                'size' => 20,
+                'precision' => 2,
+                'isPrimaryKey' => false,
+                'autoIncrement' => false,
+                'unsigned' => false,
+                'comment' => '',
+            ]),
+            'fee' => new ColumnSchema([
+                'name' => 'fee',
+                'allowNull' => true,
+                'type' => 'money',
+                'phpType' => 'string',
+                'dbType' => 'money',
+                'size' => null,
+                'precision' => null,
+                'isPrimaryKey' => false,
+                'autoIncrement' => false,
+                'unsigned' => false,
+                'comment' => '',
+            ]),
+        ];
+
+        $properties = $generator->publicGenerateProperties($schema);
+        $this->assertSame('string', $properties['amount']['type']);
+        $this->assertSame('string|null', $properties['fee']['type']);
+
+        $params = [
+            'tableName' => $schema->name,
+            'className' => 'FinancialRecord',
+            'queryClassName' => false,
+            'tableSchema' => $schema,
+            'properties' => $properties,
+            'labels' => $generator->generateLabels($schema),
+            'rules' => $generator->generateRules($schema),
+            'relations' => [],
+            'relationsClassHints' => [],
+            'enum' => $generator->getEnum($schema->columns),
+        ];
+
+        $code = $generator->render('model.php', $params);
+        $this->assertStringContainsString('* @property string $amount', $code);
+        $this->assertStringContainsString('* @property string|null $fee', $code);
+    }
+
     public function testEnum(): void
     {
         $generator = new ModelGenerator();

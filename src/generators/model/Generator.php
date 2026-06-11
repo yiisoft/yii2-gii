@@ -352,9 +352,11 @@ class Generator extends \yii\gii\Generator
                     break;
                 case Schema::TYPE_FLOAT:
                 case Schema::TYPE_DOUBLE:
+                    $type = 'float';
+                    break;
                 case Schema::TYPE_DECIMAL:
                 case Schema::TYPE_MONEY:
-                    $type = 'float';
+                    $type = 'string';
                     break;
                 case Schema::TYPE_DATE:
                 case Schema::TYPE_TIME:
