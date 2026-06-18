@@ -22,6 +22,8 @@ on:
 env:
     DEFAULT_COMPOSER_FLAGS: "--prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi"
 
+permissions:
+  contents: read
 jobs:
     phpunit:
         name: PHP ${{ matrix.php }} on ${{ matrix.os }}
@@ -44,9 +46,11 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+              with:
+                persist-credentials: false
             - name: Install PHP
-              uses: shivammathur/setup-php@v2
+              uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45
               with:
                   php-version: ${{ matrix.php }}
                   tools: pecl
@@ -56,7 +60,7 @@ jobs:
               id: composer-cache
               run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
             - name: Cache composer dependencies
-              uses: actions/cache@v3
+              uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -79,7 +83,7 @@ jobs:
               run: vendor/bin/phpunit --coverage-clover=coverage.clover --colors=always
 
             - name: Upload coverage to Codecov.
-              uses: codecov/codecov-action@v5
+              uses: codecov/codecov-action@04b047e8bb82a0c002c8312c1c880fbc6a999d45
               with:
                 files: ./coverage.xml
                 token: ${{ secrets.CODECOV_TOKEN }}
