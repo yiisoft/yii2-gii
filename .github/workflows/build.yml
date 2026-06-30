@@ -51,11 +51,11 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+              uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
               with:
                 persist-credentials: false
             - name: Install PHP
-              uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45
+              uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
               with:
                   php-version: ${{ matrix.php }}
                   tools: pecl
@@ -65,7 +65,7 @@ jobs:
               id: composer-cache
               run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
             - name: Cache composer dependencies
-              uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c
+              uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3.5.0
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -88,7 +88,7 @@ jobs:
               run: vendor/bin/phpunit --coverage-clover=coverage.clover --colors=always
 
             - name: Upload coverage to Codecov.
-              uses: codecov/codecov-action@04b047e8bb82a0c002c8312c1c880fbc6a999d45
+              uses: codecov/codecov-action@0fb7174895f61a3b6b78fc075e0cd60383518dac # v5
               with:
                 files: ./coverage.xml
                 token: ${{ secrets.CODECOV_TOKEN }}
