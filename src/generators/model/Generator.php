@@ -25,6 +25,8 @@ use yii\helpers\StringHelper;
 /**
  * This generator will generate one or multiple ActiveRecord classes for the specified database table.
  *
+ * @property-read string $tablePrefix
+ *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */

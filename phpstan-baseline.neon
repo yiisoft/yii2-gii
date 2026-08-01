@@ -1519,6 +1519,12 @@ parameters:
 			path: tests/generators/ModelGeneratorMock.php
 
 		-
+			message: '#^Method yiiunit\\gii\\generators\\ModelGeneratorMock\:\:publicGenerateProperties\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/generators/ModelGeneratorMock.php
+
+		-
 			message: '#^Access to constant TYPE_CLIENT on an unknown class TestEnumModel\.$#'
 			identifier: class.notFound
 			count: 1
