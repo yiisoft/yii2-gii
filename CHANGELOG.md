@@ -9,6 +9,7 @@ Yii Framework 2 gii extension Change Log
 - Enh #561: Applying Yii2 coding standards (@s1lver)
 - Enh #561: Raise min version to PHP 7.4 (@s1lver)
 - Bug #549: Fix decimal and money column type generation in model generator (@taobig)
+- Bug #572: Fix union types in PHPDoc annotations (mspirkov)
 
 2.2.7 February 13, 2025
 -----------------------
