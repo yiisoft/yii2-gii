@@ -108,10 +108,13 @@ class ActiveField extends \yii\widgets\ActiveField
 
         Html::addCssClass($this->options, 'form-check');
         Html::addCssClass($options, 'form-check-input');
-        Html::addCssClass($this->labelOptions, 'form-check-label');
 
         $options['label'] ??= $this->model->getAttributeLabel($this->attribute);
-        $options['labelOptions'] ??= ['tag' => 'label'];
+        $options['labelOptions'] ??= $this->labelOptions;
+
+        Html::addCssClass($options['labelOptions'], 'form-check-label');
+
+        $options['labelOptions']['tag'] ??= 'label';
 
         return parent::checkbox($options, $enclosedByLabel);
     }
@@ -125,10 +128,11 @@ class ActiveField extends \yii\widgets\ActiveField
 
         Html::addCssClass($this->options, 'form-check');
         Html::addCssClass($options, 'form-check-input');
-        Html::addCssClass($this->labelOptions, 'form-check-label');
 
         $options['label'] ??= $this->model->getAttributeLabel($this->attribute);
-        $options['labelOptions'] ??= ['tag' => 'label'];
+        $options['labelOptions'] ??= $this->labelOptions;
+        Html::addCssClass($options['labelOptions'], 'form-check-label');
+        $options['labelOptions']['tag'] ??= 'label';
 
         return parent::radio($options, $enclosedByLabel);
     }
