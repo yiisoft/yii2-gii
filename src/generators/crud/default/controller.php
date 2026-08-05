@@ -1,11 +1,11 @@
 <?php
+
 /**
  * This is the template for generating a CRUD controller class file.
  */
 
 use yii\db\ActiveRecordInterface;
 use yii\helpers\StringHelper;
-
 
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\crud\Generator $generator */
@@ -31,7 +31,7 @@ namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>
 
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
-use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
+use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : '') ?>;
 <?php else: ?>
 use yii\data\ActiveDataProvider;
 <?php endif; ?>
@@ -53,7 +53,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],

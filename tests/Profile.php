@@ -35,4 +35,4 @@ class Profile extends ActiveRecord
             'description' => 'Description',
         ];
     }
-} 
+}

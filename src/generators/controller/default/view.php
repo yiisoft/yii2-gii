@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is the template for generating an action view file.
  */
@@ -10,7 +11,7 @@
 echo "<?php\n";
 ?>
 /** @var yii\web\View $this */
-<?= "?>" ?>
+<?= '?>' ?>
 
 <h1><?= $generator->getControllerSubPath() . $generator->getControllerID() . '/' . $action ?></h1>
 

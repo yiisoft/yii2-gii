@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -28,9 +29,8 @@ use yii\web\View;
  * - [[generate()]]: generates the code based on the current user input and the specified code template files.
  *   This is the place where main code generation code resides.
  *
- * @property-read string $name The name of the generator.
- * @property-read string $description The detailed description of the generator.
- * @property-read string $stickyDataFile The file path that stores the sticky attribute values.
+ * @property-read string $description
+ * @property-read string $stickyDataFile
  * @property-read string $templatePath The root path of the template files that are currently being used.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -380,7 +380,7 @@ abstract class Generator extends Model
     {
         $class = ltrim($this->$attribute, '\\');
         if (($pos = strrpos($class, '\\')) === false) {
-            $this->addError($attribute, "The class name must contain fully qualified namespace name.");
+            $this->addError($attribute, 'The class name must contain fully qualified namespace name.');
         } else {
             $ns = substr($class, 0, $pos);
             $path = Yii::getAlias('@' . str_replace('\\', '/', $ns), false);
@@ -516,11 +516,11 @@ abstract class Generator extends Model
             } else {
                 $ph = '';
             }
-            $str = "Yii::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
+            $str = "Yii::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ')';
         } else {
             // No I18N, replace placeholders by real words, if any
             if (!empty($placeholders)) {
-                $phKeys = array_map(function($word) {
+                $phKeys = array_map(function ($word) {
                     return '{' . $word . '}';
                 }, array_keys($placeholders));
                 $phValues = array_values($placeholders);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is the template for generating a module class file.
  */
