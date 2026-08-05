@@ -16,7 +16,7 @@ use yii\gii\generators\module\Generator as ModuleGenerator;
  */
 class GeneratorsTest extends GiiTestCase
 {
-    public function testControllerGenerator()
+    public function testControllerGenerator(): void
     {
         $generator = new ControllerGenerator();
         $generator->template = 'default';
@@ -28,7 +28,7 @@ class GeneratorsTest extends GiiTestCase
         $this->assertNotEmpty($generator->generate());
     }
 
-    public function testExtensionGenerator()
+    public function testExtensionGenerator(): void
     {
         $generator = new ExtensionGenerator();
         $generator->template = 'default';
@@ -46,7 +46,7 @@ class GeneratorsTest extends GiiTestCase
         $this->assertNotEmpty($generator->generate());
     }
 
-    public function testModelGenerator()
+    public function testModelGenerator(): void
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
@@ -63,7 +63,7 @@ class GeneratorsTest extends GiiTestCase
         $this->assertTrue(strpos($modelCode, "'description' => 'Description',") !== false, "Description label should be there:\n" . $modelCode);
     }
 
-    public function testModuleGenerator()
+    public function testModuleGenerator(): void
     {
         $generator = new ModuleGenerator();
         $generator->template = 'default';
@@ -77,7 +77,7 @@ class GeneratorsTest extends GiiTestCase
     }
 
 
-    public function testFormGenerator()
+    public function testFormGenerator(): void
     {
         $generator = new FormGenerator();
         $generator->template = 'default';
@@ -91,7 +91,7 @@ class GeneratorsTest extends GiiTestCase
         $this->assertNotEmpty($generator->generate());
     }
 
-    public function testCRUDGenerator()
+    public function testCRUDGenerator(): void
     {
         $generator = new CRUDGenerator();
         $generator->template = 'default';
@@ -104,7 +104,7 @@ class GeneratorsTest extends GiiTestCase
         $this->assertNotEmpty($generator->generate());
     }
 
-    public function testTemplateValidation()
+    public function testTemplateValidation(): void
     {
         $generator = new ModelGenerator();
 

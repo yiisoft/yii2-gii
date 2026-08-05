@@ -14,7 +14,7 @@ class SchemaTest extends GiiTestCase
 {
     protected $driverName = 'pgsql';
 
-    public function testPrefixesGenerator()
+    public function testPrefixesGenerator(): void
     {
         $generator = new ModelGenerator();
         $generator->template = 'default';
@@ -28,11 +28,11 @@ class SchemaTest extends GiiTestCase
         }
 
         $this->assertEquals(5, count($files));
-        $this->assertEquals("Schema1Table1", basename($files[3]->path, '.php'));
-        $this->assertEquals("Schema1Table2", basename($files[4]->path, '.php'));
+        $this->assertEquals('Schema1Table1', basename($files[3]->path, '.php'));
+        $this->assertEquals('Schema1Table2', basename($files[4]->path, '.php'));
     }
 
-    public function relationsProvider()
+    public function relationsProvider(): array
     {
         return [
             // useClassConstant = false
@@ -140,7 +140,7 @@ class SchemaTest extends GiiTestCase
     /**
      * @dataProvider relationsProvider
      */
-    public function testViaTableRelationsGenerator($template, $tableName, $filesCount, $useClassConstant, $relationSets)
+    public function testViaTableRelationsGenerator($template, $tableName, $filesCount, $useClassConstant, $relationSets): void
     {
         $this->relationsGeneratorTest($template, $tableName, $filesCount, $useClassConstant, $relationSets, ModelGenerator::JUNCTION_RELATION_VIA_TABLE);
     }
@@ -148,12 +148,12 @@ class SchemaTest extends GiiTestCase
     /**
      * @dataProvider relationsProvider
      */
-    public function testViaModelRelationsGenerator($template, $tableName, $filesCount, $useClassConstant, $relationSets)
+    public function testViaModelRelationsGenerator($template, $tableName, $filesCount, $useClassConstant, $relationSets): void
     {
         $this->relationsGeneratorTest($template, $tableName, $filesCount, $useClassConstant, $relationSets, ModelGenerator::JUNCTION_RELATION_VIA_MODEL);
     }
 
-    protected function relationsGeneratorTest($template, $tableName, $filesCount, $useClassConstant, $relationSets, $generateViaRelationMode)
+    protected function relationsGeneratorTest($template, $tableName, $filesCount, $useClassConstant, $relationSets, $generateViaRelationMode): void
     {
         $generator = new ModelGenerator();
         $generator->template = $template;
@@ -177,8 +177,10 @@ class SchemaTest extends GiiTestCase
                 if (is_array($relation)) {
                     $relation = $relation[$generateViaRelationMode];
                 }
-                $this->assertTrue(strpos($modelCode, $relation) !== false,
-                    "Model $modelClass should contain this relation: $relation.\n$modelCode");
+                $this->assertTrue(
+                    strpos($modelCode, $relation) !== false,
+                    "Model $modelClass should contain this relation: $relation.\n$modelCode"
+                );
             }
         }
     }

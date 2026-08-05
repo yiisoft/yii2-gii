@@ -7,7 +7,7 @@ use yii\gii\Module;
 
 class ModuleTest extends TestCase
 {
-    public function testDefaultVersion()
+    public function testDefaultVersion(): void
     {
         $this->mockApplication();
         Yii::$app->extensions['yiisoft/yii2-gii'] = [
@@ -24,7 +24,7 @@ class ModuleTest extends TestCase
      * Data provider for [[testCheckAccess()]]
      * @return array test data
      */
-    public function dataProviderCheckAccess()
+    public function dataProviderCheckAccess(): array
     {
         return [
             [
@@ -90,7 +90,7 @@ class ModuleTest extends TestCase
      * @param bool $expectedResult
      * @throws \ReflectionException
      */
-    public function testCheckAccess(array $allowedIPs, $userIp, $expectedResult)
+    public function testCheckAccess(array $allowedIPs, $userIp, $expectedResult): void
     {
         $module = new Module('gii');
         $module->allowedIPs = $allowedIPs;

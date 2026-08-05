@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -75,7 +76,7 @@ class GenerateAction extends \yii\base\Action
                         $answers[$file->id] = !$skipAll;
                     } else {
                         do {
-                            $answer = $this->controller->select("Do you want to overwrite this file?", [
+                            $answer = $this->controller->select('Do you want to overwrite this file?', [
                                 'y' => 'Overwrite this file.',
                                 'n' => 'Skip this file.',
                                 'ya' => 'Overwrite this and the rest of the changed files.',

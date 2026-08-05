@@ -31,7 +31,7 @@ foreach ($generator->templates as $name => $path) {
         'errorCssClass' => 'is-invalid',
         'validationStateOn' => ActiveForm::VALIDATION_STATE_ON_INPUT,
         'fieldConfig' => [
-            'class' => ActiveField::className(),
+            'class' => ActiveField::class,
             'hintOptions' => ['tag' => 'small', 'class' => 'form-text text-muted'],
             'errorOptions' => ['class' => 'invalid-feedback']
         ],

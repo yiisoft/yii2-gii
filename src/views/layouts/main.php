@@ -63,7 +63,7 @@ $asset = yii\gii\GiiAsset::register($this);
                     <p>A Product of <a href="https://www.yiisoft.com/">Yii Software LLC</a></p>
                 </div>
                 <div class="col-6">
-                    <p class="text-right"><?= Yii::powered() ?></p>
+                    <p class="text-right">Powered by <a href="https://www.yiiframework.com/" rel="external">Yii Framework</a></p>
                 </div>
             </div>
         </div>
