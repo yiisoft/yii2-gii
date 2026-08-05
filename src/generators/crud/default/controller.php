@@ -166,7 +166,12 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         $this->findModel(<?= $actionParams ?>)->delete();
 
-        return $this->redirect(['index']);
+        list($actionID) = Yii::$app->createController(parse_url(Yii::$app->request->referrer, PHP_URL_PATH));
+        if ($actionID === 'index') {
+            return $this->redirect(Yii::$app->request->referrer);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**
