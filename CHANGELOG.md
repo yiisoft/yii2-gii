@@ -5,6 +5,7 @@ Yii Framework 2 gii extension Change Log
 ------------------------
 
 - Bug #576: Fix `ActiveField::checkbox()` and `ActiveField::radio()` label not rendered due to `generateLabel()` API change in Yii2 `22.0` (@terabytesoftw).
+- Bug #577: Fix `ActiveField::checkbox()`/`radio()` label regression; remove workaround after Yii2 `22.0` fix (#21110); add tests (@terabytesoftw).
 
 3.0.0 under development
 -----------------------
