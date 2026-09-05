@@ -22,6 +22,7 @@ use yii\helpers\StringHelper;
  * @property-read string $controllerID The controller ID.
  * @property-read string $controllerNamespace The namespace of the controller class.
  * @property-read string $controllerSubPath The controller sub path.
+ * @property-read string $name
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
