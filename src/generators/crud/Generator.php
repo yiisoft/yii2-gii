@@ -26,6 +26,7 @@ use yii\web\Controller;
  * @property-read string[] $searchAttributes Searchable attributes.
  * @property-read \yii\db\TableSchema|false $tableSchema
  * @property-read string $viewPath The controller view path.
+ * @property-read string $name
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0

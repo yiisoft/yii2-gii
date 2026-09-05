@@ -20,6 +20,7 @@ use yii\helpers\StringHelper;
  *
  * @property-read string $controllerNamespace The controller namespace of the module.
  * @property-read string $modulePath The directory that contains the module class.
+ * @property-read string $name
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0

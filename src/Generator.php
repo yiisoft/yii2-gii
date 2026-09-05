@@ -32,6 +32,7 @@ use yii\web\View;
  * @property-read string $description
  * @property-read string $stickyDataFile
  * @property-read string $templatePath The root path of the template files that are currently being used.
+ * @property-read string $name
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0

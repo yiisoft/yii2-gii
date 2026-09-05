@@ -16,6 +16,7 @@ use yii\gii\CodeFile;
  *
  * @property-read string $keywordsArrayJson A json encoded array with the given keywords.
  * @property-read bool $outputPath The directory that contains the module class.
+ * @property-read string $name
  *
  * @author Tobias Munk <schmunk@usrbin.de>
  * @since 2.0
