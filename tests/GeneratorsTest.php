@@ -1,8 +1,13 @@
 <?php
 
+/**
+ * @link https://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license https://www.yiiframework.com/license/
+ */
+
 namespace yiiunit\gii;
 
-use yii\gii\CodeFile;
 use yii\gii\generators\controller\Generator as ControllerGenerator;
 use yii\gii\generators\crud\Generator as CRUDGenerator;
 use yii\gii\generators\extension\Generator as ExtensionGenerator;
