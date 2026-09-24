@@ -28,3 +28,7 @@ coverage.xml
 
 /tests/runtime
 /tests/data/config.local.php
+
+# PHP CS Fixer
+.php-cs-fixer.php
+.php-cs-fixer.cache

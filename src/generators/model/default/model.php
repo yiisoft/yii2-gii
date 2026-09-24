@@ -106,7 +106,7 @@ endif
 <?php
     $queryClassFullName = ($generator->ns === $generator->queryNs) ? $queryClassName : '\\' . $generator->queryNs . '\\' . $queryClassName;
     echo "\n";
-?>
+    ?>
     /**
      * {@inheritdoc}
      * @return <?= $queryClassFullName ?> the active query used by this AR class.
@@ -129,11 +129,11 @@ endif
         return [
 <?php         foreach ($columnData['values'] as $k => $value): ?>
 <?php
-        if ($generator->enableI18N) {
-            echo '            self::' . $value['constName'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
-        } else {
-            echo '            self::' . $value['constName'] . ' => \'' . $value['value'] . "',\n";
-        }
+    if ($generator->enableI18N) {
+        echo '            self::' . $value['constName'] . ' => Yii::t(\'' . $generator->messageCategory . '\', \'' . $value['value'] . "'),\n";
+    } else {
+        echo '            self::' . $value['constName'] . ' => \'' . $value['value'] . "',\n";
+    }
     ?>
 <?php         endforeach; ?>
         ];
