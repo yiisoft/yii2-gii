@@ -212,7 +212,26 @@ yii.gii = (function ($) {
                 }
                 $('.field-generator-caseinsensitive').toggle(!show);
             }).change();
+            $("#generator-singularize").click(function () {
+                var $this = $(this);
+                var $modelClass = $('#generator-modelclass');
+                getModelClassName($this, $modelClass);
+            })
 
+            function getModelClassName($this, $modelClass) {
+                ajaxRequest = $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: $this.data('action'),
+                    data: $('#model-generator').serializeArray(),
+                    success: function (response) {
+                        $modelClass.val(response).blur();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $modal.find('.modal-body').html('<div class="error">' + XMLHttpRequest.responseText + '</div>');
+                    }
+                });
+            }
             // model generator: translate table name to model class
             $('#model-generator #generator-tablename').on('blur', function () {
                 var $this = $(this);
