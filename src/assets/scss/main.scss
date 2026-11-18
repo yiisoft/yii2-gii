@@ -4,6 +4,7 @@
 
 @import "bs4/reboot";
 @import "bs4/type";
+@import "bs4/card";
 @import "bs4/code";
 @import "bs4/grid";
 @import "bs4/tables";
@@ -370,4 +371,38 @@ body {
     width: 1px;
     height: 1px;
     padding: 0;
+}
+
+
+//Form Model design
+
+.rules-container > div > label{
+    min-width: 96px;
+}
+
+.card [data-toggle="collapse-custom"]:after {
+    transform: rotate(0deg) ;
+    transition: all linear 0.25s;
+    float: right;
+    background: $icon-angle-right-active no-repeat;
+    background-size: contain;
+    content: "";
+    display: inline-block;
+    height: 1em;
+    line-height: 1;
+    position: relative;
+    top: 12px;
+    width: 1em;
+}
+.card.displayed [data-toggle="collapse-custom"]:after {
+    transform: rotate(90deg) ;
+}
+
+#accordion .card .card-body{
+    display: none;
+    transition: display 2s;
+}
+
+#accordion .card.displayed .card-body{
+    display: block;
 }
